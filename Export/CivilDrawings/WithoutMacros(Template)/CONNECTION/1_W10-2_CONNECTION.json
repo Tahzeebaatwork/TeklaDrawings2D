@@ -1,0 +1,528 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "CONNECTION",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "W10-2",
+    "DrawingName": "",
+    "DrawingMark": "[W10-2]",
+    "Title1": "",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2026-09-02",
+    "Scale": "",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T10:27:09.6678227Z"
+  },
+  "JointType": "piece-to-piece",
+  "ConnectedTo": "P-300-11",
+  "Hardware": [
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 120.393,
+        "Y": 9040.006,
+        "Z": 28125.397
+      },
+      "Guid": "bbc2509f-deb7-43e0-9be1-011107c9a032",
+      "Id": 136348662
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 120.393,
+        "Y": 9036.831,
+        "Z": 28140.478
+      },
+      "Guid": "da22a0ef-88e4-4fb4-986e-a00f697e55b1",
+      "Id": 136348739
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 120.393,
+        "Y": 9040.006,
+        "Z": 29643.397
+      },
+      "Guid": "8c8452f6-4a3d-48a5-b615-f91be0aa73c5",
+      "Id": 136349188
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 120.393,
+        "Y": 9036.831,
+        "Z": 29658.478
+      },
+      "Guid": "41f43ab6-0324-4964-80a6-1050ae8c88b0",
+      "Id": 136349277
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "SP15-457-11",
+      "Description": "15Mx457 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD16",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 247.002,
+        "Y": 8913.003,
+        "Z": 29786.0
+      },
+      "Guid": "8acfe57b-6a3b-4ddf-ac25-54ba6e841841",
+      "Id": 140785776
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "SP15-457-31",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "PD52.387*12.7",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 247.002,
+        "Y": 8913.003,
+        "Z": 30239.825
+      },
+      "Guid": "98833a44-3927-44ce-89ba-e529d92597fe",
+      "Id": 140785654
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "SP15-457-21",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "ROD26.987",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 247.002,
+        "Y": 8913.003,
+        "Z": 30200.138
+      },
+      "Guid": "8aec1b8d-d8ea-4870-bd52-d257dbeaafc0",
+      "Id": 140785735
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.747,
+        "Y": 8853.743,
+        "Z": 29642.603
+      },
+      "Guid": "7ccc542b-425c-44bd-ae27-7f6dc7987358",
+      "Id": 142857347
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.572,
+        "Y": 8853.743,
+        "Z": 29627.522
+      },
+      "Guid": "8dfb6527-1ca5-48c7-a6a2-99eb4f0c81d4",
+      "Id": 142857424
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-607-11",
+      "Description": "13PL. w/STUD",
+      "Kind": "EMBED",
+      "Profile": "PL152.4*12.7",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 94.952,
+        "Y": 8887.602,
+        "Z": 30236.649
+      },
+      "Guid": "7e1ff3a3-aee3-4e0c-8854-589bb355e340",
+      "Id": 145054772
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-607-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 94.951,
+        "Y": 8963.802,
+        "Z": 30230.299
+      },
+      "Guid": "9fe855d5-a7fc-42b3-ac31-a836a5713a8a",
+      "Id": 145054853
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.746,
+        "Y": 8887.205,
+        "Z": 29443.0
+      },
+      "Guid": "c8357e9d-d884-4300-98cd-e125888a68b4",
+      "Id": 146267199
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.571,
+        "Y": 8872.124,
+        "Z": 29443.0
+      },
+      "Guid": "ebdaa8ca-4c51-4ad2-bad7-450c37ca521f",
+      "Id": 146267276
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-703-11",
+      "Description": "13PL. w/STUD",
+      "Kind": "EMBED",
+      "Profile": "PL102*12.7",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 424.002,
+        "Y": 8786.002,
+        "Z": 30236.649
+      },
+      "Guid": "c68a161e-c2c8-40b5-908b-0d75142b7d3a",
+      "Id": 153053333
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-703-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 424.0,
+        "Y": 8862.202,
+        "Z": 30230.299
+      },
+      "Guid": "8b989158-3500-4aa3-b753-9f34bf5f111e",
+      "Id": 153053414
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 246.747,
+        "Y": 8913.002,
+        "Z": 27525.0
+      },
+      "Guid": "14dc20c6-4eca-4d7f-98cc-19e20c5633cc",
+      "Id": 163337241
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-221",
+      "Description": "13Øx2743 AC 10375LB",
+      "Kind": "EMBED",
+      "Profile": "CABLE12.7",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 188.119,
+        "Y": 8786.897,
+        "Z": 29245.157
+      },
+      "Guid": "1e9b97e3-e0ae-49a7-aa80-17cfcee77c57",
+      "Id": 163357759
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-221",
+      "Description": "13Øx2743 AC 10375LB",
+      "Kind": "EMBED",
+      "Profile": "CABLE12.7",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 301.881,
+        "Y": 9039.087,
+        "Z": 29245.157
+      },
+      "Guid": "b5380db1-9bde-45ca-bb44-27f0864ccd18",
+      "Id": 163357894
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 360.938,
+        "Y": 9040.006,
+        "Z": 29508.333
+      },
+      "Guid": "4eeb91e7-a8f9-480a-bd7a-05b678f3f6bb",
+      "Id": 163358149
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 376.019,
+        "Y": 9036.831,
+        "Z": 29508.333
+      },
+      "Guid": "a42bc7c3-e183-401b-9b52-300f2c7495be",
+      "Id": 163358231
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 132.811,
+        "Y": 9040.006,
+        "Z": 29508.333
+      },
+      "Guid": "7be67191-dc0e-4135-9a1f-c63a2e51f21f",
+      "Id": 163358362
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 147.893,
+        "Y": 9036.831,
+        "Z": 29508.333
+      },
+      "Guid": "caffbe58-e083-4838-b2f4-6b86a18ca31e",
+      "Id": 163358444
+    }
+  ],
+  "Bom": [
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-300",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 6,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "bbc2509f-deb7-43e0-9be1-011107c9a032",
+      "Id": 136348662
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "SP15-457",
+      "Description": "15Mx457 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD16",
+      "Material": "400W",
+      "Quantity": 3,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "8acfe57b-6a3b-4ddf-ac25-54ba6e841841",
+      "Id": 140785776
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-607",
+      "Description": "13PL. w/STUD",
+      "Kind": "EMBED",
+      "Profile": "PL152.4*12.7",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "7e1ff3a3-aee3-4e0c-8854-589bb355e340",
+      "Id": 145054772
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-703",
+      "Description": "13PL. w/STUD",
+      "Kind": "EMBED",
+      "Profile": "PL102*12.7",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "c68a161e-c2c8-40b5-908b-0d75142b7d3a",
+      "Id": 153053333
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "14dc20c6-4eca-4d7f-98cc-19e20c5633cc",
+      "Id": 163337241
+    },
+    {
+      "PieceMark": "W10-2",
+      "Mark": "P-221",
+      "Description": "13Øx2743 AC 10375LB",
+      "Kind": "EMBED",
+      "Profile": "CABLE12.7",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "1e9b97e3-e0ae-49a7-aa80-17cfcee77c57",
+      "Id": 163357759
+    }
+  ],
+  "Dimensions": [
+    {
+      "PieceMark": "W10-2",
+      "Kind": "OverallThickness",
+      "Text": "254",
+      "Value": 254.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End1"
+    },
+    {
+      "PieceMark": "W10-2",
+      "Kind": "OverallThickness",
+      "Text": "254",
+      "Value": 254.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End2"
+    },
+    {
+      "PieceMark": "W10-2",
+      "Kind": "OverallLength",
+      "Text": "2975",
+      "Value": 2975.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-2",
+      "Kind": "OverallWidth",
+      "Text": "456.3",
+      "Value": 456.3,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "Side B"
+    }
+  ],
+  "DetailViews": [
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ]
+}

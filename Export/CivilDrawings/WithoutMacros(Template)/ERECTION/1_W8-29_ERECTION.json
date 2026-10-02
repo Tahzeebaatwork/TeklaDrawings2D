@@ -1,0 +1,643 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "ERECTION",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "W8-29",
+    "DrawingName": "",
+    "DrawingMark": "[W8-29]",
+    "Title1": "",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2026-09-02",
+    "Scale": "",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T10:47:08.2827239Z"
+  },
+  "Placement": {
+    "PieceMark": "W8-29",
+    "Name": "WALL",
+    "Profile": "2975*203",
+    "Material": "6000",
+    "Floor": "",
+    "Grid": "X10410/Y14938",
+    "Position": {
+      "X": 10409.503,
+      "Y": 14938.003,
+      "Z": 27525.0
+    },
+    "StartPoint": {
+      "X": 10409.503,
+      "Y": 12538.003,
+      "Z": 27525.0
+    },
+    "EndPoint": {
+      "X": 10409.503,
+      "Y": 17338.003,
+      "Z": 27525.0
+    },
+    "AxisX": {
+      "X": 0.0,
+      "Y": 4800.0,
+      "Z": 0.0
+    },
+    "AxisY": {
+      "X": 0.0,
+      "Y": 0.0,
+      "Z": 1000.0
+    },
+    "AxisZ": {
+      "X": 4800000.0,
+      "Y": 0.0,
+      "Z": 0.0
+    },
+    "LengthMm": 4800.0,
+    "Id": 134749350,
+    "Guid": "08e3591c-226d-4255-af53-df8d49743f52"
+  },
+  "AnchorsAndEmbeds": [
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 12818.003,
+        "Z": 29433.2
+      },
+      "Guid": "587511c3-aa0b-4c5e-8682-a59f1da410b6",
+      "Id": 140845218
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 12818.003,
+        "Z": 30496.825
+      },
+      "Guid": "8f6a6448-f3bb-4cd2-830b-99698442da3b",
+      "Id": 140845299
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 12818.003,
+        "Z": 30433.325
+      },
+      "Guid": "6a0352d3-f4c6-4638-b847-dc621963657c",
+      "Id": 140845340
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 17118.003,
+        "Z": 29433.2
+      },
+      "Guid": "3caa7d72-0a53-4a7d-885e-f24a312ad0e4",
+      "Id": 140846334
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 17118.003,
+        "Z": 30496.825
+      },
+      "Guid": "a15c8945-dbdf-459b-9c65-5be6c76d4e58",
+      "Id": 140846427
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 17118.003,
+        "Z": 30433.325
+      },
+      "Guid": "e1021961-fcb8-445f-8a47-1ae61b449b4b",
+      "Id": 140846468
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-11",
+      "Description": "15Mx457 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD16",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 13848.003,
+        "Z": 30043.0
+      },
+      "Guid": "d64bb855-6618-4969-89cc-2cebc518a5ac",
+      "Id": 140849037
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-31",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "PD52.387*12.7",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 13848.003,
+        "Z": 30496.825
+      },
+      "Guid": "de827fa1-e17c-41a4-9fd5-f43bec28ed1b",
+      "Id": 140848915
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-21",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "ROD26.987",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 13848.003,
+        "Z": 30457.138
+      },
+      "Guid": "3265611f-4778-468a-a402-90e3d1e354c0",
+      "Id": 140848996
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-11",
+      "Description": "15Mx457 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD16",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 14938.003,
+        "Z": 30043.0
+      },
+      "Guid": "1be5c895-cf6a-4346-be11-3cebb16f43ce",
+      "Id": 140850846
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-31",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "PD52.387*12.7",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 14938.003,
+        "Z": 30496.825
+      },
+      "Guid": "560bf431-d0ed-4ab1-9a89-b99becd08141",
+      "Id": 140850935
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-21",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "ROD26.987",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 14938.003,
+        "Z": 30457.138
+      },
+      "Guid": "98d4734a-d2c0-4579-be1e-7ad0eaadf68d",
+      "Id": 140850996
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-11",
+      "Description": "15Mx457 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD16",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 16028.003,
+        "Z": 30043.0
+      },
+      "Guid": "c5270fe3-9763-437f-b189-c3a186e3cc33",
+      "Id": 140851223
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-31",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "PD52.387*12.7",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 16028.003,
+        "Z": 30496.825
+      },
+      "Guid": "9be3c036-6cb1-48eb-93a9-642ac4d41a57",
+      "Id": 140851312
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "SP15-457-21",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "ROD26.987",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 16028.003,
+        "Z": 30457.138
+      },
+      "Guid": "dba56005-7022-47d5-82be-e71df540b485",
+      "Id": 140851373
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 12950.003,
+        "Z": 27525.0
+      },
+      "Guid": "ca2eced6-9f8f-4820-9109-251f38b0f42d",
+      "Id": 153043618
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 13944.003,
+        "Z": 27525.0
+      },
+      "Guid": "b56016ce-0ef9-41e0-a47d-c3ca4d462d3e",
+      "Id": 153044091
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 14938.003,
+        "Z": 27525.0
+      },
+      "Guid": "9142adcc-1988-45c0-844d-a0d6e9f89a2c",
+      "Id": 153044254
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 15932.003,
+        "Z": 27525.0
+      },
+      "Guid": "441eee8c-c895-415f-8cbc-f7f6da65eef4",
+      "Id": 153044417
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 16926.003,
+        "Z": 27525.0
+      },
+      "Guid": "2635528f-b4cd-41f7-8b7b-787dd6a3287f",
+      "Id": 153044580
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 12652.503,
+        "Z": 27541.0
+      },
+      "Guid": "79d15c59-f4c5-44ce-89d7-a455bc205fc7",
+      "Id": 153047752
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 17223.503,
+        "Z": 27541.0
+      },
+      "Guid": "0c098fed-61b4-4809-9289-cd23d54c9732",
+      "Id": 153048219
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10431.727,
+        "Y": 13398.0,
+        "Z": 30487.0
+      },
+      "Guid": "85dea83c-0b80-4e13-8ad7-5d334d02a2c2",
+      "Id": 163579386
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10374.578,
+        "Y": 13397.9,
+        "Z": 30353.651
+      },
+      "Guid": "b60590e9-fd62-49c8-85dd-b9bcc0f6792c",
+      "Id": 163579479
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 13398.0,
+        "Z": 30233.266
+      },
+      "Guid": "b6a17ca2-55e0-4439-bcb1-f04875cb18ce",
+      "Id": 163579520
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 13332.0,
+        "Z": 30500.0
+      },
+      "Guid": "78a61b4b-7beb-41eb-9176-a4565ec26168",
+      "Id": 163579561
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10431.722,
+        "Y": 16478.0,
+        "Z": 30487.0
+      },
+      "Guid": "ee8bf533-f1c3-410a-a517-3ad8927b4c49",
+      "Id": 163579940
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10374.572,
+        "Y": 16477.9,
+        "Z": 30353.651
+      },
+      "Guid": "880b9cff-c22d-4971-bf61-0b4a538e8c97",
+      "Id": 163580033
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.497,
+        "Y": 16478.0,
+        "Z": 30233.266
+      },
+      "Guid": "6ad06b0f-0b56-4962-8774-2ee1bbc31322",
+      "Id": 163580074
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.497,
+        "Y": 16412.0,
+        "Z": 30500.0
+      },
+      "Guid": "54ee2aff-f8b1-4ce9-ad19-b3e9c793f629",
+      "Id": 163580115
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10511.006,
+        "Y": 13738.003,
+        "Z": 29508.333
+      },
+      "Guid": "295893a2-966b-442e-ab2d-c8fa16132a40",
+      "Id": 163580582
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10507.831,
+        "Y": 13722.921,
+        "Z": 29508.333
+      },
+      "Guid": "0da06c83-8e4b-4816-9788-15d23dfd836b",
+      "Id": 163580664
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10511.006,
+        "Y": 16138.003,
+        "Z": 29508.333
+      },
+      "Guid": "efefdb27-35c6-460c-9f29-1b2e9834b6a5",
+      "Id": 163580795
+    },
+    {
+      "PieceMark": "W8-29",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10507.831,
+        "Y": 16122.921,
+        "Z": 29508.333
+      },
+      "Guid": "a6f8a571-0805-47f7-a725-d69d0b444332",
+      "Id": 163580877
+    }
+  ],
+  "ElevationAndPlanRefs": [
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ],
+  "ErectionSequenceNotes": [],
+  "Dimensions": []
+}

@@ -1,0 +1,7322 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "SHOP",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "P6-21",
+    "DrawingName": "Shop Drawing",
+    "DrawingMark": "[P6-21 - 1]",
+    "Title1": "Standard Settings",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2025-07-15",
+    "Scale": "60",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T05:08:46.6612386Z"
+  },
+  "GeneralNotes": {
+    "ConcreteGrade": "41.4 MPa",
+    "Strength28DayMPa": "41.4",
+    "StrippingStrength": "",
+    "WeightKg": 6903.21,
+    "WeightLbs": 15219.0,
+    "AirEntrainment": "",
+    "MinCoverMm": 19.8,
+    "CoverTopMm": null,
+    "CoverBottomMm": null,
+    "CoverSideMm": null,
+    "Class": "1",
+    "VolumeMm3": 3012251054.046761,
+    "VolumeM3": 3.0123,
+    "Material": "6000",
+    "Profile": "2975*152",
+    "Finish": "",
+    "Name": "WALL"
+  },
+  "Bom": [
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "39840627-2de1-4d9d-9cbf-03a3079ebaef",
+      "Id": 135895258
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 10,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "40574e89-4530-4702-97ac-eb6eac7d2a4f",
+      "Id": 136400893
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-10",
+      "Description": "25mm KNIFE PLATE",
+      "Kind": "PLATE",
+      "Profile": "PL127*25",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "b177d3e9-2bad-48d4-80be-64056d5bc03a",
+      "Id": 138459889
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-20",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD28.6*4.76",
+      "Material": "50W",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "5910be85-e217-4515-a905-a3bd655eb65d",
+      "Id": 138459960
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-30",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_3/4-DIA",
+      "Material": "A108-GR.90",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "bac58387-492f-4a7d-9de4-453eed6b3514",
+      "Id": 138460004
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-10",
+      "Description": "19PL KNIFE PLATE",
+      "Kind": "PLATE",
+      "Profile": "PL114.3*19.05",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "eb3a49b9-9685-48c4-a879-f072edb64f43",
+      "Id": 138461770
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-20",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD28.6*4.76",
+      "Material": "50W",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "690e06e5-9944-4af6-821e-815995b290cd",
+      "Id": 138461837
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-30",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_3/4-DIA",
+      "Material": "A108-GR.90",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "73e36b6e-d905-4956-a68e-de7a0aa14d44",
+      "Id": 138461881
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 4,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "65bb2e21-f0fa-400f-b9b8-bc37421c4cc5",
+      "Id": 161614776
+    }
+  ],
+  "Hardware": [
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 477.918,
+        "Y": 21509.003,
+        "Z": 6350.0
+      },
+      "Guid": "39840627-2de1-4d9d-9cbf-03a3079ebaef",
+      "Id": 135895258
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 21534.403,
+        "Z": 6388.1
+      },
+      "Guid": "dcbb917a-4abf-4942-8909-639ec0cf5098",
+      "Id": 135895334
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 21483.603,
+        "Z": 6388.1
+      },
+      "Guid": "272fdb34-fc1d-406a-9b9b-13316e4b1fcb",
+      "Id": 135895379
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 21534.403,
+        "Z": 6438.9
+      },
+      "Guid": "7badef04-0850-4e93-aa0b-55f833ff47e4",
+      "Id": 135895424
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 21483.603,
+        "Z": 6438.9
+      },
+      "Guid": "9dbf856d-4b79-4035-9f44-ad3a6ec2cf80",
+      "Id": 135895469
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 477.918,
+        "Y": 23209.003,
+        "Z": 6350.0
+      },
+      "Guid": "23dbb202-be47-47e2-9e1c-541da819ba3e",
+      "Id": 135895779
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 23234.403,
+        "Z": 6438.9
+      },
+      "Guid": "a5f134ca-fe7b-4d46-a0c1-003028f10f98",
+      "Id": 135895855
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 23234.403,
+        "Z": 6388.1
+      },
+      "Guid": "fee91335-c074-4a4c-ad9c-ecf198876ea1",
+      "Id": 135895900
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 23183.603,
+        "Z": 6438.9
+      },
+      "Guid": "189695e1-684d-42e2-80b4-ccdfc478b458",
+      "Id": 135895945
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 23183.603,
+        "Z": 6388.1
+      },
+      "Guid": "37aab719-063d-4829-94ca-d3914fa40709",
+      "Id": 135895990
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 477.918,
+        "Y": 24909.003,
+        "Z": 6350.0
+      },
+      "Guid": "081019ac-80fc-4ad7-a6d7-ffdbc2c10919",
+      "Id": 135896242
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 24934.403,
+        "Z": 6388.1
+      },
+      "Guid": "10984a27-d046-4d82-b994-740f4a7275c8",
+      "Id": 135896318
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 24883.603,
+        "Z": 6388.1
+      },
+      "Guid": "0b5460ba-3722-45d1-bdeb-9c5f01fafe75",
+      "Id": 135896363
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 24934.403,
+        "Z": 6438.9
+      },
+      "Guid": "600866c3-6b1a-41f0-af2a-c236b94f07f2",
+      "Id": 135896408
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 24883.603,
+        "Z": 6438.9
+      },
+      "Guid": "6d19c068-74c9-413a-93c1-990cced787a8",
+      "Id": 135896453
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 477.918,
+        "Y": 26609.003,
+        "Z": 6350.0
+      },
+      "Guid": "393ac7b1-0436-419c-b0ef-6f39dd86fe73",
+      "Id": 135896705
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 26634.403,
+        "Z": 6388.1
+      },
+      "Guid": "05b5d2c9-ddad-44ab-bf3c-8065de8990c2",
+      "Id": 135896781
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 26583.603,
+        "Z": 6388.1
+      },
+      "Guid": "b3b45a94-20d6-4e48-ba3a-44ce2f07c0c0",
+      "Id": 135896826
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 26634.403,
+        "Z": 6438.9
+      },
+      "Guid": "63ef83e0-7667-4a60-868f-c82e57617799",
+      "Id": 135896871
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 26583.603,
+        "Z": 6438.9
+      },
+      "Guid": "1741ae88-af8c-41d5-a669-a61901dff352",
+      "Id": 135896916
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 477.918,
+        "Y": 28309.003,
+        "Z": 6350.0
+      },
+      "Guid": "8ded38b3-cfaa-40b6-b281-6b374eaa182f",
+      "Id": 135897168
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 28334.403,
+        "Z": 6388.1
+      },
+      "Guid": "2c95ced6-45a0-423d-92cb-e3a62d62de18",
+      "Id": 135897244
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 28283.603,
+        "Z": 6388.1
+      },
+      "Guid": "a99f5924-c3fa-47f8-8e7c-ad0ca545ae8b",
+      "Id": 135897289
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 28334.403,
+        "Z": 6438.9
+      },
+      "Guid": "e67003b1-fe99-4fce-9c78-18749b372f97",
+      "Id": 135897334
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.743,
+        "Y": 28283.603,
+        "Z": 6438.9
+      },
+      "Guid": "4a34ab4c-5724-4e09-a5dd-0a5682a9bb73",
+      "Id": 135897379
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.746,
+        "Y": 28653.353,
+        "Z": 4125.397
+      },
+      "Guid": "40574e89-4530-4702-97ac-eb6eac7d2a4f",
+      "Id": 136400893
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.571,
+        "Y": 28653.353,
+        "Z": 4140.478
+      },
+      "Guid": "b9488ab3-4a6c-49fe-95b1-181bc0bca8f1",
+      "Id": 136400970
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.746,
+        "Y": 28653.353,
+        "Z": 5643.397
+      },
+      "Guid": "fc07e157-a694-41af-bfc8-1ba04920cca7",
+      "Id": 136401387
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.571,
+        "Y": 28653.353,
+        "Z": 5658.478
+      },
+      "Guid": "be6dc073-703c-4b10-933d-4e40544614ed",
+      "Id": 136401476
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-10",
+      "Description": "25mm KNIFE PLATE",
+      "Kind": "PLATE",
+      "Profile": "PL127*25",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 554.145,
+        "Y": 28888.003,
+        "Z": 6331.484
+      },
+      "Guid": "b177d3e9-2bad-48d4-80be-64056d5bc03a",
+      "Id": 138459889
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-20",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD28.6*4.76",
+      "Material": "50W",
+      "Quantity": 1,
+      "Position": {
+        "X": 568.445,
+        "Y": 28888.003,
+        "Z": 6293.484
+      },
+      "Guid": "5910be85-e217-4515-a905-a3bd655eb65d",
+      "Id": 138459960
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-30",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_3/4-DIA",
+      "Material": "A108-GR.90",
+      "Quantity": 1,
+      "Position": {
+        "X": 568.445,
+        "Y": 28888.003,
+        "Z": 6242.996
+      },
+      "Guid": "bac58387-492f-4a7d-9de4-453eed6b3514",
+      "Id": 138460004
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-10",
+      "Description": "19PL KNIFE PLATE",
+      "Kind": "PLATE",
+      "Profile": "PL114.3*19.05",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.74,
+        "Y": 21033.302,
+        "Z": 6338.249
+      },
+      "Guid": "eb3a49b9-9685-48c4-a879-f072edb64f43",
+      "Id": 138461770
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-20",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD28.6*4.76",
+      "Material": "50W",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.74,
+        "Y": 21019.002,
+        "Z": 6376.249
+      },
+      "Guid": "690e06e5-9944-4af6-821e-815995b290cd",
+      "Id": 138461837
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-30",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_3/4-DIA",
+      "Material": "A108-GR.90",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.74,
+        "Y": 21019.002,
+        "Z": 6242.999
+      },
+      "Guid": "73e36b6e-d905-4956-a68e-de7a0aa14d44",
+      "Id": 138461881
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 475.004,
+        "Y": 21809.003,
+        "Z": 3576.2
+      },
+      "Guid": "62e1df7e-e51b-4d1a-a7a1-60d19fb41c03",
+      "Id": 138512546
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.829,
+        "Y": 21793.922,
+        "Z": 3576.2
+      },
+      "Guid": "fc3272bd-238b-4d31-a4e9-0f4692271677",
+      "Id": 138512635
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 475.004,
+        "Y": 23509.003,
+        "Z": 3576.2
+      },
+      "Guid": "4184e105-fc36-4123-a491-7aca6484f741",
+      "Id": 138513452
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.829,
+        "Y": 23493.922,
+        "Z": 3576.2
+      },
+      "Guid": "f82b2320-e245-493d-9df1-e60e54809186",
+      "Id": 138513541
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 475.004,
+        "Y": 25209.013,
+        "Z": 3576.2
+      },
+      "Guid": "6a51cc79-60ab-49d3-89f5-49e8bb576a32",
+      "Id": 138514390
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.829,
+        "Y": 25193.932,
+        "Z": 3576.2
+      },
+      "Guid": "77535654-aaed-4faa-a6a4-114f83d2b58f",
+      "Id": 138514479
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 475.004,
+        "Y": 26909.003,
+        "Z": 3576.2
+      },
+      "Guid": "e93a532c-ba83-4892-997a-c12755e3861f",
+      "Id": 138515328
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.829,
+        "Y": 26893.922,
+        "Z": 3576.2
+      },
+      "Guid": "6b4b8c4f-ef72-42d8-84be-64605b2cac4c",
+      "Id": 138515417
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 475.004,
+        "Y": 28609.003,
+        "Z": 3576.2
+      },
+      "Guid": "d99be414-0346-4aff-9c87-464e514e6219",
+      "Id": 138516234
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.829,
+        "Y": 28593.922,
+        "Z": 3576.2
+      },
+      "Guid": "f1539192-4957-4ca5-92d6-dee6308d034c",
+      "Id": 138516323
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.746,
+        "Y": 21211.049,
+        "Z": 5443.0
+      },
+      "Guid": "e97e6800-fffc-450c-9a07-c9e7b594562c",
+      "Id": 146269446
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.571,
+        "Y": 21226.131,
+        "Z": 5443.0
+      },
+      "Guid": "f75cbccb-9e43-4703-8b91-1df4f9750a85",
+      "Id": 146269523
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.752,
+        "Y": 23209.003,
+        "Z": 5508.333
+      },
+      "Guid": "5df55f6d-20b8-4dff-80c6-93eca978ff53",
+      "Id": 157814640
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.577,
+        "Y": 23193.921,
+        "Z": 5508.333
+      },
+      "Guid": "0dcf8fe1-9d75-4cfc-894e-1e4b94d58d97",
+      "Id": 157814717
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 474.752,
+        "Y": 26928.003,
+        "Z": 5508.333
+      },
+      "Guid": "67b68d27-a7e6-4459-890f-9f66bc1e3478",
+      "Id": 157814869
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 471.577,
+        "Y": 26912.921,
+        "Z": 5508.333
+      },
+      "Guid": "a09d7ec0-d9a1-4083-8e79-65d4594a7b84",
+      "Id": 157814946
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 420.867,
+        "Y": 21901.003,
+        "Z": 6487.0
+      },
+      "Guid": "65bb2e21-f0fa-400f-b9b8-bc37421c4cc5",
+      "Id": 161614776
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 363.718,
+        "Y": 21900.903,
+        "Z": 6353.651
+      },
+      "Guid": "130c3878-ae2f-4561-9d8a-7c10d59d9b2f",
+      "Id": 161614849
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.643,
+        "Y": 21901.003,
+        "Z": 6233.266
+      },
+      "Guid": "99781f0f-fa3a-4453-a12e-5f36e82f911a",
+      "Id": 161614891
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.643,
+        "Y": 21835.003,
+        "Z": 6500.0
+      },
+      "Guid": "4f8fa189-741f-4f27-a22a-c3edad5121af",
+      "Id": 161614932
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 420.867,
+        "Y": 23890.003,
+        "Z": 6487.0
+      },
+      "Guid": "94cea418-bdb2-4b32-9324-257a1971e6c2",
+      "Id": 161615296
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 363.718,
+        "Y": 23889.903,
+        "Z": 6353.651
+      },
+      "Guid": "86390519-ad34-4991-832b-0e5d562db15d",
+      "Id": 161615369
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.643,
+        "Y": 23890.003,
+        "Z": 6233.266
+      },
+      "Guid": "340aa539-c5ff-4ce7-99f5-70467fbade3f",
+      "Id": 161615411
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.643,
+        "Y": 23824.003,
+        "Z": 6500.0
+      },
+      "Guid": "f603b94c-c8a1-4cc6-b744-856ec3d6b16d",
+      "Id": 161615452
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 420.867,
+        "Y": 27865.827,
+        "Z": 6487.0
+      },
+      "Guid": "b2cf1cbb-3bfa-491a-9b77-939c40fcce28",
+      "Id": 161615784
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 363.718,
+        "Y": 27865.727,
+        "Z": 6353.651
+      },
+      "Guid": "57a45a65-cc27-45b3-bdf9-55aad7650911",
+      "Id": 161615857
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.643,
+        "Y": 27865.827,
+        "Z": 6233.266
+      },
+      "Guid": "3e890230-7374-4bba-b24f-90fc1b8b8f56",
+      "Id": 161615899
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.643,
+        "Y": 27799.827,
+        "Z": 6500.0
+      },
+      "Guid": "b5854c16-b0ba-4477-8f73-41bd1eb1e01e",
+      "Id": 161615940
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 420.867,
+        "Y": 25878.003,
+        "Z": 6487.0
+      },
+      "Guid": "80612a24-8c7e-4095-968f-999c279fad1c",
+      "Id": 161616304
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 363.718,
+        "Y": 25877.903,
+        "Z": 6353.651
+      },
+      "Guid": "f05c88d1-8670-4f0e-b493-123b59c199f9",
+      "Id": 161616377
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.643,
+        "Y": 25878.003,
+        "Z": 6233.266
+      },
+      "Guid": "aed337e5-b4ca-407a-b8f5-4e0969607760",
+      "Id": 161616419
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 398.643,
+        "Y": 25812.003,
+        "Z": 6500.0
+      },
+      "Guid": "4ee4f87c-3ecf-41d1-9223-3f2584f35593",
+      "Id": 161616460
+    }
+  ],
+  "Rebar": [
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 454.227,
+          "Y": 26343.029,
+          "Z": 5492.771
+        },
+        {
+          "X": 454.227,
+          "Y": 25918.769,
+          "Z": 5917.031
+        }
+      ],
+      "Guid": "dc2c0e50-6182-4305-809b-7bce20298738"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 368.233,
+          "Y": 24832.966,
+          "Z": 5492.771
+        },
+        {
+          "X": 368.233,
+          "Y": 25257.226,
+          "Z": 5917.031
+        }
+      ],
+      "Guid": "a2c2df87-dfb9-45da-a5a2-1ef1288135f9"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0051",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "TS5_1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 749.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 255.0,
+      "B": 254.0,
+      "C": 254.0,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 395.333,
+          "Y": 24966.807,
+          "Z": 4093.37
+        },
+        {
+          "X": 395.333,
+          "Y": 24966.807,
+          "Z": 3842.05
+        },
+        {
+          "X": 395.333,
+          "Y": 25142.607,
+          "Z": 3666.26
+        },
+        {
+          "X": 395.333,
+          "Y": 25393.917,
+          "Z": 3666.26
+        }
+      ],
+      "Guid": "5a0c8085-0157-498b-91bc-edf250cd73bc"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0051",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "TS5_1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 749.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "1",
+      "A": 255.0,
+      "B": 254.0,
+      "C": 254.0,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 396.333,
+          "Y": 26209.347,
+          "Z": 4093.37
+        },
+        {
+          "X": 396.333,
+          "Y": 26209.347,
+          "Z": 3842.05
+        },
+        {
+          "X": 396.333,
+          "Y": 26033.547,
+          "Z": 3666.26
+        },
+        {
+          "X": 396.333,
+          "Y": 25782.237,
+          "Z": 3666.26
+        }
+      ],
+      "Guid": "eaa0a759-50c3-43d9-bb29-57d9fbd24c00"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0051",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "TS5_1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 749.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 255.0,
+      "B": 254.0,
+      "C": 254.0,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 395.333,
+          "Y": 21967.397,
+          "Z": 4093.37
+        },
+        {
+          "X": 395.333,
+          "Y": 21967.397,
+          "Z": 3842.05
+        },
+        {
+          "X": 395.333,
+          "Y": 22143.197,
+          "Z": 3666.26
+        },
+        {
+          "X": 395.333,
+          "Y": 22394.507,
+          "Z": 3666.26
+        }
+      ],
+      "Guid": "ee1acb5c-bf99-4804-88c2-76052d00df0f"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0051",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "TS5_1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 749.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "1",
+      "A": 255.0,
+      "B": 254.0,
+      "C": 254.0,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 396.333,
+          "Y": 23209.937,
+          "Z": 4093.37
+        },
+        {
+          "X": 396.333,
+          "Y": 23209.937,
+          "Z": 3842.05
+        },
+        {
+          "X": 396.333,
+          "Y": 23034.137,
+          "Z": 3666.26
+        },
+        {
+          "X": 396.333,
+          "Y": 22782.827,
+          "Z": 3666.26
+        }
+      ],
+      "Guid": "ee5a082d-8091-42ce-9b70-5b3def0624fb"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0094",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "S11",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1065.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 503.5,
+      "B": 1072.0,
+      "C": 503.5,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 103.0,
+      "Geometry": [
+        {
+          "X": 411.49,
+          "Y": 21764.403,
+          "Z": 4058.897
+        },
+        {
+          "X": 411.49,
+          "Y": 21764.403,
+          "Z": 3555.397
+        },
+        {
+          "X": 411.49,
+          "Y": 21854.403,
+          "Z": 3555.397
+        },
+        {
+          "X": 411.49,
+          "Y": 21854.403,
+          "Z": 4058.897
+        }
+      ],
+      "Guid": "76358ea1-4c99-4432-bfda-af2b3d572f7c"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0094",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "S11",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1065.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 503.5,
+      "B": 1072.0,
+      "C": 503.5,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 103.0,
+      "Geometry": [
+        {
+          "X": 411.49,
+          "Y": 23464.403,
+          "Z": 4058.897
+        },
+        {
+          "X": 411.49,
+          "Y": 23464.403,
+          "Z": 3555.397
+        },
+        {
+          "X": 411.49,
+          "Y": 23554.403,
+          "Z": 3555.397
+        },
+        {
+          "X": 411.49,
+          "Y": 23554.403,
+          "Z": 4058.897
+        }
+      ],
+      "Guid": "98e7ecc0-64dc-4888-94a8-138c6ea156ca"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0094",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "S11",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1065.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 503.5,
+      "B": 1072.0,
+      "C": 503.5,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 103.0,
+      "Geometry": [
+        {
+          "X": 411.49,
+          "Y": 25671.712,
+          "Z": 3640.803
+        },
+        {
+          "X": 411.49,
+          "Y": 25168.212,
+          "Z": 3640.803
+        },
+        {
+          "X": 411.49,
+          "Y": 25168.212,
+          "Z": 3550.803
+        },
+        {
+          "X": 411.49,
+          "Y": 25671.712,
+          "Z": 3550.803
+        }
+      ],
+      "Guid": "67b058dd-1ecc-49df-991b-f8e991b3a25d"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0094",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "S11",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1065.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 503.5,
+      "B": 1072.0,
+      "C": 503.5,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 103.0,
+      "Geometry": [
+        {
+          "X": 411.49,
+          "Y": 26864.403,
+          "Z": 4058.897
+        },
+        {
+          "X": 411.49,
+          "Y": 26864.403,
+          "Z": 3555.397
+        },
+        {
+          "X": 411.49,
+          "Y": 26954.403,
+          "Z": 3555.397
+        },
+        {
+          "X": 411.49,
+          "Y": 26954.403,
+          "Z": 4058.897
+        }
+      ],
+      "Guid": "2c55ce9c-02c4-4003-9b78-7aecb427e7fe"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0094",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "S11",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1065.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 503.5,
+      "B": 1072.0,
+      "C": 503.5,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 103.0,
+      "Geometry": [
+        {
+          "X": 411.49,
+          "Y": 28564.403,
+          "Z": 4058.897
+        },
+        {
+          "X": 411.49,
+          "Y": 28564.403,
+          "Z": 3555.397
+        },
+        {
+          "X": 411.49,
+          "Y": 28654.403,
+          "Z": 3555.397
+        },
+        {
+          "X": 411.49,
+          "Y": 28654.403,
+          "Z": 4058.897
+        }
+      ],
+      "Guid": "acfd3725-ce22-4a51-9774-d7169f6f0372"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 454.227,
+          "Y": 23343.039,
+          "Z": 5492.771
+        },
+        {
+          "X": 454.227,
+          "Y": 22918.779,
+          "Z": 5917.031
+        }
+      ],
+      "Guid": "684d4ea0-77a6-4460-b80f-ae1d692e76d4"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 368.233,
+          "Y": 21832.976,
+          "Z": 5492.771
+        },
+        {
+          "X": 368.233,
+          "Y": 22257.236,
+          "Z": 5917.031
+        }
+      ],
+      "Guid": "df712c80-1866-4b10-8258-b812c7b89d1b"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "MS 0010",
+      "Size": "W2.9/W2.9-152/152-2924/7868",
+      "Grade": "A1064-GR.65",
+      "ShapeType": "straight",
+      "ShapeCode": "",
+      "SourceType": "RebarMesh",
+      "FrozenState": null,
+      "Quantity": 114,
+      "DiameterMm": null,
+      "TotalLengthMm": 7868.2,
+      "TotalAreaMm2": 22900390.5,
+      "WeightKg": 36.1,
+      "PinRadiusMm": null,
+      "Spacing": "",
+      "A": 2924.2,
+      "B": 7869.0,
+      "C": 2925.0,
+      "D": 7869.0,
+      "E": 2925.0,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 385.447,
+          "Y": 21235.993,
+          "Z": 6474.6
+        },
+        {
+          "X": 385.447,
+          "Y": 21235.993,
+          "Z": 3550.4
+        }
+      ],
+      "Guid": "3c60c851-c5cb-4e04-99e6-5790ea483623"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0119",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "14",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1264.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.0,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 200.0,
+      "B": 147.0,
+      "C": 606.0,
+      "D": 140.0,
+      "E": 200.0,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": 100.0,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 812.0,
+      "Geometry": [
+        {
+          "X": 420.862,
+          "Y": 24317.408,
+          "Z": 5951.28
+        },
+        {
+          "X": 420.862,
+          "Y": 24317.224,
+          "Z": 6148.39
+        },
+        {
+          "X": 420.862,
+          "Y": 24222.898,
+          "Z": 6244.104
+        },
+        {
+          "X": 420.862,
+          "Y": 23622.85,
+          "Z": 6243.778
+        },
+        {
+          "X": 420.862,
+          "Y": 23519.198,
+          "Z": 6147.883
+        },
+        {
+          "X": 420.862,
+          "Y": 23519.378,
+          "Z": 5950.773
+        }
+      ],
+      "Guid": "eecbc17f-052e-429e-a222-68ffa026d22d"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RB10M 0119",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "14",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1264.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.0,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 200.0,
+      "B": 147.0,
+      "C": 606.0,
+      "D": 140.0,
+      "E": 200.0,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": 100.0,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 812.0,
+      "Geometry": [
+        {
+          "X": 420.854,
+          "Y": 24316.978,
+          "Z": 6211.568
+        },
+        {
+          "X": 420.854,
+          "Y": 24317.155,
+          "Z": 6014.458
+        },
+        {
+          "X": 420.854,
+          "Y": 24223.004,
+          "Z": 5918.571
+        },
+        {
+          "X": 420.854,
+          "Y": 23622.956,
+          "Z": 5918.246
+        },
+        {
+          "X": 420.854,
+          "Y": 23519.129,
+          "Z": 6013.951
+        },
+        {
+          "X": 420.854,
+          "Y": 23518.948,
+          "Z": 6211.061
+        }
+      ],
+      "Guid": "380a5139-3323-4557-a805-912107bf39f7"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RS15M 0058",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 6,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 2876.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 4.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "873.989966001901*1092.90004399637*1907.09058200102*1092.90004399637*2834.5202650002",
+      "A": 2875.0,
+      "B": 2871.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 446.2,
+          "Y": 21167.805,
+          "Z": 3574.957
+        },
+        {
+          "X": 446.2,
+          "Y": 21167.785,
+          "Z": 6450.0
+        }
+      ],
+      "Guid": "2df26534-612b-407c-a3df-3fd1835e3503"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "RS10M 0164",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 4,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 7819.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 6.1,
+      "PinRadiusMm": 0.0,
+      "Spacing": "717.199999985238*1962.73000007085*147.069999997552",
+      "A": 7819.0,
+      "B": 7824.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 430.5,
+          "Y": 28978.003,
+          "Z": 6423.5
+        },
+        {
+          "X": 430.5,
+          "Y": 21159.003,
+          "Z": 6423.5
+        }
+      ],
+      "Guid": "2857b636-6942-4032-8e0a-dcfc7e6f089e"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-420M 0001",
+      "Size": "20M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 20.0,
+      "TotalLengthMm": 689.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 689.0,
+      "B": 686.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 363.994,
+          "Y": 28864.303,
+          "Z": 6356.984
+        },
+        {
+          "X": 363.994,
+          "Y": 28864.303,
+          "Z": 5667.984
+        }
+      ],
+      "Guid": "227ee087-2b0a-4a8a-8e89-43c6b7d065dd"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-420M 0001",
+      "Size": "20M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 20.0,
+      "TotalLengthMm": 689.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 689.0,
+      "B": 686.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 439.994,
+          "Y": 28864.303,
+          "Z": 6356.984
+        },
+        {
+          "X": 439.994,
+          "Y": 28864.303,
+          "Z": 5667.984
+        }
+      ],
+      "Guid": "0353334e-de15-410b-8f77-96a5b28d8d22"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-420M 0001",
+      "Size": "20M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 20.0,
+      "TotalLengthMm": 689.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 689.0,
+      "B": 686.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 363.994,
+          "Y": 28911.703,
+          "Z": 6356.984
+        },
+        {
+          "X": 363.994,
+          "Y": 28911.703,
+          "Z": 5667.984
+        }
+      ],
+      "Guid": "78ea48f8-b8ca-401e-86fb-7b39bdf2262d"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-900-420M 0001",
+      "Size": "20M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 20.0,
+      "TotalLengthMm": 689.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 689.0,
+      "B": 686.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 439.994,
+          "Y": 28911.703,
+          "Z": 6356.984
+        },
+        {
+          "X": 439.994,
+          "Y": 28911.703,
+          "Z": 5667.984
+        }
+      ],
+      "Guid": "bf13ba98-6cb6-4a8b-8a12-f7602fe30c91"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-415M 0001",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 500.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 500.0,
+      "B": 508.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 417.465,
+          "Y": 21261.902,
+          "Z": 5857.299
+        },
+        {
+          "X": 417.465,
+          "Y": 21261.902,
+          "Z": 6357.299
+        }
+      ],
+      "Guid": "662db62b-c0f4-4638-95b8-a35eccc44b03"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-415M 0001",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 500.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 500.0,
+      "B": 508.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 417.465,
+          "Y": 21180.302,
+          "Z": 5857.299
+        },
+        {
+          "X": 417.465,
+          "Y": 21180.302,
+          "Z": 6357.299
+        }
+      ],
+      "Guid": "51345114-eadb-4ea4-be41-ec0b024f476d"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Mark": "P-742-510M 0001",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 407.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 406.4,
+      "B": 407.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 414.905,
+          "Y": 21211.105,
+          "Z": 6369.118
+        },
+        {
+          "X": 414.905,
+          "Y": 21617.505,
+          "Z": 6369.118
+        }
+      ],
+      "Guid": "236a5e78-3f52-4fb8-b317-cd23aa3779b9"
+    }
+  ],
+  "Dimensions": [
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1306.0,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1306.0,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1850.0,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": -1212.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1029.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": -1212.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7918.0,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1471.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7918.0,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1471.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2975.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.024,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2975.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.024,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2530.6,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 609.8,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3118.8,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 4811.5,
+      "StartPoint": {
+        "X": 3118.8,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 4811.5,
+      "StartPoint": {
+        "X": 3118.8,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 609.8,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3118.8,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2530.6,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 3518.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 979.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 178.0,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 979.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2530.6,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2530.6,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 178.0,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 979.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 3518.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 979.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1294.9,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1471.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 975.7,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1967.24,
+        "Y": 637.86,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2024.0,
+      "StartPoint": {
+        "X": 1967.24,
+        "Y": 637.86,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3991.227,
+        "Y": 637.855,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 976.0,
+      "StartPoint": {
+        "X": 3991.227,
+        "Y": 637.855,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4967.23,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 3071.7,
+      "StartPoint": {
+        "X": 4967.23,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 3071.7,
+      "StartPoint": {
+        "X": 4967.23,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 976.0,
+      "StartPoint": {
+        "X": 3991.227,
+        "Y": 637.855,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4967.23,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2024.0,
+      "StartPoint": {
+        "X": 1967.24,
+        "Y": 637.86,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3991.227,
+        "Y": 637.855,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 975.7,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1967.24,
+        "Y": 637.86,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1294.9,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1471.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1029.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": -1212.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1850.0,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": -1212.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7500.6,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 551.0,
+      "StartPoint": {
+        "X": 7500.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": -887.103,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 707.7,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": -887.103,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 707.7,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": -887.103,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 551.0,
+      "StartPoint": {
+        "X": 7500.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": -887.103,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7500.6,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7918.7,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 76.7,
+      "StartPoint": {
+        "X": -75.701,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1.0,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2813.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1.0,
+        "Y": 1325.512,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 162.0,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1325.512,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1518.0,
+      "StartPoint": {
+        "X": 7547.525,
+        "Y": -887.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": 630.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1957.3,
+      "StartPoint": {
+        "X": 102.047,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7787.1,
+      "StartPoint": {
+        "X": 700.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 76.7,
+      "StartPoint": {
+        "X": -75.701,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1.0,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7918.7,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7787.1,
+      "StartPoint": {
+        "X": 700.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1957.3,
+      "StartPoint": {
+        "X": 102.047,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1920.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 102.047,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1920.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 102.047,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 701.9,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.001,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 162.0,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1325.512,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2813.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1.0,
+        "Y": 1325.512,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1061.9,
+      "StartPoint": {
+        "X": 101.65,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1061.9,
+      "StartPoint": {
+        "X": 101.65,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1960.3,
+      "StartPoint": {
+        "X": 700.001,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 101.65,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 701.9,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.001,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1952.1,
+      "StartPoint": {
+        "X": 2400.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.397,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2888.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.0,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 935.3,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": 630.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1960.3,
+      "StartPoint": {
+        "X": 700.001,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 101.65,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 935.3,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": 630.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1518.0,
+      "StartPoint": {
+        "X": 7547.525,
+        "Y": -887.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": 630.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 547.7,
+      "StartPoint": {
+        "X": 7500.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7547.525,
+        "Y": -887.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 422.1,
+      "StartPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1699.6,
+      "StartPoint": {
+        "X": 4100.011,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 4100.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.011,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 4100.407,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5800.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2322.7,
+      "StartPoint": {
+        "X": 2100.397,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2322.7,
+      "StartPoint": {
+        "X": 2100.397,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1952.1,
+      "StartPoint": {
+        "X": 2400.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.397,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1699.6,
+      "StartPoint": {
+        "X": 4100.011,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 4100.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.011,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1955.3,
+      "StartPoint": {
+        "X": 2100.0,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.0,
+      "StartPoint": {
+        "X": 7200.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.0,
+      "StartPoint": {
+        "X": 7200.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 5500.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7200.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 3800.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5500.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2100.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3800.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 400.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 400.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 400.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2995.4,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 349.2,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 104.0,
+      "StartPoint": {
+        "X": 349.2,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 349.2,
+        "Y": 1591.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 104.0,
+      "StartPoint": {
+        "X": 349.2,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 349.2,
+        "Y": 1591.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2995.4,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 349.2,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 792.1,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 792.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1989.0,
+      "StartPoint": {
+        "X": 792.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2781.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1988.0,
+      "StartPoint": {
+        "X": 2781.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4769.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1987.8,
+      "StartPoint": {
+        "X": 4769.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 6756.824,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1162.2,
+      "StartPoint": {
+        "X": 6756.824,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1162.2,
+      "StartPoint": {
+        "X": 6756.824,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1987.8,
+      "StartPoint": {
+        "X": 4769.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 6756.824,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1988.0,
+      "StartPoint": {
+        "X": 2781.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4769.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1989.0,
+      "StartPoint": {
+        "X": 792.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2781.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 792.1,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 792.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 5500.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7200.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2119.2,
+      "StartPoint": {
+        "X": 5800.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2119.2,
+      "StartPoint": {
+        "X": 5800.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 4100.407,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5800.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2400.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.407,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1955.3,
+      "StartPoint": {
+        "X": 2100.0,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2888.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.0,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2400.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.407,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 422.1,
+      "StartPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 400.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 400.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 400.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2100.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3800.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 3800.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5500.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 547.7,
+      "StartPoint": {
+        "X": 7500.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7547.525,
+        "Y": -887.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 275.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1422.586,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 76.26,
+        "Y": 1687.5,
+        "Z": 0.0
+      },
+      "ViewName": "D"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 99.9,
+      "StartPoint": {
+        "X": -75.997,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1422.586,
+        "Z": 0.0
+      },
+      "ViewName": "D"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 275.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1422.586,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 76.26,
+        "Y": 1687.5,
+        "Z": 0.0
+      },
+      "ViewName": "D"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 99.9,
+      "StartPoint": {
+        "X": -75.997,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1422.586,
+        "Z": 0.0
+      },
+      "ViewName": "D"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 5800.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 4100.011,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5800.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2400.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.011,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 700.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 700.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 76.0,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 374.2,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7918.5,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 44.3,
+      "StartPoint": {
+        "X": 7500.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 5800.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 4100.011,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5800.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2400.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.011,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 700.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 700.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 76.0,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 44.3,
+      "StartPoint": {
+        "X": 7500.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 374.2,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7918.5,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 79.0,
+      "StartPoint": {
+        "X": 0.097,
+        "Y": 1465.61,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 75.999,
+        "Y": 1487.484,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 79.2,
+      "StartPoint": {
+        "X": -76.003,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.097,
+        "Y": 1465.61,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 79.2,
+      "StartPoint": {
+        "X": -76.003,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.097,
+        "Y": 1465.61,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 79.0,
+      "StartPoint": {
+        "X": 0.097,
+        "Y": 1465.61,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 75.999,
+        "Y": 1487.484,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 131.5,
+      "StartPoint": {
+        "X": 76.26,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 155.406,
+        "Y": 1382.484,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 131.5,
+      "StartPoint": {
+        "X": 76.26,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 155.406,
+        "Y": 1382.484,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 99.9,
+      "StartPoint": {
+        "X": -75.997,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1422.586,
+        "Z": 0.0
+      },
+      "ViewName": "D"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 275.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1422.586,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 76.26,
+        "Y": 1687.5,
+        "Z": 0.0
+      },
+      "ViewName": "D"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 131.5,
+      "StartPoint": {
+        "X": 76.26,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 155.406,
+        "Y": 1382.484,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 131.5,
+      "StartPoint": {
+        "X": 76.26,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 155.406,
+        "Y": 1382.484,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 275.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1422.586,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 76.26,
+        "Y": 1687.5,
+        "Z": 0.0
+      },
+      "ViewName": "D"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 99.9,
+      "StartPoint": {
+        "X": -75.997,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1422.586,
+        "Z": 0.0
+      },
+      "ViewName": "D"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 79.0,
+      "StartPoint": {
+        "X": 0.097,
+        "Y": 1465.61,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 75.999,
+        "Y": 1487.484,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 79.2,
+      "StartPoint": {
+        "X": -76.003,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.097,
+        "Y": 1465.61,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 79.0,
+      "StartPoint": {
+        "X": 0.097,
+        "Y": 1465.61,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 75.999,
+        "Y": 1487.484,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 79.2,
+      "StartPoint": {
+        "X": -76.003,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.097,
+        "Y": 1465.61,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 700.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 76.0,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 700.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2400.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.011,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 4100.011,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5800.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 5800.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 547.7,
+      "StartPoint": {
+        "X": 7500.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7547.525,
+        "Y": -887.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 3800.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5500.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2100.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3800.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 400.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 400.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 400.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 422.1,
+      "StartPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2400.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.407,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2119.2,
+      "StartPoint": {
+        "X": 5800.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 4100.407,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5800.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2400.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.407,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1955.3,
+      "StartPoint": {
+        "X": 2100.0,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2888.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.0,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2119.2,
+      "StartPoint": {
+        "X": 5800.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 5500.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7200.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1162.2,
+      "StartPoint": {
+        "X": 6756.824,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1987.8,
+      "StartPoint": {
+        "X": 4769.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 6756.824,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1988.0,
+      "StartPoint": {
+        "X": 2781.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4769.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1989.0,
+      "StartPoint": {
+        "X": 792.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2781.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 792.1,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 792.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1162.2,
+      "StartPoint": {
+        "X": 6756.824,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1987.8,
+      "StartPoint": {
+        "X": 4769.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 6756.824,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1988.0,
+      "StartPoint": {
+        "X": 2781.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4769.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1989.0,
+      "StartPoint": {
+        "X": 792.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2781.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 792.1,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 792.0,
+        "Y": 1474.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 104.0,
+      "StartPoint": {
+        "X": 349.2,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 349.2,
+        "Y": 1591.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2995.4,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 349.2,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 104.0,
+      "StartPoint": {
+        "X": 349.2,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 349.2,
+        "Y": 1591.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2995.4,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 349.2,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.0,
+      "StartPoint": {
+        "X": 7200.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 5500.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7200.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 3800.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5500.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2100.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3800.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 400.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 400.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 400.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.0,
+      "StartPoint": {
+        "X": 7200.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1955.3,
+      "StartPoint": {
+        "X": 2100.0,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2322.7,
+      "StartPoint": {
+        "X": 2100.397,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1952.1,
+      "StartPoint": {
+        "X": 2400.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.397,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1699.6,
+      "StartPoint": {
+        "X": 4100.011,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 4100.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.011,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2322.7,
+      "StartPoint": {
+        "X": 2100.397,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 4100.407,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5800.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 4100.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.011,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1699.6,
+      "StartPoint": {
+        "X": 4100.011,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1306.0,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1850.0,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": -1212.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1029.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": -1212.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1306.0,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1850.0,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": -1212.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1029.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": -1212.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 3071.7,
+      "StartPoint": {
+        "X": 4967.23,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 976.0,
+      "StartPoint": {
+        "X": 3991.227,
+        "Y": 637.855,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4967.23,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2024.0,
+      "StartPoint": {
+        "X": 1967.24,
+        "Y": 637.86,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3991.227,
+        "Y": 637.855,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 975.7,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1967.24,
+        "Y": 637.86,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1294.9,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1471.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 3071.7,
+      "StartPoint": {
+        "X": 4967.23,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 976.0,
+      "StartPoint": {
+        "X": 3991.227,
+        "Y": 637.855,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4967.23,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2024.0,
+      "StartPoint": {
+        "X": 1967.24,
+        "Y": 637.86,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3991.227,
+        "Y": 637.855,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 975.7,
+      "StartPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1967.24,
+        "Y": 637.86,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1294.9,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1471.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 991.59,
+        "Y": 637.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2530.6,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 178.0,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 979.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 3518.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 979.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2530.6,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 178.0,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 979.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 3518.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 979.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 4811.5,
+      "StartPoint": {
+        "X": 3118.8,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 609.8,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3118.8,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2530.6,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 4811.5,
+      "StartPoint": {
+        "X": 3118.8,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 609.8,
+      "StartPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3118.8,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2530.6,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2509.0,
+        "Y": 1157.503,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2975.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.024,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2975.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.024,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7918.0,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1471.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7918.0,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1471.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 374.2,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7918.5,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 44.3,
+      "StartPoint": {
+        "X": 7500.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 5800.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 4100.011,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5800.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 2400.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4100.011,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1700.0,
+      "StartPoint": {
+        "X": 700.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2400.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 700.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 76.0,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 374.2,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7918.5,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 44.3,
+      "StartPoint": {
+        "X": 7500.001,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": 76.26,
+        "Z": 0.0
+      },
+      "ViewName": "A"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 935.3,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": 630.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1518.0,
+      "StartPoint": {
+        "X": 7547.525,
+        "Y": -887.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": 630.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 547.7,
+      "StartPoint": {
+        "X": 7500.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7547.525,
+        "Y": -887.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 422.1,
+      "StartPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1960.3,
+      "StartPoint": {
+        "X": 700.001,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 101.65,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 935.3,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": 630.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2888.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.0,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1952.1,
+      "StartPoint": {
+        "X": 2400.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 2100.397,
+        "Y": 495.833,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1061.9,
+      "StartPoint": {
+        "X": 101.65,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1960.3,
+      "StartPoint": {
+        "X": 700.001,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 101.65,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 701.9,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.001,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1061.9,
+      "StartPoint": {
+        "X": 101.65,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 162.0,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1325.512,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2813.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1.0,
+        "Y": 1325.512,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 701.9,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.001,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1920.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 102.047,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7787.1,
+      "StartPoint": {
+        "X": 700.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1957.3,
+      "StartPoint": {
+        "X": 102.047,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1920.7,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 102.047,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7918.7,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 76.7,
+      "StartPoint": {
+        "X": -75.701,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1.0,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7787.1,
+      "StartPoint": {
+        "X": 700.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1957.3,
+      "StartPoint": {
+        "X": 102.047,
+        "Y": 430.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 700.397,
+        "Y": -1433.125,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1518.0,
+      "StartPoint": {
+        "X": 7547.525,
+        "Y": -887.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": 630.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 162.0,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1325.512,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2813.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1.0,
+        "Y": 1325.512,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7918.7,
+      "StartPoint": {
+        "X": 1.0,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": 1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 76.7,
+      "StartPoint": {
+        "X": -75.701,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 1.0,
+        "Y": 1382.899,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 707.7,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": -887.103,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 551.0,
+      "StartPoint": {
+        "X": 7500.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": -887.103,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7500.6,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 707.7,
+      "StartPoint": {
+        "X": 7544.35,
+        "Y": -887.103,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7919.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 551.0,
+      "StartPoint": {
+        "X": 7500.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7544.35,
+        "Y": -887.103,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 7500.6,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -1487.5,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 7500.397,
+        "Y": -1436.3,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "OverallThickness",
+      "Text": "152",
+      "Value": 152.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End1"
+    },
+    {
+      "PieceMark": "P6-21",
+      "Kind": "OverallThickness",
+      "Text": "152",
+      "Value": 152.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End2"
+    }
+  ],
+  "Views": [
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 60.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "D",
+      "ViewType": "SectionView",
+      "Scale": 60.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "A",
+      "ViewType": "SectionView",
+      "Scale": 60.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "B",
+      "ViewType": "SectionView",
+      "Scale": 60.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "C",
+      "ViewType": "SectionView",
+      "Scale": 60.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ],
+  "ProfileFeatures": [
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CUTPART"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "WINDOW"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "WINDOW"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CUTPART"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CUTPART"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    }
+  ],
+  "Identification": {
+    "projectCode": "1",
+    "pieceMark": "P6-21",
+    "drawnBy": "",
+    "date": "2025-07-15",
+    "scale": "60",
+    "drawingName": "Shop Drawing",
+    "drawingMark": "[P6-21 - 1]"
+  }
+}

@@ -1,0 +1,6288 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "SHOP",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "W10-80",
+    "DrawingName": "Shop Drawing",
+    "DrawingMark": "[W10-80 - 2]",
+    "Title1": "Standard Settings",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2025-07-16",
+    "Scale": "128",
+    "Revision": "DrawingWasCloned",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-03T09:30:24.2155559Z"
+  },
+  "GeneralNotes": {
+    "ConcreteGrade": "41.4 MPa",
+    "Strength28DayMPa": "41.4",
+    "StrippingStrength": "",
+    "WeightKg": 3409.0,
+    "WeightLbs": 7515.6,
+    "AirEntrainment": "",
+    "MinCoverMm": 38.1,
+    "CoverTopMm": null,
+    "CoverBottomMm": null,
+    "CoverSideMm": null,
+    "Class": "1",
+    "VolumeMm3": 1483441502.2648129,
+    "VolumeM3": 1.4834,
+    "Material": "6000",
+    "Profile": "625*254",
+    "Finish": "",
+    "Name": "WALL"
+  },
+  "Bom": [
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 9,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "2e2b1e6c-85a7-4368-823d-cab8b3638158",
+      "Id": 140715283
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-300",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 2,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "008f83ea-3c23-403d-8d9c-7b2214e109b1",
+      "Id": 147485907
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 4,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "7aad5fe2-50f8-44f7-9d6f-f656a8846a35",
+      "Id": 163882251
+    }
+  ],
+  "Hardware": [
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 9640.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "2e2b1e6c-85a7-4368-823d-cab8b3638158",
+      "Id": 140715283
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 8524.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "cb7e3e4c-2a1e-4b22-a58e-a731b43dc437",
+      "Id": 147308938
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 7408.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "ad93b369-13db-45e2-a0e6-74abf021ff0d",
+      "Id": 147309073
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 6292.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "b4180d93-1218-459a-beb5-09c375db1316",
+      "Id": 147309208
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 5176.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "0b1bd2ff-45a5-4f1f-bd1b-9abbac17e5b3",
+      "Id": 147309343
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 4060.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "02ca191c-33dc-4d8e-90f2-74fb45d7b03d",
+      "Id": 147309478
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 2944.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "b7fd87bd-b315-4e70-a2cf-8933c65c8364",
+      "Id": 147309613
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 1828.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "7271cefa-6a0d-4566-bf69-b868a423fb51",
+      "Id": 147309748
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 712.048,
+        "Y": 975.013,
+        "Z": 30525.0
+      },
+      "Guid": "86949832-fd2a-4a41-ab41-9ebad7dc212c",
+      "Id": 147309883
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 557.403,
+        "Y": 1064.006,
+        "Z": 30837.603
+      },
+      "Guid": "008f83ea-3c23-403d-8d9c-7b2214e109b1",
+      "Id": 147485907
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 557.403,
+        "Y": 1060.831,
+        "Z": 30822.522
+      },
+      "Guid": "99c23af8-9c98-40e8-874f-849e96a017b5",
+      "Id": 147485984
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 9822.051,
+        "Y": 949.196,
+        "Z": 30837.0
+      },
+      "Guid": "214c7f99-6442-4bbe-9d4f-964698ca9d53",
+      "Id": 148011720
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 9818.876,
+        "Y": 934.114,
+        "Z": 30837.0
+      },
+      "Guid": "27a99414-1d85-41e4-bdf2-9d89721b851e",
+      "Id": 148011797
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 8883.344,
+        "Y": 997.128,
+        "Z": 31137.0
+      },
+      "Guid": "7aad5fe2-50f8-44f7-9d6f-f656a8846a35",
+      "Id": 163882251
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 8883.444,
+        "Y": 939.978,
+        "Z": 31003.651
+      },
+      "Guid": "ed6a073a-c213-4b6a-b3fe-69bb090ae8ad",
+      "Id": 163882326
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 8883.344,
+        "Y": 974.903,
+        "Z": 30883.266
+      },
+      "Guid": "2193b73c-4e82-4b98-b45e-7b6371aebc4d",
+      "Id": 163882370
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 8949.344,
+        "Y": 974.903,
+        "Z": 31150.0
+      },
+      "Guid": "47f1bb3a-c77b-449f-8549-6aaa9bffa885",
+      "Id": 163882413
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 6426.344,
+        "Y": 997.128,
+        "Z": 31137.0
+      },
+      "Guid": "09feef18-9289-452b-8837-3309d0aa963d",
+      "Id": 163882813
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 6426.444,
+        "Y": 939.978,
+        "Z": 31003.651
+      },
+      "Guid": "8670d5ee-0021-41d6-8ba0-11439a233237",
+      "Id": 163882886
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 6426.344,
+        "Y": 974.903,
+        "Z": 30883.266
+      },
+      "Guid": "412efbcb-3cb6-43ff-9c3c-3eba8fc8045e",
+      "Id": 163882928
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 6492.344,
+        "Y": 974.903,
+        "Z": 31150.0
+      },
+      "Guid": "9da7db2b-f989-4deb-90f3-eecfe7e9eb62",
+      "Id": 163882969
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 1473.358,
+        "Y": 997.128,
+        "Z": 31137.0
+      },
+      "Guid": "6fc632b4-3ad1-4cb5-95fd-045b1f396b70",
+      "Id": 163883269
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 1473.458,
+        "Y": 939.978,
+        "Z": 31003.651
+      },
+      "Guid": "afbfb689-ba78-4bfd-bbe8-3829e3371a83",
+      "Id": 163883342
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 1473.358,
+        "Y": 974.903,
+        "Z": 30883.266
+      },
+      "Guid": "cba7f7dd-6b38-4e94-80b8-d71bfc0d7884",
+      "Id": 163883384
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 1539.358,
+        "Y": 974.903,
+        "Z": 31150.0
+      },
+      "Guid": "f5d897c0-cc8b-4732-8ad3-404d717a8d0e",
+      "Id": 163883425
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 3929.344,
+        "Y": 997.128,
+        "Z": 31137.0
+      },
+      "Guid": "4c58dbc4-b9ea-4112-8794-d73e0c5a330c",
+      "Id": 163883789
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 3929.444,
+        "Y": 939.978,
+        "Z": 31003.651
+      },
+      "Guid": "64ac7481-fa3c-4ab5-9387-79a64b3c1532",
+      "Id": 163883862
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 3929.344,
+        "Y": 974.903,
+        "Z": 30883.266
+      },
+      "Guid": "573e4224-f340-462f-8e96-c1bcfa7ccdf5",
+      "Id": 163883904
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 3995.344,
+        "Y": 974.903,
+        "Z": 31150.0
+      },
+      "Guid": "4d99b571-080e-4b0a-9209-ee2843c12ed0",
+      "Id": 163883945
+    }
+  ],
+  "Rebar": [
+    {
+      "PieceMark": "W10-80",
+      "Mark": "RB10M 0001",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "S11",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1253.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.0,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 603.5,
+      "B": 1272.0,
+      "C": 603.5,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 92.0,
+      "Geometry": [
+        {
+          "X": 1116.163,
+          "Y": 1020.503,
+          "Z": 30877.341
+        },
+        {
+          "X": 512.663,
+          "Y": 1020.503,
+          "Z": 30877.341
+        },
+        {
+          "X": 512.663,
+          "Y": 1020.503,
+          "Z": 30798.661
+        },
+        {
+          "X": 1116.163,
+          "Y": 1020.503,
+          "Z": 30798.661
+        }
+      ],
+      "Guid": "6967e229-cfcc-4d72-bfdd-734903c059df"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "RS10M 0208",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 3,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 9267.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 7.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "295*207",
+      "A": 9266.0,
+      "B": 9271.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 544.0,
+          "Y": 909.503,
+          "Z": 30586.5
+        },
+        {
+          "X": 9810.048,
+          "Y": 909.503,
+          "Z": 30586.5
+        }
+      ],
+      "Guid": "44121ecc-e35b-4f0c-8b62-033f9d7edcf4"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "RS10M 0208",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 3,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 9267.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 7.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "207*295",
+      "A": 9266.0,
+      "B": 9271.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 544.0,
+          "Y": 1040.503,
+          "Z": 31088.5
+        },
+        {
+          "X": 9810.048,
+          "Y": 1040.503,
+          "Z": 31088.5
+        }
+      ],
+      "Guid": "1f4b6393-85ce-4936-a94b-355d53a4f441"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Mark": "RB10M 0169",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "T1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 28,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1577.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.2,
+      "PinRadiusMm": 20.0,
+      "Spacing": "360*350*350*350*350*350*350*350*350*400*290*350*350*350*350*350*350*350*350*350*350*350*350*350*350*260*200",
+      "A": 99.0,
+      "B": 178.0,
+      "C": 549.0,
+      "D": 178.0,
+      "E": 549.0,
+      "F": 535.8,
+      "G": 99.0,
+      "H": 80.0,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 9788.548,
+          "Y": 949.159,
+          "Z": 31011.351
+        },
+        {
+          "X": 9788.548,
+          "Y": 892.607,
+          "Z": 31067.903
+        },
+        {
+          "X": 9788.548,
+          "Y": 892.607,
+          "Z": 31105.38
+        },
+        {
+          "X": 9788.548,
+          "Y": 1057.403,
+          "Z": 31105.38
+        },
+        {
+          "X": 9788.548,
+          "Y": 1057.403,
+          "Z": 30569.6
+        },
+        {
+          "X": 9788.548,
+          "Y": 892.607,
+          "Z": 30569.6
+        },
+        {
+          "X": 9788.548,
+          "Y": 892.607,
+          "Z": 31105.38
+        },
+        {
+          "X": 9788.548,
+          "Y": 930.084,
+          "Z": 31105.38
+        },
+        {
+          "X": 9788.548,
+          "Y": 986.636,
+          "Z": 31048.828
+        }
+      ],
+      "Guid": "ffae8a0b-4264-453f-96a3-516bc60eea6e"
+    }
+  ],
+  "Dimensions": [
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 127.0,
+      "StartPoint": {
+        "X": 4732.438,
+        "Y": 0.015,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4732.438,
+        "Y": 127.005,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 141.9,
+      "StartPoint": {
+        "X": 4669.081,
+        "Y": -127.005,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4732.438,
+        "Y": 0.015,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 127.0,
+      "StartPoint": {
+        "X": 4732.438,
+        "Y": 0.015,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4732.438,
+        "Y": 127.005,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 141.9,
+      "StartPoint": {
+        "X": 4669.081,
+        "Y": -127.005,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4732.438,
+        "Y": 0.015,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 126.9,
+      "StartPoint": {
+        "X": 0.095,
+        "Y": 314.55,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 126.986,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 127.1,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.095,
+        "Y": 314.55,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 126.9,
+      "StartPoint": {
+        "X": 0.095,
+        "Y": 314.55,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 126.986,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 127.1,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.095,
+        "Y": 314.55,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 321.0,
+      "StartPoint": {
+        "X": 9375.681,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9302.645,
+        "Y": 0.113,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 321.0,
+      "StartPoint": {
+        "X": 9375.681,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9302.645,
+        "Y": 0.113,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1335.0,
+      "StartPoint": {
+        "X": 8032.0,
+        "Y": 262.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1335.0,
+      "StartPoint": {
+        "X": 8032.0,
+        "Y": 262.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 625.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 625.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 539.1,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 431.5,
+        "Y": 10.695,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 539.1,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 431.5,
+        "Y": 10.695,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 979.4,
+      "StartPoint": {
+        "X": 8386.69,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2456.0,
+      "StartPoint": {
+        "X": 5930.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 8386.69,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2497.0,
+      "StartPoint": {
+        "X": 3433.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5930.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2457.0,
+      "StartPoint": {
+        "X": 976.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3433.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 976.8,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 312.641,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 976.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 976.8,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 312.641,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 976.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 979.4,
+      "StartPoint": {
+        "X": 8386.69,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2456.0,
+      "StartPoint": {
+        "X": 5930.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 8386.69,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2497.0,
+      "StartPoint": {
+        "X": 3433.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5930.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2457.0,
+      "StartPoint": {
+        "X": 976.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3433.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 318.8,
+      "StartPoint": {
+        "X": 9302.645,
+        "Y": 0.113,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 318.8,
+      "StartPoint": {
+        "X": 9302.645,
+        "Y": 0.113,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 620.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 565.295,
+        "Y": -57.12,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 620.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 565.295,
+        "Y": -57.12,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9366.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 312.641,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9366.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 312.641,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7421.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7771.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7771.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8121.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 8121.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8471.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 8471.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8821.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 260.0,
+      "StartPoint": {
+        "X": 8821.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9081.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 200.0,
+      "StartPoint": {
+        "X": 9081.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9281.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 588.2,
+      "StartPoint": {
+        "X": 9281.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 586.5,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 171.3,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": -88.89,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 92.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": -88.89,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 92.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": -88.89,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 171.3,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": -88.89,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 586.5,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.6,
+      "StartPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 700.8,
+      "StartPoint": {
+        "X": 9366.044,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.6,
+      "StartPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 700.8,
+      "StartPoint": {
+        "X": 9366.044,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.1,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9266.0,
+      "StartPoint": {
+        "X": 50.0,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 50.0,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.1,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9266.0,
+      "StartPoint": {
+        "X": 50.0,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 50.0,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": -127.023,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9266.0,
+      "StartPoint": {
+        "X": 50.0,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 50.0,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 50.0,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9266.0,
+      "StartPoint": {
+        "X": 50.0,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": -127.023,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.1,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 518.8,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.0,
+      "StartPoint": {
+        "X": 9366.044,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.1,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 518.8,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.0,
+      "StartPoint": {
+        "X": 9366.044,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.6,
+      "StartPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 8748.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 8748.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.6,
+      "StartPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 588.2,
+      "StartPoint": {
+        "X": 9281.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 200.0,
+      "StartPoint": {
+        "X": 9081.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9281.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 260.0,
+      "StartPoint": {
+        "X": 8821.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9081.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 8471.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8821.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 8121.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8471.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7771.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8121.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7421.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7771.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7071.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7421.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6721.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7071.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6371.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6721.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6021.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6371.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 5671.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6021.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 5321.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 5671.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4971.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 5321.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4621.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4971.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4271.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4621.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 3921.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4271.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 290.0,
+      "StartPoint": {
+        "X": 3631.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3921.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 400.0,
+      "StartPoint": {
+        "X": 3231.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3631.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2881.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3231.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2531.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2881.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2181.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2531.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1831.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2181.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1481.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1831.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1131.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1481.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 781.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1131.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 431.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 781.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 360.0,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 431.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 95.4,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 95.4,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 360.0,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 431.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 431.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 781.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 781.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1131.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1131.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1481.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1481.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1831.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1831.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2181.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2181.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2531.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2531.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2881.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2881.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3231.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 400.0,
+      "StartPoint": {
+        "X": 3231.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3631.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 290.0,
+      "StartPoint": {
+        "X": 3631.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3921.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 3921.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4271.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4271.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4621.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4621.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4971.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4971.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 5321.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 5321.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 5671.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 5671.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6021.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6021.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6371.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6371.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6721.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6721.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7071.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7071.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7421.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 102.9,
+      "StartPoint": {
+        "X": 82.39,
+        "Y": 274.389,
+        "Z": 4598.478
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 164.9,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": 4598.478
+      },
+      "EndPoint": {
+        "X": 82.39,
+        "Y": 274.389,
+        "Z": 4598.478
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9281.7,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": 4598.478
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9281.7,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": 4598.478
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 164.9,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": 4598.478
+      },
+      "EndPoint": {
+        "X": 82.39,
+        "Y": 274.389,
+        "Z": 4598.478
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 102.9,
+      "StartPoint": {
+        "X": 82.39,
+        "Y": 274.389,
+        "Z": 4598.478
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9297.0,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": -4611.522
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 535.8,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": -267.891,
+        "Z": -4611.522
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": -4611.522
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 225.7,
+      "StartPoint": {
+        "X": 127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": -267.891,
+        "Z": -4611.522
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9297.0,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": -4611.522
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 535.8,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": -267.891,
+        "Z": -4611.522
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": -4611.522
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 225.7,
+      "StartPoint": {
+        "X": 127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": -267.891,
+        "Z": -4611.522
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 131.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 131.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 207.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 295.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 207.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 295.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 207.0,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 295.0,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 295.0,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 207.0,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 141.9,
+      "StartPoint": {
+        "X": 4669.081,
+        "Y": -127.005,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4732.438,
+        "Y": 0.015,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 127.0,
+      "StartPoint": {
+        "X": 4732.438,
+        "Y": 0.015,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4732.438,
+        "Y": 127.005,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 127.0,
+      "StartPoint": {
+        "X": 4732.438,
+        "Y": 0.015,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4732.438,
+        "Y": 127.005,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 141.9,
+      "StartPoint": {
+        "X": 4669.081,
+        "Y": -127.005,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 4732.438,
+        "Y": 0.015,
+        "Z": 0.0
+      },
+      "ViewName": "C"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 127.1,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.095,
+        "Y": 314.55,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 126.9,
+      "StartPoint": {
+        "X": 0.095,
+        "Y": 314.55,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 126.986,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 126.9,
+      "StartPoint": {
+        "X": 0.095,
+        "Y": 314.55,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 126.986,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 127.1,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.095,
+        "Y": 314.55,
+        "Z": 0.0
+      },
+      "ViewName": "B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9366.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 312.641,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9366.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 312.641,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 620.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 565.295,
+        "Y": -57.12,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 620.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 565.295,
+        "Y": -57.12,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 318.8,
+      "StartPoint": {
+        "X": 9302.645,
+        "Y": 0.113,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 318.8,
+      "StartPoint": {
+        "X": 9302.645,
+        "Y": 0.113,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2457.0,
+      "StartPoint": {
+        "X": 976.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3433.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2497.0,
+      "StartPoint": {
+        "X": 3433.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5930.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2456.0,
+      "StartPoint": {
+        "X": 5930.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 8386.69,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 979.4,
+      "StartPoint": {
+        "X": 8386.69,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 976.8,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 312.641,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 976.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 979.4,
+      "StartPoint": {
+        "X": 8386.69,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2456.0,
+      "StartPoint": {
+        "X": 5930.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 8386.69,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2497.0,
+      "StartPoint": {
+        "X": 3433.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 5930.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 2457.0,
+      "StartPoint": {
+        "X": 976.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 3433.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 976.8,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 312.641,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 976.704,
+        "Y": 299.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 539.1,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 431.5,
+        "Y": 10.695,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 539.1,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 431.5,
+        "Y": 10.695,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 625.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 625.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1335.0,
+      "StartPoint": {
+        "X": 8032.0,
+        "Y": 262.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 1335.0,
+      "StartPoint": {
+        "X": 8032.0,
+        "Y": 262.51,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 312.51,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 321.0,
+      "StartPoint": {
+        "X": 9375.681,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9302.645,
+        "Y": 0.113,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 321.0,
+      "StartPoint": {
+        "X": 9375.681,
+        "Y": -312.49,
+        "Z": 0.0
+      },
+      "EndPoint": {
+        "X": 9302.645,
+        "Y": 0.113,
+        "Z": 0.0
+      },
+      "ViewName": "Side B"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.0,
+      "StartPoint": {
+        "X": 9366.044,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 518.8,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.1,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.1,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 518.8,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.0,
+      "StartPoint": {
+        "X": 9366.044,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": -127.023,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9266.0,
+      "StartPoint": {
+        "X": 50.0,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 50.0,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": -127.023,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9266.0,
+      "StartPoint": {
+        "X": 50.0,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.0,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 50.0,
+        "Y": -65.495,
+        "Z": 250.991
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 50.0,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9266.0,
+      "StartPoint": {
+        "X": 50.0,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.1,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 569.1,
+      "StartPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9266.0,
+      "StartPoint": {
+        "X": 50.0,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "EndPoint": {
+        "X": 9316.048,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 50.0,
+        "Y": 65.505,
+        "Z": -251.009
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 700.8,
+      "StartPoint": {
+        "X": 9366.044,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.6,
+      "StartPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.6,
+      "StartPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 700.8,
+      "StartPoint": {
+        "X": 9366.044,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 586.5,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 171.3,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": -88.89,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 92.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": -88.89,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 586.5,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 171.3,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": -88.89,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 92.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": -127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": -88.89,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 588.2,
+      "StartPoint": {
+        "X": 9281.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 200.0,
+      "StartPoint": {
+        "X": 9081.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9281.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 260.0,
+      "StartPoint": {
+        "X": 8821.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9081.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 8471.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8821.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 8121.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8471.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7771.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8121.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7421.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7771.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7071.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7421.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6721.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7071.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6371.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6721.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6021.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6371.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 5671.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6021.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 5321.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 5671.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4971.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 5321.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4621.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4971.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4271.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4621.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 3921.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4271.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 290.0,
+      "StartPoint": {
+        "X": 3631.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3921.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 400.0,
+      "StartPoint": {
+        "X": 3231.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3631.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2881.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3231.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2531.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2881.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2181.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2531.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1831.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2181.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1481.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1831.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1131.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1481.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 781.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1131.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 431.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 781.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 360.0,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 431.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 95.4,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 588.2,
+      "StartPoint": {
+        "X": 9281.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 200.0,
+      "StartPoint": {
+        "X": 9081.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9281.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 260.0,
+      "StartPoint": {
+        "X": 8821.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 9081.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 8471.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8821.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 8121.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8471.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7771.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 8121.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7421.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7771.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 7071.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7421.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6721.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 7071.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6371.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6721.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 6021.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6371.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 5671.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 6021.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 5321.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 5671.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4971.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 5321.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4621.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4971.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 4271.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4621.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 3921.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 4271.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 290.0,
+      "StartPoint": {
+        "X": 3631.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3921.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 400.0,
+      "StartPoint": {
+        "X": 3231.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3631.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2881.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 3231.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2531.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2881.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 2181.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2531.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1831.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 2181.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1481.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1831.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 1131.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1481.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 781.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 1131.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 350.0,
+      "StartPoint": {
+        "X": 431.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 781.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 360.0,
+      "StartPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "EndPoint": {
+        "X": 431.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 95.4,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 71.5,
+        "Y": 82.405,
+        "Z": -267.889
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.6,
+      "StartPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 8748.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 719.6,
+      "StartPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "EndPoint": {
+        "X": 9366.044,
+        "Y": 127.005,
+        "Z": 312.51
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 8748.5,
+      "StartPoint": {
+        "X": 0.0,
+        "Y": 127.005,
+        "Z": -312.51
+      },
+      "EndPoint": {
+        "X": 8743.884,
+        "Y": 45.505,
+        "Z": -39.851
+      },
+      "ViewName": "Side"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 207.0,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 295.0,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 207.0,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 295.0,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": 127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 295.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 207.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 207.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 295.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 44.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": -250.991,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 131.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9316.5,
+      "StartPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 131.0,
+      "StartPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "EndPoint": {
+        "X": 65.495,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 100.3,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -65.505,
+        "Y": 251.009,
+        "Z": -4633.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 225.7,
+      "StartPoint": {
+        "X": 127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": -267.891,
+        "Z": -4611.522
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 535.8,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": -267.891,
+        "Z": -4611.522
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": -4611.522
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9297.0,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": -4611.522
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9297.0,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": -4611.522
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 535.8,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": -267.891,
+        "Z": -4611.522
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": -4611.522
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 225.7,
+      "StartPoint": {
+        "X": 127.005,
+        "Y": -312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": -267.891,
+        "Z": -4611.522
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 102.9,
+      "StartPoint": {
+        "X": 82.39,
+        "Y": 274.389,
+        "Z": 4598.478
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 164.9,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": 4598.478
+      },
+      "EndPoint": {
+        "X": 82.39,
+        "Y": 274.389,
+        "Z": 4598.478
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9281.7,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": 4598.478
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 102.9,
+      "StartPoint": {
+        "X": 82.39,
+        "Y": 274.389,
+        "Z": 4598.478
+      },
+      "EndPoint": {
+        "X": 127.005,
+        "Y": 312.51,
+        "Z": 4683.022
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 164.9,
+      "StartPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": 4598.478
+      },
+      "EndPoint": {
+        "X": 82.39,
+        "Y": 274.389,
+        "Z": 4598.478
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "StraightDimension",
+      "Text": "Tekla.Structures.Drawing.ContainerElement",
+      "Value": 9281.7,
+      "StartPoint": {
+        "X": -127.005,
+        "Y": 312.51,
+        "Z": -4683.022
+      },
+      "EndPoint": {
+        "X": -82.405,
+        "Y": 267.889,
+        "Z": 4598.478
+      },
+      "ViewName": "SectionView"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "OverallThickness",
+      "Text": "254",
+      "Value": 254.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End1"
+    },
+    {
+      "PieceMark": "W10-80",
+      "Kind": "OverallThickness",
+      "Text": "254",
+      "Value": 254.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End2"
+    }
+  ],
+  "Views": [
+    {
+      "Name": "C",
+      "ViewType": "SectionView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "B",
+      "ViewType": "SectionView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 48.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side",
+      "ViewType": "BottomView",
+      "Scale": 48.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "SectionView",
+      "ViewType": "SectionView",
+      "Scale": 32.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ],
+  "ProfileFeatures": [
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Connection Recess"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Connection Recess"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    }
+  ],
+  "Identification": {
+    "projectCode": "1",
+    "pieceMark": "W10-80",
+    "drawnBy": "",
+    "date": "2025-07-16",
+    "scale": "128",
+    "drawingName": "Shop Drawing",
+    "drawingMark": "[W10-80 - 2]"
+  }
+}

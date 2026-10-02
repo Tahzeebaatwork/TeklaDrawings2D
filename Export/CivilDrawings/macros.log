@@ -1,0 +1,528 @@
+﻿2026-09-10T19:34:33 CloseActiveDrawing (RunMacros start)
+2026-09-10T19:34:33 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-10T19:34:33 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-10T19:34:33 already in model: SP_M.BM_SET_11x17.cs
+2026-09-10T19:34:33 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-10T19:34:33 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-10T19:34:33 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-10T19:34:33 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-10T19:34:33 already in model: SP_M.SINGLE_standard.cs
+2026-09-10T19:34:33 === session mode=smoke mark=W10-175 ===
+2026-09-10T19:34:33 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-10T19:34:33 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-10T19:34:33 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-10T19:34:33 session drawings before macros=99
+2026-09-10T19:34:55 WALL=1 COLUMN=0 BEAM=0 mark=W10-175 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-10T19:34:55 smoke hardware CU batch 1/1 n=1
+2026-09-10T19:34:55 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-10T19:34:55 Select n=1 ok=True
+2026-09-10T19:34:55 CommitChanges after select
+2026-09-10T19:34:56 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-175, drawingsBefore=99)
+2026-09-10T19:34:56 trying SP_M.CU_PG1_11X17.cs
+2026-09-10T19:35:08 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-10T19:35:08 started SP_M.CU_PG1_11X17.cs
+2026-09-10T19:35:08 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=100 (need > 99)
+2026-09-10T19:35:09 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-10T19:35:09 drawing-count delta 99 → 100 after 0s
+2026-09-10T19:35:09 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-10T19:35:09 drawings 99 → 100 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-10T19:35:10 smoke rebar placing CU batch 1/1 n=1
+2026-09-10T19:35:10 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-10T19:35:10 Select n=1 ok=True
+2026-09-10T19:35:10 CommitChanges after select
+2026-09-10T19:35:10 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-175, drawingsBefore=100)
+2026-09-10T19:35:10 trying SP_M.CU_PG2_11X17.cs
+2026-09-10T19:35:22 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-10T19:35:22 started SP_M.CU_PG2_11X17.cs
+2026-09-10T19:35:22 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=101 (need > 100)
+2026-09-10T19:35:24 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-10T19:35:24 drawing-count delta 100 → 101 after 0s
+2026-09-10T19:35:24 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-10T19:35:24 drawings 100 → 101 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-10T19:35:24 smoke rebar table CU batch 1/1 n=1
+2026-09-10T19:35:24 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-10T19:35:24 Select n=1 ok=True
+2026-09-10T19:35:24 CommitChanges after select
+2026-09-10T19:35:25 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-175, drawingsBefore=101)
+2026-09-10T19:35:25 trying SP_M.CU_PG3_11X17.cs
+2026-09-10T19:35:31 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-10T19:35:31 started SP_M.CU_PG3_11X17.cs
+2026-09-10T19:35:31 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=102 (need > 101)
+2026-09-10T19:35:33 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-10T19:35:33 drawing-count delta 101 → 102 after 0s
+2026-09-10T19:35:33 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-10T19:35:33 drawings 101 → 102 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-10T19:35:33 smoke: skipped beams and floor GA
+2026-09-10T19:35:33 session drawings 99 → 102 after smoke macros
+2026-09-11T11:50:01 CloseActiveDrawing (OpenAPI start)
+2026-09-11T11:50:01 OpenAPI drawings before insert=98
+2026-09-11T11:50:24 OpenAPI WALL=1 COLUMN=0 BEAM=0 mark=W10-175 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-11T11:50:24 OpenAPI XS_DRAWING_CLONING_IGNORE_CHECK was=FALSE
+2026-09-11T11:50:24 OpenAPI set XS_DRAWING_CLONING_IGNORE_CHECK=TRUE ok=True
+2026-09-11T11:50:27 OpenAPI next free sheet for id=101191148 → 1
+2026-09-11T11:50:40 OpenAPI CastUnit Insert OK attr=SP_M.CU_HARDWARE_PROPS_11X17 sheet=1
+2026-09-11T11:50:41 OpenAPI CastUnit Insert OK attr=SP_M.CU_REINFORCING_PLACING_PROPS_11X17 sheet=2
+2026-09-11T11:50:42 OpenAPI CastUnit Insert OK attr=SP_M.CU_REINFORCING_TABLE_PROPS_11X17 sheet=3
+2026-09-11T11:50:42 OpenAPI CastUnit Insert created=3 attributes=SP_M.CU_HARDWARE_PROPS_11X17,SP_M.CU_REINFORCING_PLACING_PROPS_11X17,SP_M.CU_REINFORCING_TABLE_PROPS_11X17
+2026-09-11T11:50:42 OpenAPI CastUnit Insert created=0 attributes=SP_M.CU_HARDWARE_PROPS_11X17,SP_M.CU_REINFORCING_PLACING_PROPS_11X17,SP_M.CU_REINFORCING_TABLE_PROPS_11X17,SP_M_Beam_PG4_11x17
+2026-09-11T11:50:42 OpenAPI: skipped floor GA (mark=W10-175)
+2026-09-11T11:50:42 OpenAPI restored XS_DRAWING_CLONING_IGNORE_CHECK=FALSE
+2026-09-11T11:50:42 OpenAPI drawings 98 → 101 (delta=3, tracked sheets=3)
+2026-09-11T12:02:42 CloseActiveDrawing (RunMacros start)
+2026-09-11T12:02:42 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-11T12:02:42 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-11T12:02:42 already in model: SP_M.BM_SET_11x17.cs
+2026-09-11T12:02:42 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-11T12:02:42 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-11T12:02:42 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-11T12:02:42 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-11T12:02:42 already in model: SP_M.SINGLE_standard.cs
+2026-09-11T12:02:42 === session mode=smoke mark=W10-175 ===
+2026-09-11T12:02:42 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-11T12:02:42 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-11T12:02:42 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-11T12:02:42 session drawings before macros=98
+2026-09-11T12:03:28 WALL=1 COLUMN=0 BEAM=0 mark=W10-175 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-11T12:03:28 smoke hardware CU batch 1/1 n=1
+2026-09-11T12:03:28 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-11T12:03:29 Select n=1 ok=True
+2026-09-11T12:03:29 CommitChanges after select
+2026-09-11T12:03:31 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-175, drawingsBefore=98)
+2026-09-11T12:03:32 trying SP_M.CU_PG1_11X17.cs
+2026-09-11T12:03:58 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-11T12:03:58 started SP_M.CU_PG1_11X17.cs
+2026-09-11T12:03:58 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=99 (need > 98)
+2026-09-11T12:03:59 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-11T12:03:59 drawing-count delta 98 → 99 after 0s
+2026-09-11T12:03:59 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-11T12:03:59 drawings 98 → 99 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-11T12:03:59 smoke rebar placing CU batch 1/1 n=1
+2026-09-11T12:03:59 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-11T12:04:00 Select n=1 ok=True
+2026-09-11T12:04:00 CommitChanges after select
+2026-09-11T12:04:00 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-175, drawingsBefore=99)
+2026-09-11T12:04:00 trying SP_M.CU_PG2_11X17.cs
+2026-09-11T12:04:22 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-11T12:04:22 started SP_M.CU_PG2_11X17.cs
+2026-09-11T12:04:22 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=100 (need > 99)
+2026-09-11T12:04:23 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-11T12:04:23 drawing-count delta 99 → 100 after 0s
+2026-09-11T12:04:23 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-11T12:04:23 drawings 99 → 100 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-11T12:04:23 smoke rebar table CU batch 1/1 n=1
+2026-09-11T12:04:23 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-11T12:04:23 Select n=1 ok=True
+2026-09-11T12:04:23 CommitChanges after select
+2026-09-11T12:04:24 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-175, drawingsBefore=100)
+2026-09-11T12:04:24 trying SP_M.CU_PG3_11X17.cs
+2026-09-11T12:04:28 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-11T12:04:28 started SP_M.CU_PG3_11X17.cs
+2026-09-11T12:04:28 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=101 (need > 100)
+2026-09-11T12:04:29 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-11T12:04:29 drawing-count delta 100 → 101 after 0s
+2026-09-11T12:04:29 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-11T12:04:29 drawings 100 → 101 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-11T12:04:29 smoke: skipped beams and floor GA
+2026-09-11T12:04:29 session drawings 98 → 101 after smoke macros
+2026-09-15T16:36:48 CloseActiveDrawing (RunMacros start)
+2026-09-15T16:36:48 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-15T16:36:48 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-15T16:36:48 already in model: SP_M.BM_SET_11x17.cs
+2026-09-15T16:36:48 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-15T16:36:48 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-15T16:36:48 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-15T16:36:48 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-15T16:36:48 already in model: SP_M.SINGLE_standard.cs
+2026-09-15T16:36:48 === session mode=smoke mark=W10-175 ===
+2026-09-15T16:36:48 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-15T16:36:48 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-15T16:36:48 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-15T16:36:48 session drawings before macros=98
+2026-09-15T16:37:10 WALL=1 COLUMN=0 BEAM=0 mark=W10-175 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-15T16:37:10 smoke hardware CU batch 1/1 n=1
+2026-09-15T16:37:10 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-15T16:37:10 Select n=1 ok=True
+2026-09-15T16:37:11 CommitChanges after select
+2026-09-15T16:37:11 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-175, drawingsBefore=98)
+2026-09-15T16:37:11 trying SP_M.CU_PG1_11X17.cs
+2026-09-15T16:37:34 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-15T16:37:34 started SP_M.CU_PG1_11X17.cs
+2026-09-15T16:37:34 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=99 (need > 98)
+2026-09-15T16:37:35 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-15T16:37:35 drawing-count delta 98 → 99 after 0s
+2026-09-15T16:37:35 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-15T16:37:36 drawings 98 → 99 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-15T16:37:36 smoke rebar placing CU batch 1/1 n=1
+2026-09-15T16:37:36 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-15T16:37:36 Select n=1 ok=True
+2026-09-15T16:37:36 CommitChanges after select
+2026-09-15T16:37:36 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-175, drawingsBefore=99)
+2026-09-15T16:37:36 trying SP_M.CU_PG2_11X17.cs
+2026-09-15T16:37:46 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-15T16:37:46 started SP_M.CU_PG2_11X17.cs
+2026-09-15T16:37:46 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=100 (need > 99)
+2026-09-15T16:37:48 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-15T16:37:48 drawing-count delta 99 → 100 after 0s
+2026-09-15T16:37:48 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-15T16:37:48 drawings 99 → 100 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-15T16:37:48 smoke rebar table CU batch 1/1 n=1
+2026-09-15T16:37:48 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-15T16:37:48 Select n=1 ok=True
+2026-09-15T16:37:48 CommitChanges after select
+2026-09-15T16:37:49 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-175, drawingsBefore=100)
+2026-09-15T16:37:49 trying SP_M.CU_PG3_11X17.cs
+2026-09-15T16:37:50 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-15T16:37:50 started SP_M.CU_PG3_11X17.cs
+2026-09-15T16:37:50 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=101 (need > 100)
+2026-09-15T16:37:51 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-15T16:37:51 drawing-count delta 100 → 101 after 0s
+2026-09-15T16:37:51 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-15T16:37:51 drawings 100 → 101 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-15T16:37:51 smoke: skipped beams and floor GA
+2026-09-15T16:37:51 session drawings 98 → 101 after smoke macros
+2026-09-15T18:01:06 CloseActiveDrawing (RunMacros start)
+2026-09-15T18:01:06 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-15T18:01:06 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-15T18:01:06 already in model: SP_M.BM_SET_11x17.cs
+2026-09-15T18:01:06 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-15T18:01:06 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-15T18:01:06 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-15T18:01:06 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-15T18:01:06 already in model: SP_M.SINGLE_standard.cs
+2026-09-15T18:01:06 === session mode=smoke mark=W10-78 ===
+2026-09-15T18:01:06 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-15T18:01:06 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-15T18:01:06 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-15T18:01:06 session drawings before macros=101
+2026-09-15T18:01:28 WALL=1 COLUMN=0 BEAM=0 mark=W10-78 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-15T18:01:28 smoke hardware CU batch 1/1 n=1
+2026-09-15T18:01:28 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-15T18:01:28 Select n=1 ok=True
+2026-09-15T18:01:28 CommitChanges after select
+2026-09-15T18:01:28 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-78, drawingsBefore=101)
+2026-09-15T18:01:28 trying SP_M.CU_PG1_11X17.cs
+2026-09-15T18:01:37 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-15T18:01:37 started SP_M.CU_PG1_11X17.cs
+2026-09-15T18:01:37 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=102 (need > 101)
+2026-09-15T18:01:38 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-15T18:01:38 drawing-count delta 101 → 102 after 0s
+2026-09-15T18:01:38 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-15T18:01:38 drawings 101 → 102 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-15T18:01:38 smoke rebar placing CU batch 1/1 n=1
+2026-09-15T18:01:38 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-15T18:01:38 Select n=1 ok=True
+2026-09-15T18:01:39 CommitChanges after select
+2026-09-15T18:01:39 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-78, drawingsBefore=102)
+2026-09-15T18:01:39 trying SP_M.CU_PG2_11X17.cs
+2026-09-15T18:01:54 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-15T18:01:54 started SP_M.CU_PG2_11X17.cs
+2026-09-15T18:01:54 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=103 (need > 102)
+2026-09-15T18:01:56 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-15T18:01:56 drawing-count delta 102 → 103 after 0s
+2026-09-15T18:01:56 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-15T18:01:56 drawings 102 → 103 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-15T18:01:56 smoke rebar table CU batch 1/1 n=1
+2026-09-15T18:01:56 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-15T18:01:56 Select n=1 ok=True
+2026-09-15T18:01:56 CommitChanges after select
+2026-09-15T18:01:56 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-78, drawingsBefore=103)
+2026-09-15T18:01:56 trying SP_M.CU_PG3_11X17.cs
+2026-09-15T18:01:59 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-15T18:01:59 started SP_M.CU_PG3_11X17.cs
+2026-09-15T18:01:59 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=104 (need > 103)
+2026-09-15T18:02:01 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-15T18:02:01 drawing-count delta 103 → 104 after 0s
+2026-09-15T18:02:01 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-15T18:02:01 drawings 103 → 104 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-15T18:02:01 smoke: skipped beams and floor GA
+2026-09-15T18:02:01 session drawings 101 → 104 after smoke macros
+2026-09-15T18:23:37 CloseActiveDrawing (RunMacros start)
+2026-09-15T18:23:37 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-15T18:23:37 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-15T18:23:37 already in model: SP_M.BM_SET_11x17.cs
+2026-09-15T18:23:37 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-15T18:23:37 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-15T18:23:37 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-15T18:23:37 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-15T18:23:37 already in model: SP_M.SINGLE_standard.cs
+2026-09-15T18:23:37 === session mode=smoke mark=W10-27 ===
+2026-09-15T18:23:37 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-15T18:23:37 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-15T18:23:37 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-15T18:23:37 session drawings before macros=104
+2026-09-15T18:24:02 WALL=1 COLUMN=0 BEAM=0 mark=W10-27 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-15T18:24:02 smoke hardware CU batch 1/1 n=1
+2026-09-15T18:24:02 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-15T18:24:02 Select n=1 ok=True
+2026-09-15T18:24:02 CommitChanges after select
+2026-09-15T18:24:02 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-27, drawingsBefore=104)
+2026-09-15T18:24:02 trying SP_M.CU_PG1_11X17.cs
+2026-09-15T18:24:12 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-15T18:24:12 started SP_M.CU_PG1_11X17.cs
+2026-09-15T18:24:13 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=105 (need > 104)
+2026-09-15T18:24:14 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-15T18:24:14 drawing-count delta 104 → 105 after 0s
+2026-09-15T18:24:14 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-15T18:24:14 drawings 104 → 105 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-15T18:24:14 smoke rebar placing CU batch 1/1 n=1
+2026-09-15T18:24:14 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-15T18:24:14 Select n=1 ok=True
+2026-09-15T18:24:14 CommitChanges after select
+2026-09-15T18:24:15 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-27, drawingsBefore=105)
+2026-09-15T18:24:15 trying SP_M.CU_PG2_11X17.cs
+2026-09-15T18:24:27 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-15T18:24:27 started SP_M.CU_PG2_11X17.cs
+2026-09-15T18:24:27 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=106 (need > 105)
+2026-09-15T18:24:29 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-15T18:24:29 drawing-count delta 105 → 106 after 0s
+2026-09-15T18:24:29 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-15T18:24:29 drawings 105 → 106 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-15T18:24:29 smoke rebar table CU batch 1/1 n=1
+2026-09-15T18:24:29 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-15T18:24:29 Select n=1 ok=True
+2026-09-15T18:24:29 CommitChanges after select
+2026-09-15T18:24:30 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-27, drawingsBefore=106)
+2026-09-15T18:24:30 trying SP_M.CU_PG3_11X17.cs
+2026-09-15T18:24:33 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-15T18:24:33 started SP_M.CU_PG3_11X17.cs
+2026-09-15T18:24:33 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=107 (need > 106)
+2026-09-15T18:24:35 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-15T18:24:35 drawing-count delta 106 → 107 after 0s
+2026-09-15T18:24:35 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-15T18:24:35 drawings 106 → 107 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-15T18:24:35 smoke: skipped beams and floor GA
+2026-09-15T18:24:35 session drawings 104 → 107 after smoke macros
+2026-09-17T14:55:29 CloseActiveDrawing (RunMacros start)
+2026-09-17T14:55:29 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-17T14:55:29 copied AutoCompressAndEdit11x17.cs → D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-17T14:55:29 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-17T14:55:29 already in model: SP_M.BM_SET_11x17.cs
+2026-09-17T14:55:29 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-17T14:55:29 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-17T14:55:29 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-17T14:55:29 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-17T14:55:29 already in model: SP_M.SINGLE_standard.cs
+2026-09-17T14:55:29 === session mode=smoke mark=W10-175 ===
+2026-09-17T14:55:29 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-17T14:55:29 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-17T14:55:29 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-17T14:55:29 session drawings before macros=98
+2026-09-17T14:55:47 WALL=1 COLUMN=0 BEAM=0 mark=W10-175 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-17T14:55:47 smoke hardware CU batch 1/1 n=1
+2026-09-17T14:55:47 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-17T14:55:48 Select n=1 ok=True
+2026-09-17T14:55:48 CommitChanges after select
+2026-09-17T14:55:48 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-175, drawingsBefore=98)
+2026-09-17T14:55:48 trying SP_M.CU_PG1_11X17.cs
+2026-09-17T14:56:27 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-17T14:56:27 started SP_M.CU_PG1_11X17.cs
+2026-09-17T14:56:27 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=99 (need > 98)
+2026-09-17T14:56:28 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-17T14:56:28 drawing-count delta 98 → 99 after 0s
+2026-09-17T14:56:28 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-17T14:56:28 drawings 98 → 99 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-17T14:56:28 smoke rebar placing CU batch 1/1 n=1
+2026-09-17T14:56:28 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-17T14:56:28 Select n=1 ok=True
+2026-09-17T14:56:28 CommitChanges after select
+2026-09-17T14:56:29 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-175, drawingsBefore=99)
+2026-09-17T14:56:29 trying SP_M.CU_PG2_11X17.cs
+2026-09-17T14:56:52 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-17T14:56:52 started SP_M.CU_PG2_11X17.cs
+2026-09-17T14:56:52 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=100 (need > 99)
+2026-09-17T14:56:53 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-17T14:56:53 drawing-count delta 99 → 100 after 0s
+2026-09-17T14:56:54 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-17T14:56:54 drawings 99 → 100 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-17T14:56:54 smoke rebar table CU batch 1/1 n=1
+2026-09-17T14:56:54 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-17T14:56:54 Select n=1 ok=True
+2026-09-17T14:56:54 CommitChanges after select
+2026-09-17T14:56:54 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-175, drawingsBefore=100)
+2026-09-17T14:56:54 trying SP_M.CU_PG3_11X17.cs
+2026-09-17T14:56:58 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-17T14:56:58 started SP_M.CU_PG3_11X17.cs
+2026-09-17T14:56:58 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=101 (need > 100)
+2026-09-17T14:56:59 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-17T14:56:59 drawing-count delta 100 → 101 after 0s
+2026-09-17T14:56:59 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-17T14:56:59 drawings 100 → 101 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-17T14:56:59 smoke: skipped beams and floor GA
+2026-09-17T14:56:59 session drawings 98 → 101 after smoke macros
+2026-09-28T18:01:38 CloseActiveDrawing (RunMacros start)
+2026-09-28T18:01:38 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-28T18:01:38 already in model: AutoCompressAndEdit11x17.cs
+2026-09-28T18:01:38 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-28T18:01:38 already in model: SP_M.BM_SET_11x17.cs
+2026-09-28T18:01:38 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-28T18:01:38 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-28T18:01:38 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-28T18:01:38 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-28T18:01:38 already in model: SP_M.SINGLE_standard.cs
+2026-09-28T18:01:38 === session mode=smoke mark=W10-175 ===
+2026-09-28T18:01:38 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-28T18:01:38 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-28T18:01:38 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-28T18:01:38 session drawings before macros=98
+2026-09-28T18:03:13 WALL=1 COLUMN=0 BEAM=0 mark=W10-175 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-28T18:03:13 smoke hardware CU batch 1/1 n=1
+2026-09-28T18:03:13 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-28T18:03:14 Select n=1 ok=True
+2026-09-28T18:03:15 CommitChanges after select
+2026-09-28T18:03:15 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-175, drawingsBefore=98)
+2026-09-28T18:03:16 trying SP_M.CU_PG1_11X17.cs
+2026-09-28T18:08:19 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-28T18:08:19 started SP_M.CU_PG1_11X17.cs
+2026-09-28T18:08:19 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=99 (need > 98)
+2026-09-28T18:08:20 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-28T18:08:20 drawing-count delta 98 → 99 after 0s
+2026-09-28T18:08:20 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-28T18:08:20 drawings 98 → 99 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-28T18:08:21 smoke rebar placing CU batch 1/1 n=1
+2026-09-28T18:08:21 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-28T18:08:21 Select n=1 ok=True
+2026-09-28T18:08:21 CommitChanges after select
+2026-09-28T18:08:21 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-175, drawingsBefore=99)
+2026-09-28T18:08:21 trying SP_M.CU_PG2_11X17.cs
+2026-09-28T18:13:40 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-28T18:13:40 started SP_M.CU_PG2_11X17.cs
+2026-09-28T18:13:40 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=100 (need > 99)
+2026-09-28T18:13:42 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-28T18:13:42 drawing-count delta 99 → 100 after 0s
+2026-09-28T18:13:42 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-28T18:13:42 drawings 99 → 100 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-28T18:13:42 smoke rebar table CU batch 1/1 n=1
+2026-09-28T18:13:42 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-28T18:13:42 Select n=1 ok=True
+2026-09-28T18:13:42 CommitChanges after select
+2026-09-28T18:13:43 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-175, drawingsBefore=100)
+2026-09-28T18:13:43 trying SP_M.CU_PG3_11X17.cs
+2026-09-28T18:13:46 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-28T18:13:46 started SP_M.CU_PG3_11X17.cs
+2026-09-28T18:13:46 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=101 (need > 100)
+2026-09-28T18:13:48 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-28T18:13:48 drawing-count delta 100 → 101 after 0s
+2026-09-28T18:13:48 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-28T18:13:48 drawings 100 → 101 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-28T18:13:48 smoke: skipped beams and floor GA
+2026-09-28T18:13:48 session drawings 98 → 101 after smoke macros
+2026-09-28T18:43:07 CloseActiveDrawing (RunMacros start)
+2026-09-28T18:43:07 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-28T18:43:07 already in model: AutoCompressAndEdit11x17.cs
+2026-09-28T18:43:07 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-28T18:43:07 already in model: SP_M.BM_SET_11x17.cs
+2026-09-28T18:43:07 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-28T18:43:07 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-28T18:43:07 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-28T18:43:07 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-28T18:43:07 already in model: SP_M.SINGLE_standard.cs
+2026-09-28T18:43:07 === session mode=smoke mark=W10-175 ===
+2026-09-28T18:43:07 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-28T18:43:07 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-28T18:43:07 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-28T18:43:07 session drawings before macros=98
+2026-09-28T18:43:51 WALL=1 COLUMN=0 BEAM=0 mark=W10-175 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-28T18:43:51 smoke hardware CU batch 1/1 n=1
+2026-09-28T18:43:51 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-28T18:43:51 Select n=1 ok=True
+2026-09-28T18:43:51 CommitChanges after select
+2026-09-28T18:43:51 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-175, drawingsBefore=98)
+2026-09-28T18:43:51 trying SP_M.CU_PG1_11X17.cs
+2026-09-28T18:44:03 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-28T18:44:03 started SP_M.CU_PG1_11X17.cs
+2026-09-28T18:44:09 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=99 (need > 98)
+2026-09-28T18:44:10 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-28T18:44:10 drawing-count delta 98 → 99 after 0s
+2026-09-28T18:44:10 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-28T18:44:10 drawings 98 → 99 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-28T18:44:10 CloseActiveDrawing (between batches)
+2026-09-28T18:44:10 smoke rebar placing CU batch 1/1 n=1
+2026-09-28T18:44:10 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-28T18:44:11 Select n=1 ok=True
+2026-09-28T18:44:11 CommitChanges after select
+2026-09-28T18:44:11 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-175, drawingsBefore=99)
+2026-09-28T18:44:11 trying SP_M.CU_PG2_11X17.cs
+2026-09-28T18:44:31 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-28T18:44:31 started SP_M.CU_PG2_11X17.cs
+2026-09-28T18:44:31 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=100 (need > 99)
+2026-09-28T18:44:33 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-28T18:44:33 drawing-count delta 99 → 100 after 0s
+2026-09-28T18:44:33 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-28T18:44:33 drawings 99 → 100 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-28T18:44:33 CloseActiveDrawing (between batches)
+2026-09-28T18:44:33 smoke rebar table CU batch 1/1 n=1
+2026-09-28T18:44:33 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-28T18:44:33 Select n=1 ok=True
+2026-09-28T18:44:33 CommitChanges after select
+2026-09-28T18:44:33 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-175, drawingsBefore=100)
+2026-09-28T18:44:33 trying SP_M.CU_PG3_11X17.cs
+2026-09-28T18:44:37 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-28T18:44:37 started SP_M.CU_PG3_11X17.cs
+2026-09-28T18:44:37 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=101 (need > 100)
+2026-09-28T18:44:38 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-28T18:44:38 drawing-count delta 100 → 101 after 0s
+2026-09-28T18:44:38 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-28T18:44:38 drawings 100 → 101 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-28T18:44:38 CloseActiveDrawing (between batches)
+2026-09-28T18:44:38 smoke: skipped beams and floor GA
+2026-09-28T18:44:38 session drawings 98 → 101 after smoke macros
+2026-09-28T18:49:32 CloseActiveDrawing (RunMacros start)
+2026-09-28T18:49:32 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-28T18:49:32 already in model: AutoCompressAndEdit11x17.cs
+2026-09-28T18:49:32 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-28T18:49:32 already in model: SP_M.BM_SET_11x17.cs
+2026-09-28T18:49:32 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-28T18:49:32 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-28T18:49:32 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-28T18:49:32 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-28T18:49:32 already in model: SP_M.SINGLE_standard.cs
+2026-09-28T18:49:33 === session mode=smoke mark=W10-175 ===
+2026-09-28T18:49:33 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-28T18:49:33 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\macros.log
+2026-09-28T18:49:33 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-28T18:49:33 session drawings before macros=98
+2026-09-28T18:50:33 WALL=1 COLUMN=0 BEAM=0 mark=W10-175 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-28T18:50:33 smoke hardware CU batch 1/1 n=1
+2026-09-28T18:50:33 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-28T18:50:33 Select n=1 ok=True
+2026-09-28T18:50:33 CommitChanges after select
+2026-09-28T18:50:34 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-175, drawingsBefore=98)
+2026-09-28T18:50:34 trying SP_M.CU_PG1_11X17.cs
+2026-09-28T18:50:45 RunMacro bool=True path=SP_M.CU_PG1_11X17.cs
+2026-09-28T18:50:45 started SP_M.CU_PG1_11X17.cs
+2026-09-28T18:50:45 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=99 (need > 98)
+2026-09-28T18:50:47 CloseActiveDrawing (new sheet from SP_M.CU_PG1_11X17.cs)
+2026-09-28T18:50:47 drawing-count delta 98 → 99 after 0s
+2026-09-28T18:50:47 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-28T18:50:47 drawings 98 → 99 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-28T18:50:47 CloseActiveDrawing (between batches)
+2026-09-28T18:50:47 smoke rebar placing CU batch 1/1 n=1
+2026-09-28T18:50:47 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-28T18:50:47 Select n=1 ok=True
+2026-09-28T18:50:47 CommitChanges after select
+2026-09-28T18:50:48 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-175, drawingsBefore=99)
+2026-09-28T18:50:48 trying SP_M.CU_PG2_11X17.cs
+2026-09-28T18:51:08 RunMacro bool=True path=SP_M.CU_PG2_11X17.cs
+2026-09-28T18:51:08 started SP_M.CU_PG2_11X17.cs
+2026-09-28T18:51:08 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=100 (need > 99)
+2026-09-28T18:51:10 CloseActiveDrawing (new sheet from SP_M.CU_PG2_11X17.cs)
+2026-09-28T18:51:10 drawing-count delta 99 → 100 after 0s
+2026-09-28T18:51:10 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-28T18:51:10 drawings 99 → 100 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-28T18:51:10 CloseActiveDrawing (between batches)
+2026-09-28T18:51:10 smoke rebar table CU batch 1/1 n=1
+2026-09-28T18:51:10 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-28T18:51:10 Select n=1 ok=True
+2026-09-28T18:51:10 CommitChanges after select
+2026-09-28T18:51:11 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-175, drawingsBefore=100)
+2026-09-28T18:51:11 trying SP_M.CU_PG3_11X17.cs
+2026-09-28T18:51:14 RunMacro bool=True path=SP_M.CU_PG3_11X17.cs
+2026-09-28T18:51:14 started SP_M.CU_PG3_11X17.cs
+2026-09-28T18:51:14 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=101 (need > 100)
+2026-09-28T18:51:16 CloseActiveDrawing (new sheet from SP_M.CU_PG3_11X17.cs)
+2026-09-28T18:51:16 drawing-count delta 100 → 101 after 0s
+2026-09-28T18:51:16 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-28T18:51:16 drawings 100 → 101 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-28T18:51:16 CloseActiveDrawing (between batches)
+2026-09-28T18:51:16 smoke: skipped beams and floor GA
+2026-09-28T18:51:16 session drawings 98 → 101 after smoke macros

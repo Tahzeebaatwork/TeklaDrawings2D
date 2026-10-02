@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Tekla 2D export viewer</title>
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:Segoe UI,Arial,sans-serif;background:#12151a;color:#e8eaed;overflow:hidden}
+a{color:#8ab4f8;text-decoration:none}
+a:hover{text-decoration:underline}
+button,select,input{font-family:inherit}
+#app{display:grid;grid-template-columns:270px 1fr;grid-template-rows:auto auto 1fr;height:100%}
+header{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0e1116;border-bottom:1px solid #2a3038;flex-wrap:wrap}
+header h1{font-size:15px;margin:0;font-weight:600}
+.meta{color:#9aa0a6;font-size:12px}
+header input[type=search]{flex:1;min-width:160px;max-width:260px;background:#1c222b;border:1px solid #3c4450;color:#fff;padding:7px 10px;border-radius:6px}
+.chips,.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip,header button,.pane h2 select,.json-types button{
+  background:#1c222b;border:1px solid #3c4450;color:#e8eaed;padding:5px 10px;border-radius:14px;cursor:pointer;font-size:12px}
+.chip.on,.json-types button.on{background:#1a73e8;border-color:#1a73e8}
+.banner{grid-column:1/-1;padding:8px 14px;background:#3c2f15;color:#fdd663;font-size:13px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.banner.hidden{display:none}
+aside{background:#16181d;border-right:1px solid #2a3038;overflow:auto}
+.item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;font-size:13px;border-left:3px solid transparent}
+.item:hover{background:#222830}
+.item.sel{background:#1e3a5f;border-left-color:#8ab4f8}
+.item.miss{opacity:.6}
+.badge{font-size:10px;padding:1px 6px;border-radius:8px;background:#3c4450;text-transform:lowercase}
+.badge.both,.badge.ok{background:#137333}
+.badge.macros{background:#8a5a00}
+.badge.api{background:#174ea6}
+.kind{margin-left:auto;color:#9aa0a6;font-size:11px}
+main{min-width:0;min-height:0;display:flex;flex-direction:column}
+.toolbar{display:flex;align-items:center;gap:10px;padding:8px 10px;background:#16181d;border-bottom:1px solid #2a3038;flex-wrap:wrap}
+.stage{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:8px}
+.stage.compare{grid-template-columns:1fr 1fr 1fr}
+.split{flex:1;min-height:0;display:grid;grid-template-rows:1fr 1fr;gap:6px;padding:6px}
+.split .pane{min-height:0;height:auto}
+.pane{display:flex;flex-direction:column;min-width:0;min-height:0;background:#0e1116;border:1px solid #2a3038;border-radius:8px;overflow:hidden}
+.pane h2{margin:0;padding:8px 10px;font-size:12px;font-weight:600;background:#1c222b;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.body{flex:1;overflow:auto;min-height:0}
+.pdf{width:100%;height:100%;border:0;background:#2a2f38;min-height:240px}
+.empty{padding:24px;color:#9aa0a6;text-align:center}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{border-bottom:1px solid #2a3038;padding:4px 8px;text-align:left;vertical-align:top}
+th{position:sticky;top:0;background:#1c222b}
+tr.add td{background:#0d3b1e}
+tr.del td{background:#4a1c1c}
+tr.chg td{background:#3c2f15}
+.tree{font-family:Consolas,Consolas,monospace;font-size:12px;padding:8px 10px;line-height:1.45}
+.tree details{margin-left:12px}
+.tree summary{cursor:pointer;color:#9aa0a6}
+.k{color:#8ab4f8}
+.s{color:#81c995}
+.n{color:#fdd663}
+.b{color:#c58af9}
+.null{color:#9aa0a6}
+.diff .k{font-weight:600}
+.foot{padding:6px 10px;font-size:11px;color:#9aa0a6;border-top:1px solid #2a3038}
+@media (max-width:1100px){
+  #app{grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr}
+  aside{max-height:180px;border-right:0;border-bottom:1px solid #2a3038}
+  .stage,.stage.compare{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>window.MANIFEST=null;</script>
+<script>
+(function () {
+  var M = window.MANIFEST || { pieces: [], mode: "folder" };
+  var pieces = M.pieces || [];
+  var q = "", filter = "all", kind = "all";
+  var source = M.mode === "folder" ? "local" : "api";
+  var compare = false;
+  var jsonType = "shop";
+  var csvName = "SHOP.csv";
+  var macrosLabel = M.macrosLabel || M.macrosFolder || "new with macros";
+  var apiLabel = M.apiLabel || "WithoutMacros";
+  var idx = Math.max(0, pieces.findIndex(function (p) { return p.status === "both" || p.status === "ok"; }));
+  if (idx < 0) idx = 0;
+  var pdfL = 0, pdfR = 0;
+  var fileMap = {};
+  var cache = {};
+  var fetchOk = null;
+  var banner = "";
+
+  function $(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  function fileName(h) { return (h || "").split("/").pop(); }
+  function norm(p) { return String(p || "").replace(/\\/g, "/"); }
+
+  function side(p, which) {
+    if (!p) return {};
+    if (M.mode === "folder") return p.side || {};
+    if (which === "macros") return p.macros || {};
+    if (which === "api") return p.api || {};
+    return source === "macros" ? (p.macros || {}) : (p.api || {});
+  }
+
+  function jsonHref(s) {
+    if (!s) return null;
+    return s[jsonType] || s.shop || s.bbs || s.conn || s.erection || s.ga || null;
+  }
+
+  function csvHref(src) {
+    var list = ((M.csv || {})[src === "local" ? "local" : src === "macros" ? "macros" : src === "root" ? "root" : "api"]) || [];
+    var hit = list.filter(function (c) { return c.name === csvName; })[0];
+    return hit ? hit.href : (list[0] ? list[0].href : null);
+  }
+
+  function csvListFor(src) {
+    if (src === "local") return (M.csv && M.csv.local) || [];
+    if (src === "macros") return (M.csv && M.csv.macros) || [];
+    if (src === "root") return (M.csv && M.csv.root) || [];
+    return (M.csv && M.csv.api) || [];
+  }
+
+  function visible() {
+    var s = q.toLowerCase();
+    return pieces.filter(function (p) {
+      if (s && p.mark.toLowerCase().indexOf(s) < 0 && String(p.family || "").toLowerCase().indexOf(s) < 0) return false;
+      if (filter !== "all" && p.status !== filter) return false;
+      if (kind !== "all" && p.kind !== kind) return false;
+      return true;
+    });
+  }
+
+  function findFile(href) {
+    href = norm(href);
+    if (!href) return null;
+    if (fileMap[href]) return fileMap[href];
+    var keys = Object.keys(fileMap);
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      if (k === href || k.endsWith("/" + href) || k.endsWith(href)) return fileMap[k];
+    }
+    return null;
+  }
+
+  function readFile(file) {
+    return new Promise(function (resolve, reject) {
+      var r = new FileReader();
+      r.onload = function () { resolve(String(r.result || "")); };
+      r.onerror = reject;
+      r.readAsText(file);
+    });
+  }
+
+  function loadText(href) {
+    href = norm(href);
+    if (!href) return Promise.resolve(null);
+    if (cache[href]) return Promise.resolve(cache[href]);
+    var f = findFile(href);
+    if (f) {
+      return readFile(f).then(function (t) { cache[href] = t; return t; });
+    }
+    return fetch(href).then(function (res) {
+      if (!res.ok) throw new Error(res.status);
+      fetchOk = true;
+      return res.text();
+    }).then(function (t) {
+      cache[href] = t;
+      hideNeedFolder();
+      return t;
+    }).catch(function () {
+      fetchOk = false;
+      showNeedFolder();
+      return null;
+    });
+  }
+
+  function showNeedFolder() {
+    banner = "JSON/CSV fetch is blocked on file://. Click Open export folder and pick Export/CivilDrawings (or this extract folder). PDFs still load from relative paths.";
+    var el = document.getElementById("need-folder");
+    if (el) { el.textContent = banner; el.classList.remove("hidden"); }
+  }
+  function hideNeedFolder() {
+    banner = "";
+    var el = document.getElementById("need-folder");
+    if (el) el.classList.add("hidden");
+  }
+
+  function indexFiles(list) {
+    fileMap = {};
+    cache = {};
+    for (var i = 0; i < list.length; i++) {
+      var f = list[i];
+      var rel = norm(f.webkitRelativePath || f.name);
+      fileMap[rel] = f;
+      var parts = rel.split("/");
+      if (parts.length >= 2) fileMap[parts.slice(-2).join("/")] = f;
+      if (parts.length >= 3) fileMap[parts.slice(-3).join("/")] = f;
+    }
+    hideNeedFolder();
+    render();
+    refreshPanes();
+  }
+
+  function parseCsv(text) {
+    if (!text) return { header: [], rows: [] };
+    var lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(function (l) { return l.length; });
+    if (!lines.length) return { header: [], rows: [] };
+    function split(line) {
+      var out = [], cur = "", q = false;
+      for (var i = 0; i < line.length; i++) {
+        var ch = line[i];
+        if (ch === '"') { q = !q; continue; }
+        if (ch === "," && !q) { out.push(cur); cur = ""; continue; }
+        cur += ch;
+      }
+      out.push(cur);
+      return out;
+    }
+    var header = split(lines[0]);
+    var rows = [];
+    for (var i = 1; i < lines.length; i++) rows.push(split(lines[i]));
+    return { header: header, rows: rows };
+  }
+
+  function filterCsv(parsed, mark) {
+    var hi = parsed.header.findIndex(function (h) { return String(h).toLowerCase() === "piecemark"; });
+    if (hi < 0) return parsed;
+    var rows = parsed.rows.filter(function (r) { return String(r[hi] || "").toLowerCase() === String(mark || "").toLowerCase(); });
+    return { header: parsed.header, rows: rows };
+  }
+
+  function tableFrom(parsed, diffs) {
+    var wrap = $("div", "body");
+    if (!parsed.header.length) { wrap.appendChild($("div", "empty", "No CSV")); return wrap; }
+    var t = $("table");
+    var thead = $("thead");
+    var trh = $("tr");
+    parsed.header.forEach(function (h) { trh.appendChild($("th", "", h)); });
+    thead.appendChild(trh);
+    t.appendChild(thead);
+    var tb = $("tbody");
+    parsed.rows.forEach(function (r) {
+      var tr = $("tr");
+      var key = (r[1] || "") + "|" + (r[2] || "");
+      if (diffs && diffs[key] === "add") tr.className = "add";
+      if (diffs && diffs[key] === "del") tr.className = "del";
+      if (diffs && diffs[key] === "chg") tr.className = "chg";
+      parsed.header.forEach(function (_, i) { tr.appendChild($("td", "", r[i] == null ? "" : r[i])); });
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    wrap.appendChild(t);
+    return wrap;
+  }
+
+  var SKIP = { Views: 1, Parts: 1, Dimensions: 1, Rebars: 1, Reinforcement: 1, Polygons: 1, Mesh: 1, Geometry: 1, DrawingViews: 1 };
+
+  function treeNode(key, val) {
+    var wrap = document.createElement("div");
+    if (val !== null && typeof val === "object") {
+      var d = document.createElement("details");
+      d.open = key === "Header" || key === "GeneralNotes" || key === "Bom" || !key;
+      var sm = document.createElement("summary");
+      var n = Array.isArray(val) ? val.length : Object.keys(val).length;
+      sm.innerHTML = '<span class="k">' + esc(key || "root") + '</span> <span class="null">' + (Array.isArray(val) ? "[" + n + "]" : "{" + n + "}") + "</span>";
+      d.appendChild(sm);
+      if (SKIP[key] && n > 12) {
+        d.appendChild($("div", "null", "skipped large array (" + n + ")"));
+      } else if (Array.isArray(val)) {
+        val.slice(0, 80).forEach(function (item, i) { d.appendChild(treeNode(String(i), item)); });
+        if (val.length > 80) d.appendChild($("div", "null", "… " + (val.length - 80) + " more"));
+      } else {
+        Object.keys(val).forEach(function (k) { d.appendChild(treeNode(k, val[k])); });
+      }
+      wrap.appendChild(d);
+      return wrap;
+    }
+    var leaf = document.createElement("div");
+    var cls = val == null ? "null" : typeof val === "number" ? "n" : typeof val === "boolean" ? "b" : "s";
+    leaf.innerHTML = '<span class="k">' + esc(key) + "</span>: <span class=\"" + cls + "\">" + esc(val == null ? "null" : JSON.stringify(val)) + "</span>";
+    wrap.appendChild(leaf);
+    return wrap;
+  }
+
+  function flattenShop(obj) {
+    var out = {};
+    if (!obj || typeof obj !== "object") return out;
+    function copy(o, prefix) {
+      if (!o || typeof o !== "object") return;
+      Object.keys(o).forEach(function (k) {
+        var v = o[k];
+        if (v !== null && typeof v === "object" && !Array.isArray(v)) return;
+        if (Array.isArray(v)) return;
+        out[prefix + k] = v == null ? "" : String(v);
+      });
+    }
+    copy(obj.Header, "Header.");
+    copy(obj.GeneralNotes, "Notes.");
+    (obj.Bom || []).forEach(function (row) {
+      var k = "Bom." + (row.Mark || "") + "|" + (row.Kind || "");
+      out[k] = String(row.Quantity == null ? "" : row.Quantity) + " · " + String(row.Description || "");
+    });
+    return out;
+  }
+
+  function diffMaps(a, b) {
+    var keys = {};
+    Object.keys(a || {}).concat(Object.keys(b || {})).forEach(function (k) { keys[k] = 1; });
+    var rows = [];
+    Object.keys(keys).sort().forEach(function (k) {
+      var av = a[k], bv = b[k];
+      var st = av == null ? "add" : bv == null ? "del" : av !== bv ? "chg" : "same";
+      rows.push({ k: k, a: av, b: bv, st: st });
+    });
+    return rows;
+  }
+
+  function csvKey(header, row) {
+    var mi = header.findIndex(function (h) { return String(h).toLowerCase() === "mark"; });
+    var ki = header.findIndex(function (h) { return String(h).toLowerCase() === "kind"; });
+    return String(row[mi < 0 ? 1 : mi] || "") + "|" + String(row[ki < 0 ? 2 : ki] || "");
+  }
+
+  function csvDiffClass(left, right) {
+    var mapL = {}, mapR = {};
+    left.rows.forEach(function (r) { mapL[csvKey(left.header, r)] = r.join("\t"); });
+    right.rows.forEach(function (r) { mapR[csvKey(right.header, r)] = r.join("\t"); });
+    var dL = {}, dR = {};
+    Object.keys(mapL).forEach(function (k) {
+      if (mapR[k] == null) dL[k] = "del";
+      else if (mapR[k] !== mapL[k]) dL[k] = "chg";
+    });
+    Object.keys(mapR).forEach(function (k) {
+      if (mapL[k] == null) dR[k] = "add";
+      else if (mapL[k] !== mapR[k]) dR[k] = "chg";
+    });
+    return { L: dL, R: dR };
+  }
+
+  function pdfPane(title, s, which) {
+    var pane = $("div", "pane");
+    s = s || {};
+    var pdfs = s.pdfs || [];
+    var h = $("h2");
+    h.appendChild(document.createTextNode(title + " · PDF"));
+    var i = which === "R" ? pdfR : pdfL;
+    if (pdfs.length > 1) {
+      var sel = document.createElement("select");
+      pdfs.forEach(function (href, n) {
+        var o = document.createElement("option");
+        o.value = n; o.textContent = fileName(href);
+        if (n === i) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.onchange = function () {
+        if (which === "R") pdfR = +sel.value; else pdfL = +sel.value;
+        render();
+        refreshPanes();
+      };
+      h.appendChild(sel);
+    }
+    pane.appendChild(h);
+    if (!pdfs.length) {
+      pane.appendChild($("div", "empty", "No PDF for this mark"));
+      return pane;
+    }
+    var href = pdfs[Math.min(i, pdfs.length - 1)];
+    var frame = document.createElement("iframe");
+    frame.className = "pdf";
+    frame.src = href;
+    pane.appendChild(frame);
+    var foot = $("div", "foot");
+    var a = document.createElement("a");
+    a.href = href; a.target = "_blank"; a.textContent = fileName(href);
+    foot.appendChild(a);
+    pane.appendChild(foot);
+    return pane;
+  }
+
+  function jsonPane(title, s, diffRows, col) {
+    var pane = $("div", "pane");
+    s = s || {};
+    var h = $("h2", "", title + " · JSON");
+    pane.appendChild(h);
+    var types = $("div", "json-types");
+    [["shop", "SHOP"], ["bbs", "BBS"], ["conn", "CONN"], ["erection", "ERECTION"], ["ga", "GA"]].forEach(function (pair) {
+      if (!s[pair[0]]) return;
+      var b = $("button", jsonType === pair[0] ? "on" : "", pair[1]);
+      b.onclick = function () { jsonType = pair[0]; render(); refreshPanes(); };
+      types.appendChild(b);
+    });
+    if (types.childNodes.length) pane.appendChild(types);
+    var body = $("div", "body tree");
+    body.id = "json-" + col;
+    pane.appendChild(body);
+    var href = jsonHref(s);
+    var foot = $("div", "foot");
+    if (href) {
+      var a = document.createElement("a");
+      a.href = href; a.target = "_blank"; a.textContent = fileName(href);
+      foot.appendChild(a);
+    }
+    pane.appendChild(foot);
+    if (diffRows) {
+      body.className = "body tree diff";
+      diffRows.forEach(function (row) {
+        if (row.st === "same") return;
+        var div = $("div", row.st);
+        div.innerHTML = '<span class="k">' + esc(row.k) + "</span> " +
+          (col === "L" ? esc(row.a == null ? "—" : row.a) : esc(row.b == null ? "—" : row.b));
+        body.appendChild(div);
+      });
+      return pane;
+    }
+    if (!href) { body.appendChild($("div", "empty", "No JSON")); return pane; }
+    loadText(href).then(function (text) {
+      var el = document.getElementById("json-" + col);
+      if (!el) return;
+      el.innerHTML = "";
+      if (!text) { el.appendChild($("div", "empty", "Open export folder to parse JSON, or open the file link.")); return; }
+      try { el.appendChild(treeNode("", JSON.parse(text))); }
+      catch (e) { el.appendChild($("pre", "", text.slice(0, 20000))); }
+    });
+    return pane;
+  }
+
+  function csvPane(title, src, mark, diffs) {
+    var pane = $("div", "pane");
+    var h = $("h2", "", title + " · CSV");
+    var list = csvListFor(src);
+    if (list.length) {
+      var sel = document.createElement("select");
+      list.forEach(function (c) {
+        var o = document.createElement("option");
+        o.value = c.name; o.textContent = c.name;
+        if (c.name === csvName) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.onchange = function () { csvName = sel.value; render(); refreshPanes(); };
+      h.appendChild(sel);
+    }
+    pane.appendChild(h);
+    var body = $("div", "body");
+    body.id = "csv-" + src + "-" + title;
+    pane.appendChild(body);
+    var href = csvHref(src);
+    var foot = $("div", "foot");
+    if (href) {
+      var a = document.createElement("a");
+      a.href = href; a.target = "_blank"; a.textContent = fileName(href);
+      foot.appendChild(a);
+    }
+    pane.appendChild(foot);
+    if (!href) { body.appendChild($("div", "empty", "No CSV")); return pane; }
+    var bodyId = body.id;
+    loadText(href).then(function (text) {
+      var el = document.getElementById(bodyId);
+      if (!el) return;
+      el.innerHTML = "";
+      if (!text) { el.appendChild($("div", "empty", "Open export folder to load CSV.")); return; }
+      var parsed = filterCsv(parseCsv(text), mark);
+      el.appendChild(tableFrom(parsed, diffs).firstChild || tableFrom(parsed, diffs));
+    });
+    return pane;
+  }
+
+  function fillCsv(id, href, mark, diffs) {
+    loadText(href).then(function (text) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = "";
+      if (!text) { el.appendChild($("div", "empty", "Open export folder to load CSV.")); return; }
+      var parsed = filterCsv(parseCsv(text), mark);
+      var tbl = tableFrom(parsed, diffs);
+      while (tbl.firstChild) el.appendChild(tbl.firstChild);
+    });
+  }
+
+  function refreshPanes() {
+    var p = pieces[idx];
+    if (!p || compare) return;
+  }
+
+  async function loadCompare(p) {
+    var sl = side(p, "macros");
+    var sr = side(p, "api");
+    var jl = jsonHref(sl), jr = jsonHref(sr);
+    var tl = jl ? await loadText(jl) : null;
+    var tr = jr ? await loadText(jr) : null;
+    var ol = {}, orr = {};
+    try { if (tl) ol = flattenShop(JSON.parse(tl)); } catch (e) {}
+    try { if (tr) orr = flattenShop(JSON.parse(tr)); } catch (e) {}
+    return diffMaps(ol, orr);
+  }
+
+  function render() {
+    var app = document.getElementById("app");
+    app.innerHTML = "";
+    var vis = visible();
+    if (vis.indexOf(pieces[idx]) < 0 && vis.length) {
+      idx = pieces.indexOf(vis[0]);
+      pdfL = pdfR = 0;
+    }
+    var p = pieces[idx] || { mark: "", status: "" };
+
+    var header = $("header");
+    header.appendChild($("h1", "", M.title || "Tekla 2D export"));
+    header.appendChild($("span", "meta", (M.generated || "") + " · " + pieces.length + " marks"));
+    var search = document.createElement("input");
+    search.type = "search";
+    search.placeholder = "Search mark…";
+    search.value = q;
+    search.oninput = function () { q = search.value; render(); };
+    header.appendChild(search);
+
+    var chips = $("div", "chips");
+    function chip(val, label, cur, set) {
+      var b = $("button", "chip" + (cur === val ? " on" : ""), label);
+      b.onclick = function () { set(val); render(); refreshAsync(); };
+      chips.appendChild(b);
+    }
+    chip("all", "All", filter, function (v) { filter = v; });
+    if (M.mode === "root") {
+      chip("both", "Both", filter, function (v) { filter = v; });
+      chip("macros", "Macros only", filter, function (v) { filter = v; });
+      chip("api", "Open API only", filter, function (v) { filter = v; });
+    }
+    ["WALL", "COLUMN", "BEAM", "GA", "OTHER"].forEach(function (k) {
+      var b = $("button", "chip" + (kind === k ? " on" : ""), k);
+      b.onclick = function () { kind = kind === k ? "all" : k; render(); refreshAsync(); };
+      chips.appendChild(b);
+    });
+    header.appendChild(chips);
+
+    if (M.mode === "root") {
+      var src = $("div", "chips");
+      [["api", apiLabel], ["macros", macrosLabel], ["root", "Root CSVs"]].forEach(function (pair) {
+        var b = $("button", "chip" + (source === pair[0] && !compare ? " on" : ""), pair[1]);
+        b.onclick = function () { source = pair[0]; compare = false; render(); refreshAsync(); };
+        src.appendChild(b);
+      });
+      var cmp = $("button", "chip" + (compare ? " on" : ""), "Compare macros vs API");
+      cmp.onclick = function () { compare = !compare; if (compare) source = "api"; render(); refreshAsync(); };
+      src.appendChild(cmp);
+      header.appendChild(src);
+    }
+
+    var openBtn = $("button", "chip", "Open export folder");
+    var inp = document.createElement("input");
+    inp.type = "file";
+    inp.webkitdirectory = true;
+    inp.multiple = true;
+    inp.style.display = "none";
+    inp.onchange = function () { indexFiles(inp.files); };
+    openBtn.onclick = function () { inp.click(); };
+    header.appendChild(openBtn);
+    header.appendChild(inp);
+    app.appendChild(header);
+
+    var ban = $("div", "banner" + (banner ? "" : " hidden"));
+    ban.id = "need-folder";
+    ban.textContent = banner || "";
+    app.appendChild(ban);
+
+    var aside = $("aside");
+    vis.forEach(function (item) {
+      var row = $("div", "item" + (item === p ? " sel" : "") + (item.status === "both" || item.status === "ok" ? "" : " miss"));
+      row.appendChild($("span", "", item.mark));
+      row.appendChild($("span", "badge " + item.status, item.status));
+      row.appendChild($("span", "kind", item.kind || ""));
+      row.onclick = function () { idx = pieces.indexOf(item); pdfL = pdfR = 0; render(); refreshAsync(); };
+      aside.appendChild(row);
+    });
+    if (!vis.length) aside.appendChild($("div", "empty", "No marks match"));
+    app.appendChild(aside);
+
+    var main = $("main");
+    var bar = $("div", "toolbar");
+    bar.appendChild($("strong", "", p.mark || "—"));
+    bar.appendChild($("span", "meta", compare ? "compare " + macrosLabel + " vs " + apiLabel : (source === "macros" ? macrosLabel : source === "root" ? "Root CSVs" : M.mode === "folder" ? (M.leftLabel || "folder") : apiLabel)));
+    main.appendChild(bar);
+
+    var stage = $("div", "stage" + (compare ? " compare" : ""));
+    stage.id = "stage";
+    main.appendChild(stage);
+    app.appendChild(main);
+    try { location.hash = encodeURIComponent(p.mark || ""); } catch (e) {}
+
+    paintStage(p);
+  }
+
+  function paintStage(p) {
+    var stage = document.getElementById("stage");
+    if (!stage) return;
+    stage.innerHTML = "";
+    if (compare && M.mode === "root") {
+      var sl = side(p, "macros");
+      var sr = side(p, "api");
+      var jsonCol = $("div", "pane");
+      jsonCol.appendChild($("h2", "", "JSON diff · Header / Notes / BOM"));
+      var jsonSplit = $("div", "split");
+      jsonSplit.appendChild(jsonPane(macrosLabel, sl, null, "L"));
+      jsonSplit.appendChild(jsonPane("Open API", sr, null, "R"));
+      jsonCol.appendChild(jsonSplit);
+      stage.appendChild(jsonCol);
+
+      var csvCol = $("div", "pane");
+      csvCol.appendChild($("h2", "", "CSV diff · " + csvName));
+      var csvSplit = $("div", "split");
+      csvSplit.appendChild(csvPane(macrosLabel, "macros", p.mark, null));
+      csvSplit.appendChild(csvPane("Open API", "api", p.mark, null));
+      csvCol.appendChild(csvSplit);
+      stage.appendChild(csvCol);
+
+      var pdfCol = $("div", "pane");
+      pdfCol.appendChild($("h2", "", "PDF"));
+      var pdfSplit = $("div", "split");
+      pdfSplit.appendChild(pdfPane(macrosLabel, sl, "L"));
+      pdfSplit.appendChild(pdfPane("Open API", sr, "R"));
+      pdfCol.appendChild(pdfSplit);
+      stage.appendChild(pdfCol);
+
+      loadCompare(p).then(function (rows) {
+        var jl = document.getElementById("json-L");
+        var jr = document.getElementById("json-R");
+        if (!jl || !jr || !rows || !rows.some(function (r) { return r.st !== "same"; })) return;
+        jl.innerHTML = ""; jr.innerHTML = "";
+        rows.forEach(function (row) {
+          if (row.st === "same") return;
+          var a = $("div", row.st); a.innerHTML = '<span class="k">' + esc(row.k) + "</span> " + esc(row.a == null ? "—" : row.a);
+          var b = $("div", row.st); b.innerHTML = '<span class="k">' + esc(row.k) + "</span> " + esc(row.b == null ? "—" : row.b);
+          jl.appendChild(a); jr.appendChild(b);
+        });
+      });
+      Promise.all([loadText(csvHref("macros")), loadText(csvHref("api"))]).then(function (pair) {
+        var pl = filterCsv(parseCsv(pair[0]), p.mark);
+        var pr = filterCsv(parseCsv(pair[1]), p.mark);
+        var d = csvDiffClass(pl, pr);
+        var bodies = csvSplit.querySelectorAll(".body");
+        if (bodies[0]) { bodies[0].innerHTML = ""; var t0 = tableFrom(pl, d.L).querySelector("table"); if (t0) bodies[0].appendChild(t0); }
+        if (bodies[1]) { bodies[1].innerHTML = ""; var t1 = tableFrom(pr, d.R).querySelector("table"); if (t1) bodies[1].appendChild(t1); }
+      });
+      return;
+    }
+
+    var src = M.mode === "folder" ? "local" : source;
+    var s = M.mode === "folder" ? side(p)
+      : src === "root" ? (side(p, "api").shop ? side(p, "api") : side(p, "macros"))
+      : side(p, src);
+    stage.appendChild(jsonPane("JSON", s, null, "M"));
+    stage.appendChild(csvPane(src === "root" ? "Root" : "CSV", src, p.mark, null));
+    var pdfSide = src === "root"
+      ? (side(p, "api").pdfs && side(p, "api").pdfs.length ? side(p, "api") : side(p, "macros"))
+      : s;
+    stage.appendChild(pdfPane("PDF", pdfSide, "L"));
+  }
+
+  function refreshAsync() { /* render already paints */ }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    var vis = visible();
+    if (!vis.length) return;
+    e.preventDefault();
+    var i = vis.indexOf(pieces[idx]);
+    i = (i + (e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1) + vis.length) % vis.length;
+    idx = pieces.indexOf(vis[i]);
+    pdfL = pdfR = 0;
+    render();
+  });
+
+  if (location.hash) {
+    var want = decodeURIComponent(location.hash.replace("#", ""));
+    var i = pieces.findIndex(function (p) { return p.mark === want; });
+    if (i >= 0) idx = i;
+  }
+
+  if (!window.MANIFEST) {
+    fetch("manifest.json").then(function (r) { return r.json(); }).then(function (data) {
+      window.MANIFEST = data;
+      M = data;
+      pieces = M.pieces || [];
+      source = M.mode === "folder" ? "local" : "api";
+      idx = Math.max(0, pieces.findIndex(function (p) { return p.status === "both" || p.status === "ok"; }));
+      render();
+    }).catch(function () { render(); });
+  } else {
+    render();
+  }
+})();
+</script>
+</body>
+</html>

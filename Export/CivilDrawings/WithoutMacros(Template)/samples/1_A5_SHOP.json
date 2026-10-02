@@ -1,0 +1,124 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "SHOP",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "A5",
+    "DrawingName": "",
+    "DrawingMark": "[A5]",
+    "Title1": "",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2026-09-02",
+    "Scale": "128",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T10:08:57.4205018Z"
+  },
+  "GeneralNotes": {
+    "ConcreteGrade": "41.4 MPa",
+    "Strength28DayMPa": "41.4",
+    "StrippingStrength": "",
+    "WeightKg": 2804.57,
+    "WeightLbs": 6183.0,
+    "AirEntrainment": "",
+    "MinCoverMm": null,
+    "CoverTopMm": null,
+    "CoverBottomMm": null,
+    "CoverSideMm": null,
+    "Class": "32",
+    "VolumeMm3": 1215856224.9999657,
+    "VolumeM3": 1.2159,
+    "Material": "6000",
+    "Profile": "Basic Wall:P FW2 FDN Wall Pre-Cast 250:1549247",
+    "Finish": "",
+    "Name": "CIP BEAM"
+  },
+  "Bom": [],
+  "Hardware": [],
+  "Rebar": [],
+  "Dimensions": [
+    {
+      "PieceMark": "A5",
+      "Kind": "OverallThickness",
+      "Text": "250",
+      "Value": 250.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End1"
+    },
+    {
+      "PieceMark": "A5",
+      "Kind": "OverallThickness",
+      "Text": "250",
+      "Value": 250.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End2"
+    },
+    {
+      "PieceMark": "A5",
+      "Kind": "OverallLength",
+      "Text": "3374.9",
+      "Value": 3374.9,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "A5",
+      "Kind": "OverallWidth",
+      "Text": "1626",
+      "Value": 1626.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "Side B"
+    }
+  ],
+  "Views": [
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ],
+  "ProfileFeatures": [],
+  "Identification": {
+    "projectCode": "1",
+    "pieceMark": "A5",
+    "drawnBy": "",
+    "date": "2026-09-02",
+    "scale": "128",
+    "drawingName": "",
+    "drawingMark": "[A5]"
+  }
+}

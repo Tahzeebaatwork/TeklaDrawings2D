@@ -1,0 +1,21 @@
+{
+  "Header": { "Schema": "tekla-civil-drawing/1.0", "DrawingType": "ERECTION", "ProjectCode": "P22-132", "PieceMark": "W8-22", "Units": "mm", "HasDrawingSheet": true },
+  "Placement": {
+    "PieceMark": "W8-22",
+    "Name": "WALL",
+    "Position": { "X": 5177, "Y": 975, "Z": 25 },
+    "AxisX": { "X": -1, "Y": 0, "Z": 0 },
+    "AxisY": { "X": 0, "Y": 1, "Z": 0 },
+    "AxisZ": { "X": 0, "Y": 0, "Z": 1 },
+    "LengthMm": 9366
+  },
+  "AnchorsAndEmbeds": [
+    { "PieceMark": "W8-22", "Kind": "ANCHOR", "Mark": "BOLT", "Description": "ANCHOR 19", "Quantity": 4, "Position": { "X": 9860, "Y": 949, "Z": 2643 } }
+  ],
+  "ElevationAndPlanRefs": [
+    { "Name": "Plan", "ViewType": "TopView" },
+    { "Name": "Elevation", "ViewType": "FrontView" }
+  ],
+  "ErectionSequenceNotes": [],
+  "Dimensions": []
+}

@@ -1,0 +1,198 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "REBAR_BBS",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "W10-121",
+    "DrawingName": "",
+    "DrawingMark": "[W10-121 - 3]",
+    "Title1": "",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2026-09-02",
+    "Scale": "",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T13:02:12.5092366Z"
+  },
+  "Rebar": [
+    {
+      "PieceMark": "W10-121",
+      "Mark": "RS15M 0019",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 3,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 3374.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 5.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "3",
+      "A": 3373.4,
+      "B": 3379.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 9665.852,
+          "Y": 29688.85,
+          "Z": 75.796
+        },
+        {
+          "X": 9665.852,
+          "Y": 29688.87,
+          "Z": 3449.196
+        }
+      ],
+      "Guid": "29df6c5e-2353-4902-8c4c-11694f548353"
+    },
+    {
+      "PieceMark": "W10-121",
+      "Mark": "RS15M 0019",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 3,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 3374.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 5.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "3",
+      "A": 3373.4,
+      "B": 3379.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 9800.252,
+          "Y": 29688.85,
+          "Z": 75.796
+        },
+        {
+          "X": 9800.252,
+          "Y": 29688.87,
+          "Z": 3449.196
+        }
+      ],
+      "Guid": "b67c5d36-28c9-47e1-94a4-b60ff201f28a"
+    },
+    {
+      "PieceMark": "W10-121",
+      "Mark": "RB10M 0027",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "TS24",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 15,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 2325.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.8,
+      "PinRadiusMm": 20.0,
+      "Spacing": "250",
+      "A": 100.0,
+      "B": 178.0,
+      "C": 632.0,
+      "D": 178.0,
+      "E": 632.0,
+      "F": 178.0,
+      "G": 346.0,
+      "H": 164.8,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 9650.652,
+          "Y": 29184.703,
+          "Z": 82.3
+        },
+        {
+          "X": 9650.652,
+          "Y": 29091.603,
+          "Z": 82.3
+        },
+        {
+          "X": 9815.452,
+          "Y": 29091.603,
+          "Z": 82.3
+        },
+        {
+          "X": 9815.452,
+          "Y": 29710.403,
+          "Z": 82.3
+        },
+        {
+          "X": 9650.652,
+          "Y": 29710.403,
+          "Z": 82.3
+        },
+        {
+          "X": 9650.652,
+          "Y": 29091.603,
+          "Z": 82.3
+        },
+        {
+          "X": 9815.452,
+          "Y": 29091.603,
+          "Z": 82.3
+        },
+        {
+          "X": 9815.452,
+          "Y": 29424.533,
+          "Z": 82.3
+        },
+        {
+          "X": 9650.652,
+          "Y": 29424.533,
+          "Z": 82.3
+        },
+        {
+          "X": 9650.652,
+          "Y": 29331.433,
+          "Z": 82.3
+        }
+      ],
+      "Guid": "3c836a75-529d-422f-97ff-5c7fa33d3cc9"
+    }
+  ],
+  "TotalLengthMm": 55119.0,
+  "TotalWeightKg": 58.8,
+  "BarLineCount": 3
+}

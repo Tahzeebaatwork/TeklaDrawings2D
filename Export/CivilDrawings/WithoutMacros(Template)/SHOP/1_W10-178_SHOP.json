@@ -1,0 +1,4387 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "SHOP",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "W10-178",
+    "DrawingName": "",
+    "DrawingMark": "[W10-178]",
+    "Title1": "",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2026-09-02",
+    "Scale": "128",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T11:09:08.4872703Z"
+  },
+  "GeneralNotes": {
+    "ConcreteGrade": "41.4 MPa",
+    "Strength28DayMPa": "41.4",
+    "StrippingStrength": "",
+    "WeightKg": 11021.45,
+    "WeightLbs": 24298.1,
+    "AirEntrainment": "",
+    "MinCoverMm": 38.1,
+    "CoverTopMm": null,
+    "CoverBottomMm": null,
+    "CoverSideMm": null,
+    "Class": "1",
+    "VolumeMm3": 4794651529.0507975,
+    "VolumeM3": 4.7947,
+    "Material": "6000",
+    "Profile": "2975*254",
+    "Finish": "",
+    "Name": "WALL"
+  },
+  "Bom": [
+    {
+      "PieceMark": "W10-178",
+      "Mark": "MPX11",
+      "Description": "V REVEAL LARGE",
+      "Kind": "EMBED",
+      "Profile": "TRIANGLE12.7*12.7",
+      "Material": "Misc_Undefined",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "8aa49c69-e545-42a6-a71d-85f1f8826451",
+      "Id": 146673920
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 5,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "031e12d1-647d-4017-a153-25f9e5ba1f4c",
+      "Id": 136106498
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 2,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "c84c2305-895f-4722-9527-f562ce7f1491",
+      "Id": 138447793
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP15-457",
+      "Description": "15Mx457 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD16",
+      "Material": "400W",
+      "Quantity": 6,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "181a8ff0-1112-4c47-b8b9-e2832996730f",
+      "Id": 138450280
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 8,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "1a01feaa-a7f6-4130-9b50-4d44eba93e83",
+      "Id": 144166585
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT100-1219",
+      "Description": "100Øx1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD102",
+      "Material": "Zero_Density",
+      "Quantity": 3,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "b178b75d-63c4-44d0-9684-4a3f3e06b2b5",
+      "Id": 144172823
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 8,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "aea7f932-d095-44b0-b916-3e07db2c6cc8",
+      "Id": 144175721
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP30-1219",
+      "Description": "30Mx1219 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD30.16",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "ee462eed-73c0-4b24-a16f-90307925c692",
+      "Id": 144182164
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT76-254",
+      "Description": "76Øx254mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 6,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "83558ed4-9104-4795-af4d-c55c5d59d9a0",
+      "Id": 160056746
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "CNDT",
+      "Description": "19MM CONDUIT",
+      "Kind": "CONDUIT",
+      "Profile": "ROD19",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "63e0c04d-445a-4cf0-831e-01caa16f5084",
+      "Id": 161734876
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "EB-S-PL",
+      "Description": "Single Plastic Electr",
+      "Kind": "PLATE",
+      "Profile": "160*50.8",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "8522dfd7-12b5-463b-8b75-1b72af045b97",
+      "Id": 161735112
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-602",
+      "Description": "13PL. W/STUD",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*12.7",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "166a57ee-c14e-4f1f-b124-f4879e1bf5a3",
+      "Id": 162481018
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 4,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "9d7a90ab-b492-48de-b7a2-1449b8633b9e",
+      "Id": 163183747
+    }
+  ],
+  "Hardware": [
+    {
+      "PieceMark": "W10-178",
+      "Mark": "MPX11",
+      "Description": "V REVEAL LARGE",
+      "Kind": "EMBED",
+      "Profile": "TRIANGLE12.7*12.7",
+      "Material": "Misc_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 22554.757,
+        "Y": 854.353,
+        "Z": 18525.0
+      },
+      "Guid": "8aa49c69-e545-42a6-a71d-85f1f8826451",
+      "Id": 146673920
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25130.083,
+        "Y": 1102.006,
+        "Z": 19125.397
+      },
+      "Guid": "031e12d1-647d-4017-a153-25f9e5ba1f4c",
+      "Id": 136106498
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25130.083,
+        "Y": 1098.831,
+        "Z": 19140.478
+      },
+      "Guid": "5adefd3d-a9a7-4e87-8147-3e9123bd1211",
+      "Id": 136106575
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25130.083,
+        "Y": 1102.006,
+        "Z": 20643.397
+      },
+      "Guid": "429eccd9-636b-4e7c-8cee-c23368efe38c",
+      "Id": 136107225
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25130.083,
+        "Y": 1098.831,
+        "Z": 20658.478
+      },
+      "Guid": "cd40298b-5038-4171-8d29-67c0e07147b1",
+      "Id": 136107314
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 15865.944,
+        "Y": 949.206,
+        "Z": 20643.0
+      },
+      "Guid": "1a019b19-a5af-4ad8-8d2c-e836032dd513",
+      "Id": 136792238
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 15869.119,
+        "Y": 934.125,
+        "Z": 20643.0
+      },
+      "Guid": "1f9c65ee-88fa-41fd-87f2-0cf44c661438",
+      "Id": 136792315
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 16917.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "c84c2305-895f-4722-9527-f562ce7f1491",
+      "Id": 138447793
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-686",
+      "Description": "75Ø x 686 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 19832.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "fdbf3e82-3fad-4a1d-b194-348539fc6abf",
+      "Id": 138448016
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP15-457-11",
+      "Description": "15Mx457 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD16",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 16917.948,
+        "Y": 975.003,
+        "Z": 20786.02
+      },
+      "Guid": "181a8ff0-1112-4c47-b8b9-e2832996730f",
+      "Id": 138450280
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP15-457-31",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "PD52.387*12.7",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 16917.948,
+        "Y": 975.003,
+        "Z": 21239.845
+      },
+      "Guid": "4ee95c25-d29d-420f-931e-30279ad0ba84",
+      "Id": 138450360
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP15-457-21",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "ROD26.987",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 16917.948,
+        "Y": 975.003,
+        "Z": 21200.158
+      },
+      "Guid": "a5bc52ea-8e1a-4b82-a9ff-0d5c92bec56e",
+      "Id": 138450421
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP15-457-11",
+      "Description": "15Mx457 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD16",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 19832.948,
+        "Y": 975.003,
+        "Z": 20786.02
+      },
+      "Guid": "ab91d091-83dd-46ee-821a-596ac91a45fa",
+      "Id": 138451389
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP15-457-31",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "PD52.387*12.7",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 19832.948,
+        "Y": 975.003,
+        "Z": 21239.845
+      },
+      "Guid": "6b53c1e8-d01e-4e20-8492-84dfe6074c0f",
+      "Id": 138451469
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP15-457-21",
+      "Description": "",
+      "Kind": "INSERT",
+      "Profile": "ROD26.987",
+      "Material": "400W",
+      "Quantity": 1,
+      "Position": {
+        "X": 19832.948,
+        "Y": 975.003,
+        "Z": 21200.158
+      },
+      "Guid": "8bad9374-c181-4118-b821-9b3b8c70d927",
+      "Id": 138451530
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 16085.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "1a01feaa-a7f6-4130-9b50-4d44eba93e83",
+      "Id": 144166585
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 22787.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "bf7a21cc-a3ec-480b-afd1-f50fc5792fe6",
+      "Id": 144166810
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 23075.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "b1dab1a1-b9c1-43b4-a53b-75a9654f2e18",
+      "Id": 144166973
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 17750.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "1bdf15c6-44a7-4cea-ad79-4aad172f52de",
+      "Id": 144167136
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 20497.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "83f086fa-8b01-4f65-8245-b2ba3554b1fc",
+      "Id": 144167299
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 19187.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "5f67fcf1-43c4-49a3-8934-afa6afb59425",
+      "Id": 144167462
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 23363.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "7f7da782-eddd-447f-abc8-104b044a6982",
+      "Id": 144167625
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT75-1219",
+      "Description": "75Ø x 1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 23651.948,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "bc711059-ccc7-4551-9a42-bceb50e355f8",
+      "Id": 144167788
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT100-1219-11",
+      "Description": "100Øx1219 GROUT TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD102",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25042.002,
+        "Y": 975.003,
+        "Z": 18525.0
+      },
+      "Guid": "b178b75d-63c4-44d0-9684-4a3f3e06b2b5",
+      "Id": 144172823
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT100-1219-21",
+      "Description": "",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD110",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25042.002,
+        "Y": 975.003,
+        "Z": 19706.0
+      },
+      "Guid": "74ac3ce9-ef16-4ae1-afd0-c7fc1dc92181",
+      "Id": 144172909
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT100-1219-31",
+      "Description": "",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25042.002,
+        "Y": 975.003,
+        "Z": 19795.0
+      },
+      "Guid": "806b18dc-5c49-46f5-9099-942c354067d2",
+      "Id": 144172956
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 16085.948,
+        "Y": 975.003,
+        "Z": 20176.2
+      },
+      "Guid": "aea7f932-d095-44b0-b916-3e07db2c6cc8",
+      "Id": 144175721
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 16085.948,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "7112932e-eaa0-48d2-9ae2-35df2441dff9",
+      "Id": 144175807
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 16085.948,
+        "Y": 975.003,
+        "Z": 21176.325
+      },
+      "Guid": "8f69d214-6457-4d02-bc90-0d2618fcffd1",
+      "Id": 144175868
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 22787.948,
+        "Y": 975.003,
+        "Z": 20176.2
+      },
+      "Guid": "1a01035b-9ecb-4afe-a4d7-0bc24eca106a",
+      "Id": 144178251
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 22787.948,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "f654da67-631e-44e6-9430-575b9c8b2595",
+      "Id": 144178346
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 22787.948,
+        "Y": 975.003,
+        "Z": 21176.325
+      },
+      "Guid": "f9d1323c-f183-4428-96c7-61967facc884",
+      "Id": 144178407
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23075.948,
+        "Y": 975.003,
+        "Z": 20176.2
+      },
+      "Guid": "d961806a-64a5-420c-96c9-1d4c3c0c3ab9",
+      "Id": 144178570
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23075.948,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "f78a9330-b316-4064-a325-09182cdd78d1",
+      "Id": 144178665
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23075.948,
+        "Y": 975.003,
+        "Z": 21176.325
+      },
+      "Guid": "ed49b5b2-6399-4aa1-aef1-2d232b778304",
+      "Id": 144178726
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 17750.948,
+        "Y": 975.003,
+        "Z": 20176.2
+      },
+      "Guid": "3d51155c-39d3-468f-84a6-51ad7c37e463",
+      "Id": 144178894
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 17750.948,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "d789533b-2a98-41fb-ac29-7a575a9d7a8b",
+      "Id": 144178980
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 17750.948,
+        "Y": 975.003,
+        "Z": 21176.325
+      },
+      "Guid": "8894c980-65b9-460d-afbb-3271a8b638ec",
+      "Id": 144179041
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 20497.948,
+        "Y": 975.003,
+        "Z": 20176.2
+      },
+      "Guid": "4abdaeef-3cc0-49d9-acc7-a48fd6f414e3",
+      "Id": 144179204
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 20497.948,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "ccb48792-f1e9-4207-a6d3-64af645e52a6",
+      "Id": 144179299
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 20497.948,
+        "Y": 975.003,
+        "Z": 21176.325
+      },
+      "Guid": "5c906ec7-4473-48c8-9ad6-5a7f601ab67f",
+      "Id": 144179360
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 19187.948,
+        "Y": 975.003,
+        "Z": 20176.2
+      },
+      "Guid": "6aad6276-4fb0-4642-bdf0-5e03a0d4ea1a",
+      "Id": 144179528
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 19187.948,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "32f5ffef-9a82-4d21-9291-24991dff2fc4",
+      "Id": 144179614
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 19187.948,
+        "Y": 975.003,
+        "Z": 21176.325
+      },
+      "Guid": "b970d8d5-0186-4aea-a16c-6f133ab3513b",
+      "Id": 144179675
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23363.948,
+        "Y": 975.003,
+        "Z": 20176.2
+      },
+      "Guid": "f7e31dfe-c228-445d-a06a-eb94eed140e7",
+      "Id": 144180418
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23363.948,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "c1f78b9c-f6f2-4dfb-8dd7-73ece1b639f8",
+      "Id": 144180513
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23363.948,
+        "Y": 975.003,
+        "Z": 21176.325
+      },
+      "Guid": "df2d7fc3-17b2-4dbc-a22f-6c4bb7654987",
+      "Id": 144180574
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-11",
+      "Description": "SP25Mx1067 WILLIAMS S",
+      "Kind": "INSERT",
+      "Profile": "ROD25.4",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23651.948,
+        "Y": 975.003,
+        "Z": 20176.2
+      },
+      "Guid": "0061d7d8-0c5b-4a83-9998-42b1dbaa0e1f",
+      "Id": 144180961
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD66.675*15.875",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23651.948,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "358fdc28-f208-46b0-b515-5ca9c842ec3c",
+      "Id": 144181056
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP25-1067-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD41.275",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 23651.948,
+        "Y": 975.003,
+        "Z": 21176.325
+      },
+      "Guid": "09230783-15ce-4b9e-82e9-d4bdc037804c",
+      "Id": 144181117
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP30-1219-11",
+      "Description": "30Mx1219 WILLIAMS SPL",
+      "Kind": "INSERT",
+      "Profile": "ROD30.16",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 25042.002,
+        "Y": 975.003,
+        "Z": 20023.8
+      },
+      "Guid": "ee462eed-73c0-4b24-a16f-90307925c692",
+      "Id": 144182164
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP30-1219-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD71.438*19.05",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 25042.002,
+        "Y": 975.003,
+        "Z": 21239.825
+      },
+      "Guid": "b0ec11d0-172a-4f56-bfd0-0b7ed0b49a01",
+      "Id": 144182248
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "SP30-1219-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD44.45",
+      "Material": "A706-GR.60",
+      "Quantity": 1,
+      "Position": {
+        "X": 25042.002,
+        "Y": 975.003,
+        "Z": 21169.975
+      },
+      "Guid": "a0f7d269-b64f-4360-85bd-51e854f6421a",
+      "Id": 144182289
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT76-254",
+      "Description": "76Øx254mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 19966.353,
+        "Y": 847.997,
+        "Z": 20825.0
+      },
+      "Guid": "83558ed4-9104-4795-af4d-c55c5d59d9a0",
+      "Id": 160056746
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT76-254",
+      "Description": "76Øx254mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 19966.353,
+        "Y": 847.997,
+        "Z": 19925.0
+      },
+      "Guid": "22309b1c-4f7e-43a1-ae1f-5274ffd9d0f6",
+      "Id": 160057838
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT76-254",
+      "Description": "76Øx254mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 19966.353,
+        "Y": 847.997,
+        "Z": 19025.0
+      },
+      "Guid": "4f9bb620-cc51-4a0d-adc9-a5b86e50a020",
+      "Id": 160058924
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT76-254",
+      "Description": "76Øx254mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 23260.536,
+        "Y": 847.997,
+        "Z": 19024.999
+      },
+      "Guid": "985acbf9-4027-4e6b-aff9-56907c486835",
+      "Id": 160264649
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT76-254",
+      "Description": "76Øx254mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 23260.536,
+        "Y": 847.997,
+        "Z": 19824.999
+      },
+      "Guid": "5b9eccf3-e2c8-4485-aef8-d11613929644",
+      "Id": 160265750
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "GT76-254",
+      "Description": "76Øx254mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 23260.536,
+        "Y": 847.997,
+        "Z": 20624.999
+      },
+      "Guid": "ad1840fc-916c-49a3-be4f-d783b0240992",
+      "Id": 160266838
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "CNDT37",
+      "Description": "19MM CONDUIT",
+      "Kind": "CONDUIT",
+      "Profile": "ROD19",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 22850.999,
+        "Y": 873.383,
+        "Z": 18980.005
+      },
+      "Guid": "63e0c04d-445a-4cf0-831e-01caa16f5084",
+      "Id": 161734876
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "EB-S-PL1",
+      "Description": "Single Plastic Electr",
+      "Kind": "PLATE",
+      "Profile": "160*50.8",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 22795.996,
+        "Y": 873.377,
+        "Z": 18900.0
+      },
+      "Guid": "8522dfd7-12b5-463b-8b75-1b72af045b97",
+      "Id": 161735112
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-602-11",
+      "Description": "13PL. W/STUD",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*12.7",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25106.826,
+        "Y": 1000.0,
+        "Z": 21236.649
+      },
+      "Guid": "166a57ee-c14e-4f1f-b124-f4879e1bf5a3",
+      "Id": 162481018
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-602-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25157.626,
+        "Y": 1000.0,
+        "Z": 21230.299
+      },
+      "Guid": "f9d9563d-6f15-4e3e-b2d4-b4e3f9869aab",
+      "Id": 162481101
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 22872.002,
+        "Y": 1102.011,
+        "Z": 20575.0
+      },
+      "Guid": "fc036389-e19f-4a8a-befd-74e0ac089ead",
+      "Id": 163183242
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 22887.083,
+        "Y": 1098.836,
+        "Z": 20575.0
+      },
+      "Guid": "79ea4d65-6e0b-4cc6-8135-6b964e3c5244",
+      "Id": 163183324
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 17765.948,
+        "Y": 1102.011,
+        "Z": 20575.0
+      },
+      "Guid": "edb275e1-3640-45ad-bedc-e62bba53aea8",
+      "Id": 163183455
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 17781.029,
+        "Y": 1098.836,
+        "Z": 20575.0
+      },
+      "Guid": "ffb50872-44fc-4b8c-8d51-c8bab09b7974",
+      "Id": 163183537
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 24265.297,
+        "Y": 1008.128,
+        "Z": 21230.0
+      },
+      "Guid": "9d7a90ab-b492-48de-b7a2-1449b8633b9e",
+      "Id": 163183747
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 24265.397,
+        "Y": 950.978,
+        "Z": 21096.651
+      },
+      "Guid": "4224d62a-0362-49d7-b2aa-29c2545d45ef",
+      "Id": 163183831
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 24265.297,
+        "Y": 985.903,
+        "Z": 20976.266
+      },
+      "Guid": "6f931d74-762d-45d8-9517-f86cdba2c15d",
+      "Id": 163183872
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 24331.297,
+        "Y": 985.903,
+        "Z": 21243.0
+      },
+      "Guid": "a31705fb-a611-40ba-b5b6-3348f93dc0c8",
+      "Id": 163183913
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 22126.297,
+        "Y": 1008.128,
+        "Z": 21230.0
+      },
+      "Guid": "07181396-3c1a-40cd-9975-046cc2887014",
+      "Id": 163184307
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 22126.397,
+        "Y": 950.978,
+        "Z": 21096.651
+      },
+      "Guid": "086b8b22-a763-4e4d-9754-49ab11c9004f",
+      "Id": 163184391
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 22126.297,
+        "Y": 985.903,
+        "Z": 20976.266
+      },
+      "Guid": "fac693cb-e466-41ac-b275-e5435790fc72",
+      "Id": 163184432
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 22192.297,
+        "Y": 985.903,
+        "Z": 21243.0
+      },
+      "Guid": "f3dd06c6-8fe5-476c-ac4c-652da107aa7e",
+      "Id": 163184473
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 17546.287,
+        "Y": 1008.128,
+        "Z": 21230.0
+      },
+      "Guid": "5ca0b56d-6af5-4e56-872c-a337027a29ba",
+      "Id": 163184803
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 17546.387,
+        "Y": 950.978,
+        "Z": 21096.651
+      },
+      "Guid": "205d42d1-057b-4c67-a2e6-710183e1da0b",
+      "Id": 163184887
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 17546.287,
+        "Y": 985.903,
+        "Z": 20976.266
+      },
+      "Guid": "2a4bbf2b-53f1-42d9-ac64-2b3e58fc1296",
+      "Id": 163184928
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 17612.287,
+        "Y": 985.903,
+        "Z": 21243.0
+      },
+      "Guid": "50fa28c7-35b9-4157-9687-c1c46c86bcdc",
+      "Id": 163184969
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 19723.297,
+        "Y": 1008.128,
+        "Z": 21230.0
+      },
+      "Guid": "fae6ed5c-2581-466e-990d-5c2d0accb88b",
+      "Id": 163185363
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 19723.397,
+        "Y": 950.978,
+        "Z": 21096.651
+      },
+      "Guid": "0e055b0e-cd06-49ca-bf49-8f9d5410b1eb",
+      "Id": 163185447
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 19723.297,
+        "Y": 985.903,
+        "Z": 20976.266
+      },
+      "Guid": "a5a539d4-42fe-4646-aaf8-43893dd4cded",
+      "Id": 163185488
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 19789.297,
+        "Y": 985.903,
+        "Z": 21243.0
+      },
+      "Guid": "f6cd9d06-c8f5-496d-a57d-465904777bd4",
+      "Id": 163185529
+    }
+  ],
+  "Rebar": [
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0025",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "14",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 862.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.7,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 200.0,
+      "B": 141.0,
+      "C": 209.0,
+      "D": 141.0,
+      "E": 200.0,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": 100.0,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 407.0,
+      "Geometry": [
+        {
+          "X": 16043.687,
+          "Y": 954.538,
+          "Z": 21215.361
+        },
+        {
+          "X": 16043.691,
+          "Y": 954.538,
+          "Z": 21018.251
+        },
+        {
+          "X": 16138.799,
+          "Y": 954.538,
+          "Z": 20922.451
+        },
+        {
+          "X": 16341.997,
+          "Y": 954.538,
+          "Z": 20922.451
+        },
+        {
+          "X": 16436.997,
+          "Y": 954.538,
+          "Z": 21018.251
+        },
+        {
+          "X": 16436.997,
+          "Y": 954.538,
+          "Z": 21215.361
+        }
+      ],
+      "Guid": "070d1d28-70eb-4100-87ad-8508ef92ebbd"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0025",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "14",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 862.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.7,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 200.0,
+      "B": 141.0,
+      "C": 209.0,
+      "D": 141.0,
+      "E": 200.0,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": 100.0,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": 407.0,
+      "Geometry": [
+        {
+          "X": 16043.687,
+          "Y": 954.538,
+          "Z": 20932.884
+        },
+        {
+          "X": 16043.691,
+          "Y": 954.538,
+          "Z": 21129.994
+        },
+        {
+          "X": 16138.799,
+          "Y": 954.538,
+          "Z": 21225.794
+        },
+        {
+          "X": 16341.997,
+          "Y": 954.538,
+          "Z": 21225.794
+        },
+        {
+          "X": 16436.997,
+          "Y": 954.538,
+          "Z": 21129.994
+        },
+        {
+          "X": 16436.997,
+          "Y": 954.538,
+          "Z": 20932.884
+        }
+      ],
+      "Guid": "2d82c50b-683f-4d18-bd80-38fc301bb4e5"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0040",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "T1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 10,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 3790.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 3.0,
+      "PinRadiusMm": 30.0,
+      "Spacing": "195*320*320*320*320*320*280*310*150",
+      "A": 102.0,
+      "B": 161.0,
+      "C": 1676.0,
+      "D": 161.0,
+      "E": 1676.0,
+      "F": 1662.8,
+      "G": 102.0,
+      "H": 74.1,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 20570.368,
+          "Y": 953.893,
+          "Z": 18621.5
+        },
+        {
+          "X": 20622.777,
+          "Y": 901.483,
+          "Z": 18621.5
+        },
+        {
+          "X": 20674.396,
+          "Y": 901.483,
+          "Z": 18621.5
+        },
+        {
+          "X": 20674.396,
+          "Y": 1048.518,
+          "Z": 18621.5
+        },
+        {
+          "X": 19011.552,
+          "Y": 1048.518,
+          "Z": 18621.5
+        },
+        {
+          "X": 19011.552,
+          "Y": 901.483,
+          "Z": 18621.5
+        },
+        {
+          "X": 20674.396,
+          "Y": 901.483,
+          "Z": 18621.5
+        },
+        {
+          "X": 20674.396,
+          "Y": 953.102,
+          "Z": 18621.5
+        },
+        {
+          "X": 20621.986,
+          "Y": 1005.512,
+          "Z": 18621.5
+        }
+      ],
+      "Guid": "f8a8f6b5-52ce-42fa-9e23-e327581f7dec"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0046",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "17",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 9,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 763.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "134*154*300*300*300*300*300*310",
+      "A": 323.5,
+      "B": 330.0,
+      "C": 161.0,
+      "D": 330.0,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 17589.996,
+          "Y": 901.483,
+          "Z": 18607.0
+        },
+        {
+          "X": 17913.496,
+          "Y": 901.483,
+          "Z": 18607.0
+        },
+        {
+          "X": 17913.496,
+          "Y": 1048.518,
+          "Z": 18607.0
+        },
+        {
+          "X": 17589.996,
+          "Y": 1048.518,
+          "Z": 18607.0
+        }
+      ],
+      "Guid": "169ef6b2-46c3-4a48-8b4b-236f41191737"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0046",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "17",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 10,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 763.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "134*154*300*300*300*300*300*342*152",
+      "A": 323.5,
+      "B": 330.0,
+      "C": 161.0,
+      "D": 330.0,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 16245.952,
+          "Y": 1048.518,
+          "Z": 18607.0
+        },
+        {
+          "X": 15922.452,
+          "Y": 1048.518,
+          "Z": 18607.0
+        },
+        {
+          "X": 15922.452,
+          "Y": 901.483,
+          "Z": 18607.0
+        },
+        {
+          "X": 16245.952,
+          "Y": 901.483,
+          "Z": 18607.0
+        }
+      ],
+      "Guid": "ab237bd9-1c7f-45af-a032-afc7e3cf0c14"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 17723.73,
+          "Y": 944.513,
+          "Z": 20482.771
+        },
+        {
+          "X": 18147.99,
+          "Y": 944.513,
+          "Z": 20907.031
+        }
+      ],
+      "Guid": "303e46ba-6224-4856-8b58-5e478c0a6afe"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 19202.798,
+          "Y": 1005.513,
+          "Z": 20482.771
+        },
+        {
+          "X": 18778.538,
+          "Y": 1005.513,
+          "Z": 20907.031
+        }
+      ],
+      "Guid": "b9c9284e-d7ab-4f37-af49-f56c8d241117"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 20461.92,
+          "Y": 944.513,
+          "Z": 20512.771
+        },
+        {
+          "X": 20886.18,
+          "Y": 944.513,
+          "Z": 20937.031
+        }
+      ],
+      "Guid": "a61c3e02-3b04-48f3-be01-7638fddeed0c"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 22825.028,
+          "Y": 1005.513,
+          "Z": 20507.771
+        },
+        {
+          "X": 22400.768,
+          "Y": 1005.513,
+          "Z": 20932.031
+        }
+      ],
+      "Guid": "f9dd76e9-cfbd-4709-be45-2cd07e99d194"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 23627.15,
+          "Y": 944.513,
+          "Z": 20497.771
+        },
+        {
+          "X": 24051.41,
+          "Y": 944.513,
+          "Z": 20922.031
+        }
+      ],
+      "Guid": "10cf3955-cece-41e0-865c-9e7d402e9a76"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0030",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 600.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 600.0,
+      "B": 610.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25111.218,
+          "Y": 1005.513,
+          "Z": 20477.771
+        },
+        {
+          "X": 24686.958,
+          "Y": 1005.513,
+          "Z": 20902.031
+        }
+      ],
+      "Guid": "a029b1e7-72ab-45ca-a332-1c6a50baed41"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0051",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "TS5_1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 749.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 255.0,
+      "B": 254.0,
+      "C": 254.0,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 23751.182,
+          "Y": 1005.518,
+          "Z": 19093.37
+        },
+        {
+          "X": 23751.182,
+          "Y": 1005.518,
+          "Z": 18842.05
+        },
+        {
+          "X": 23926.982,
+          "Y": 1005.518,
+          "Z": 18666.26
+        },
+        {
+          "X": 24178.292,
+          "Y": 1005.518,
+          "Z": 18666.26
+        }
+      ],
+      "Guid": "f6c4e4ea-4dd1-41c5-8a30-d70560e3074b"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0051",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "TS5_1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 749.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "2",
+      "A": 255.0,
+      "B": 254.0,
+      "C": 254.0,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 24992.766,
+          "Y": 1005.518,
+          "Z": 19093.37
+        },
+        {
+          "X": 24992.766,
+          "Y": 1005.518,
+          "Z": 18842.05
+        },
+        {
+          "X": 24816.966,
+          "Y": 1005.518,
+          "Z": 18666.26
+        },
+        {
+          "X": 24565.656,
+          "Y": 1005.518,
+          "Z": 18666.26
+        }
+      ],
+      "Guid": "3ebf8440-298a-4ce3-b4eb-60d24e2391fa"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0096",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 4750.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 7.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "134",
+      "A": 4749.4,
+      "B": 4750.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 20666.196,
+          "Y": 1047.818,
+          "Z": 18591.005
+        },
+        {
+          "X": 15916.751,
+          "Y": 1047.818,
+          "Z": 18591.005
+        }
+      ],
+      "Guid": "c75c315f-7e01-41f1-a521-3ba5a4e0711b"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0097",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 2563.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 4.0,
+      "PinRadiusMm": 0.0,
+      "Spacing": "134",
+      "A": 2562.7,
+      "B": 2566.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 22618.462,
+          "Y": 1047.818,
+          "Z": 18591.005
+        },
+        {
+          "X": 25181.197,
+          "Y": 1047.818,
+          "Z": 18591.005
+        }
+      ],
+      "Guid": "87cd74b1-8df0-48d3-b478-c48a47f5da6c"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0052",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "TS67_2",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 13,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1089.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.9,
+      "PinRadiusMm": 20.0,
+      "Spacing": "240*220*240*240*240*240*240*240*168*200*160*95",
+      "A": 100.0,
+      "B": 160.0,
+      "C": 279.0,
+      "D": 160.0,
+      "E": 278.0,
+      "F": 160.0,
+      "G": 100.0,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25086.296,
+          "Y": 1048.513,
+          "Z": 18621.5
+        },
+        {
+          "X": 25179.396,
+          "Y": 1048.513,
+          "Z": 18621.5
+        },
+        {
+          "X": 25179.396,
+          "Y": 901.513,
+          "Z": 18621.5
+        },
+        {
+          "X": 24914.341,
+          "Y": 901.513,
+          "Z": 18621.5
+        },
+        {
+          "X": 24913.762,
+          "Y": 1048.513,
+          "Z": 18621.5
+        },
+        {
+          "X": 25178.496,
+          "Y": 1048.513,
+          "Z": 18621.5
+        },
+        {
+          "X": 25178.496,
+          "Y": 901.513,
+          "Z": 18621.5
+        },
+        {
+          "X": 25085.396,
+          "Y": 901.513,
+          "Z": 18621.5
+        }
+      ],
+      "Guid": "0ef0e1df-68c1-4938-8ffd-e5150bca50f9"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0096",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 4750.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 7.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "133.891643094688",
+      "A": 4749.4,
+      "B": 4750.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 20666.196,
+          "Y": 901.398,
+          "Z": 18591.183
+        },
+        {
+          "X": 15916.752,
+          "Y": 901.398,
+          "Z": 18591.183
+        }
+      ],
+      "Guid": "cc65da69-ad7f-473b-8a3a-d708e9082d2a"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0097",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 2563.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 4.0,
+      "PinRadiusMm": 0.0,
+      "Spacing": "133.891643094688",
+      "A": 2562.7,
+      "B": 2566.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 22618.462,
+          "Y": 901.398,
+          "Z": 18591.183
+        },
+        {
+          "X": 25181.201,
+          "Y": 901.398,
+          "Z": 18591.183
+        }
+      ],
+      "Guid": "b0bcaf49-c485-4b37-906f-7c7d397aea2c"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0050",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "Unknown",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 12,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 4245.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 3.3,
+      "PinRadiusMm": 20.0,
+      "Spacing": "185*275*240*240*200*250*250*250*175*220*230",
+      "A": 93.1,
+      "B": 653.5,
+      "C": 147.0,
+      "D": 1215.8,
+      "E": 147.0,
+      "F": 616.5,
+      "G": 147.0,
+      "H": 321.5,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 23174.924,
+          "Y": 955.418,
+          "Z": 18611.5
+        },
+        {
+          "X": 23174.924,
+          "Y": 1048.518,
+          "Z": 18611.5
+        },
+        {
+          "X": 23828.396,
+          "Y": 1048.518,
+          "Z": 18611.5
+        },
+        {
+          "X": 23828.396,
+          "Y": 901.483,
+          "Z": 18611.5
+        },
+        {
+          "X": 22612.551,
+          "Y": 901.483,
+          "Z": 18611.5
+        },
+        {
+          "X": 22612.551,
+          "Y": 1048.518,
+          "Z": 18611.5
+        },
+        {
+          "X": 23229.024,
+          "Y": 1048.518,
+          "Z": 18611.5
+        },
+        {
+          "X": 23229.024,
+          "Y": 901.483,
+          "Z": 18611.5
+        },
+        {
+          "X": 22907.551,
+          "Y": 901.483,
+          "Z": 18611.5
+        },
+        {
+          "X": 22907.551,
+          "Y": 1048.518,
+          "Z": 18611.5
+        },
+        {
+          "X": 23548.396,
+          "Y": 1048.518,
+          "Z": 18611.5
+        },
+        {
+          "X": 23548.396,
+          "Y": 901.483,
+          "Z": 18611.5
+        },
+        {
+          "X": 23455.296,
+          "Y": 901.483,
+          "Z": 18611.5
+        }
+      ],
+      "Guid": "ac68a851-9565-4c02-805a-aa21b5654d3d"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0208",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 9267.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 7.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 9266.0,
+      "B": 9271.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.995,
+          "Y": 1045.513,
+          "Z": 20874.807
+        },
+        {
+          "X": 15915.951,
+          "Y": 1045.513,
+          "Z": 20874.807
+        }
+      ],
+      "Guid": "53a2f58b-5994-4787-b130-af7bd702196d"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0238",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 174.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.1,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 173.0,
+      "B": 178.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 16088.995,
+          "Y": 904.513,
+          "Z": 21024.807
+        },
+        {
+          "X": 15915.951,
+          "Y": 904.513,
+          "Z": 21024.807
+        }
+      ],
+      "Guid": "6a8e5401-7c98-40fe-8547-300e7ad61256"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0238",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 174.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.1,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 173.0,
+      "B": 178.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 16088.995,
+          "Y": 1045.513,
+          "Z": 21024.807
+        },
+        {
+          "X": 15915.951,
+          "Y": 1045.513,
+          "Z": 21024.807
+        }
+      ],
+      "Guid": "2d34fac8-c4c2-40f4-b2dd-784f2f272583"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0051",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "TS5_1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 749.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "200",
+      "A": 255.0,
+      "B": 254.0,
+      "C": 254.0,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 17847.952,
+          "Y": 1005.518,
+          "Z": 19093.37
+        },
+        {
+          "X": 17847.952,
+          "Y": 1005.518,
+          "Z": 18842.05
+        },
+        {
+          "X": 18023.752,
+          "Y": 1005.518,
+          "Z": 18666.26
+        },
+        {
+          "X": 18275.062,
+          "Y": 1005.518,
+          "Z": 18666.26
+        }
+      ],
+      "Guid": "d25c88ac-7b91-4aa5-9d75-14d89c70d69e"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0051",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "TS5_1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 749.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "2",
+      "A": 255.0,
+      "B": 254.0,
+      "C": 254.0,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 19089.536,
+          "Y": 1005.518,
+          "Z": 19093.37
+        },
+        {
+          "X": 19089.536,
+          "Y": 1005.518,
+          "Z": 18842.05
+        },
+        {
+          "X": 18913.736,
+          "Y": 1005.518,
+          "Z": 18666.26
+        },
+        {
+          "X": 18662.426,
+          "Y": 1005.518,
+          "Z": 18666.26
+        }
+      ],
+      "Guid": "971b954c-579b-4ffa-972c-1a286cbbc3fb"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0173",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 3199.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 5.0,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 3199.0,
+      "B": 3201.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 23242.406,
+          "Y": 1048.213,
+          "Z": 21076.81
+        },
+        {
+          "X": 20043.411,
+          "Y": 1048.213,
+          "Z": 21076.81
+        }
+      ],
+      "Guid": "923b7d94-6ba4-448e-a5fc-5e8d2aa6e8d3"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0173",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 3199.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 5.0,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 3199.0,
+      "B": 3201.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 23242.406,
+          "Y": 901.813,
+          "Z": 21076.81
+        },
+        {
+          "X": 20043.411,
+          "Y": 901.813,
+          "Z": 21076.81
+        }
+      ],
+      "Guid": "0e8e766c-49a8-40dd-a665-eb1c324fcdb3"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB15M 0068",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "Unknown",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 1136.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "334",
+      "A": 509.9,
+      "B": 149.0,
+      "C": 509.9,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 24674.997,
+          "Y": 1049.513,
+          "Z": 20747.0
+        },
+        {
+          "X": 25184.897,
+          "Y": 1049.513,
+          "Z": 20747.0
+        },
+        {
+          "X": 25184.897,
+          "Y": 900.513,
+          "Z": 20747.0
+        },
+        {
+          "X": 24674.997,
+          "Y": 900.513,
+          "Z": 20747.0
+        }
+      ],
+      "Guid": "bdd25c8b-dec8-43f6-8a40-6551d2d394f9"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0239",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 8791.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 6.9,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 8790.3,
+      "B": 8789.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.995,
+          "Y": 904.513,
+          "Z": 21024.807
+        },
+        {
+          "X": 16391.671,
+          "Y": 904.513,
+          "Z": 21024.807
+        }
+      ],
+      "Guid": "60dc2cd7-b89f-41aa-b9be-5052b2bf8630"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0239",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 8791.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 6.9,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 8790.3,
+      "B": 8789.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.995,
+          "Y": 1045.513,
+          "Z": 21024.807
+        },
+        {
+          "X": 16391.671,
+          "Y": 1045.513,
+          "Z": 21024.807
+        }
+      ],
+      "Guid": "c0e862ac-195f-426b-8f3a-5b05152491c5"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0240",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 2363.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 3.7,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 2362.0,
+      "B": 2363.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 16193.708,
+          "Y": 920.484,
+          "Z": 18575.001
+        },
+        {
+          "X": 16193.708,
+          "Y": 920.484,
+          "Z": 20937.021
+        }
+      ],
+      "Guid": "3716d574-b03e-40dd-ac0f-91992c3e374d"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0240",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 2363.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 3.7,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 2362.0,
+      "B": 2363.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 16193.675,
+          "Y": 1029.518,
+          "Z": 18574.941
+        },
+        {
+          "X": 16193.675,
+          "Y": 1029.518,
+          "Z": 20936.961
+        }
+      ],
+      "Guid": "35859e4d-4abc-49a2-a42c-0bff3f0d3d5c"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0241",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 237.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.4,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 237.0,
+      "B": 229.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 16193.708,
+          "Y": 920.484,
+          "Z": 21213.021
+        },
+        {
+          "X": 16193.708,
+          "Y": 920.484,
+          "Z": 21450.001
+        }
+      ],
+      "Guid": "bd3150ab-9acb-4387-9110-d6f16f7b4ffb"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0059",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 14,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 2618.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 4.1,
+      "PinRadiusMm": 0.0,
+      "Spacing": "220*1127.26*280*320*280*295*1990*235*1125*240*1154*240*1700",
+      "A": 2617.9,
+      "B": 2617.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25154.935,
+          "Y": 1029.202,
+          "Z": 18575.001
+        },
+        {
+          "X": 25154.935,
+          "Y": 1029.202,
+          "Z": 21192.942
+        }
+      ],
+      "Guid": "d5ec0527-8040-42e1-b6b6-4c91bd8fd3d4"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0058",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 14,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 2875.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 4.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "219.99993*1127.260018*280.000005*320.000005*280.000005*295.000005*1990.000032*235.000004*1125.000018*240.000004*1154.000019*240.000004*1700.000028",
+      "A": 2875.0,
+      "B": 2871.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25154.96,
+          "Y": 921.213,
+          "Z": 18575.001
+        },
+        {
+          "X": 25154.96,
+          "Y": 921.213,
+          "Z": 21450.001
+        }
+      ],
+      "Guid": "c60f5745-a2da-4034-84f9-61a74dfe523c"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0208",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 9267.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 7.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "568.69",
+      "A": 9266.0,
+      "B": 9271.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.995,
+          "Y": 904.513,
+          "Z": 20874.807
+        },
+        {
+          "X": 15915.951,
+          "Y": 904.513,
+          "Z": 20874.807
+        }
+      ],
+      "Guid": "897b60fd-3983-485c-87a6-86fe8e83d365"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0029",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 7888.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 12.4,
+      "PinRadiusMm": 0.0,
+      "Spacing": "325",
+      "A": 7887.2,
+      "B": 7900.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.996,
+          "Y": 1048.213,
+          "Z": 20774.81
+        },
+        {
+          "X": 17294.761,
+          "Y": 1048.213,
+          "Z": 20774.81
+        }
+      ],
+      "Guid": "5c7664db-005d-40ae-8f35-63abdc5a6863"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0029",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 2,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 7888.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 12.4,
+      "PinRadiusMm": 0.0,
+      "Spacing": "325",
+      "A": 7887.2,
+      "B": 7900.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.996,
+          "Y": 901.813,
+          "Z": 20774.81
+        },
+        {
+          "X": 17294.761,
+          "Y": 901.813,
+          "Z": 20774.81
+        }
+      ],
+      "Guid": "5846ca60-d386-4cbf-821b-a20f8139aad2"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0251",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 6,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 2016.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "300*300*300*300*300",
+      "A": 2015.1,
+      "B": 2007.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 17931.015,
+          "Y": 1045.513,
+          "Z": 18881.497
+        },
+        {
+          "X": 15915.951,
+          "Y": 1045.513,
+          "Z": 18881.497
+        }
+      ],
+      "Guid": "a8d58ea1-2b7e-4809-b014-b719cfa8a3b8"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0251",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 6,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 2016.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.6,
+      "PinRadiusMm": 0.0,
+      "Spacing": "300*300*300*300*300",
+      "A": 2015.1,
+      "B": 2007.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 17931.015,
+          "Y": 904.513,
+          "Z": 18881.497
+        },
+        {
+          "X": 15915.951,
+          "Y": 904.513,
+          "Z": 18881.497
+        }
+      ],
+      "Guid": "69ee22ff-9e64-4c28-a48d-89ac8c7f53c2"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0095",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 9267.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 14.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 9266.0,
+      "B": 9271.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.999,
+          "Y": 901.823,
+          "Z": 20721.125
+        },
+        {
+          "X": 15915.951,
+          "Y": 901.823,
+          "Z": 20721.125
+        }
+      ],
+      "Guid": "0e81fd9d-f112-4dfa-ba05-1905541cad0d"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0268",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 8790.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 13.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 8790.0,
+      "B": 8789.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.973,
+          "Y": 901.814,
+          "Z": 21178.125
+        },
+        {
+          "X": 16392.011,
+          "Y": 901.814,
+          "Z": 21178.125
+        }
+      ],
+      "Guid": "f40d6e76-f4bc-4603-8cc6-d053c12c54dc"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0095",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 9267.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 14.5,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 9266.0,
+      "B": 9271.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.971,
+          "Y": 1048.213,
+          "Z": 20721.155
+        },
+        {
+          "X": 15915.951,
+          "Y": 1048.213,
+          "Z": 20721.155
+        }
+      ],
+      "Guid": "536fa1b5-d2bb-407b-9036-ab0c60c6be15"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0268",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 8790.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 13.8,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 8790.0,
+      "B": 8789.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 25181.971,
+          "Y": 1048.213,
+          "Z": 21178.155
+        },
+        {
+          "X": 16392.011,
+          "Y": 1048.213,
+          "Z": 21178.155
+        }
+      ],
+      "Guid": "47a601c7-8ec1-4ebe-883c-eda3dd93e2d6"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0269",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 174.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 173.1,
+      "B": 178.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 16089.013,
+          "Y": 901.814,
+          "Z": 21178.125
+        },
+        {
+          "X": 15915.951,
+          "Y": 901.814,
+          "Z": 21178.125
+        }
+      ],
+      "Guid": "71c6b921-959a-40c7-be9d-c319496e7bec"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS15M 0269",
+      "Size": "15M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 15.0,
+      "TotalLengthMm": 174.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 173.1,
+      "B": 178.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 16089.011,
+          "Y": 1048.213,
+          "Z": 21178.155
+        },
+        {
+          "X": 15915.951,
+          "Y": 1048.213,
+          "Z": 21178.155
+        }
+      ],
+      "Guid": "9d5d73de-2b5c-4950-a7fd-a5ed34ba81d3"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0135",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "Unknown",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 22,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 1692.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 1.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "203*203*203*203*57.7445639455436*1879.25543605465*203*203*203*203*203*203*203*203*97.7400000000016*1432.26000000023*203*203*203*203*57.7445639455436",
+      "A": 754.6,
+      "B": 181.0,
+      "C": 503.8,
+      "D": 181.0,
+      "E": 37.5,
+      "F": 80.0,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 18039.952,
+          "Y": 884.483,
+          "Z": 21449.2
+        },
+        {
+          "X": 18039.952,
+          "Y": 884.483,
+          "Z": 20694.6
+        },
+        {
+          "X": 18039.952,
+          "Y": 1065.518,
+          "Z": 20694.6
+        },
+        {
+          "X": 18039.952,
+          "Y": 1065.518,
+          "Z": 21198.4
+        },
+        {
+          "X": 18039.952,
+          "Y": 884.483,
+          "Z": 21198.4
+        },
+        {
+          "X": 18039.952,
+          "Y": 884.483,
+          "Z": 21160.924
+        },
+        {
+          "X": 18039.952,
+          "Y": 941.035,
+          "Z": 21104.372
+        }
+      ],
+      "Guid": "f8c1e98f-80cb-40cc-be86-d34c43738382"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB10M 0049",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "stirrup",
+      "ShapeCode": "T1",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 12,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 890.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 0.7,
+      "PinRadiusMm": 20.0,
+      "Spacing": "203*203*203*203*82.1445639455414*5021.55543605488*203*203*203*203*82.1445639455414",
+      "A": 99.0,
+      "B": 189.0,
+      "C": 194.0,
+      "D": 189.0,
+      "E": 194.0,
+      "F": 181.0,
+      "G": 99.0,
+      "H": 80.0,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 18015.552,
+          "Y": 978.541,
+          "Z": 18688.848
+        },
+        {
+          "X": 18015.552,
+          "Y": 921.989,
+          "Z": 18745.4
+        },
+        {
+          "X": 18015.552,
+          "Y": 884.513,
+          "Z": 18745.4
+        },
+        {
+          "X": 18015.552,
+          "Y": 884.513,
+          "Z": 18569.6
+        },
+        {
+          "X": 18015.552,
+          "Y": 1065.513,
+          "Z": 18569.6
+        },
+        {
+          "X": 18015.552,
+          "Y": 1065.513,
+          "Z": 18745.4
+        },
+        {
+          "X": 18015.552,
+          "Y": 884.513,
+          "Z": 18745.4
+        },
+        {
+          "X": 18015.552,
+          "Y": 884.513,
+          "Z": 18707.923
+        },
+        {
+          "X": 18015.552,
+          "Y": 941.065,
+          "Z": 18651.371
+        }
+      ],
+      "Guid": "edafad4f-2e44-4f21-a279-a2837a9902e1"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0180",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 6,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 2618.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 2.1,
+      "PinRadiusMm": 0.0,
+      "Spacing": "399.999999999207*2322.26000000184*291.000000000009*291.000000000009*350.000000000007",
+      "A": 2617.2,
+      "B": 2617.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 20079.615,
+          "Y": 1032.303,
+          "Z": 18575.8
+        },
+        {
+          "X": 20079.616,
+          "Y": 1032.303,
+          "Z": 21193.001
+        }
+      ],
+      "Guid": "2708646d-217b-41d5-8b12-55823867ec7c"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RS10M 0195",
+      "Size": "10M",
+      "Grade": "400W",
+      "ShapeType": "straight",
+      "ShapeCode": "STR",
+      "SourceType": "RebarGroup",
+      "FrozenState": null,
+      "Quantity": 6,
+      "DiameterMm": 10.0,
+      "TotalLengthMm": 2874.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 2.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "400.00000000001*2322.26000000008*291.000000000008*291.000000000008*350.000000000006",
+      "A": 2873.4,
+      "B": 2871.0,
+      "C": null,
+      "D": null,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 20079.624,
+          "Y": 917.703,
+          "Z": 18575.8
+        },
+        {
+          "X": 20079.624,
+          "Y": 917.703,
+          "Z": 21449.2
+        }
+      ],
+      "Guid": "e8e6eb9c-5770-489c-a524-6239abdf6055"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Mark": "RB25M 0139",
+      "Size": "25M",
+      "Grade": "400W",
+      "ShapeType": "bent",
+      "ShapeCode": "17",
+      "SourceType": "SingleRebar",
+      "FrozenState": null,
+      "Quantity": 1,
+      "DiameterMm": 25.0,
+      "TotalLengthMm": 2377.0,
+      "TotalAreaMm2": null,
+      "WeightKg": 9.3,
+      "PinRadiusMm": 0.0,
+      "Spacing": "",
+      "A": 198.0,
+      "B": 212.0,
+      "C": 2085.0,
+      "D": 212.0,
+      "E": null,
+      "F": null,
+      "G": null,
+      "H": null,
+      "H2": null,
+      "J": null,
+      "K": null,
+      "K2": null,
+      "O": null,
+      "Geometry": [
+        {
+          "X": 22671.657,
+          "Y": 956.007,
+          "Z": 18881.0
+        },
+        {
+          "X": 22671.657,
+          "Y": 1154.007,
+          "Z": 18881.0
+        },
+        {
+          "X": 20614.657,
+          "Y": 1154.007,
+          "Z": 18881.0
+        },
+        {
+          "X": 20614.657,
+          "Y": 956.007,
+          "Z": 18881.0
+        }
+      ],
+      "Guid": "fe1cd1d8-8849-4e76-94c1-767050e371d2"
+    }
+  ],
+  "Dimensions": [
+    {
+      "PieceMark": "W10-178",
+      "Kind": "OverallThickness",
+      "Text": "254",
+      "Value": 254.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End1"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Kind": "OverallThickness",
+      "Text": "254",
+      "Value": 254.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End2"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Kind": "OverallLength",
+      "Text": "9366.1",
+      "Value": 9366.1,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-178",
+      "Kind": "OverallWidth",
+      "Text": "2975",
+      "Value": 2975.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "Side B"
+    }
+  ],
+  "Views": [
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ],
+  "ProfileFeatures": [
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "LEDGE"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Drip edge"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "DOOR"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "WINDOW"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "WINDOW"
+    },
+    {
+      "Kind": "recess",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "V REVEAL LARGE"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "FALSE JOINT VERTICAL"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CUTPART"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CUTPART"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CUTPART"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "notch",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "CutPlane"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    },
+    {
+      "Kind": "cut",
+      "Source": "GetBooleans",
+      "ViewName": "",
+      "Text": "Cutpart"
+    }
+  ],
+  "Identification": {
+    "projectCode": "1",
+    "pieceMark": "W10-178",
+    "drawnBy": "",
+    "date": "2026-09-02",
+    "scale": "128",
+    "drawingName": "",
+    "drawingMark": "[W10-178]"
+  }
+}

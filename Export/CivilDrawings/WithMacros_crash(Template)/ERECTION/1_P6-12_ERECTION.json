@@ -1,0 +1,1603 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "ERECTION",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "P6-12",
+    "DrawingName": "",
+    "DrawingMark": "[P6-12 - 2]",
+    "Title1": "",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2026-09-02",
+    "Scale": "",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T13:29:16.9881854Z"
+  },
+  "Placement": {
+    "PieceMark": "P6-12",
+    "Name": "WALL",
+    "Profile": "3254*152",
+    "Material": "6000",
+    "Floor": "",
+    "Grid": "X25802/Y14938",
+    "Position": {
+      "X": 25801.743,
+      "Y": 14938.003,
+      "Z": 3246.0
+    },
+    "StartPoint": {
+      "X": 25801.743,
+      "Y": 21090.0,
+      "Z": 3246.0
+    },
+    "EndPoint": {
+      "X": 25801.743,
+      "Y": 8786.005,
+      "Z": 3246.0
+    },
+    "AxisX": {
+      "X": 0.0,
+      "Y": -12303.995,
+      "Z": 0.0
+    },
+    "AxisY": {
+      "X": 0.0,
+      "Y": 0.0,
+      "Z": 1000.0
+    },
+    "AxisZ": {
+      "X": -12303995.104,
+      "Y": 0.0,
+      "Z": 0.0
+    },
+    "LengthMm": 12304.0,
+    "Id": 134708131,
+    "Guid": "ef3e87e6-0954-41ad-9de0-e257e3644297"
+  },
+  "AnchorsAndEmbeds": [
+    {
+      "PieceMark": "P6-12",
+      "Mark": "MPX13",
+      "Description": "V REVEAL LARGE",
+      "Kind": "EMBED",
+      "Profile": "TRIANGLE12.7*12.7",
+      "Material": "Misc_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25871.395,
+        "Y": 14126.574,
+        "Z": 3554.0
+      },
+      "Guid": "b505bda0-1752-43d8-9823-211256513c98",
+      "Id": 158231089
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "MPX14",
+      "Description": "V REVEAL LARGE",
+      "Kind": "EMBED",
+      "Profile": "TRIANGLE12.7*12.7",
+      "Material": "Misc_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25871.395,
+        "Y": 10707.843,
+        "Z": 3800.0
+      },
+      "Guid": "2d429f51-6689-454e-9c46-6074ba18a565",
+      "Id": 158240660
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "MPX12",
+      "Description": "MOUNTPART",
+      "Kind": "EMBED",
+      "Profile": "TRIANGLE51.0*12.7",
+      "Material": "Misc_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25852.245,
+        "Y": 10701.493,
+        "Z": 3793.65
+      },
+      "Guid": "521d8ce1-bd25-4686-aa8a-0ec20a450813",
+      "Id": 158240750
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25722.825,
+        "Y": 15338.005,
+        "Z": 6075.0
+      },
+      "Guid": "3e70dbae-476d-4a26-b933-1b8bdecc0461",
+      "Id": 136036436
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 15312.605,
+        "Z": 6113.1
+      },
+      "Guid": "dcfd909b-a54f-4e05-b13f-8160dba84921",
+      "Id": 136036521
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 15363.405,
+        "Z": 6113.1
+      },
+      "Guid": "f97bd0c5-83f9-4a6c-8f09-bb2b16d9435b",
+      "Id": 136036566
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 15312.605,
+        "Z": 6163.9
+      },
+      "Guid": "583de700-f612-4a70-861c-55bb138e113a",
+      "Id": 136036611
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 15363.405,
+        "Z": 6163.9
+      },
+      "Guid": "35b02cf1-1c0d-42cf-838a-89658653846f",
+      "Id": 136036656
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25722.825,
+        "Y": 12038.005,
+        "Z": 6075.0
+      },
+      "Guid": "9445f991-f661-4528-8d98-7d7095ef9f18",
+      "Id": 136036903
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 12012.605,
+        "Z": 6113.1
+      },
+      "Guid": "95e97802-2a4b-4b4c-a089-f021c8e1e923",
+      "Id": 136036988
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 12063.405,
+        "Z": 6113.1
+      },
+      "Guid": "f5361d8e-7d08-4542-8341-3500cd597854",
+      "Id": 136037033
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 12012.605,
+        "Z": 6163.9
+      },
+      "Guid": "20358f62-6554-412a-8f66-ba3ac571345d",
+      "Id": 136037078
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 12063.405,
+        "Z": 6163.9
+      },
+      "Guid": "5c26f6ca-99c5-481d-9d88-dd64c969908e",
+      "Id": 136037123
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25722.825,
+        "Y": 17038.005,
+        "Z": 6075.0
+      },
+      "Guid": "b9aad38d-3776-4de7-9ae3-84e7c2ff13b2",
+      "Id": 136037370
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 17012.605,
+        "Z": 6113.1
+      },
+      "Guid": "d8cd1b3b-daeb-4939-846a-d5a1aeae73ad",
+      "Id": 136037455
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 17063.405,
+        "Z": 6113.1
+      },
+      "Guid": "8bbb3c7d-43c9-4fa7-9361-849635a4e9b5",
+      "Id": 136037500
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 17012.605,
+        "Z": 6163.9
+      },
+      "Guid": "5bcc4f8b-bd54-464d-92e5-35e997d6ab66",
+      "Id": 136037545
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25726.0,
+        "Y": 17063.405,
+        "Z": 6163.9
+      },
+      "Guid": "a6270e31-0a22-4790-b5a8-201bef230cdc",
+      "Id": 136037590
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25722.568,
+        "Y": 20490.0,
+        "Z": 6350.002
+      },
+      "Guid": "8d81f117-c055-4888-8506-f71493186eec",
+      "Id": 136037968
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 20464.6,
+        "Z": 6388.102
+      },
+      "Guid": "a7e85977-fa22-4099-989a-b629c5121b6d",
+      "Id": 136038044
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 20515.4,
+        "Z": 6388.102
+      },
+      "Guid": "6d4c223b-2bfc-47e8-bc57-a59f015a2e2b",
+      "Id": 136038089
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 20464.6,
+        "Z": 6438.902
+      },
+      "Guid": "39943281-0dd7-445a-8927-b077ed1cccc4",
+      "Id": 136038134
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 20515.4,
+        "Z": 6438.902
+      },
+      "Guid": "8e5d9ab7-d2b4-4b20-be8e-0ead1f2299dc",
+      "Id": 136038179
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25722.568,
+        "Y": 11490.0,
+        "Z": 6350.003
+      },
+      "Guid": "7c038204-4249-4c51-b2f0-f37b560ee4de",
+      "Id": 136038507
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 11464.6,
+        "Z": 6388.103
+      },
+      "Guid": "0661ab7a-ebe2-4fd2-83b5-8ce87651c910",
+      "Id": 136038583
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 11515.4,
+        "Z": 6388.103
+      },
+      "Guid": "ce370d59-6191-4778-83cb-2672e6497d60",
+      "Id": 136038628
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 11464.6,
+        "Z": 6438.903
+      },
+      "Guid": "276760a8-a317-405b-9da0-ee57efaedff4",
+      "Id": 136038673
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 11515.4,
+        "Z": 6438.903
+      },
+      "Guid": "a78e95ef-8bc1-4b0c-b404-f5960f4bbfd0",
+      "Id": 136038718
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25722.568,
+        "Y": 18690.0,
+        "Z": 6350.003
+      },
+      "Guid": "e044b53c-4873-4862-a936-c4fcbd1d38f1",
+      "Id": 136038970
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 18664.6,
+        "Z": 6388.103
+      },
+      "Guid": "9baa1ecf-6ccf-409a-beb8-f88dfc379a1c",
+      "Id": 136039046
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 18715.4,
+        "Z": 6388.103
+      },
+      "Guid": "45d2f06c-9789-4851-9b29-28da23c080b2",
+      "Id": 136039091
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 18664.6,
+        "Z": 6438.903
+      },
+      "Guid": "32c539db-7530-48ee-a75d-e544fb966f79",
+      "Id": 136039136
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 18715.4,
+        "Z": 6438.903
+      },
+      "Guid": "f4f6ef11-d7dc-4c07-833e-cc22aa84fae0",
+      "Id": 136039181
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-11",
+      "Description": "6PL W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "PL101.6*6.35",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25722.568,
+        "Y": 9690.0,
+        "Z": 6350.003
+      },
+      "Guid": "fb0c5df0-c907-4157-a9ce-92753ed4fe5b",
+      "Id": 136039433
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 9664.6,
+        "Z": 6388.103
+      },
+      "Guid": "f99ccfcb-4f23-40dd-9a81-19532e8273bf",
+      "Id": 136039509
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 9715.4,
+        "Z": 6388.103
+      },
+      "Guid": "bbed1bea-0fc8-4404-8396-a7556a60a1af",
+      "Id": 136039554
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 9664.6,
+        "Z": 6438.903
+      },
+      "Guid": "fba85fa2-6ae8-4f35-ae35-76c35f13a836",
+      "Id": 136039599
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-620-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 9715.4,
+        "Z": 6438.903
+      },
+      "Guid": "721fa358-fcae-47f9-98f0-f8c10a68b771",
+      "Id": 136039644
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.736,
+        "Y": 9160.653,
+        "Z": 4125.397
+      },
+      "Guid": "0a26c4bd-5c08-4b5b-95ac-d791efda8e3d",
+      "Id": 136131583
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25728.911,
+        "Y": 9160.653,
+        "Z": 4140.478
+      },
+      "Guid": "a437c840-20b4-4d96-992b-b08357ae3efb",
+      "Id": 136131660
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.736,
+        "Y": 9160.653,
+        "Z": 5643.397
+      },
+      "Guid": "6934ad4d-6a09-44e9-95de-be0438cd146e",
+      "Id": 136132109
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25728.911,
+        "Y": 9160.653,
+        "Z": 5658.478
+      },
+      "Guid": "e0b87da7-8ca8-4186-9f85-41da9274aa0e",
+      "Id": 136132198
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.736,
+        "Y": 20715.343,
+        "Z": 4125.397
+      },
+      "Guid": "da83dcb5-fa43-49bc-9569-0f806ab4af46",
+      "Id": 136263033
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25728.911,
+        "Y": 20715.343,
+        "Z": 4140.478
+      },
+      "Guid": "6990fcb1-093f-4e27-967f-d8af0571af69",
+      "Id": 136263110
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.736,
+        "Y": 20715.343,
+        "Z": 5643.397
+      },
+      "Guid": "99ef3c07-7fd1-453c-b26a-2a4cbe05937e",
+      "Id": 136263760
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25728.911,
+        "Y": 20715.343,
+        "Z": 5658.478
+      },
+      "Guid": "c39c876c-c782-4659-ac5a-6994b9cef90f",
+      "Id": 136263849
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-900-10",
+      "Description": "25mm KNIFE PLATE",
+      "Kind": "PLATE",
+      "Profile": "PL127*25",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25646.855,
+        "Y": 8925.997,
+        "Z": 6331.484
+      },
+      "Guid": "a7f4de73-6d3a-4ff6-81c3-ceb107603d26",
+      "Id": 138483125
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-900-20",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD28.6*4.76",
+      "Material": "50W",
+      "Quantity": 1,
+      "Position": {
+        "X": 25632.555,
+        "Y": 8925.997,
+        "Z": 6293.484
+      },
+      "Guid": "1c31f7a9-0067-4726-b687-6872e9a2b320",
+      "Id": 138483222
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-900-30",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_3/4-DIA",
+      "Material": "A108-GR.90",
+      "Quantity": 1,
+      "Position": {
+        "X": 25632.555,
+        "Y": 8925.997,
+        "Z": 6242.996
+      },
+      "Guid": "65f3fe4e-82cb-4783-a9c8-0507ef296863",
+      "Id": 138483271
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-900-10",
+      "Description": "25mm KNIFE PLATE",
+      "Kind": "PLATE",
+      "Profile": "PL127*25",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 25646.855,
+        "Y": 20949.997,
+        "Z": 6331.484
+      },
+      "Guid": "15a04544-8073-4d89-90d1-5208be1be560",
+      "Id": 138483470
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-900-20",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PD28.6*4.76",
+      "Material": "50W",
+      "Quantity": 1,
+      "Position": {
+        "X": 25632.555,
+        "Y": 20949.997,
+        "Z": 6293.484
+      },
+      "Guid": "4d6ff32d-64ac-4e3f-b3cb-ee26b0ec35ab",
+      "Id": 138483567
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-900-30",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_3/4-DIA",
+      "Material": "A108-GR.90",
+      "Quantity": 1,
+      "Position": {
+        "X": 25632.555,
+        "Y": 20949.997,
+        "Z": 6242.996
+      },
+      "Guid": "cf2cc4c0-d4f7-4e3d-adf5-1e37e643e9bb",
+      "Id": 138483616
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.994,
+        "Y": 20189.997,
+        "Z": 3576.2
+      },
+      "Guid": "069eaf40-b937-45c4-88f5-fc4cf6e7085e",
+      "Id": 138678329
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25729.169,
+        "Y": 20205.078,
+        "Z": 3576.2
+      },
+      "Guid": "ee99311e-52e4-41f2-993e-896fa35d135b",
+      "Id": 138678395
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.994,
+        "Y": 18389.997,
+        "Z": 3576.2
+      },
+      "Guid": "ce9ecdf4-c6a3-4ded-a36c-ac573ebfc666",
+      "Id": 138679233
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25729.169,
+        "Y": 18405.078,
+        "Z": 3576.2
+      },
+      "Guid": "deb81d01-e264-4a05-8859-87fdc9b116d0",
+      "Id": 138679299
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.994,
+        "Y": 17038.007,
+        "Z": 3576.2
+      },
+      "Guid": "2fad9831-b19a-4a5e-83fe-927726650558",
+      "Id": 138680137
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25729.169,
+        "Y": 17053.088,
+        "Z": 3576.2
+      },
+      "Guid": "dd3f36b7-7aa9-4984-86ea-6a3baf985fe2",
+      "Id": 138680203
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.994,
+        "Y": 15338.007,
+        "Z": 3576.2
+      },
+      "Guid": "833b4085-193b-4d86-966f-7105d3dd3b2d",
+      "Id": 138681041
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25729.169,
+        "Y": 15353.088,
+        "Z": 3576.2
+      },
+      "Guid": "d1319774-7093-43aa-93ca-fc01ea02b4d2",
+      "Id": 138681107
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.994,
+        "Y": 12038.007,
+        "Z": 3576.2
+      },
+      "Guid": "8fcf2e8f-a797-4727-91a0-ea9cab01874d",
+      "Id": 138681881
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25729.169,
+        "Y": 12053.088,
+        "Z": 3576.2
+      },
+      "Guid": "ff65fd41-2254-4115-a909-3a7dfd23a8c0",
+      "Id": 138681947
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.994,
+        "Y": 11189.997,
+        "Z": 3576.2
+      },
+      "Guid": "7682d807-8453-4975-a450-a04c37b2830e",
+      "Id": 138682785
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25729.169,
+        "Y": 11205.078,
+        "Z": 3576.2
+      },
+      "Guid": "0e969e88-f0ff-42a9-97f8-4ed511ad369b",
+      "Id": 138682851
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.994,
+        "Y": 9389.997,
+        "Z": 3576.2
+      },
+      "Guid": "e0ec9007-b40e-444f-8729-733f4944a200",
+      "Id": 138683689
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25729.169,
+        "Y": 9405.078,
+        "Z": 3576.2
+      },
+      "Guid": "83879bd6-afbe-4464-931c-d1266178fa25",
+      "Id": 138683755
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "GT76-152",
+      "Description": "76Øx152mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 11670.878,
+        "Z": 5525.0
+      },
+      "Guid": "f3c40de8-87f2-4dbf-bb78-593ca6362886",
+      "Id": 149279437
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "GT76-152",
+      "Description": "76Øx152mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.742,
+        "Y": 11666.769,
+        "Z": 3925.005
+      },
+      "Guid": "803ba55e-4b32-44b3-8b84-739afc704679",
+      "Id": 149280639
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "GT76-152",
+      "Description": "76Øx152mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.742,
+        "Y": 11668.823,
+        "Z": 4725.003
+      },
+      "Guid": "d6cb7443-9863-4414-8d2e-b13411829a5a",
+      "Id": 149281723
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "GT76-152",
+      "Description": "76Øx152mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.743,
+        "Y": 18205.128,
+        "Z": 4025.0
+      },
+      "Guid": "b8ff455c-ed36-441f-ad98-62541c516ae3",
+      "Id": 153725496
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "GT76-152",
+      "Description": "76Øx152mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.742,
+        "Y": 18207.182,
+        "Z": 4824.997
+      },
+      "Guid": "4b431974-5040-4cf8-89ba-5108c1c9b9ca",
+      "Id": 153726687
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "GT76-152",
+      "Description": "76Øx152mm G.TUBE",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.742,
+        "Y": 18209.236,
+        "Z": 5624.995
+      },
+      "Guid": "aff7cbb2-c947-4e29-88c7-2de40fe077e2",
+      "Id": 153727758
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "CNDT24",
+      "Description": "19MM CONDUIT",
+      "Kind": "CONDUIT",
+      "Profile": "ROD19",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25852.338,
+        "Y": 14587.915,
+        "Z": 3955.955
+      },
+      "Guid": "3916b1f3-31be-43a4-8f5a-51d12994e056",
+      "Id": 157733787
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "EB-S-PL1",
+      "Description": "Single Plastic Electr",
+      "Kind": "PLATE",
+      "Profile": "160*50.8",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25852.343,
+        "Y": 14642.914,
+        "Z": 3900.0
+      },
+      "Guid": "cc353c75-b7fe-492e-89f5-a1b15f715d71",
+      "Id": 157733895
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.496,
+        "Y": 18590.0,
+        "Z": 5415.335
+      },
+      "Guid": "efacc5c7-b390-4f1d-b8fa-a9e42a55f731",
+      "Id": 157805650
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25728.671,
+        "Y": 18605.082,
+        "Z": 5415.335
+      },
+      "Guid": "6e16ec14-d9a6-4e4b-8788-0d7504a6f9fd",
+      "Id": 157805727
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25725.496,
+        "Y": 11286.003,
+        "Z": 5415.335
+      },
+      "Guid": "488a5f42-6aed-4a6e-b7cc-c565c5241de9",
+      "Id": 157805879
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25728.671,
+        "Y": 11301.084,
+        "Z": 5415.335
+      },
+      "Guid": "6584689d-70ec-44c0-910d-97a9d9d90e08",
+      "Id": 157805956
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25779.618,
+        "Y": 19859.5,
+        "Z": 6487.002
+      },
+      "Guid": "19dcb2df-1b7e-4e0b-8961-d0416cb93f22",
+      "Id": 161643740
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25836.768,
+        "Y": 19859.6,
+        "Z": 6353.653
+      },
+      "Guid": "7cd85355-0de7-415a-9f19-b347faf0e3f1",
+      "Id": 161643813
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25801.843,
+        "Y": 19859.5,
+        "Z": 6233.268
+      },
+      "Guid": "980d274a-4de0-4a9e-88d3-f4d0632bd843",
+      "Id": 161643855
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25801.843,
+        "Y": 19925.5,
+        "Z": 6500.003
+      },
+      "Guid": "625a2622-ed1b-4cd0-8bb7-362d2737f517",
+      "Id": 161643896
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25779.618,
+        "Y": 16645.5,
+        "Z": 6208.002
+      },
+      "Guid": "1dfe474e-04cf-41ed-a9ad-82bda69db3c4",
+      "Id": 161644196
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25836.768,
+        "Y": 16645.6,
+        "Z": 6074.653
+      },
+      "Guid": "c887b8be-d48f-4b00-b96f-2cee5ae16679",
+      "Id": 161644269
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25801.843,
+        "Y": 16645.5,
+        "Z": 5954.268
+      },
+      "Guid": "b6a064c3-8c56-4489-aa0f-768acbb7a2a9",
+      "Id": 161644311
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25801.843,
+        "Y": 16711.5,
+        "Z": 6221.003
+      },
+      "Guid": "0ea7ae29-1c6e-40e1-be23-675d32a7d185",
+      "Id": 161644352
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25779.618,
+        "Y": 10217.868,
+        "Z": 6487.002
+      },
+      "Guid": "1c3fd6a6-264c-412d-8f96-4e2295c149c3",
+      "Id": 161644716
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25836.768,
+        "Y": 10217.968,
+        "Z": 6353.653
+      },
+      "Guid": "4f49fd2d-a5cf-4e97-ab7d-9f6854c5bc1f",
+      "Id": 161644789
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25801.843,
+        "Y": 10217.868,
+        "Z": 6233.268
+      },
+      "Guid": "53873746-9cb0-431a-b3dc-eba1ec05f604",
+      "Id": 161644831
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25801.843,
+        "Y": 10283.868,
+        "Z": 6500.003
+      },
+      "Guid": "b2faa230-9813-4ed5-acb6-1860bab7592d",
+      "Id": 161644872
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-11",
+      "Description": "12000LB FORGED ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25779.618,
+        "Y": 13431.5,
+        "Z": 6208.002
+      },
+      "Guid": "f22973cf-8ecd-4cfa-9865-87476ecbd4b0",
+      "Id": 161645268
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL76.2*12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25836.768,
+        "Y": 13431.6,
+        "Z": 6074.653
+      },
+      "Guid": "193518e1-f1c1-4b48-b531-4a65cccc2dbe",
+      "Id": 161645341
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "SPHERE47.625",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25801.843,
+        "Y": 13431.5,
+        "Z": 5954.268
+      },
+      "Guid": "6e5fac98-b429-4ef7-ab5c-18f45f123a10",
+      "Id": 161645383
+    },
+    {
+      "PieceMark": "P6-12",
+      "Mark": "P-205-32",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25801.843,
+        "Y": 13497.5,
+        "Z": 6221.003
+      },
+      "Guid": "c5b68050-5efa-4739-a20b-c7cb43358566",
+      "Id": 161645424
+    }
+  ],
+  "ElevationAndPlanRefs": [
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ],
+  "ErectionSequenceNotes": [],
+  "Dimensions": []
+}

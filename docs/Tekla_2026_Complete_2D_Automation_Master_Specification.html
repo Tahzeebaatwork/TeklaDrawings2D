@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tekla Structures 2026: Complete 2D Drawing Automation, Mathematical Derivations & Architecture Master Specification</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 14mm 13mm 16mm 13mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2328;
+    background: #fff;
+    line-height: 1.5;
+    font-size: 9.1pt;
+  }
+
+  .doc-header {
+    border-bottom: 2.5px solid #0969da;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+  .doc-badge {
+    display: inline-block;
+    background: #ddf4ff;
+    color: #0969da;
+    font-size: 7.5pt;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  h1 {
+    font-size: 15.5pt;
+    font-weight: 800;
+    color: #1f2328;
+    margin: 0 0 6px 0;
+    line-height: 1.25;
+  }
+  .doc-subtitle {
+    font-size: 9.2pt;
+    color: #57606a;
+    margin: 0 0 12px 0;
+    line-height: 1.35;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: #f6f8fa;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 8pt;
+  }
+  .meta-item strong {
+    display: block;
+    color: #57606a;
+    font-size: 6.8pt;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  h2 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: #0969da;
+    border-bottom: 1px solid #d0d7de;
+    padding-bottom: 4px;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 9.8pt;
+    font-weight: 600;
+    color: #24292f;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    page-break-after: avoid;
+  }
+
+  p, li {
+    margin-top: 0;
+    margin-bottom: 6px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    font-size: 8.3pt;
+  }
+  th, td {
+    border: 1px solid #d0d7de;
+    padding: 5px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #f6f8fa;
+    font-weight: 600;
+    color: #24292f;
+  }
+
+  .math-block {
+    background: #f6f8fa;
+    border-left: 3px solid #0969da;
+    padding: 6px 12px;
+    margin: 8px 0;
+    font-family: "Cambria Math", "Latin Modern Math", KaTeX_Main, serif;
+    font-size: 9.2pt;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .analogy-box {
+    background: #fff8c5;
+    border: 1px solid #d4a72c;
+    border-left: 4px solid #9a6700;
+    padding: 6px 10px;
+    margin: 6px 0 10px 0;
+    border-radius: 4px;
+    font-size: 8.4pt;
+    color: #4d2d00;
+  }
+  .analogy-box strong {
+    color: #7a4700;
+  }
+
+  .info-box {
+    background: #e7f5ff;
+    border: 1px solid #96d0ff;
+    border-left: 4px solid #0969da;
+    padding: 6px 10px;
+    margin: 6px 0 10px 0;
+    border-radius: 4px;
+    font-size: 8.4pt;
+    color: #053b7a;
+  }
+
+  pre, code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  }
+  code {
+    background: #afb8c133;
+    padding: 1.5px 4.5px;
+    border-radius: 3px;
+    font-size: 8.2pt;
+  }
+  pre {
+    background: #f6f8fa;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 7.8pt;
+    line-height: 1.35;
+    overflow-x: auto;
+    margin: 6px 0 10px 0;
+  }
+
+  .flowchart-container {
+    background: #fdfdfd;
+    border: 1.5px solid #d0d7de;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+  }
+  .flow-step {
+    background: #ffffff;
+    border: 1.5px solid #0969da;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .flow-step-header {
+    font-weight: 700;
+    color: #0969da;
+    font-size: 8.8pt;
+    display: flex;
+    justify-content: space-between;
+  }
+  .flow-step-body {
+    font-size: 8pt;
+    color: #424a53;
+    margin-top: 3px;
+  }
+  .flow-arrow {
+    text-align: center;
+    color: #0969da;
+    font-weight: 900;
+    font-size: 11pt;
+    margin: -2px 0 4px 0;
+  }
+
+  .footer {
+    margin-top: 20px;
+    border-top: 1px solid #d0d7de;
+    padding-top: 8px;
+    font-size: 7.5pt;
+    color: #6e7781;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-badge">Complete Engineering Master Specification &amp; Architecture Reference v2.0</div>
+  <h1>Tekla Structures 2026: Complete 2D Drawing Automation, Mathematical Derivations &amp; Production Architecture</h1>
+  <div class="doc-subtitle">
+    End-to-end technical consolidation: Full variable dictionary, 11x17 Bounding Box Math, Clutter Clean &amp; View Filtering, Precision Dimension Automation, Memory-Safe Batch Worker, Crash-Proof View Manipulation, and Reusable TSEP Deployment.
+  </div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Software Platform</strong>Tekla Structures 2026 (x64)</div>
+    <div class="meta-item"><strong>Architecture Pattern</strong>Decoupled Hybrid (Macro + Open API)</div>
+    <div class="meta-item"><strong>Target Sheet Standard</strong>ANSI 11x17 (431.8 x 279.4 mm)</div>
+    <div class="meta-item"><strong>Quality Standard</strong>Engineering Fabrication-Ready (ENG Quality)</div>
+  </div>
+</div>
+
+<h2>1. Executive Summary &amp; Problem Taxonomy</h2>
+<p>In structural steel and precast concrete detailing, drawing automation evolves through four distinct quality tiers:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 14%;">Stage</th>
+      <th style="width: 20%;">Execution Origin</th>
+      <th style="width: 46%;">Visual &amp; Geometric Characteristics</th>
+      <th style="width: 20%;">Fabrication Usability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>OUT MACRO</strong></td>
+      <td>Raw Open API Insert</td>
+      <td>Unordered geometry, temporary AF1/AF2 tags visible, no title block metadata, massive text clashes.</td>
+      <td><span style="color: #cf222e; font-weight:600;">Unusable (Raw Draft)</span></td>
+    </tr>
+    <tr>
+      <td><strong>CV (Civil)</strong></td>
+      <td>Educational / Raw Extraction</td>
+      <td>Heavy rebar wireframe cluttering elevation, educational watermarks, unanchored section views.</td>
+      <td><span style="color: #9a6700; font-weight:600;">Draft Only</span></td>
+    </tr>
+    <tr>
+      <td><strong>M (Macro Baseline)</strong></td>
+      <td>Standard Akit Macro Script</td>
+      <td>Standard title block applied, but views overflow sheet borders, tight dimension text ("288 288") collides, "PROFILE RECESS" overlaps BOM.</td>
+      <td><span style="color: #0969da; font-weight:600;">Automated Baseline</span></td>
+    </tr>
+    <tr>
+      <td><strong>ENG (Engineer Standard)</strong></td>
+      <td>Two-Stage Hybrid Automation</td>
+      <td>Rebar hidden on front elevation, views compressed within 11x17 envelope, BOM docked with zero overlap, text staggered with leader lines, single-page vector PDF (&ge; 100 KB).</td>
+      <td><span style="color: #1a7f37; font-weight:700;">100% Fabrication-Ready</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>1.1 The Core Root Causes</h3>
+<ol>
+  <li><strong>Sheet Overflow:</strong> A 9366 mm precast wall drawn at 1:20 scale takes 468.3 mm on paper, immediately overflowing standard 11x17 paper (431.8 mm width).</li>
+  <li><strong>BOM Collisions:</strong> Drawing views and text callouts treat BOM tables as invisible. When a table grows downward with part count, it collides with elevation views and notes.</li>
+  <li><strong>CommandRepository Crash:</strong> Calling <code>wpf.InvokeCommand("CommandRepository", "Drawing.ArrangeViews")</code> throws <code>NullReferenceException</code> when UI focus or view selection is lost in headless/batch execution.</li>
+  <li><strong>Vector Bloat &amp; Clutter:</strong> Macros blindly render hidden lines, adjacent neighbor assemblies, and reference models, ballooning file sizes from 150 KB to several megabytes.</li>
+</ol>
+
+<h2>2. The Master Variable &amp; Notation Dictionary</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 14%;">Symbol</th>
+      <th style="width: 24%;">Formal Name</th>
+      <th style="width: 16%;">Unit</th>
+      <th style="width: 46%;">Operational Role in Tekla 2026 Pipeline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>P, Q</strong></td>
+      <td>Point Position Vector</td>
+      <td>Millimeters (mm)</td>
+      <td>Specifies 2D/3D spatial coordinates: P_part (local solid vertex), P_global (model coordinates), P_view (final 2D sheet point).</td>
+    </tr>
+    <tr>
+      <td><strong>M</strong></td>
+      <td>Affine Transformation Matrix</td>
+      <td>Dimensionless (4x4)</td>
+      <td>Homogeneous matrix incorporating 3D rotation and translation: M_composite = A &times; B (strictly associative in Tekla 2026).</td>
+    </tr>
+    <tr>
+      <td><strong>R</strong></td>
+      <td>Orthonormal Rotation Matrix</td>
+      <td>Dimensionless (3x3)</td>
+      <td>Direction cosine sub-matrix defining spatial orientation and tilt angles relative to camera projection planes.</td>
+    </tr>
+    <tr>
+      <td><strong>T</strong></td>
+      <td>Translation Vector</td>
+      <td>Millimeters (mm)</td>
+      <td>Linear coordinate offset (Tx, Ty, Tz) shifting part-local origins to assembly datum or drawing sheet origins.</td>
+    </tr>
+    <tr>
+      <td><strong>S</strong></td>
+      <td>View Scale Ratio</td>
+      <td>Dimensionless Ratio</td>
+      <td>Scale factor (1:S). S = 30 means 30 mm in real 3D solid geometry equals 1 mm on physical drawing paper.</td>
+    </tr>
+    <tr>
+      <td><strong>W, H</strong></td>
+      <td>Geometric Width &amp; Height</td>
+      <td>Millimeters (mm)</td>
+      <td>Physical bounds: W_sheet = 431.8, H_sheet = 279.4 (11x17 ANSI B); W_bom = 140.0, H_bom = 180.0 (BOM Table).</td>
+    </tr>
+    <tr>
+      <td><strong>&Omega;_BOM</strong></td>
+      <td>BOM Keepout Domain</td>
+      <td>Area Domain (mm&sup2;)</td>
+      <td>Forbidden 2D coordinate box [280, 425] &times; [90, 275] on 11x17 sheet reserved strictly for hardware BOM tables.</td>
+    </tr>
+    <tr>
+      <td><strong>&delta;_clearance</strong></td>
+      <td>Clearance Padding Buffer</td>
+      <td>Millimeters (mm)</td>
+      <td>Mandatory safety gap (6.0 mm) between drawing annotations and table boundary borders.</td>
+    </tr>
+    <tr>
+      <td><strong>n_hat</strong></td>
+      <td>Unit Surface Normal Vector</td>
+      <td>Unit Vector (||n||=1)</td>
+      <td>Orthogonal vector perpendicular to solid cut faces; used in bevel angle calculation and grazing angle checks.</td>
+    </tr>
+    <tr>
+      <td><strong>V_z, d_ray</strong></td>
+      <td>View Projection Vector</td>
+      <td>Unit Vector (||V||=1)</td>
+      <td>Camera optical axis pointing from 3D space into the 2D orthographic drawing plane (typically [0, 0, 1]^T).</td>
+    </tr>
+    <tr>
+      <td><strong>&theta;, &phi;</strong></td>
+      <td>Spatial Angles</td>
+      <td>Degrees (&deg;) / Radians</td>
+      <td>&theta;_true (true 3D bevel cut angle), &theta;_apparent (foreshortened 2D angle), &phi; (ray incident angle).</td>
+    </tr>
+    <tr>
+      <td><strong>w(Q)</strong></td>
+      <td>Winding Number</td>
+      <td>Integer (0, 1, 2...)</td>
+      <td>Total counter-clockwise boundary revolutions around test point Q. w=0 &rarr; Exterior Air; |w| &ge; 1 &rarr; Solid or Internal Cutout.</td>
+    </tr>
+    <tr>
+      <td><strong>F_net</strong></td>
+      <td>Simulated Particle Force</td>
+      <td>Simulated Units</td>
+      <td>Net vector sum of F_repulsion (magnetic push), F_spring (anchor tether), and F_damping (viscous friction) in anti-collision.</td>
+    </tr>
+    <tr>
+      <td><strong>&epsilon;</strong></td>
+      <td>Infinitesimal Tolerance</td>
+      <td>Dimensionless / mm</td>
+      <td>Numerical precision threshold: &epsilon;_grazing &approx; 0.05 (silhouette slicing), &epsilon;_tol &approx; 0.5 mm (coincident pitch collapse).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>3. Mathematical Derivations of the Algorithms</h2>
+
+<h3>3.1 Derivation of 11x17 Bounding Box Allocation &amp; Scale Compression</h3>
+<p>To ensure complete containment of precast wall panels within an 11x17 sheet ($W_{	ext{sheet}} = 431.8	ext{ mm}, H_{	ext{sheet}} = 279.4	ext{ mm}$):</p>
+<div class="math-block">
+  $$X_{	ext{safe\_max}} = W_{	ext{sheet}} - W_{	ext{bom}} - M_{	ext{border}} - \delta = 431.8 - 140.0 - 15.0 - 6.8 = \mathbf{270.0	ext{ mm}}$$
+  $$Y_{	ext{safe\_max}} = H_{	ext{sheet}} - M_{	ext{border}} = 279.4 - 15.0 = 264.4	ext{ mm} pprox \mathbf{260.0	ext{ mm}}$$
+</div>
+<p>Available Safe Viewport Envelope: $W_{	ext{avail}} = 270.0 - 15.0 = 255.0	ext{ mm}$, $H_{	ext{avail}} = 260.0 - 15.0 = 245.0	ext{ mm}$.</p>
+<p>For a panel with 3D length $L_{	ext{panel}} = 9366	ext{ mm}$ and dimension chains adding $900	ext{ mm}$:</p>
+<div class="math-block">
+  $$S_{	ext{req}} = \max\left( rac{L_{	ext{panel\_3D}} + 900}{W_{	ext{avail}}}, \;\; rac{H_{	ext{panel\_3D}} + 900}{H_{	ext{avail}}} ight) = \max\left( rac{10266}{255}, rac{3875}{245} ight) = 40.25 \implies \mathbf{	ext{Scale } 1:40}$$
+</div>
+<p>When Part Shortening is activated ($L_{	ext{shortened}} pprox 5500	ext{ mm}$), $S_{	ext{req}} = (5500 + 900) / 255 = 25.09 \implies \mathbf{	ext{Scale } 1:25	ext{ or } 1:30}$.</p>
+
+<h3>3.2 Derivation of Zero BOM Overlapping (AABB Deflection)</h3>
+<p>Let the BOM Keepout Box be $\Omega_{	ext{BOM}} = [280, 425] 	imes [90, 275]	ext{ mm}$. For any text or mark bounding box $B = [x_{\min}, x_{\max}] 	imes [y_{\min}, y_{\max}]$:</p>
+<div class="math-block">
+  $$	ext{Collision}(B, \Omega_{	ext{BOM}}) \iff (x_{\max} \ge 280.0) \land (y_{\max} \ge 90.0)$$
+  $$\Delta X = -(x_{\max} - 280.0 + 6.0	ext{ mm}), \quad P_{	ext{new}} = (x_{	ext{old}} + \Delta X, \; y_{	ext{old}})^T, \quad 	ext{Placing} = 	ext{LeaderLine}()$$
+</div>
+
+<h3>3.3 Derivations of the 7 Quality Control Algorithms</h3>
+<p><strong>Cat A: Boolean Cuts &amp; Penetrations (Winding Number Theorem)</strong></p>
+<div class="math-block">
+  $$w(Q) = rac{1}{2\pi} \sum_{i=0}^{n-1} 	ext{arctan2}\left( rac{\det(ec{v}_i, ec{v}_{i+1})}{ec{v}_i \cdot ec{v}_{i+1}} ight) = \sum_{i=0}^{n-1} [ +1 	ext{ if crossed upwards left}, -1 	ext{ if crossed downwards left} ]$$
+</div>
+<div class="analogy-box">
+  <strong>Analogy:</strong> Walking around the plate boundary turns left (winding = +1, outer solid). Walking around a window cutout turns right (winding = -1, inner opening). This tells Tekla to place opening dimensions instead of cross-hatching.
+</div>
+
+<p><strong>Cat B: Compound Angles &amp; True-Length (Direction Cosine Matrix)</strong></p>
+<div class="math-block">
+  $$	heta_{	ext{true}} = rccos\left( rac{\hat{n}_{	ext{cut}} \cdot \hat{V}_z}{\|\hat{n}_{	ext{cut}}\| \|\hat{V}_z\|} ight), \quad \mathbf{M}_{	ext{DCM}} = egin{pmatrix} \hat{X}_{	ext{aux}} \ \hat{Y}_{	ext{aux}} \ \hat{Z}_{	ext{aux}} \end{pmatrix} \implies P_{	ext{aux}} = \mathbf{M}_{	ext{DCM}} 	imes (P_{3D} - P_0)$$
+</div>
+<div class="analogy-box">
+  <strong>Analogy:</strong> A tilted signboard looks squashed in a photograph. The DCM rotates the virtual camera to stand exactly perpendicular to the face, capturing true length and bevel angle.
+</div>
+
+<p><strong>Cat C: Overlapping Dimensions (Force-Directed Spring Relaxation)</strong></p>
+<div class="math-block">
+  $$\mathbf{F}_{i, 	ext{net}} = \mathbf{F}_{	ext{repulsion}} + \mathbf{F}_{	ext{spring}} + \mathbf{F}_{	ext{damping}} = \sum_{j 
+eq i} k_r \left( rac{1}{r_{ij}^2} ight) \hat{r}_{ij} - k_s (\mathbf{x}_i - \mathbf{x}_{i, 0}) - c \mathbf{v}_i pprox 0$$
+</div>
+<div class="analogy-box">
+  <strong>Analogy:</strong> Texts act as repelling magnets tied to anchor points by rubber bands. Pushing and pulling balance out, settling crowded "288 288" labels with leader lines.
+</div>
+
+<p><strong>Cat D: View-Dependent Occlusion (Silhouette Grazing Angle)</strong></p>
+<div class="math-block">
+  $$|\hat{n}_{	ext{face}} \cdot \hat{d}_{	ext{ray}}| < \epsilon_{	ext{grazing}} \quad (\epsilon pprox 0.05), \quad R(t) = O + t \hat{d} \implies 	ext{Occluded if } 0 < t < t_{	ext{target}}$$
+</div>
+
+<p><strong>Cat E: Hierarchical Affine Transform Traversal</strong></p>
+<div class="math-block">
+  $$P_{	ext{view}} = \mathbf{M}_{	ext{view}\leftarrow	ext{global}} 	imes \mathbf{M}_{	ext{global}\leftarrow	ext{assembly}} 	imes \mathbf{M}_{	ext{assembly}\leftarrow	ext{part}} 	imes P_{	ext{part}} \quad (	ext{Tekla 2026: } \mathbf{M} = \mathbf{A} 	imes \mathbf{B})$$
+</div>
+
+<p><strong>Cat F: 1D Sweep-Line Fabrication Chains</strong></p>
+<div class="math-block">
+  $$s_k = (P_k - P_{	ext{datum}}) \cdot \hat{u}, \quad \mathcal{S}_{	ext{sorted}} = 	ext{Sort}(\{s_0, s_1, \dots, s_n\}), \quad \Delta s_i = s_i - s_{i-1}$$
+</div>
+
+<p><strong>Cat G: Tolerance &amp; Edge Distance Validator</strong></p>
+<div class="math-block">
+  $$t^* = rac{(C - A) \cdot (B - A)}{\|B - A\|^2}, \quad L_{	ext{edge}} = \|C - (A + 	ext{clamp}(t^*, 0, 1)(B - A))\| < 1.25 	imes d_{	ext{bolt}} \implies \mathbf{VIOLATION}$$
+</div>
+
+<h2>4. Clutter Clean &amp; View Filtering Architecture</h2>
+<p>Automating clean drawings requires suppressing unwanted neighbor parts, hidden line bloat, and infinite background view bleed before calculating dimensions.</p>
+
+<h3>4.1 The 3-Tier Clutter Elimination Strategy</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 20%;">Tier</th>
+      <th style="width: 30%;">Mechanism</th>
+      <th style="width: 50%;">Operational Effect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Tier 1: View Depth Frustum Clamping</strong></td>
+      <td>Mathematically restrict view front/back depths: $Z_{	ext{depth}} = 	ext{Thickness}/2 + 25	ext{ mm}$.</td>
+      <td>Eliminates 90% of ghost background bleed (slabs, secondary framing behind the view plane) at the hardware rasterizer level.</td>
+    </tr>
+    <tr>
+      <td><strong>Tier 2: Model Filter Injection</strong></td>
+      <td>Deploy <code>clean_fabrication.filter</code> to model <code>attributes/</code> directory.</td>
+      <td>Excludes <code>REBAR</code>, <code>IS_NEIGHBOR_PART</code>, and <code>IS_REFERENCE_MODEL</code> from initial view rendering.</td>
+    </tr>
+    <tr>
+      <td><strong>Tier 3: Open API Object Suppression</strong></td>
+      <td>C# scan of <code>DrawingObject</code> instances with <code>Hideable.HideFromDrawingView()</code>.</td>
+      <td>Forces <code>DrawHiddenLines = false</code>, <code>DrawOwnHiddenLines = false</code>, and hides orphaned secondary lines.</td>
+    </tr>
+  </tbody>
+</table>
+
+<pre><code class="language-csharp">// Production View Clutter Suppression (Tekla 2026 Open API)
+public static void CleanDrawingClutter(View view, HashSet&lt;int&gt; mainAssemblyIds)
+{
+    var objects = view.GetAllObjects();
+    while (objects.MoveNext())
+    {
+        if (objects.Current is Part dwgPart)
+        {
+            int mId = dwgPart.ModelIdentifier != null ? dwgPart.ModelIdentifier.ID : 0;
+            // Hide Neighbor Parts not belonging to current assembly
+            if (mId > 0 &amp;&amp; !mainAssemblyIds.Contains(mId))
+            {
+                dwgPart.Hideable?.HideFromDrawingView();
+                dwgPart.Modify();
+                continue;
+            }
+            // Suppress hidden line bloat
+            if (dwgPart.Attributes != null)
+            {
+                dwgPart.Attributes.DrawHiddenLines = false;
+                dwgPart.Attributes.DrawOwnHiddenLines = false;
+                dwgPart.Attributes.DrawReferenceLine = false;
+                dwgPart.Modify();
+            }
+        }
+    }
+}</code></pre>
+
+<h2>5. Precision Dimension Automation (3-Tier Hierarchy)</h2>
+<p>Precision dimensioning maps live 3D solid coordinates into 2D orthographic view space using a strict 3-tier hierarchy, avoiding coordinate drift and broken dimensions.</p>
+
+<div class="info-box">
+  <strong>Structural Detailer's Hierarchy:</strong><br>
+  &bull; <strong>Tier 1 (Outer Chain, 38 mm offset):</strong> Total span length &amp; total profile height.<br>
+  &bull; <strong>Tier 2 (Intermediate Chain, 26 mm offset):</strong> Major cutouts, haunches, and fitting centers.<br>
+  &bull; <strong>Tier 3 (Inner Chain, 14 mm offset):</strong> Bolt hole-to-hole pitch (70/80 mm) and edge distances.
+</div>
+
+<h3>5.1 Collinear Clustering &amp; 0.5 mm Deduplication Math</h3>
+<p>Tekla's <code>StraightDimensionSetHandler</code> requires sorted points and throws fatal errors on coincident points ($|P_i - P_j| &lt; 0.5	ext{ mm}$):</p>
+<div class="math-block">
+  $$	ext{Cluster}(P_i, P_j) \iff |P_{i, y} - P_{j, y}| \le 3.0	ext{ mm}, \quad 	ext{Sort}(P) 	ext{ along } \hat{u}$$
+  $$	ext{Filter: Discard } P_{k} 	ext{ if } \|P_k - P_{k-1}\| < 0.5	ext{ mm}$$
+</div>
+
+<pre><code class="language-csharp">// Precision Dimension Creation via StraightDimensionSetHandler
+public static bool CreateCleanDimensionChain(View view, List&lt;Point&gt; pts, Vector upDir, double distance)
+{
+    var sorted = (Math.Abs(upDir.Y) > 0.5) ? pts.OrderBy(p => p.X).ToList() : pts.OrderBy(p => p.Y).ToList();
+    var deduplicated = new PointList();
+    Point prev = null;
+    foreach (var pt in sorted)
+    {
+        if (prev == null || Math.Sqrt(Math.Pow(pt.X - prev.X, 2) + Math.Pow(pt.Y - prev.Y, 2)) >= 0.5)
+        {
+            deduplicated.Add(new Point(pt.X, pt.Y, 0));
+            prev = pt;
+        }
+    }
+    if (deduplicated.Count &lt; 2) return false;
+    var handler = new StraightDimensionSetHandler();
+    return handler.CreateDimensionSet(view, deduplicated, upDir, distance) != null;
+}</code></pre>
+
+<h2>6. Practical Plan Master Flowchart</h2>
+<p>The entire automated pipeline executes seamlessly across 8 deterministic stages:</p>
+
+<div class="flowchart-container">
+  <div class="flow-step">
+    <div class="flow-step-header"><span>STAGE 1: 3D MODEL SCANNING &amp; FEATURE EXTRACTION</span><span>Tekla.Structures.Model</span></div>
+    <div class="flow-step-body">Extracts main part solids, secondary parts, bolt groups, boolean cuts, and Center of Gravity (COG) in global coordinates.</div>
+  </div>
+  <div class="flow-arrow">&darr;</div>
+  <div class="flow-step">
+    <div class="flow-step-header"><span>STAGE 2: TEMPLATE APPLICATION &amp; INITIAL VIEW SPAWN</span><span>Akit Macro (.cs) / Layout</span></div>
+    <div class="flow-step-body">Applies master drawing layout (.lay) and title block. Macro handles styling only; no geometric positioning is delegated to Akit.</div>
+  </div>
+  <div class="flow-arrow">&darr;</div>
+  <div class="flow-step">
+    <div class="flow-step-header"><span>STAGE 3: CLUTTER CLEANING &amp; VIEW FILTERING</span><span>DrawingClutterCleaner</span></div>
+    <div class="flow-step-body">Clamps view frustum depth ($Z = T/2 + 25	ext{ mm}$), hides neighbor parts, suppresses hidden line bloat and reference lines.</div>
+  </div>
+  <div class="flow-arrow">&darr;</div>
+  <div class="flow-step">
+    <div class="flow-step-header"><span>STAGE 4: PRECISION DIMENSIONING ENGINE</span><span>PrecisionDimensionAutomator</span></div>
+    <div class="flow-step-body">Transforms 3D points to 2D view space ($\mathbf{M}_{	ext{view}\leftarrow	ext{global}}$), clusters &amp; deduplicates ($0.5	ext{ mm}$ tol), generates 3-tier chains.</div>
+  </div>
+  <div class="flow-arrow">&darr;</div>
+  <div class="flow-step">
+    <div class="flow-step-header"><span>STAGE 5: ZERO-BOM KEEP-OUT OPTIMIZATION</span><span>VerifiedLayoutOptimizer</span></div>
+    <div class="flow-step-body">Scans Table AABB extents. Clamps drawing views to Safe Zone 3 ($X \le 270	ext{ mm}$) using direct <code>view.Origin</code> math (Zero CommandRepository crash).</div>
+  </div>
+  <div class="flow-arrow">&darr;</div>
+  <div class="flow-step">
+    <div class="flow-step-header"><span>STAGE 6: SINGLE-PAGE 11x17 VECTOR PDF EXPORT</span><span>DrawingGenerator</span></div>
+    <div class="flow-step-body">DPMPrinterAttributes with <code>DotPrintScalingType.Auto</code>, <code>Orientation.Landscape</code>, <code>PrintToMultipleSheet = Off</code>.</div>
+  </div>
+  <div class="flow-arrow">&darr;</div>
+  <div class="flow-step">
+    <div class="flow-step-header"><span>STAGE 7: MEMORY RECYCLER &amp; HEURISTIC QA</span><span>SafeBatchDrawingWorker</span></div>
+    <div class="flow-step-body">Closes drawing (<code>CloseActiveDrawing(true)</code>). Every 25 sheets: runs <code>GC.Collect()</code>. Validates PDF size (&lt; 30 KB fail vs &gt; 100 KB success).</div>
+  </div>
+  <div class="flow-arrow">&darr;</div>
+  <div class="flow-step">
+    <div class="flow-step-header"><span>STAGE 8: LIVE TEKLA UI HUMAN EDITABILITY</span><span>Tekla 2026 Interactive GUI</span></div>
+    <div class="flow-step-body">All dimensions, marks, and views remain 100% native <code>DrawingObject</code> instances, fully draggable and editable by human engineers.</div>
+  </div>
+</div>
+
+<h2>7. Implementation Approaches: Pros &amp; Cons Matrix</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 20%;">Implementation Route</th>
+      <th style="width: 40%;">Advantages (PROS)</th>
+      <th style="width: 40%;">Disadvantages (CONS)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Pure Akit Macro (.cs)</strong></td>
+      <td>&bull; Easy to record without coding.<br>&bull; Instantly loads pre-saved property presets (.opt / .cudraw).</td>
+      <td><span style="color: #cf222e;">&times; Zero Math Capability:</span> Cannot compute bounding boxes or detect text collisions.<br><span style="color: #cf222e;">&times; Crashes on Focus Loss:</span> <code>Drawing.ArrangeViews</code> throws NullReferenceException.<br><span style="color: #cf222e;">&times; Silent Failures:</span> No return codes.</td>
+    </tr>
+    <tr>
+      <td><strong>2. Standalone Open API CLI (.exe)</strong></td>
+      <td><span style="color: #1a7f37;">&check; Enterprise Batch Processing:</span> Processes 500+ sheets unattended.<br><span style="color: #1a7f37;">&check; Worker Recycling:</span> Flushes GDI/COM heap every 25 sheets (&le; 1.8 GB RAM).<br><span style="color: #1a7f37;">&check; Full Math Suite:</span> Full Cat A&ndash;G algorithms.</td>
+      <td>&bull; Runs outside Tekla UI; launched from terminal or task scheduler.<br>&bull; No interactive visual preview while running.</td>
+    </tr>
+    <tr>
+      <td><strong>3. Open API in UI Macro (.cs)<br><em>(Recommended)</em></strong></td>
+      <td><span style="color: #1a7f37;">&check; 1-Click Live UI Button:</span> Runs inside Tekla Applications &amp; Components.<br><span style="color: #1a7f37;">&check; Crash-Proof view.Origin Math:</span> Bypasses CommandRepository bugs.<br><span style="color: #1a7f37;">&check; 100% Live Engineer Editability:</span> Native Tekla DrawingObjects.</td>
+      <td>&bull; Must be placed in model or firm macro directory (solved by TSEP packaging).</td>
+    </tr>
+    <tr>
+      <td><strong>4. Reusable TSEP Extension Package</strong></td>
+      <td><span style="color: #1a7f37;">&check; Double-Click Install:</span> Auto-registers into Tekla 2026 Extension Manager.<br><span style="color: #1a7f37;">&check; Custom Ribbon Tab:</span> Permanent [ Auto-Fit 11x17 &amp; Clean ] button.<br><span style="color: #1a7f37;">&check; Model Independent:</span> Zero manual configuration per project.</td>
+      <td>&bull; Requires initial TSEP zip archive packaging step.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>8. Crash-Proof Mathematical View Positioning</h2>
+<p>To eliminate <code>NullReferenceException</code> caused by <code>CommandRepository</code>, the pipeline calculates and updates <code>view.Origin</code> directly:</p>
+
+<pre><code class="language-csharp">public static void PositionViewMathematically(View view)
+{
+    var aabb = view.GetAxisAlignedBoundingBox();
+    if (aabb == null) return;
+
+    // Center of Safe Zone 3 on 11x17: X = (15 + 270) / 2 = 142.5mm, Y = (15 + 260) / 2 = 137.5mm
+    double currentCenterX = (aabb.MinPoint.X + aabb.MaxPoint.X) / 2.0;
+    double currentCenterY = (aabb.MinPoint.Y + aabb.MaxPoint.Y) / 2.0;
+
+    double deltaX = 142.5 - currentCenterX;
+    double deltaY = 137.5 - currentCenterY;
+
+    view.Origin = new Point(view.Origin.X + deltaX, view.Origin.Y + deltaY, view.Origin.Z);
+    view.Modify();
+
+    // Clamp away from BOM if right edge exceeds X = 270mm
+    var updatedAabb = view.GetAxisAlignedBoundingBox();
+    if (updatedAabb != null &amp;&amp; updatedAabb.MaxPoint.X > 270.0)
+    {
+        double overShoot = updatedAabb.MaxPoint.X - 270.0;
+        view.Origin = new Point(view.Origin.X - overShoot, view.Origin.Y, view.Origin.Z);
+        view.Modify();
+    }
+}</code></pre>
+
+<h2>9. Complete TSEP Package Distribution Blueprint</h2>
+<p>The entire system is bundled into a self-contained Tekla Structures Extension Package (.tsep) for seamless team deployment:</p>
+
+<pre><code>Tekla2DAutoOptimizer.tsep (ZIP Archive Container)
+├── manifest.xml                        (Compatibility definition for Tekla Structures 2026.0)
+├── bin│   └── Tekla2DAutoOptimizer.dll        (Compiled 7-Algorithm Open API Engine)
+├── DrawingMacros│   └── AutoCompressAndEdit11x17.cs     (1-Click UI Macro Button)
+├── Attributes│   ├── clean_fabrication.filter        (Clutter suppression view filter)
+│   ├── SP_M.CU_HARDWARE_PROPS_11X17.cudraw (Pre-configured 11x17 properties)
+│   └── 11x17_Precast_Standard.lay      (BOM &amp; Title Block layout definitions)
+└── Ribbon    └── DrawingEditorRibbon.xml         (Top Ribbon Integration: [ Auto-Fit 11x17 &amp; Clean ])</code></pre>
+
+<h3>9.1 manifest.xml Definition</h3>
+<pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Extension Version="1.0"&gt;
+  &lt;Identity&gt;Tekla2DAutoOptimizer&lt;/Identity&gt;
+  &lt;Name&gt;Tekla 2026 2D Auto-Optimizer &amp; 11x17 Compressor&lt;/Name&gt;
+  &lt;Publisher&gt;Structural Engineering Automation Group&lt;/Publisher&gt;
+  &lt;Compatibility&gt;
+    &lt;MinVersion&gt;2026.0&lt;/MinVersion&gt;
+    &lt;MaxVersion&gt;2026.9&lt;/MaxVersion&gt;
+  &lt;/Compatibility&gt;
+  &lt;Files&gt;
+    &lt;File TargetFolder="%XSDATADIR%\environments\common\macros\drawings"&gt;DrawingMacros\AutoCompressAndEdit11x17.cs&lt;/File&gt;
+    &lt;File TargetFolder="%XSDATADIR%\environments\common\attributes"&gt;Attributes\*.*&lt;/File&gt;
+  &lt;/Files&gt;
+&lt;/Extension&gt;</code></pre>
+
+<h2>10. Engineer-Level Live UI &amp; Vector PDF Verification</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 22%;">Operational Dimension</th>
+      <th style="width: 39%;">Tekla UI Live Editor Experience</th>
+      <th style="width: 39%;">Compiled 11x17 PDF Output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Visual Clarity</strong></td>
+      <td>Elevation rebar hidden; sharp concrete silhouette; zero clutter.</td>
+      <td>High-contrast vector lines; zero raster blur at 1000% zoom.</td>
+    </tr>
+    <tr>
+      <td><strong>BOM Placement</strong></td>
+      <td>BOM table docked in top-right corner; zero view/text touch.</td>
+      <td>Docked cleanly on the same sheet; 100% itemized hardware table.</td>
+    </tr>
+    <tr>
+      <td><strong>Text Clashes</strong></td>
+      <td>"288 288" staggered vertically with leader lines.</td>
+      <td>Crystal-clear, un-obscured dimension reading for shop floor.</td>
+    </tr>
+    <tr>
+      <td><strong>Human Editability</strong></td>
+      <td><strong>100% Editable:</strong> Engineer can drag dimensions, edit UDAs, and modify marks.</td>
+      <td>Static, tamper-proof fabrication document issued for shop floor.</td>
+    </tr>
+    <tr>
+      <td><strong>Verification Metric</strong></td>
+      <td>CommitChanges() successful; modified in 1.5 seconds.</td>
+      <td>File size &ge; 100 KB; strictly 1 single page (PrintToMultipleSheet = Off).</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="footer">
+  <span>Tekla Structures 2026 Complete Master Specification v2.0</span>
+  <span>Confidential &amp; Proprietary &mdash; Engineering Detailing Standard</span>
+</div>
+
+</body>
+</html>

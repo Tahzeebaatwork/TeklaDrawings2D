@@ -1,0 +1,419 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "ERECTION",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "L-4",
+    "DrawingName": "",
+    "DrawingMark": "[L-4]",
+    "Title1": "",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2026-09-02",
+    "Scale": "",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T10:13:44.1062103Z"
+  },
+  "Placement": {
+    "PieceMark": "L-4",
+    "Name": "Landing",
+    "Profile": "254.0*2129.0",
+    "Material": "6000",
+    "Floor": "",
+    "Grid": "X10410/Y18736",
+    "Position": {
+      "X": 10409.5,
+      "Y": 18736.003,
+      "Z": 27516.0
+    },
+    "StartPoint": {
+      "X": 9208.0,
+      "Y": 18736.003,
+      "Z": 27516.0
+    },
+    "EndPoint": {
+      "X": 11611.0,
+      "Y": 18736.003,
+      "Z": 27516.0
+    },
+    "AxisX": {
+      "X": 2555.0,
+      "Y": 0.0,
+      "Z": 0.0
+    },
+    "AxisY": {
+      "X": 0.0,
+      "Y": 0.0,
+      "Z": 1000.0
+    },
+    "AxisZ": {
+      "X": 0.0,
+      "Y": -2555000.0,
+      "Z": 0.0
+    },
+    "LengthMm": 2403.0,
+    "Id": 149547659,
+    "Guid": "11602871-df7d-4688-a3ce-e2813ce81937"
+  },
+  "AnchorsAndEmbeds": [
+    {
+      "PieceMark": "L-4",
+      "Mark": "GT75-254",
+      "Description": "75Ø GROUT TUBE x 254",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 10409.503,
+        "Y": 17236.503,
+        "Z": 27262.0
+      },
+      "Guid": "141f2f30-9d7d-478b-ab8c-590c3c4364a1",
+      "Id": 154668853
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-403-11",
+      "Description": "L102X102X12.7 W/STUDS",
+      "Kind": "EMBED",
+      "Profile": "L102X102X12.7",
+      "Material": "A572-GR.50",
+      "Quantity": 1,
+      "Position": {
+        "X": 11605.0,
+        "Y": 17090.697,
+        "Z": 27389.3
+      },
+      "Guid": "89541242-d7d0-46e7-b186-0f647267e07f",
+      "Id": 154722651
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-403-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 11480.0,
+        "Y": 17141.696,
+        "Z": 27389.3
+      },
+      "Guid": "9a4938be-d8ee-4f3b-b394-6f50dc708028",
+      "Id": 154722725
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-403-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 11210.0,
+        "Y": 17141.693,
+        "Z": 27389.3
+      },
+      "Guid": "c410e1b0-be39-45db-9b44-da23ae9560a0",
+      "Id": 154722766
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-403-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 10939.0,
+        "Y": 17141.69,
+        "Z": 27389.3
+      },
+      "Guid": "d6f31d2a-f417-448e-b71f-ec5eef0a7227",
+      "Id": 154722816
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-403-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "STUD_1/2-DIA",
+      "Material": "A108-C1010-1020",
+      "Quantity": 1,
+      "Position": {
+        "X": 10668.0,
+        "Y": 17141.686,
+        "Z": 27389.3
+      },
+      "Guid": "5d3f1d1a-fb91-4246-8fc2-4f93c9213200",
+      "Id": 154722857
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-207-11",
+      "Description": "4000LB T-BAR ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 11045.25,
+        "Y": 18005.794,
+        "Z": 27503.0
+      },
+      "Guid": "84274df7-5d36-4316-b932-d06e18e8ef5f",
+      "Id": 154863506
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-207-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 11007.15,
+        "Y": 17989.924,
+        "Z": 27420.45
+      },
+      "Guid": "b815c096-904e-4a2c-a8e4-7b370bad4bae",
+      "Id": 154863576
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-206-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 11097.277,
+        "Y": 17989.924,
+        "Z": 27516.0
+      },
+      "Guid": "ac8400c6-63d5-4c4c-be6c-eb60ccb687f3",
+      "Id": 154863617
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-207-11",
+      "Description": "4000LB T-BAR ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 9928.74,
+        "Y": 17171.274,
+        "Z": 27503.0
+      },
+      "Guid": "31d517fb-6a73-4a5e-871c-a6a961662c9d",
+      "Id": 154863917
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-207-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 9890.64,
+        "Y": 17155.404,
+        "Z": 27420.45
+      },
+      "Guid": "cedb03d0-9dc5-4417-b788-4f4f06081d0a",
+      "Id": 154863987
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-206-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 9980.767,
+        "Y": 17155.404,
+        "Z": 27516.0
+      },
+      "Guid": "31fba45a-fc18-424d-8236-ea5eb7cb41f8",
+      "Id": 154864028
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-207-11",
+      "Description": "4000LB T-BAR ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10737.558,
+        "Y": 18424.99,
+        "Z": 27503.0
+      },
+      "Guid": "bc8afa8e-7258-4a5d-b6fd-db69426d68d1",
+      "Id": 154864328
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-207-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 10699.458,
+        "Y": 18409.12,
+        "Z": 27420.45
+      },
+      "Guid": "e18109d9-ad8f-46b0-a283-5798ebc32d18",
+      "Id": 154864398
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-206-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 10789.585,
+        "Y": 18409.12,
+        "Z": 27516.0
+      },
+      "Guid": "a377137e-c27e-4d48-b08b-1c3c3459461f",
+      "Id": 154864439
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-207-11",
+      "Description": "4000LB T-BAR ANCHOR",
+      "Kind": "ANCHOR",
+      "Profile": "PL15.88",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 9621.048,
+        "Y": 17605.47,
+        "Z": 27503.0
+      },
+      "Guid": "9ebff4f0-c722-4f47-bf62-33d94251fdab",
+      "Id": 154864707
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-207-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD12.7",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 9582.948,
+        "Y": 17589.6,
+        "Z": 27420.45
+      },
+      "Guid": "0f8db711-7b98-45e4-a2b4-b0a51a417cef",
+      "Id": 154864777
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "P-206-31",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "PL54",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 9673.075,
+        "Y": 17589.6,
+        "Z": 27516.0
+      },
+      "Guid": "7ebaeb44-e845-4648-b64e-a79bd31543bc",
+      "Id": 154864818
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "SLV-102-254",
+      "Description": "102Ø x 254 PVC SLEEVE",
+      "Kind": "SLEEVE",
+      "Profile": "ROD108",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 9551.0,
+        "Y": 18609.007,
+        "Z": 27516.0
+      },
+      "Guid": "c879ddba-7c5c-4d15-a3d6-b1c2345446c6",
+      "Id": 155377105
+    },
+    {
+      "PieceMark": "L-4",
+      "Mark": "SLV-152-254",
+      "Description": "152Ø x 254 PVC SLEEVE",
+      "Kind": "SLEEVE",
+      "Profile": "ROD160",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 9335.0,
+        "Y": 18609.003,
+        "Z": 27516.0
+      },
+      "Guid": "0c101008-4e5c-45cf-9ec7-970f111b4c8f",
+      "Id": 155377232
+    }
+  ],
+  "ElevationAndPlanRefs": [
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ],
+  "ErectionSequenceNotes": [],
+  "Dimensions": []
+}

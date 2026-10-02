@@ -1,0 +1,4704 @@
+{
+  "mode": "folder",
+  "title": "WithoutMacros (Open API)",
+  "generated": "2026-09-03 11:57",
+  "leftLabel": "WithoutMacros (Open API)",
+  "csv": {
+    "local": [
+      {
+        "name": "BOM.csv",
+        "href": "BOM.csv"
+      },
+      {
+        "name": "SHOP.csv",
+        "href": "SHOP.csv"
+      },
+      {
+        "name": "REBAR_BBS.csv",
+        "href": "REBAR_BBS.csv"
+      },
+      {
+        "name": "CONNECTION.csv",
+        "href": "CONNECTION.csv"
+      },
+      {
+        "name": "ERECTION.csv",
+        "href": "ERECTION.csv"
+      },
+      {
+        "name": "GA.csv",
+        "href": "GA.csv"
+      }
+    ],
+    "root": [],
+    "macros": [],
+    "api": []
+  },
+  "pieces": [
+    {
+      "mark": "1",
+      "family": "1",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_1_GA.json"
+      }
+    },
+    {
+      "mark": "10",
+      "family": "10",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_10_GA.json"
+      }
+    },
+    {
+      "mark": "2",
+      "family": "2",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_2_GA.json"
+      }
+    },
+    {
+      "mark": "3",
+      "family": "3",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_3_GA.json"
+      }
+    },
+    {
+      "mark": "4",
+      "family": "4",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_4_GA.json"
+      }
+    },
+    {
+      "mark": "5",
+      "family": "5",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_5_GA.json"
+      }
+    },
+    {
+      "mark": "6",
+      "family": "6",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_6_GA.json"
+      }
+    },
+    {
+      "mark": "7",
+      "family": "7",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_7_GA.json"
+      }
+    },
+    {
+      "mark": "8",
+      "family": "8",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_8_GA.json"
+      }
+    },
+    {
+      "mark": "9",
+      "family": "9",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_9_GA.json"
+      }
+    },
+    {
+      "mark": "A5",
+      "family": "A5",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/A5.pdf",
+          "PDF/A5_-_1.pdf",
+          "PDF/A5_-_2.pdf",
+          "PDF/A5_-_3.pdf",
+          "PDF/A5_-_4.pdf"
+        ],
+        "shop": "SHOP/1_A5_SHOP.json",
+        "bbs": "REBAR_BBS/1_A5_REBAR_BBS.json",
+        "conn": "CONNECTION/1_A5_CONNECTION.json",
+        "erection": "ERECTION/1_A5_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-1",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/BA-1.pdf",
+          "PDF/BA-1_-_1.pdf",
+          "PDF/BA-1_-_2.pdf",
+          "PDF/BA-1_-_3.pdf",
+          "PDF/BA-1_-_4.pdf"
+        ],
+        "shop": "SHOP/1_BA-1_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-1_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-1_CONNECTION.json",
+        "erection": "ERECTION/1_BA-1_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-10",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_BA-10_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-10_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-10_CONNECTION.json",
+        "erection": "ERECTION/1_BA-10_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-11",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_BA-11_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-11_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-11_CONNECTION.json",
+        "erection": "ERECTION/1_BA-11_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-12",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/BA-12.pdf",
+          "PDF/BA-12_-_1.pdf",
+          "PDF/BA-12_-_2.pdf",
+          "PDF/BA-12_-_3.pdf",
+          "PDF/BA-12_-_4.pdf"
+        ],
+        "shop": "SHOP/1_BA-12_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-12_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-12_CONNECTION.json",
+        "erection": "ERECTION/1_BA-12_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-2",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/BA-2.pdf",
+          "PDF/BA-2_-_1.pdf",
+          "PDF/BA-2_-_2.pdf",
+          "PDF/BA-2_-_3.pdf",
+          "PDF/BA-2_-_4.pdf"
+        ],
+        "shop": "SHOP/1_BA-2_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-2_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-2_CONNECTION.json",
+        "erection": "ERECTION/1_BA-2_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-3",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/BA-3.pdf",
+          "PDF/BA-3_-_1.pdf",
+          "PDF/BA-3_-_2.pdf",
+          "PDF/BA-3_-_3.pdf",
+          "PDF/BA-3_-_4.pdf"
+        ],
+        "shop": "SHOP/1_BA-3_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-3_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-3_CONNECTION.json",
+        "erection": "ERECTION/1_BA-3_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-4",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/BA-4.pdf",
+          "PDF/BA-4_-_1.pdf",
+          "PDF/BA-4_-_2.pdf",
+          "PDF/BA-4_-_3.pdf",
+          "PDF/BA-4_-_4.pdf"
+        ],
+        "shop": "SHOP/1_BA-4_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-4_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-4_CONNECTION.json",
+        "erection": "ERECTION/1_BA-4_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-5",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/BA-5.pdf",
+          "PDF/BA-5_-_1.pdf",
+          "PDF/BA-5_-_2.pdf",
+          "PDF/BA-5_-_3.pdf",
+          "PDF/BA-5_-_4.pdf"
+        ],
+        "shop": "SHOP/1_BA-5_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-5_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-5_CONNECTION.json",
+        "erection": "ERECTION/1_BA-5_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-6",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/BA-6.pdf",
+          "PDF/BA-6_-_1.pdf",
+          "PDF/BA-6_-_2.pdf",
+          "PDF/BA-6_-_3.pdf",
+          "PDF/BA-6_-_4.pdf"
+        ],
+        "shop": "SHOP/1_BA-6_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-6_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-6_CONNECTION.json",
+        "erection": "ERECTION/1_BA-6_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-8",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_BA-8_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-8_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-8_CONNECTION.json",
+        "erection": "ERECTION/1_BA-8_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "BA-9",
+      "family": "BA",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_BA-9_SHOP.json",
+        "bbs": "REBAR_BBS/1_BA-9_REBAR_BBS.json",
+        "conn": "CONNECTION/1_BA-9_CONNECTION.json",
+        "erection": "ERECTION/1_BA-9_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "L-1",
+      "family": "L",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/L-1.pdf",
+          "PDF/L-1_-_1.pdf",
+          "PDF/L-1_-_2.pdf",
+          "PDF/L-1_-_3.pdf",
+          "PDF/L-1_-_4.pdf"
+        ],
+        "shop": "SHOP/1_L-1_SHOP.json",
+        "bbs": "REBAR_BBS/1_L-1_REBAR_BBS.json",
+        "conn": "CONNECTION/1_L-1_CONNECTION.json",
+        "erection": "ERECTION/1_L-1_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "L-2",
+      "family": "L",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/L-2.pdf",
+          "PDF/L-2_-_1.pdf",
+          "PDF/L-2_-_2.pdf",
+          "PDF/L-2_-_3.pdf",
+          "PDF/L-2_-_4.pdf"
+        ],
+        "shop": "SHOP/1_L-2_SHOP.json",
+        "bbs": "REBAR_BBS/1_L-2_REBAR_BBS.json",
+        "conn": "CONNECTION/1_L-2_CONNECTION.json",
+        "erection": "ERECTION/1_L-2_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "L-3",
+      "family": "L",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/L-3.pdf",
+          "PDF/L-3_-_1.pdf",
+          "PDF/L-3_-_2.pdf",
+          "PDF/L-3_-_3.pdf",
+          "PDF/L-3_-_4.pdf"
+        ],
+        "shop": "SHOP/1_L-3_SHOP.json",
+        "bbs": "REBAR_BBS/1_L-3_REBAR_BBS.json",
+        "conn": "CONNECTION/1_L-3_CONNECTION.json",
+        "erection": "ERECTION/1_L-3_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "L-4",
+      "family": "L",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/L-4.pdf",
+          "PDF/L-4_-_1.pdf",
+          "PDF/L-4_-_2.pdf",
+          "PDF/L-4_-_3.pdf",
+          "PDF/L-4_-_4.pdf"
+        ],
+        "shop": "SHOP/1_L-4_SHOP.json",
+        "bbs": "REBAR_BBS/1_L-4_REBAR_BBS.json",
+        "conn": "CONNECTION/1_L-4_CONNECTION.json",
+        "erection": "ERECTION/1_L-4_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "L-5",
+      "family": "L",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/L-5.pdf",
+          "PDF/L-5_-_1.pdf",
+          "PDF/L-5_-_2.pdf",
+          "PDF/L-5_-_3.pdf",
+          "PDF/L-5_-_4.pdf"
+        ],
+        "shop": "SHOP/1_L-5_SHOP.json",
+        "bbs": "REBAR_BBS/1_L-5_REBAR_BBS.json",
+        "conn": "CONNECTION/1_L-5_CONNECTION.json",
+        "erection": "ERECTION/1_L-5_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "L-6",
+      "family": "L",
+      "kind": "BEAM",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/L-6.pdf",
+          "PDF/L-6_-_1.pdf",
+          "PDF/L-6_-_2.pdf",
+          "PDF/L-6_-_3.pdf",
+          "PDF/L-6_-_4.pdf"
+        ],
+        "shop": "SHOP/1_L-6_SHOP.json",
+        "bbs": "REBAR_BBS/1_L-6_REBAR_BBS.json",
+        "conn": "CONNECTION/1_L-6_CONNECTION.json",
+        "erection": "ERECTION/1_L-6_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-1",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-1.pdf",
+          "PDF/P6-1_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-1_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-1_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-1_CONNECTION.json",
+        "erection": "ERECTION/1_P6-1_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-10",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-10.pdf",
+          "PDF/P6-10_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-10_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-10_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-10_CONNECTION.json",
+        "erection": "ERECTION/1_P6-10_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-11",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-11.pdf",
+          "PDF/P6-11_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-11_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-11_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-11_CONNECTION.json",
+        "erection": "ERECTION/1_P6-11_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-12",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-12.pdf",
+          "PDF/P6-12_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-12_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-12_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-12_CONNECTION.json",
+        "erection": "ERECTION/1_P6-12_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-13",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-13.pdf",
+          "PDF/P6-13_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-13_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-13_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-13_CONNECTION.json",
+        "erection": "ERECTION/1_P6-13_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-14",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-14.pdf",
+          "PDF/P6-14_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-14_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-14_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-14_CONNECTION.json",
+        "erection": "ERECTION/1_P6-14_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-15",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-15.pdf",
+          "PDF/P6-15_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-15_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-15_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-15_CONNECTION.json",
+        "erection": "ERECTION/1_P6-15_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-16",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-16.pdf",
+          "PDF/P6-16_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-16_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-16_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-16_CONNECTION.json",
+        "erection": "ERECTION/1_P6-16_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-17",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-17.pdf",
+          "PDF/P6-17_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-17_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-17_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-17_CONNECTION.json",
+        "erection": "ERECTION/1_P6-17_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-18",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-18.pdf",
+          "PDF/P6-18_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-18_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-18_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-18_CONNECTION.json",
+        "erection": "ERECTION/1_P6-18_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-19",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-19.pdf",
+          "PDF/P6-19_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-19_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-19_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-19_CONNECTION.json",
+        "erection": "ERECTION/1_P6-19_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-2",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-2.pdf",
+          "PDF/P6-2_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-2_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-2_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-2_CONNECTION.json",
+        "erection": "ERECTION/1_P6-2_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-20",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-20.pdf",
+          "PDF/P6-20_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-20_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-20_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-20_CONNECTION.json",
+        "erection": "ERECTION/1_P6-20_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-21",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-21.pdf",
+          "PDF/P6-21_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-21_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-21_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-21_CONNECTION.json",
+        "erection": "ERECTION/1_P6-21_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-22",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-22.pdf",
+          "PDF/P6-22_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-22_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-22_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-22_CONNECTION.json",
+        "erection": "ERECTION/1_P6-22_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-23",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_P6-23_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-23_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-23_CONNECTION.json",
+        "erection": "ERECTION/1_P6-23_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-24",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-24.pdf",
+          "PDF/P6-24_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-24_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-24_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-24_CONNECTION.json",
+        "erection": "ERECTION/1_P6-24_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-25",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-25.pdf",
+          "PDF/P6-25_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-25_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-25_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-25_CONNECTION.json",
+        "erection": "ERECTION/1_P6-25_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-26",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-26.pdf",
+          "PDF/P6-26_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-26_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-26_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-26_CONNECTION.json",
+        "erection": "ERECTION/1_P6-26_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-27",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-27.pdf",
+          "PDF/P6-27_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-27_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-27_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-27_CONNECTION.json",
+        "erection": "ERECTION/1_P6-27_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-28",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-28.pdf",
+          "PDF/P6-28_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-28_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-28_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-28_CONNECTION.json",
+        "erection": "ERECTION/1_P6-28_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-29",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-29.pdf",
+          "PDF/P6-29_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-29_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-29_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-29_CONNECTION.json",
+        "erection": "ERECTION/1_P6-29_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-3",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-3.pdf",
+          "PDF/P6-3_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-3_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-3_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-3_CONNECTION.json",
+        "erection": "ERECTION/1_P6-3_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-30",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-30.pdf",
+          "PDF/P6-30_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-30_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-30_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-30_CONNECTION.json",
+        "erection": "ERECTION/1_P6-30_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-31",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-31.pdf",
+          "PDF/P6-31_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-31_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-31_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-31_CONNECTION.json",
+        "erection": "ERECTION/1_P6-31_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-32",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-32.pdf",
+          "PDF/P6-32_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-32_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-32_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-32_CONNECTION.json",
+        "erection": "ERECTION/1_P6-32_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-33",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-33.pdf",
+          "PDF/P6-33_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-33_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-33_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-33_CONNECTION.json",
+        "erection": "ERECTION/1_P6-33_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-34",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-34.pdf",
+          "PDF/P6-34_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-34_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-34_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-34_CONNECTION.json",
+        "erection": "ERECTION/1_P6-34_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-35",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-35.pdf",
+          "PDF/P6-35_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-35_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-35_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-35_CONNECTION.json",
+        "erection": "ERECTION/1_P6-35_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-36",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-36.pdf",
+          "PDF/P6-36_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-36_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-36_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-36_CONNECTION.json",
+        "erection": "ERECTION/1_P6-36_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-37",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-37.pdf",
+          "PDF/P6-37_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-37_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-37_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-37_CONNECTION.json",
+        "erection": "ERECTION/1_P6-37_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-38",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-38.pdf",
+          "PDF/P6-38_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-38_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-38_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-38_CONNECTION.json",
+        "erection": "ERECTION/1_P6-38_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-39",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-39.pdf",
+          "PDF/P6-39_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-39_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-39_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-39_CONNECTION.json",
+        "erection": "ERECTION/1_P6-39_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-4",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-4.pdf",
+          "PDF/P6-4_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-4_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-4_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-4_CONNECTION.json",
+        "erection": "ERECTION/1_P6-4_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-40",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-40.pdf",
+          "PDF/P6-40_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-40_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-40_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-40_CONNECTION.json",
+        "erection": "ERECTION/1_P6-40_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-41",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-41.pdf",
+          "PDF/P6-41_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-41_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-41_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-41_CONNECTION.json",
+        "erection": "ERECTION/1_P6-41_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-42",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-42.pdf",
+          "PDF/P6-42_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-42_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-42_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-42_CONNECTION.json",
+        "erection": "ERECTION/1_P6-42_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-43",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-43.pdf",
+          "PDF/P6-43_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-43_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-43_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-43_CONNECTION.json",
+        "erection": "ERECTION/1_P6-43_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-44",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-44.pdf",
+          "PDF/P6-44_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-44_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-44_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-44_CONNECTION.json",
+        "erection": "ERECTION/1_P6-44_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-45",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-45.pdf",
+          "PDF/P6-45_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-45_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-45_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-45_CONNECTION.json",
+        "erection": "ERECTION/1_P6-45_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-46",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-46.pdf",
+          "PDF/P6-46_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-46_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-46_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-46_CONNECTION.json",
+        "erection": "ERECTION/1_P6-46_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-47",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-47.pdf",
+          "PDF/P6-47_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-47_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-47_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-47_CONNECTION.json",
+        "erection": "ERECTION/1_P6-47_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-49",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-49.pdf",
+          "PDF/P6-49_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-49_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-49_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-49_CONNECTION.json",
+        "erection": "ERECTION/1_P6-49_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-5",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-5.pdf",
+          "PDF/P6-5_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-5_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-5_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-5_CONNECTION.json",
+        "erection": "ERECTION/1_P6-5_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-6",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-6.pdf",
+          "PDF/P6-6_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-6_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-6_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-6_CONNECTION.json",
+        "erection": "ERECTION/1_P6-6_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-7",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-7.pdf",
+          "PDF/P6-7_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-7_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-7_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-7_CONNECTION.json",
+        "erection": "ERECTION/1_P6-7_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-8",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-8.pdf",
+          "PDF/P6-8_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-8_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-8_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-8_CONNECTION.json",
+        "erection": "ERECTION/1_P6-8_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "P6-9",
+      "family": "P6",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/P6-9.pdf",
+          "PDF/P6-9_-_1.pdf"
+        ],
+        "shop": "SHOP/1_P6-9_SHOP.json",
+        "bbs": "REBAR_BBS/1_P6-9_REBAR_BBS.json",
+        "conn": "CONNECTION/1_P6-9_CONNECTION.json",
+        "erection": "ERECTION/1_P6-9_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SR-1",
+      "family": "SR",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SR-1.pdf",
+          "PDF/SR-1_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SR-1_SHOP.json",
+        "bbs": "REBAR_BBS/1_SR-1_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SR-1_CONNECTION.json",
+        "erection": "ERECTION/1_SR-1_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SR-2",
+      "family": "SR",
+      "kind": "OTHER",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SR-2.pdf",
+          "PDF/SR-2_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SR-2_SHOP.json",
+        "bbs": "REBAR_BBS/1_SR-2_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SR-2_CONNECTION.json",
+        "erection": "ERECTION/1_SR-2_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SW15-1",
+      "family": "SW15",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SW15-1.pdf",
+          "PDF/SW15-1_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SW15-1_SHOP.json",
+        "bbs": "REBAR_BBS/1_SW15-1_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SW15-1_CONNECTION.json",
+        "erection": "ERECTION/1_SW15-1_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SW17-1",
+      "family": "SW17",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SW17-1.pdf",
+          "PDF/SW17-1_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SW17-1_SHOP.json",
+        "bbs": "REBAR_BBS/1_SW17-1_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SW17-1_CONNECTION.json",
+        "erection": "ERECTION/1_SW17-1_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SW17-2",
+      "family": "SW17",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SW17-2.pdf",
+          "PDF/SW17-2_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SW17-2_SHOP.json",
+        "bbs": "REBAR_BBS/1_SW17-2_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SW17-2_CONNECTION.json",
+        "erection": "ERECTION/1_SW17-2_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SW17-3",
+      "family": "SW17",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SW17-3.pdf",
+          "PDF/SW17-3_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SW17-3_SHOP.json",
+        "bbs": "REBAR_BBS/1_SW17-3_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SW17-3_CONNECTION.json",
+        "erection": "ERECTION/1_SW17-3_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SW17-4",
+      "family": "SW17",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SW17-4.pdf",
+          "PDF/SW17-4_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SW17-4_SHOP.json",
+        "bbs": "REBAR_BBS/1_SW17-4_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SW17-4_CONNECTION.json",
+        "erection": "ERECTION/1_SW17-4_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SW17-5",
+      "family": "SW17",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SW17-5.pdf",
+          "PDF/SW17-5_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SW17-5_SHOP.json",
+        "bbs": "REBAR_BBS/1_SW17-5_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SW17-5_CONNECTION.json",
+        "erection": "ERECTION/1_SW17-5_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SW17-6",
+      "family": "SW17",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SW17-6.pdf",
+          "PDF/SW17-6_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SW17-6_SHOP.json",
+        "bbs": "REBAR_BBS/1_SW17-6_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SW17-6_CONNECTION.json",
+        "erection": "ERECTION/1_SW17-6_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "SW17-7",
+      "family": "SW17",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/SW17-7.pdf",
+          "PDF/SW17-7_-_1.pdf"
+        ],
+        "shop": "SHOP/1_SW17-7_SHOP.json",
+        "bbs": "REBAR_BBS/1_SW17-7_REBAR_BBS.json",
+        "conn": "CONNECTION/1_SW17-7_CONNECTION.json",
+        "erection": "ERECTION/1_SW17-7_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-1",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-1.pdf",
+          "PDF/W10-1_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-1_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-1_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-1_CONNECTION.json",
+        "erection": "ERECTION/1_W10-1_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-10",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-10.pdf",
+          "PDF/W10-10_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-10_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-10_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-10_CONNECTION.json",
+        "erection": "ERECTION/1_W10-10_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-100",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-100.pdf",
+          "PDF/W10-100_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-100_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-100_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-100_CONNECTION.json",
+        "erection": "ERECTION/1_W10-100_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-101",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-101.pdf",
+          "PDF/W10-101_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-101_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-101_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-101_CONNECTION.json",
+        "erection": "ERECTION/1_W10-101_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-102",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-102.pdf",
+          "PDF/W10-102_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-102_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-102_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-102_CONNECTION.json",
+        "erection": "ERECTION/1_W10-102_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-103",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-103.pdf",
+          "PDF/W10-103_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-103_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-103_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-103_CONNECTION.json",
+        "erection": "ERECTION/1_W10-103_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-104",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-104.pdf",
+          "PDF/W10-104_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-104_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-104_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-104_CONNECTION.json",
+        "erection": "ERECTION/1_W10-104_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-105",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-105.pdf",
+          "PDF/W10-105_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-105_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-105_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-105_CONNECTION.json",
+        "erection": "ERECTION/1_W10-105_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-106",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-106.pdf",
+          "PDF/W10-106_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-106_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-106_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-106_CONNECTION.json",
+        "erection": "ERECTION/1_W10-106_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-107",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-107.pdf",
+          "PDF/W10-107_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-107_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-107_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-107_CONNECTION.json",
+        "erection": "ERECTION/1_W10-107_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-108",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-108.pdf",
+          "PDF/W10-108_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-108_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-108_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-108_CONNECTION.json",
+        "erection": "ERECTION/1_W10-108_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-109",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-109.pdf",
+          "PDF/W10-109_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-109_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-109_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-109_CONNECTION.json",
+        "erection": "ERECTION/1_W10-109_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-11",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-11.pdf",
+          "PDF/W10-11_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-11_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-11_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-11_CONNECTION.json",
+        "erection": "ERECTION/1_W10-11_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-110",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-110.pdf",
+          "PDF/W10-110_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-110_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-110_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-110_CONNECTION.json",
+        "erection": "ERECTION/1_W10-110_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-111",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-111.pdf",
+          "PDF/W10-111_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-111_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-111_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-111_CONNECTION.json",
+        "erection": "ERECTION/1_W10-111_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-112",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-112.pdf",
+          "PDF/W10-112_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-112_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-112_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-112_CONNECTION.json",
+        "erection": "ERECTION/1_W10-112_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-113",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-113.pdf",
+          "PDF/W10-113_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-113_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-113_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-113_CONNECTION.json",
+        "erection": "ERECTION/1_W10-113_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-114",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-114.pdf",
+          "PDF/W10-114_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-114_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-114_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-114_CONNECTION.json",
+        "erection": "ERECTION/1_W10-114_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-115",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-115.pdf",
+          "PDF/W10-115_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-115_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-115_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-115_CONNECTION.json",
+        "erection": "ERECTION/1_W10-115_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-116",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_W10-116_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-116_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-116_CONNECTION.json",
+        "erection": "ERECTION/1_W10-116_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-117",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-117.pdf",
+          "PDF/W10-117_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-117_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-117_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-117_CONNECTION.json",
+        "erection": "ERECTION/1_W10-117_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-118",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-118.pdf",
+          "PDF/W10-118_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-118_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-118_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-118_CONNECTION.json",
+        "erection": "ERECTION/1_W10-118_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-119",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-119.pdf",
+          "PDF/W10-119_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-119_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-119_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-119_CONNECTION.json",
+        "erection": "ERECTION/1_W10-119_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-12",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-12.pdf",
+          "PDF/W10-12_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-12_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-12_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-12_CONNECTION.json",
+        "erection": "ERECTION/1_W10-12_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-120",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-120.pdf",
+          "PDF/W10-120_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-120_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-120_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-120_CONNECTION.json",
+        "erection": "ERECTION/1_W10-120_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-121",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_W10-121_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-121_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-121_CONNECTION.json",
+        "erection": "ERECTION/1_W10-121_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-122",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-122.pdf",
+          "PDF/W10-122_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-122_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-122_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-122_CONNECTION.json",
+        "erection": "ERECTION/1_W10-122_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-123",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-123.pdf",
+          "PDF/W10-123_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-123_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-123_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-123_CONNECTION.json",
+        "erection": "ERECTION/1_W10-123_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-124",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-124.pdf",
+          "PDF/W10-124_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-124_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-124_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-124_CONNECTION.json",
+        "erection": "ERECTION/1_W10-124_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-125",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-125.pdf",
+          "PDF/W10-125_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-125_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-125_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-125_CONNECTION.json",
+        "erection": "ERECTION/1_W10-125_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-127",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-127.pdf",
+          "PDF/W10-127_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-127_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-127_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-127_CONNECTION.json",
+        "erection": "ERECTION/1_W10-127_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-128",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-128.pdf",
+          "PDF/W10-128_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-128_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-128_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-128_CONNECTION.json",
+        "erection": "ERECTION/1_W10-128_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-129",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-129.pdf",
+          "PDF/W10-129_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-129_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-129_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-129_CONNECTION.json",
+        "erection": "ERECTION/1_W10-129_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-13",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-13.pdf",
+          "PDF/W10-13_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-13_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-13_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-13_CONNECTION.json",
+        "erection": "ERECTION/1_W10-13_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-130",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-130.pdf",
+          "PDF/W10-130_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-130_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-130_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-130_CONNECTION.json",
+        "erection": "ERECTION/1_W10-130_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-132",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-132.pdf",
+          "PDF/W10-132_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-132_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-132_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-132_CONNECTION.json",
+        "erection": "ERECTION/1_W10-132_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-139",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-139.pdf",
+          "PDF/W10-139_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-139_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-139_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-139_CONNECTION.json",
+        "erection": "ERECTION/1_W10-139_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-14",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_W10-14_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-14_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-14_CONNECTION.json",
+        "erection": "ERECTION/1_W10-14_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-140",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-140.pdf",
+          "PDF/W10-140_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-140_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-140_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-140_CONNECTION.json",
+        "erection": "ERECTION/1_W10-140_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-141",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-141.pdf",
+          "PDF/W10-141_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-141_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-141_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-141_CONNECTION.json",
+        "erection": "ERECTION/1_W10-141_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-142",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-142.pdf",
+          "PDF/W10-142_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-142_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-142_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-142_CONNECTION.json",
+        "erection": "ERECTION/1_W10-142_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-143",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-143.pdf",
+          "PDF/W10-143_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-143_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-143_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-143_CONNECTION.json",
+        "erection": "ERECTION/1_W10-143_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-144",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-144.pdf",
+          "PDF/W10-144_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-144_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-144_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-144_CONNECTION.json",
+        "erection": "ERECTION/1_W10-144_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-147",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-147.pdf",
+          "PDF/W10-147_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-147_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-147_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-147_CONNECTION.json",
+        "erection": "ERECTION/1_W10-147_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-148",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-148.pdf",
+          "PDF/W10-148_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-148_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-148_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-148_CONNECTION.json",
+        "erection": "ERECTION/1_W10-148_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-149",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-149.pdf",
+          "PDF/W10-149_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-149_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-149_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-149_CONNECTION.json",
+        "erection": "ERECTION/1_W10-149_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-15",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_W10-15_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-15_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-15_CONNECTION.json",
+        "erection": "ERECTION/1_W10-15_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-150",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-150.pdf",
+          "PDF/W10-150_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-150_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-150_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-150_CONNECTION.json",
+        "erection": "ERECTION/1_W10-150_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-151",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-151.pdf",
+          "PDF/W10-151_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-151_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-151_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-151_CONNECTION.json",
+        "erection": "ERECTION/1_W10-151_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-152",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-152.pdf",
+          "PDF/W10-152_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-152_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-152_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-152_CONNECTION.json",
+        "erection": "ERECTION/1_W10-152_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-153",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-153.pdf",
+          "PDF/W10-153_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-153_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-153_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-153_CONNECTION.json",
+        "erection": "ERECTION/1_W10-153_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-16",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-16.pdf",
+          "PDF/W10-16_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-16_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-16_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-16_CONNECTION.json",
+        "erection": "ERECTION/1_W10-16_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-165",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-165.pdf",
+          "PDF/W10-165_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-165_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-165_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-165_CONNECTION.json",
+        "erection": "ERECTION/1_W10-165_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-17",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-17.pdf",
+          "PDF/W10-17_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-17_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-17_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-17_CONNECTION.json",
+        "erection": "ERECTION/1_W10-17_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-171",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-171.pdf",
+          "PDF/W10-171_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-171_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-171_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-171_CONNECTION.json",
+        "erection": "ERECTION/1_W10-171_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-172",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-172.pdf",
+          "PDF/W10-172_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-172_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-172_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-172_CONNECTION.json",
+        "erection": "ERECTION/1_W10-172_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-173",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-173.pdf",
+          "PDF/W10-173_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-173_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-173_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-173_CONNECTION.json",
+        "erection": "ERECTION/1_W10-173_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-174",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-174.pdf",
+          "PDF/W10-174_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-174_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-174_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-174_CONNECTION.json",
+        "erection": "ERECTION/1_W10-174_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-175",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-175.pdf",
+          "PDF/W10-175_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-175_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-175_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-175_CONNECTION.json",
+        "erection": "ERECTION/1_W10-175_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-177",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-177.pdf",
+          "PDF/W10-177_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-177_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-177_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-177_CONNECTION.json",
+        "erection": "ERECTION/1_W10-177_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-178",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-178.pdf",
+          "PDF/W10-178_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-178_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-178_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-178_CONNECTION.json",
+        "erection": "ERECTION/1_W10-178_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-18",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-18.pdf",
+          "PDF/W10-18_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-18_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-18_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-18_CONNECTION.json",
+        "erection": "ERECTION/1_W10-18_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-182",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-182.pdf",
+          "PDF/W10-182_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-182_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-182_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-182_CONNECTION.json",
+        "erection": "ERECTION/1_W10-182_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-189",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-189.pdf",
+          "PDF/W10-189_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-189_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-189_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-189_CONNECTION.json",
+        "erection": "ERECTION/1_W10-189_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-19",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-19.pdf",
+          "PDF/W10-19_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-19_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-19_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-19_CONNECTION.json",
+        "erection": "ERECTION/1_W10-19_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-193",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-193.pdf",
+          "PDF/W10-193_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-193_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-193_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-193_CONNECTION.json",
+        "erection": "ERECTION/1_W10-193_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-196",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-196.pdf",
+          "PDF/W10-196_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-196_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-196_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-196_CONNECTION.json",
+        "erection": "ERECTION/1_W10-196_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-198",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-198.pdf",
+          "PDF/W10-198_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-198_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-198_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-198_CONNECTION.json",
+        "erection": "ERECTION/1_W10-198_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-2",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-2.pdf",
+          "PDF/W10-2_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-2_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-2_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-2_CONNECTION.json",
+        "erection": "ERECTION/1_W10-2_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-20",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-20.pdf",
+          "PDF/W10-20_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-20_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-20_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-20_CONNECTION.json",
+        "erection": "ERECTION/1_W10-20_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-203",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-203.pdf",
+          "PDF/W10-203_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-203_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-203_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-203_CONNECTION.json",
+        "erection": "ERECTION/1_W10-203_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-205",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-205.pdf",
+          "PDF/W10-205_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-205_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-205_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-205_CONNECTION.json",
+        "erection": "ERECTION/1_W10-205_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-206",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-206.pdf",
+          "PDF/W10-206_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-206_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-206_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-206_CONNECTION.json",
+        "erection": "ERECTION/1_W10-206_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-207",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-207.pdf",
+          "PDF/W10-207_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-207_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-207_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-207_CONNECTION.json",
+        "erection": "ERECTION/1_W10-207_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-21",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-21.pdf",
+          "PDF/W10-21_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-21_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-21_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-21_CONNECTION.json",
+        "erection": "ERECTION/1_W10-21_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-22",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-22.pdf",
+          "PDF/W10-22_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-22_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-22_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-22_CONNECTION.json",
+        "erection": "ERECTION/1_W10-22_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-23",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-23.pdf",
+          "PDF/W10-23_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-23_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-23_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-23_CONNECTION.json",
+        "erection": "ERECTION/1_W10-23_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-24",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-24.pdf",
+          "PDF/W10-24_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-24_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-24_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-24_CONNECTION.json",
+        "erection": "ERECTION/1_W10-24_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-25",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-25.pdf",
+          "PDF/W10-25_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-25_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-25_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-25_CONNECTION.json",
+        "erection": "ERECTION/1_W10-25_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-26",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-26.pdf",
+          "PDF/W10-26_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-26_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-26_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-26_CONNECTION.json",
+        "erection": "ERECTION/1_W10-26_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-27",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-27.pdf",
+          "PDF/W10-27_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-27_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-27_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-27_CONNECTION.json",
+        "erection": "ERECTION/1_W10-27_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-28",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-28.pdf",
+          "PDF/W10-28_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-28_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-28_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-28_CONNECTION.json",
+        "erection": "ERECTION/1_W10-28_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-29",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-29.pdf",
+          "PDF/W10-29_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-29_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-29_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-29_CONNECTION.json",
+        "erection": "ERECTION/1_W10-29_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-3",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-3.pdf",
+          "PDF/W10-3_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-3_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-3_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-3_CONNECTION.json",
+        "erection": "ERECTION/1_W10-3_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-30",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-30.pdf",
+          "PDF/W10-30_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-30_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-30_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-30_CONNECTION.json",
+        "erection": "ERECTION/1_W10-30_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-31",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-31.pdf",
+          "PDF/W10-31_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-31_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-31_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-31_CONNECTION.json",
+        "erection": "ERECTION/1_W10-31_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-32",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-32.pdf",
+          "PDF/W10-32_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-32_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-32_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-32_CONNECTION.json",
+        "erection": "ERECTION/1_W10-32_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-33",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-33.pdf",
+          "PDF/W10-33_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-33_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-33_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-33_CONNECTION.json",
+        "erection": "ERECTION/1_W10-33_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-34",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-34.pdf",
+          "PDF/W10-34_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-34_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-34_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-34_CONNECTION.json",
+        "erection": "ERECTION/1_W10-34_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-35",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-35.pdf",
+          "PDF/W10-35_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-35_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-35_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-35_CONNECTION.json",
+        "erection": "ERECTION/1_W10-35_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-36",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-36.pdf",
+          "PDF/W10-36_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-36_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-36_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-36_CONNECTION.json",
+        "erection": "ERECTION/1_W10-36_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-37",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-37.pdf",
+          "PDF/W10-37_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-37_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-37_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-37_CONNECTION.json",
+        "erection": "ERECTION/1_W10-37_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-38",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-38.pdf",
+          "PDF/W10-38_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-38_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-38_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-38_CONNECTION.json",
+        "erection": "ERECTION/1_W10-38_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-39",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-39.pdf",
+          "PDF/W10-39_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-39_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-39_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-39_CONNECTION.json",
+        "erection": "ERECTION/1_W10-39_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-4",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-4.pdf",
+          "PDF/W10-4_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-4_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-4_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-4_CONNECTION.json",
+        "erection": "ERECTION/1_W10-4_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-40",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-40.pdf",
+          "PDF/W10-40_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-40_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-40_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-40_CONNECTION.json",
+        "erection": "ERECTION/1_W10-40_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-41",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-41.pdf",
+          "PDF/W10-41_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-41_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-41_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-41_CONNECTION.json",
+        "erection": "ERECTION/1_W10-41_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-42",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-42.pdf",
+          "PDF/W10-42_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-42_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-42_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-42_CONNECTION.json",
+        "erection": "ERECTION/1_W10-42_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-43",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-43.pdf",
+          "PDF/W10-43_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-43_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-43_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-43_CONNECTION.json",
+        "erection": "ERECTION/1_W10-43_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-44",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-44.pdf",
+          "PDF/W10-44_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-44_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-44_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-44_CONNECTION.json",
+        "erection": "ERECTION/1_W10-44_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-45",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-45.pdf",
+          "PDF/W10-45_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-45_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-45_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-45_CONNECTION.json",
+        "erection": "ERECTION/1_W10-45_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-46",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_W10-46_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-46_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-46_CONNECTION.json",
+        "erection": "ERECTION/1_W10-46_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-47",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-47.pdf",
+          "PDF/W10-47_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-47_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-47_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-47_CONNECTION.json",
+        "erection": "ERECTION/1_W10-47_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-48",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-48.pdf",
+          "PDF/W10-48_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-48_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-48_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-48_CONNECTION.json",
+        "erection": "ERECTION/1_W10-48_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-49",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-49.pdf",
+          "PDF/W10-49_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-49_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-49_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-49_CONNECTION.json",
+        "erection": "ERECTION/1_W10-49_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-5",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-5.pdf",
+          "PDF/W10-5_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-5_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-5_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-5_CONNECTION.json",
+        "erection": "ERECTION/1_W10-5_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-50",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-50.pdf",
+          "PDF/W10-50_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-50_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-50_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-50_CONNECTION.json",
+        "erection": "ERECTION/1_W10-50_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-51",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-51.pdf",
+          "PDF/W10-51_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-51_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-51_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-51_CONNECTION.json",
+        "erection": "ERECTION/1_W10-51_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-52",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-52.pdf",
+          "PDF/W10-52_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-52_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-52_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-52_CONNECTION.json",
+        "erection": "ERECTION/1_W10-52_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-53",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-53.pdf",
+          "PDF/W10-53_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-53_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-53_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-53_CONNECTION.json",
+        "erection": "ERECTION/1_W10-53_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-54",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-54.pdf",
+          "PDF/W10-54_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-54_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-54_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-54_CONNECTION.json",
+        "erection": "ERECTION/1_W10-54_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-55",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-55.pdf",
+          "PDF/W10-55_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-55_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-55_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-55_CONNECTION.json",
+        "erection": "ERECTION/1_W10-55_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-56",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-56.pdf",
+          "PDF/W10-56_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-56_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-56_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-56_CONNECTION.json",
+        "erection": "ERECTION/1_W10-56_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-57",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-57.pdf",
+          "PDF/W10-57_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-57_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-57_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-57_CONNECTION.json",
+        "erection": "ERECTION/1_W10-57_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-58",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-58.pdf",
+          "PDF/W10-58_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-58_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-58_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-58_CONNECTION.json",
+        "erection": "ERECTION/1_W10-58_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-59",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-59.pdf",
+          "PDF/W10-59_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-59_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-59_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-59_CONNECTION.json",
+        "erection": "ERECTION/1_W10-59_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-6",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-6.pdf",
+          "PDF/W10-6_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-6_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-6_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-6_CONNECTION.json",
+        "erection": "ERECTION/1_W10-6_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-60",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-60.pdf",
+          "PDF/W10-60_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-60_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-60_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-60_CONNECTION.json",
+        "erection": "ERECTION/1_W10-60_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-61",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-61.pdf",
+          "PDF/W10-61_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-61_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-61_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-61_CONNECTION.json",
+        "erection": "ERECTION/1_W10-61_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-62",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-62.pdf",
+          "PDF/W10-62_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-62_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-62_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-62_CONNECTION.json",
+        "erection": "ERECTION/1_W10-62_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-63",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-63.pdf",
+          "PDF/W10-63_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-63_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-63_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-63_CONNECTION.json",
+        "erection": "ERECTION/1_W10-63_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-64",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_W10-64_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-64_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-64_CONNECTION.json",
+        "erection": "ERECTION/1_W10-64_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-65",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-65.pdf",
+          "PDF/W10-65_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-65_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-65_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-65_CONNECTION.json",
+        "erection": "ERECTION/1_W10-65_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-66",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-66.pdf",
+          "PDF/W10-66_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-66_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-66_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-66_CONNECTION.json",
+        "erection": "ERECTION/1_W10-66_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-67",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-67.pdf",
+          "PDF/W10-67_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-67_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-67_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-67_CONNECTION.json",
+        "erection": "ERECTION/1_W10-67_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-68",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-68.pdf",
+          "PDF/W10-68_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-68_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-68_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-68_CONNECTION.json",
+        "erection": "ERECTION/1_W10-68_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-69",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-69.pdf",
+          "PDF/W10-69_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-69_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-69_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-69_CONNECTION.json",
+        "erection": "ERECTION/1_W10-69_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-7",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-7.pdf",
+          "PDF/W10-7_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-7_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-7_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-7_CONNECTION.json",
+        "erection": "ERECTION/1_W10-7_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-70",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-70.pdf",
+          "PDF/W10-70_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-70_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-70_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-70_CONNECTION.json",
+        "erection": "ERECTION/1_W10-70_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-71",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-71.pdf",
+          "PDF/W10-71_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-71_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-71_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-71_CONNECTION.json",
+        "erection": "ERECTION/1_W10-71_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-72",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-72.pdf",
+          "PDF/W10-72_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-72_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-72_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-72_CONNECTION.json",
+        "erection": "ERECTION/1_W10-72_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-73",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": "SHOP/1_W10-73_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-73_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-73_CONNECTION.json",
+        "erection": "ERECTION/1_W10-73_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-74",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-74.pdf",
+          "PDF/W10-74_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-74_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-74_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-74_CONNECTION.json",
+        "erection": "ERECTION/1_W10-74_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-75",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-75.pdf",
+          "PDF/W10-75_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-75_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-75_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-75_CONNECTION.json",
+        "erection": "ERECTION/1_W10-75_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-76",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-76.pdf",
+          "PDF/W10-76_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-76_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-76_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-76_CONNECTION.json",
+        "erection": "ERECTION/1_W10-76_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-77",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-77.pdf",
+          "PDF/W10-77_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-77_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-77_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-77_CONNECTION.json",
+        "erection": "ERECTION/1_W10-77_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-78",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-78.pdf",
+          "PDF/W10-78_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-78_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-78_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-78_CONNECTION.json",
+        "erection": "ERECTION/1_W10-78_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-79",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-79.pdf",
+          "PDF/W10-79_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-79_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-79_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-79_CONNECTION.json",
+        "erection": "ERECTION/1_W10-79_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-8",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-8.pdf",
+          "PDF/W10-8_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-8_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-8_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-8_CONNECTION.json",
+        "erection": "ERECTION/1_W10-8_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-80",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-80.pdf",
+          "PDF/W10-80_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-80_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-80_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-80_CONNECTION.json",
+        "erection": "ERECTION/1_W10-80_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-81",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-81.pdf",
+          "PDF/W10-81_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-81_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-81_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-81_CONNECTION.json",
+        "erection": "ERECTION/1_W10-81_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-82",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-82.pdf",
+          "PDF/W10-82_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-82_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-82_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-82_CONNECTION.json",
+        "erection": "ERECTION/1_W10-82_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-83",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-83.pdf",
+          "PDF/W10-83_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-83_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-83_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-83_CONNECTION.json",
+        "erection": "ERECTION/1_W10-83_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-84",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-84.pdf",
+          "PDF/W10-84_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-84_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-84_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-84_CONNECTION.json",
+        "erection": "ERECTION/1_W10-84_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-85",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-85.pdf",
+          "PDF/W10-85_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-85_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-85_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-85_CONNECTION.json",
+        "erection": "ERECTION/1_W10-85_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-86",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-86.pdf",
+          "PDF/W10-86_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-86_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-86_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-86_CONNECTION.json",
+        "erection": "ERECTION/1_W10-86_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-87",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-87.pdf",
+          "PDF/W10-87_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-87_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-87_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-87_CONNECTION.json",
+        "erection": "ERECTION/1_W10-87_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-88",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-88.pdf",
+          "PDF/W10-88_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-88_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-88_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-88_CONNECTION.json",
+        "erection": "ERECTION/1_W10-88_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-89",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-89.pdf",
+          "PDF/W10-89_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-89_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-89_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-89_CONNECTION.json",
+        "erection": "ERECTION/1_W10-89_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-9",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-9.pdf",
+          "PDF/W10-9_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-9_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-9_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-9_CONNECTION.json",
+        "erection": "ERECTION/1_W10-9_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-90",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-90.pdf",
+          "PDF/W10-90_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-90_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-90_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-90_CONNECTION.json",
+        "erection": "ERECTION/1_W10-90_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-91",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-91.pdf",
+          "PDF/W10-91_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-91_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-91_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-91_CONNECTION.json",
+        "erection": "ERECTION/1_W10-91_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-92",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-92.pdf",
+          "PDF/W10-92_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-92_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-92_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-92_CONNECTION.json",
+        "erection": "ERECTION/1_W10-92_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-93",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-93.pdf",
+          "PDF/W10-93_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-93_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-93_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-93_CONNECTION.json",
+        "erection": "ERECTION/1_W10-93_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-94",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-94.pdf",
+          "PDF/W10-94_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-94_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-94_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-94_CONNECTION.json",
+        "erection": "ERECTION/1_W10-94_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-95",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-95.pdf",
+          "PDF/W10-95_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-95_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-95_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-95_CONNECTION.json",
+        "erection": "ERECTION/1_W10-95_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-96",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-96.pdf",
+          "PDF/W10-96_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-96_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-96_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-96_CONNECTION.json",
+        "erection": "ERECTION/1_W10-96_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-97",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-97.pdf",
+          "PDF/W10-97_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-97_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-97_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-97_CONNECTION.json",
+        "erection": "ERECTION/1_W10-97_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-98",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-98.pdf",
+          "PDF/W10-98_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-98_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-98_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-98_CONNECTION.json",
+        "erection": "ERECTION/1_W10-98_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W10-99",
+      "family": "W10",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W10-99.pdf",
+          "PDF/W10-99_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W10-99_SHOP.json",
+        "bbs": "REBAR_BBS/1_W10-99_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W10-99_CONNECTION.json",
+        "erection": "ERECTION/1_W10-99_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-1",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-1.pdf",
+          "PDF/W8-1_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-1_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-1_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-1_CONNECTION.json",
+        "erection": "ERECTION/1_W8-1_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-10",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-10.pdf",
+          "PDF/W8-10_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-10_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-10_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-10_CONNECTION.json",
+        "erection": "ERECTION/1_W8-10_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-11",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-11.pdf",
+          "PDF/W8-11_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-11_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-11_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-11_CONNECTION.json",
+        "erection": "ERECTION/1_W8-11_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-13",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-13.pdf",
+          "PDF/W8-13_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-13_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-13_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-13_CONNECTION.json",
+        "erection": "ERECTION/1_W8-13_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-14",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-14.pdf",
+          "PDF/W8-14_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-14_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-14_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-14_CONNECTION.json",
+        "erection": "ERECTION/1_W8-14_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-16",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-16.pdf",
+          "PDF/W8-16_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-16_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-16_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-16_CONNECTION.json",
+        "erection": "ERECTION/1_W8-16_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-17",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-17.pdf",
+          "PDF/W8-17_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-17_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-17_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-17_CONNECTION.json",
+        "erection": "ERECTION/1_W8-17_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-18",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-18.pdf",
+          "PDF/W8-18_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-18_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-18_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-18_CONNECTION.json",
+        "erection": "ERECTION/1_W8-18_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-19",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-19.pdf",
+          "PDF/W8-19_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-19_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-19_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-19_CONNECTION.json",
+        "erection": "ERECTION/1_W8-19_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-2",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-2.pdf",
+          "PDF/W8-2_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-2_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-2_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-2_CONNECTION.json",
+        "erection": "ERECTION/1_W8-2_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-20",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-20.pdf",
+          "PDF/W8-20_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-20_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-20_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-20_CONNECTION.json",
+        "erection": "ERECTION/1_W8-20_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-22",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-22.pdf",
+          "PDF/W8-22_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-22_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-22_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-22_CONNECTION.json",
+        "erection": "ERECTION/1_W8-22_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-23",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-23.pdf",
+          "PDF/W8-23_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-23_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-23_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-23_CONNECTION.json",
+        "erection": "ERECTION/1_W8-23_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-27",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-27.pdf",
+          "PDF/W8-27_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-27_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-27_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-27_CONNECTION.json",
+        "erection": "ERECTION/1_W8-27_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-28",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-28.pdf",
+          "PDF/W8-28_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-28_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-28_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-28_CONNECTION.json",
+        "erection": "ERECTION/1_W8-28_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-29",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-29.pdf",
+          "PDF/W8-29_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-29_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-29_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-29_CONNECTION.json",
+        "erection": "ERECTION/1_W8-29_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-3",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-3.pdf",
+          "PDF/W8-3_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-3_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-3_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-3_CONNECTION.json",
+        "erection": "ERECTION/1_W8-3_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-30",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-30.pdf",
+          "PDF/W8-30_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-30_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-30_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-30_CONNECTION.json",
+        "erection": "ERECTION/1_W8-30_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-34",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-34.pdf",
+          "PDF/W8-34_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-34_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-34_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-34_CONNECTION.json",
+        "erection": "ERECTION/1_W8-34_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-35",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-35.pdf",
+          "PDF/W8-35_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-35_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-35_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-35_CONNECTION.json",
+        "erection": "ERECTION/1_W8-35_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-37",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-37.pdf",
+          "PDF/W8-37_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-37_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-37_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-37_CONNECTION.json",
+        "erection": "ERECTION/1_W8-37_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-38",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-38.pdf",
+          "PDF/W8-38_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-38_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-38_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-38_CONNECTION.json",
+        "erection": "ERECTION/1_W8-38_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-39",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-39.pdf",
+          "PDF/W8-39_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-39_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-39_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-39_CONNECTION.json",
+        "erection": "ERECTION/1_W8-39_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-4",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-4.pdf",
+          "PDF/W8-4_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-4_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-4_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-4_CONNECTION.json",
+        "erection": "ERECTION/1_W8-4_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-42",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-42.pdf",
+          "PDF/W8-42_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-42_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-42_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-42_CONNECTION.json",
+        "erection": "ERECTION/1_W8-42_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-5",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-5.pdf",
+          "PDF/W8-5_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-5_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-5_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-5_CONNECTION.json",
+        "erection": "ERECTION/1_W8-5_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-7",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-7.pdf",
+          "PDF/W8-7_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-7_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-7_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-7_CONNECTION.json",
+        "erection": "ERECTION/1_W8-7_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-8",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-8.pdf",
+          "PDF/W8-8_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-8_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-8_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-8_CONNECTION.json",
+        "erection": "ERECTION/1_W8-8_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "W8-9",
+      "family": "W8",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [
+          "PDF/W8-9.pdf",
+          "PDF/W8-9_-_1.pdf"
+        ],
+        "shop": "SHOP/1_W8-9_SHOP.json",
+        "bbs": "REBAR_BBS/1_W8-9_REBAR_BBS.json",
+        "conn": "CONNECTION/1_W8-9_CONNECTION.json",
+        "erection": "ERECTION/1_W8-9_ERECTION.json",
+        "ga": null
+      }
+    },
+    {
+      "mark": "WALL-COLUMN-BEAM",
+      "family": "WALL",
+      "kind": "WALL",
+      "status": "ok",
+      "side": {
+        "pdfs": [],
+        "shop": null,
+        "bbs": null,
+        "conn": null,
+        "erection": null,
+        "ga": "GA/1_WALL_COLUMN_BEAM_GA.json"
+      }
+    }
+  ]
+}

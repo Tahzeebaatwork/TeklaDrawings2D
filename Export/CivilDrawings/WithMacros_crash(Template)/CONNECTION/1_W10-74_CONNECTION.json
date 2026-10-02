@@ -1,0 +1,249 @@
+﻿{
+  "Header": {
+    "Schema": "tekla-civil-drawing/1.0",
+    "DrawingType": "CONNECTION",
+    "ProjectCode": "1",
+    "ProjectName": "Trimble Solutions Corporation",
+    "ModelName": "Paisley_Exam.db1",
+    "PieceMark": "W10-74",
+    "DrawingName": "",
+    "DrawingMark": "[W10-74 - 2]",
+    "Title1": "",
+    "Title2": "",
+    "Title3": "",
+    "DrawnBy": "",
+    "Date": "2026-09-02",
+    "Scale": "",
+    "Revision": "DrawingIsUpToDate",
+    "Units": "mm",
+    "TeklaDrawingType": "CastUnitDrawing",
+    "HasDrawingSheet": true,
+    "Error": null,
+    "GeneratedUtc": "2026-09-02T13:42:24.0766668Z"
+  },
+  "JointType": "piece-to-piece",
+  "ConnectedTo": "GT75-575",
+  "Hardware": [
+    {
+      "PieceMark": "W10-74",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "Position": {
+        "X": 25478.742,
+        "Y": 8913.003,
+        "Z": 30525.0
+      },
+      "Guid": "6a86dc2a-d335-42d8-8f02-76b97278c393",
+      "Id": 140778294
+    },
+    {
+      "PieceMark": "W10-74",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25288.736,
+        "Y": 8887.206,
+        "Z": 30838.0
+      },
+      "Guid": "86623f9d-b73c-470f-9965-4a2bb64cea62",
+      "Id": 147422041
+    },
+    {
+      "PieceMark": "W10-74",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25291.911,
+        "Y": 8872.124,
+        "Z": 30838.0
+      },
+      "Guid": "40f540f2-38fe-4122-b2d0-cffcd64c6a01",
+      "Id": 147422118
+    },
+    {
+      "PieceMark": "W10-74",
+      "Mark": "P-300-11",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25643.08,
+        "Y": 9002.006,
+        "Z": 30837.397
+      },
+      "Guid": "7c58bf15-4708-4e5a-bbb4-ff0641cf869d",
+      "Id": 147441015
+    },
+    {
+      "PieceMark": "W10-74",
+      "Mark": "P-300-21",
+      "Description": "",
+      "Kind": "EMBED",
+      "Profile": "ROD6.35",
+      "Material": "A36",
+      "Quantity": 1,
+      "Position": {
+        "X": 25643.08,
+        "Y": 8998.831,
+        "Z": 30852.478
+      },
+      "Guid": "827d10a0-4e03-4d28-8aec-604cc5ce97ee",
+      "Id": 147441092
+    },
+    {
+      "PieceMark": "W10-74",
+      "Mark": "P-221",
+      "Description": "13Øx2743 AC 10375LB",
+      "Kind": "EMBED",
+      "Profile": "CABLE12.7",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25576.88,
+        "Y": 9039.103,
+        "Z": 30152.159
+      },
+      "Guid": "761b9248-0bae-4e8c-86c6-7b6b34fae514",
+      "Id": 163959871
+    },
+    {
+      "PieceMark": "W10-74",
+      "Mark": "P-221",
+      "Description": "13Øx2743 AC 10375LB",
+      "Kind": "EMBED",
+      "Profile": "CABLE12.7",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "Position": {
+        "X": 25383.12,
+        "Y": 8786.913,
+        "Z": 30152.159
+      },
+      "Guid": "7299f735-771e-4a1b-99cd-933bccb64868",
+      "Id": 163960052
+    }
+  ],
+  "Bom": [
+    {
+      "PieceMark": "W10-74",
+      "Mark": "GT75-575",
+      "Description": "75Ø GROUT TUBE x 575",
+      "Kind": "GROUT_TUBE",
+      "Profile": "ROD76.2",
+      "Material": "Zero_Density",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "6a86dc2a-d335-42d8-8f02-76b97278c393",
+      "Id": 140778294
+    },
+    {
+      "PieceMark": "W10-74",
+      "Mark": "P-300",
+      "Description": "19Ø INSERT (NC)",
+      "Kind": "INSERT",
+      "Profile": "ROD23.813",
+      "Material": "A36",
+      "Quantity": 2,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "86623f9d-b73c-470f-9965-4a2bb64cea62",
+      "Id": 147422041
+    },
+    {
+      "PieceMark": "W10-74",
+      "Mark": "P-221",
+      "Description": "13Øx2743 AC 10375LB",
+      "Kind": "EMBED",
+      "Profile": "CABLE12.7",
+      "Material": "Steel_Undefined",
+      "Quantity": 1,
+      "LengthMm": null,
+      "WeightKg": null,
+      "Guid": "761b9248-0bae-4e8c-86c6-7b6b34fae514",
+      "Id": 163959871
+    }
+  ],
+  "Dimensions": [
+    {
+      "PieceMark": "W10-74",
+      "Kind": "OverallThickness",
+      "Text": "254",
+      "Value": 254.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End1"
+    },
+    {
+      "PieceMark": "W10-74",
+      "Kind": "OverallThickness",
+      "Text": "254",
+      "Value": 254.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "End2"
+    },
+    {
+      "PieceMark": "W10-74",
+      "Kind": "OverallLength",
+      "Text": "625",
+      "Value": 625.0,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "Side A"
+    },
+    {
+      "PieceMark": "W10-74",
+      "Kind": "OverallWidth",
+      "Text": "455.7",
+      "Value": 455.7,
+      "StartPoint": null,
+      "EndPoint": null,
+      "ViewName": "Side B"
+    }
+  ],
+  "DetailViews": [
+    {
+      "Name": "Side A",
+      "ViewType": "FrontView",
+      "Scale": 128.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End1",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "End2",
+      "ViewType": "EndView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    },
+    {
+      "Name": "Side B",
+      "ViewType": "FrontView",
+      "Scale": 0.0,
+      "Notes": "",
+      "PluginInputs": []
+    }
+  ]
+}

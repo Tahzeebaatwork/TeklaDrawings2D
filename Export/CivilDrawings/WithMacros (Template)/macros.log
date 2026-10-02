@@ -1,0 +1,66 @@
+﻿2026-09-03T15:15:33 CloseActiveDrawing (RunMacros start)
+2026-09-03T15:15:33 bundled macros src=C:\Users\ASUS\Desktop\2d_tekla\bin\Debug\net48\LocalMacros dest=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling
+2026-09-03T15:15:33 already in model: SP_M.ASSEMBLY_standard.cs
+2026-09-03T15:15:33 already in model: SP_M.BM_SET_11x17.cs
+2026-09-03T15:15:33 already in model: SP_M.CU_PG1_11X17.cs
+2026-09-03T15:15:33 already in model: SP_M.CU_PG2_11X17.cs
+2026-09-03T15:15:33 already in model: SP_M.CU_PG3_11X17.cs
+2026-09-03T15:15:33 already in model: SP_M.GA_EXP_GA_STD.cs
+2026-09-03T15:15:33 already in model: SP_M.SINGLE_standard.cs
+2026-09-03T15:15:33 === session mode=smoke mark=W10-50 ===
+2026-09-03T15:15:33 model=Paisley_Exam.db1 path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam
+2026-09-03T15:15:33 macros.log=C:\Users\ASUS\Desktop\2d_tekla\Export\CivilDrawings\WithMacros\macros.log
+2026-09-03T15:15:33 if AKIT dies inside Tekla, check C:\Users\ASUS\AppData\Local\Trimble\TeklaStructures\2026.0\logs and the Tekla session log
+2026-09-03T15:15:51 WALL=1 COLUMN=0 BEAM=0 mark=W10-50 (precast only; hollowcore/insulation/formliner skipped)
+2026-09-03T15:15:51 smoke hardware CU batch 1/1 n=1
+2026-09-03T15:15:51 CloseActiveDrawing (before smoke hardware CU batch 1)
+2026-09-03T15:15:51 Select n=1 ok=True
+2026-09-03T15:15:52 CommitChanges after select
+2026-09-03T15:15:52 RunMacro SP_M.CU_PG1_11X17.cs (smoke hardware CU batch 1, n=1, marks=W10-50, drawingsBefore=86)
+2026-09-03T15:15:52 trying SP_M.CU_PG1_11X17.cs
+2026-09-03T15:15:52 RunMacro bool=False path=SP_M.CU_PG1_11X17.cs
+2026-09-03T15:15:52 trying D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG1_11X17.cs
+2026-09-03T15:15:53 RunMacro bool=True path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG1_11X17.cs
+2026-09-03T15:15:53 started D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG1_11X17.cs
+2026-09-03T15:15:53 wait SP_M.CU_PG1_11X17.cs t=0s IsMacroRunning=False drawings=86 (need > 86)
+2026-09-03T15:16:08 wait SP_M.CU_PG1_11X17.cs t=15s IsMacroRunning=False drawings=86 (need > 86)
+2026-09-03T15:16:12 script ended with no drawing-count increase after 20s idle (SP_M.CU_PG1_11X17.cs)
+2026-09-03T15:16:12 timeout waiting for drawing-count increase on SP_M.CU_PG1_11X17.cs after 19s drawings=86
+2026-09-03T15:16:12 CloseActiveDrawing (after SP_M.CU_PG1_11X17.cs)
+2026-09-03T15:16:12 drawings 86 → 86 after SP_M.CU_PG1_11X17.cs fallbackInsert=no
+2026-09-03T15:16:12 FAIL [smoke hardware CU batch 1 0 new sheets] System.InvalidOperationException: RunMacro started but 0 new sheets for SP_M.CU_PG1_11X17.cs (AKIT template likely loaded; CreateCastUnitDrawing did not commit). marks=W10-50
+2026-09-03T15:16:12 smoke rebar placing CU batch 1/1 n=1
+2026-09-03T15:16:12 CloseActiveDrawing (before smoke rebar placing CU batch 1)
+2026-09-03T15:16:12 Select n=1 ok=True
+2026-09-03T15:16:13 CommitChanges after select
+2026-09-03T15:16:13 RunMacro SP_M.CU_PG2_11X17.cs (smoke rebar placing CU batch 1, n=1, marks=W10-50, drawingsBefore=86)
+2026-09-03T15:16:13 trying SP_M.CU_PG2_11X17.cs
+2026-09-03T15:16:13 RunMacro bool=False path=SP_M.CU_PG2_11X17.cs
+2026-09-03T15:16:13 trying D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG2_11X17.cs
+2026-09-03T15:16:16 RunMacro bool=True path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG2_11X17.cs
+2026-09-03T15:16:16 started D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG2_11X17.cs
+2026-09-03T15:16:16 wait SP_M.CU_PG2_11X17.cs t=0s IsMacroRunning=False drawings=86 (need > 86)
+2026-09-03T15:16:32 wait SP_M.CU_PG2_11X17.cs t=15s IsMacroRunning=False drawings=86 (need > 86)
+2026-09-03T15:16:36 script ended with no drawing-count increase after 20s idle (SP_M.CU_PG2_11X17.cs)
+2026-09-03T15:16:36 timeout waiting for drawing-count increase on SP_M.CU_PG2_11X17.cs after 19s drawings=86
+2026-09-03T15:16:36 CloseActiveDrawing (after SP_M.CU_PG2_11X17.cs)
+2026-09-03T15:16:36 drawings 86 → 86 after SP_M.CU_PG2_11X17.cs fallbackInsert=no
+2026-09-03T15:16:36 FAIL [smoke rebar placing CU batch 1 0 new sheets] System.InvalidOperationException: RunMacro started but 0 new sheets for SP_M.CU_PG2_11X17.cs (AKIT template likely loaded; CreateCastUnitDrawing did not commit). marks=W10-50
+2026-09-03T15:16:36 smoke rebar table CU batch 1/1 n=1
+2026-09-03T15:16:36 CloseActiveDrawing (before smoke rebar table CU batch 1)
+2026-09-03T15:16:36 Select n=1 ok=True
+2026-09-03T15:16:36 CommitChanges after select
+2026-09-03T15:16:37 RunMacro SP_M.CU_PG3_11X17.cs (smoke rebar table CU batch 1, n=1, marks=W10-50, drawingsBefore=86)
+2026-09-03T15:16:37 trying SP_M.CU_PG3_11X17.cs
+2026-09-03T15:16:37 RunMacro bool=False path=SP_M.CU_PG3_11X17.cs
+2026-09-03T15:16:37 trying D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG3_11X17.cs
+2026-09-03T15:16:38 RunMacro bool=True path=D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG3_11X17.cs
+2026-09-03T15:16:38 started D:\design_\Paisley\Paisley_Exam\Paisley_Exam\macros\modeling\SP_M.CU_PG3_11X17.cs
+2026-09-03T15:16:38 wait SP_M.CU_PG3_11X17.cs t=0s IsMacroRunning=False drawings=86 (need > 86)
+2026-09-03T15:16:53 wait SP_M.CU_PG3_11X17.cs t=15s IsMacroRunning=False drawings=86 (need > 86)
+2026-09-03T15:16:58 script ended with no drawing-count increase after 20s idle (SP_M.CU_PG3_11X17.cs)
+2026-09-03T15:16:58 timeout waiting for drawing-count increase on SP_M.CU_PG3_11X17.cs after 19s drawings=86
+2026-09-03T15:16:58 CloseActiveDrawing (after SP_M.CU_PG3_11X17.cs)
+2026-09-03T15:16:58 drawings 86 → 86 after SP_M.CU_PG3_11X17.cs fallbackInsert=no
+2026-09-03T15:16:58 FAIL [smoke rebar table CU batch 1 0 new sheets] System.InvalidOperationException: RunMacro started but 0 new sheets for SP_M.CU_PG3_11X17.cs (AKIT template likely loaded; CreateCastUnitDrawing did not commit). marks=W10-50
+2026-09-03T15:16:58 smoke: skipped beams and floor GA
