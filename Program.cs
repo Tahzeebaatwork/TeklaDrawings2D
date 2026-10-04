@@ -251,6 +251,9 @@ namespace TeklaExtractor
                 else
                     Console.WriteLine("[Civil] " + CivilDrawingTypes.MacrosFolder + " folder (local PG1/PG2/PG3/BM_SET then extract)");
 
+                if (!extractOnly && PrecastDimensionPostProcessor.AbortIfNumberingStale("Civil"))
+                    return 1;
+
                 if (cleanFirst)
                 {
                     if (string.IsNullOrWhiteSpace(mark))

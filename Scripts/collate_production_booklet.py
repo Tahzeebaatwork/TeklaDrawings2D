@@ -23,13 +23,13 @@ def sheet_paths(mark):
     p3 = PDF_DIR / f"{mark}_-_2.pdf"
     p4 = PDF_DIR / f"{mark}_-_3.pdf"
 
+    # Prefer PG3 table as _-_3.pdf; fall back to _-_4 if only that exists.
     p_alt4 = PDF_DIR / f"{mark}_-_4.pdf"
-    if p_alt4.exists():
-        return [p1, p2 if p2.exists() else p3, p3 if p2.exists() else p4, p_alt4]
+    table = p4 if p4.exists() else p_alt4
 
     if p2.exists():
-        return [p1, p2, p3, p4]
-    return [p1, p3, p4]
+        return [p1, p2, p3, table]
+    return [p1, p3, table]
 
 
 def main():

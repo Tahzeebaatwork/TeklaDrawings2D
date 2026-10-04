@@ -8,6 +8,7 @@ using Tekla.Structures;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
+using Tekla.Structures.Model.Operations;
 using Tekla.Structures.Solid;
 
 namespace TeklaExtractor.Services;
@@ -970,6 +971,49 @@ public class PrecastDimensionPostProcessor
 		_pdfDir = pdfDir;
 	}
 
+	private static void WarnIfNumberingStale()
+	{
+		try
+		{
+			if (!Operation.IsNumberingUpToDateAll())
+			{
+				Console.WriteLine("[Fit] Numbering is not up to date — part marks may show '?'.");
+				Console.WriteLine("  In Tekla: Drawings & reports → Numbering → Number modified objects, then re-run Fit.");
+			}
+		}
+		catch
+		{
+		}
+	}
+
+	/// <summary>
+	/// Hard gate before clean-mark / PG macros. Returns false when model numbering is stale
+	/// so sheets are not recreated with unresolved magenta '?'.
+	/// </summary>
+	public static bool AbortIfNumberingStale(string context = "Civil")
+	{
+		try
+		{
+			if (!Operation.IsNumberingUpToDateAll())
+			{
+				Console.WriteLine("[" + context + "] ABORT: Numbering is not up to date — part marks would show '?'.");
+				Console.WriteLine("  In Tekla: Drawings & reports → Numbering → Number modified objects, then re-run standalone.");
+				return true;
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[" + context + "] numbering check failed: " + ex.Message);
+		}
+		return false;
+	}
+
+	private struct MarkRepairResult
+	{
+		public int Repaired;
+		public int Unresolved;
+	}
+
 	public static bool IsHardwareShopSheet(Drawing drawing)
 	{
 		if (drawing == null)
@@ -1023,11 +1067,17 @@ public class PrecastDimensionPostProcessor
 		catch
 		{
 		}
-		if (!Regex.IsMatch(input, "-\\s*3\\s*$") && text.IndexOf("REBAR_BBS", StringComparison.OrdinalIgnoreCase) < 0)
-		{
-			return text.IndexOf("BBS", StringComparison.OrdinalIgnoreCase) >= 0;
-		}
-		return true;
+		// PG3 rebar table is typically sheet - 3; also - 4 / REBAR_BBS / TABLE names.
+		if (Regex.IsMatch(input, "-\\s*3\\s*$"))
+			return true;
+		if (Regex.IsMatch(input, "-\\s*4\\s*$"))
+			return true;
+		if (text.IndexOf("REBAR_BBS", StringComparison.OrdinalIgnoreCase) >= 0)
+			return true;
+		if (text.IndexOf("REINF. TABLE", StringComparison.OrdinalIgnoreCase) >= 0
+			|| text.IndexOf("REINFORCING TABLE", StringComparison.OrdinalIgnoreCase) >= 0)
+			return true;
+		return text.IndexOf("BBS", StringComparison.OrdinalIgnoreCase) >= 0;
 	}
 
 	public void CleanBbs(Drawing drawing)
@@ -1059,6 +1109,7 @@ public class PrecastDimensionPostProcessor
 					drawingObjectEnumerator = null;
 				}
 			}
+			// Engineer table sheet: park all model views so schedule/BOM/notes stay uncluttered.
 			while (drawingObjectEnumerator != null && drawingObjectEnumerator.MoveNext())
 			{
 				if (drawingObjectEnumerator.Current is View view)
@@ -1076,9 +1127,12 @@ public class PrecastDimensionPostProcessor
 					}
 				}
 			}
-			drawing.CommitChanges();
-			_handler.SaveActiveDrawing();
-			Console.WriteLine("[BBS] Parked extraneous views off-sheet for BBS schedule.");
+			PurgeTemporaryTags(sheet);
+			try { drawing.CommitChanges(); } catch { }
+			try { _handler.SaveActiveDrawing(); } catch { }
+			string bbsMark = "";
+			try { bbsMark = drawing.Mark ?? ""; } catch { }
+			Console.WriteLine("[BBS] Parked model views off-sheet; table/BOM left clean for '" + bbsMark + "'.");
 		}
 		catch
 		{
@@ -1173,15 +1227,17 @@ public class PrecastDimensionPostProcessor
 			double sheetWidth = ((sheet.Width > 1.0) ? sheet.Width : 431.8);
 			double sheetHeight = ((sheet.Height > 1.0) ? sheet.Height : 279.4);
 			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, num, sheetWidth, sheetHeight, num2, shopFitResult);
+			WarnIfNumberingStale();
 			PanelAxis panelAxis = PanelAxis.Measure(part, num);
 			int num3 = 0;
 			double num4 = double.NaN;
+			bool tapeVerified = false;
 			List<double[]> micros = new List<double[]>();
 			StationBuckets stationBuckets = null;
 			if (panelAxis == null || Math.Abs(panelAxis.Span - num) > 0.1)
 			{
 				num4 = ((panelAxis == null) ? double.NaN : (panelAxis.Span - num));
-				Console.WriteLine("[Fit] '" + text + "' dimension tape aborted: span " + F(panelAxis?.Span ?? 0.0) + " vs length " + F(num) + " delta " + F(num4));
+				Console.WriteLine("[TAPE_UNVERIFIED] '" + text + "' span " + F(panelAxis?.Span ?? 0.0) + " vs length " + F(num) + " delta " + F(num4) + " — OVERALL dims only");
 			}
 			else
 			{
@@ -1194,18 +1250,15 @@ public class PrecastDimensionPostProcessor
 				List<double> list = panelAxis.Chain(stations);
 				num4 = ((list.Count < 2) ? double.NaN : (list[list.Count - 1] - list[0] - num));
 				num3 = list.Count;
-				if (Math.Abs(num4) > 0.1)
-				{
-					Console.WriteLine("[Fit] '" + text + "' dimension tape aborted: delta " + F(num4));
-				}
+				if (!double.IsNaN(num4) && Math.Abs(num4) <= 0.1)
+					tapeVerified = true;
 				else
-				{
-					HideSheet1Rebar(sheet);
-					PurgeTemporaryTags(sheet);
-					panelAxis.BindView(front, part);
-					// PlaceTiers runs after ExportNativePage2 / final arrange so the mesh stays on sheet 1.
-				}
+					Console.WriteLine("[TAPE_UNVERIFIED] '" + text + "' delta " + F(num4) + " — OVERALL dims only");
 			}
+			HideSheet1Rebar(sheet);
+			PurgeTemporaryTags(sheet);
+			if (panelAxis != null)
+				panelAxis.BindView(front, part);
 			shopFitResult.TapeDeltaMm = num4;
 			CatReport catReport = ApplyCats(drawing, sheet, front, part, panelAxis, stationBuckets, micros, num2, shopFitResult, num, scale);
 			shopFitResult.Sheet2Updated = catReport.Sheet2Updated;
@@ -1233,8 +1286,10 @@ public class PrecastDimensionPostProcessor
 				}
 				if (string.IsNullOrEmpty(value))
 				{
-					value = "W10-175";
+					value = Regex.Replace(text ?? "", "-\\s*\\d+\\s*$", "").Trim().Trim('[', ']').Trim();
 				}
+				if (string.IsNullOrEmpty(value))
+					value = "UNKNOWN";
 				string page2Path = Path.Combine(_pdfDir, value + "_-_2_Sections_3D.pdf");
 				ExportNativePage2(drawing, front, view3D, section, bottom, otherViews, part, page2Path);
 			}
@@ -1242,7 +1297,7 @@ public class PrecastDimensionPostProcessor
 			SealView(front, num, scale, sheetHeight, num2);
 			PurgeTemporaryTags(sheet);
 			// Dimension mesh last — after page-2 export and the final elevation-only arrange.
-			if (stationBuckets != null && panelAxis != null && !double.IsNaN(num4) && Math.Abs(num4) <= 0.1)
+			if (panelAxis != null)
 			{
 				panelAxis.BindView(front, part);
 				List<double> tape = new List<double>
@@ -1250,9 +1305,15 @@ public class PrecastDimensionPostProcessor
 					panelAxis.Min,
 					panelAxis.Min + panelAxis.Span
 				};
-				PlaceTiers(front, panelAxis, stationBuckets, tape, micros, scale);
-				RefitFrontFrame(front, part, scale);
+				StationBuckets bucketsForTiers = stationBuckets ?? new StationBuckets();
+				PlaceTiers(front, panelAxis, bucketsForTiers, tape, micros, scale, overallOnly: !tapeVerified);
+				RefitFrontFrame(front, part, scale, sheet);
 			}
+			// Repair unresolved part marks (magenta '?') from model PART_POS — never hide numbering.
+			MarkRepairResult markRepair = RepairBrokenPartMarks(drawing, sheet, front);
+			Console.WriteLine("[Fit] repaired " + markRepair.Repaired.ToString(CultureInfo.InvariantCulture)
+				+ " part mark(s); unresolved " + markRepair.Unresolved.ToString(CultureInfo.InvariantCulture)
+				+ " (no PART_POS)");
 			RemoveInnerSheetBorders(sheet, sheetWidth, sheetHeight);
 			try
 			{
@@ -1461,22 +1522,24 @@ public class PrecastDimensionPostProcessor
 		}
 	}
 
-	private static void RefitFrontFrame(View view, Tekla.Structures.Model.Part main, int scale)
+	private static void RefitFrontFrame(View view, Tekla.Structures.Model.Part main, int scale, ContainerView sheet)
 	{
 		if (view == null || main == null || scale < 1) return;
 		try
 		{
 			if (!GetSolidBoundsInView(view, main, out double minX, out double maxX, out double minY, out double maxY))
 				return;
-			const double desiredLeft = 25.0;
-			const double desiredCenterY = 145.0;
+			double bomLeft = ScanBomLeft(sheet);
+			double sheetWidth = (sheet != null && sheet.Width > 1.0) ? sheet.Width : 431.8;
+			double availableWidth = (bomLeft - 10.0) - 15.0; // 10mm buffer, 15mm margin
+			double targetX = 15.0 + (availableWidth / 2.0);
 			var attrs = view.Attributes;
 			attrs.FixedViewPlacing = true;
 			attrs.Scale = scale;
 			view.Attributes = attrs;
-			view.Origin = new Point(desiredLeft - (minX / scale), desiredCenterY - ((minY + maxY) / (2.0 * scale)), 0.0);
+			view.Origin = new Point(targetX - ((minX + maxX) / (2.0 * scale)), 139.7 - ((minY + maxY) / (2.0 * scale)), 0.0);
 			view.Modify();
-			Console.WriteLine("[Fit] fit-page origin left=25 centerY=145 scale=" + scale.ToString(CultureInfo.InvariantCulture));
+			Console.WriteLine("[Fit] fit-page dynamic center targetX=" + targetX.ToString(CultureInfo.InvariantCulture) + " scale=" + scale.ToString(CultureInfo.InvariantCulture));
 		}
 		catch (Exception ex)
 		{
@@ -1767,6 +1830,17 @@ public class PrecastDimensionPostProcessor
 		return value;
 	}
 
+	private static double LiveHeight(Tekla.Structures.Model.Part main)
+	{
+		if (main == null) return 0.0;
+		double value = 0.0;
+		try { main.GetReportProperty("HEIGHT", ref value); } catch {}
+		if (value > 0.0) return value;
+		Solid solid = main.GetSolid();
+		if (solid != null) return solid.MaximumPoint.Y - solid.MinimumPoint.Y;
+		return 0.0;
+	}
+
 	private static double ScanBomLeft(ContainerView sheet)
 	{
 		double num = double.MaxValue;
@@ -1863,6 +1937,458 @@ public class PrecastDimensionPostProcessor
 		}
 	}
 
+	/// <summary>
+	/// After UpdateDrawing, rewrite unresolved part marks (display '?') with model PART_POS
+	/// as TextElement content. Never hide numbering marks. Rebar marks are skipped.
+	/// </summary>
+	private MarkRepairResult RepairBrokenPartMarks(Drawing drawing, ContainerView sheet, View front)
+	{
+		var result = default(MarkRepairResult);
+		if (drawing == null || _model == null)
+			return result;
+		try { _handler.UpdateDrawing(drawing); } catch { }
+
+		var hosts = new List<ViewBase>();
+		if (front != null) hosts.Add(front);
+		if (sheet != null)
+		{
+			DrawingObjectEnumerator en = null;
+			try { en = sheet.GetAllViews(); }
+			catch { try { en = sheet.GetViews(); } catch { en = null; } }
+			while (en != null && en.MoveNext())
+			{
+				if (en.Current is View v && !hosts.Contains(v))
+					hosts.Add(v);
+			}
+		}
+
+		int scanned = 0;
+		int rebarSkip = 0;
+		foreach (ViewBase host in hosts)
+		{
+			// Snapshot first — Delete during recreate invalidates live enumerators.
+			List<MarkBase> hostMarks = new List<MarkBase>(EnumerateMarks(host));
+			foreach (MarkBase mark in hostMarks)
+			{
+				scanned++;
+				try
+				{
+					try
+					{
+						var prop = mark.GetType().GetProperty("ChangeSymbol");
+						if (prop != null && prop.CanWrite)
+							prop.SetValue(mark, false, null);
+					}
+					catch { }
+
+					if (MarkLinksToRebar(mark))
+					{
+						rebarSkip++;
+						continue;
+					}
+
+					string displayed = FirstNonEmpty(FlattenRelatedMarkText(mark), FlattenMarkText(mark));
+					string resolved = ResolveMarkPartPos(mark, host);
+					// API often already has a real mark string while Tekla UI still paints a magenta
+					// associativity '?' — recreate the Mark attached to the drawing Part.
+					if (string.IsNullOrWhiteSpace(resolved) || resolved.IndexOf('?') >= 0)
+					{
+						if (!string.IsNullOrWhiteSpace(displayed) && displayed.IndexOf('?') < 0
+							&& !LooksLikeUnresolvedPropertyToken(displayed))
+							resolved = displayed.Trim();
+					}
+					if (string.IsNullOrWhiteSpace(resolved) || resolved.IndexOf('?') >= 0)
+					{
+						result.Unresolved++;
+						if (scanned <= 5)
+							Console.WriteLine("[Fit] mark-unresolved displayed='" + Trunc(displayed, 40) + "'");
+						continue;
+					}
+
+					// Recreate (insert-new then delete-old) clears broken associativity '?' glyphs.
+					// Fall back to content rewrite when the drawing Part cannot be resolved.
+					bool ok = TryRecreateMark(mark, host, resolved);
+					if (!ok)
+						ok = TryRewriteMarkContent(mark, resolved);
+					if (ok)
+						result.Repaired++;
+					else if (IsMarkContentBroken(mark, displayed))
+						result.Unresolved++;
+					if (scanned <= 5)
+						Console.WriteLine("[Fit] mark-fix '" + Trunc(displayed, 40) + "' -> '" + Trunc(resolved, 40)
+							+ "' ok=" + ok);
+				}
+				catch { }
+			}
+		}
+		Console.WriteLine("[Fit] mark-scan total=" + scanned.ToString(CultureInfo.InvariantCulture)
+			+ " rebarSkip=" + rebarSkip.ToString(CultureInfo.InvariantCulture));
+		return result;
+	}
+
+	/// <summary>
+	/// Insert a new Mark attached to the drawing Part, then delete the old one.
+	/// Insert-first avoids losing numbering if Insert fails. Recreate clears broken
+	/// associativity '?' glyphs while keeping real PART_POS text.
+	/// </summary>
+	private bool TryRecreateMark(MarkBase mark, ViewBase host, string resolved)
+	{
+		if (mark == null || string.IsNullOrWhiteSpace(resolved)) return false;
+		Tekla.Structures.Drawing.ModelObject target = FindRelatedDrawingModelObject(mark, host);
+		if (target == null) return false;
+
+		Point ip = null;
+		try { ip = mark.InsertionPoint; } catch { }
+
+		try
+		{
+			var neu = new Mark(target);
+			neu.Attributes.Content.Clear();
+			neu.Attributes.Content.Add(new TextElement(resolved, new FontAttributes { Height = 2.5 }));
+			if (ip != null)
+				neu.InsertionPoint = new Point(ip.X, ip.Y, 0.0);
+			try { if (neu.Hideable != null) neu.Hideable.ShowInDrawingView(); } catch { }
+			if (!neu.Insert())
+				return false;
+		}
+		catch { return false; }
+
+		try { mark.Delete(); } catch { }
+		return true;
+	}
+
+	private Tekla.Structures.Drawing.ModelObject FindRelatedDrawingModelObject(MarkBase mark, ViewBase host)
+	{
+		try
+		{
+			DrawingObjectEnumerator related = null;
+			try { related = mark.GetRelatedObjects(new Type[] { typeof(Tekla.Structures.Drawing.Part) }); }
+			catch { related = null; }
+			if (related == null)
+			{
+				try { related = mark.GetRelatedObjects(); }
+				catch { related = null; }
+			}
+			while (related != null && related.MoveNext())
+			{
+				if (related.Current is Tekla.Structures.Drawing.Part dp)
+					return dp;
+				if (related.Current is Tekla.Structures.Drawing.ModelObject dmo)
+					return dmo;
+			}
+		}
+		catch { }
+
+		Identifier id = FindNearestDrawingPartId(mark, host);
+		if (id == null || !id.IsValid() || host == null) return null;
+		DrawingObjectEnumerator en = null;
+		try { en = host.GetAllObjects(typeof(Tekla.Structures.Drawing.Part)); }
+		catch
+		{
+			try { en = host.GetObjects(new Type[] { typeof(Tekla.Structures.Drawing.Part) }); }
+			catch { return null; }
+		}
+		while (en != null && en.MoveNext())
+		{
+			if (en.Current is Tekla.Structures.Drawing.Part dp
+				&& dp.ModelIdentifier != null && dp.ModelIdentifier.ID == id.ID)
+				return dp;
+		}
+		return null;
+	}
+
+	private static string Trunc(string s, int max)
+	{
+		s = s ?? "";
+		if (s.Length <= max) return s;
+		return s.Substring(0, max) + "...";
+	}
+
+	private static IEnumerable<MarkBase> EnumerateMarks(ViewBase host)
+	{
+		if (host == null) yield break;
+		var seen = new HashSet<int>();
+		DrawingObjectEnumerator marks = null;
+		try { marks = host.GetAllObjects(typeof(MarkBase)); }
+		catch
+		{
+			try { marks = host.GetObjects(new Type[] { typeof(MarkBase), typeof(Mark), typeof(MarkSet) }); }
+			catch
+			{
+				try { marks = host.GetAllObjects(); }
+				catch { yield break; }
+			}
+		}
+		while (marks != null && marks.MoveNext())
+		{
+			if (!(marks.Current is MarkBase mark)) continue;
+			int id = 0;
+			try { id = mark.GetHashCode(); } catch { }
+			if (id != 0 && !seen.Add(id)) continue;
+			yield return mark;
+		}
+	}
+
+	private static bool TryRewriteMarkContent(MarkBase mark, string resolved)
+	{
+		if (string.IsNullOrWhiteSpace(resolved)) return false;
+		var font = new FontAttributes { Height = 2.5 };
+		try
+		{
+			if (mark is Mark m && m.Attributes?.Content != null)
+			{
+				m.Attributes.Content.Clear();
+				m.Attributes.Content.Add(new TextElement(resolved, font));
+				try { if (m.Hideable != null) m.Hideable.ShowInDrawingView(); } catch { }
+				return m.Modify();
+			}
+		}
+		catch { }
+		return false;
+	}
+
+	private static bool IsMarkContentBroken(MarkBase mark, string displayed)
+	{
+		if (string.IsNullOrWhiteSpace(displayed) || displayed.IndexOf('?') >= 0)
+			return true;
+		if (LooksLikeUnresolvedPropertyToken(displayed))
+			return true;
+		if (mark is Mark m && HasUnresolvedPropertyElement(m))
+			return true;
+		return false;
+	}
+
+	private static bool LooksLikeUnresolvedPropertyToken(string text)
+	{
+		string s = (text ?? "").Trim();
+		if (s.Length == 0) return true;
+		return Regex.IsMatch(s,
+			@"^%?(PART_POS|ASSEMBLY_POS|PARTMARK|CAST_UNIT_POS|REBAR_POS|MARK|PART_POSITION|ASSEMBLY_POSITION)%?$",
+			RegexOptions.IgnoreCase);
+	}
+
+	private static bool HasUnresolvedPropertyElement(Mark mark)
+	{
+		try
+		{
+			return mark?.Attributes?.Content != null && HasUnresolvedInContainer(mark.Attributes.Content);
+		}
+		catch { return false; }
+	}
+
+	private static bool HasUnresolvedInContainer(IEnumerable container)
+	{
+		if (container == null) return false;
+		foreach (object el in container)
+		{
+			if (el is PropertyElement pe)
+			{
+				string v = pe.Value ?? "";
+				if (string.IsNullOrWhiteSpace(v) || v.IndexOf('?') >= 0)
+					return true;
+			}
+			else if (el is TextElement te)
+			{
+				if ((te.Value ?? "").IndexOf('?') >= 0)
+					return true;
+			}
+			else if (el is ContainerElement ce && HasUnresolvedInContainer(ce))
+				return true;
+		}
+		return false;
+	}
+
+	private string ResolveMarkPartPos(MarkBase mark, ViewBase host)
+	{
+		if (mark == null || _model == null)
+			return "";
+		Identifier id = FindMarkModelIdentifier(mark);
+		string pos = PartPosFromIdentifier(id);
+		if (!string.IsNullOrWhiteSpace(pos) && pos.IndexOf('?') < 0)
+			return pos;
+
+		// Fallback: nearest drawing Part in the same view (magenta '?' marks often lose RelatedObjects).
+		id = FindNearestDrawingPartId(mark, host);
+		return PartPosFromIdentifier(id);
+	}
+
+	private static Identifier FindMarkModelIdentifier(MarkBase mark)
+	{
+		Identifier id = null;
+		try
+		{
+			DrawingObjectEnumerator related = null;
+			try { related = mark.GetRelatedObjects(new Type[] { typeof(Tekla.Structures.Drawing.Part) }); }
+			catch { related = null; }
+			if (related == null)
+			{
+				try { related = mark.GetRelatedObjects(); }
+				catch { related = null; }
+			}
+			while (related != null && related.MoveNext())
+			{
+				if (related.Current is Tekla.Structures.Drawing.Part dp && dp.ModelIdentifier != null && dp.ModelIdentifier.IsValid())
+					return dp.ModelIdentifier;
+				if (related.Current is Tekla.Structures.Drawing.ModelObject dmo
+					&& dmo.ModelIdentifier != null && dmo.ModelIdentifier.IsValid() && id == null)
+					id = dmo.ModelIdentifier;
+			}
+		}
+		catch { }
+		return id;
+	}
+
+	private Identifier FindNearestDrawingPartId(MarkBase mark, ViewBase host)
+	{
+		View view = host as View;
+		if (mark == null || view == null || _model == null) return null;
+		Point ip = null;
+		try { ip = mark.InsertionPoint; } catch { }
+		if (ip == null) return null;
+
+		Identifier bestId = null;
+		double bestDist = 500.0 * 500.0; // view units^2
+		DrawingObjectEnumerator en = null;
+		try { en = host.GetAllObjects(typeof(Tekla.Structures.Drawing.Part)); }
+		catch
+		{
+			try { en = host.GetObjects(new Type[] { typeof(Tekla.Structures.Drawing.Part) }); }
+			catch { return null; }
+		}
+		while (en != null && en.MoveNext())
+		{
+			if (!(en.Current is Tekla.Structures.Drawing.Part dp) || dp.ModelIdentifier == null || !dp.ModelIdentifier.IsValid())
+				continue;
+			Tekla.Structures.Model.Part mp = null;
+			try { mp = _model.SelectModelObject(dp.ModelIdentifier) as Tekla.Structures.Model.Part; }
+			catch { }
+			if (mp == null) continue;
+			Point gp = PartPoint(mp);
+			Point vp = PanelAxis.ToView(gp, view);
+			if (vp == null) continue;
+			double dx = vp.X - ip.X;
+			double dy = vp.Y - ip.Y;
+			double d2 = dx * dx + dy * dy;
+			if (d2 < bestDist)
+			{
+				bestDist = d2;
+				bestId = dp.ModelIdentifier;
+			}
+		}
+		return bestId;
+	}
+
+	private string PartPosFromIdentifier(Identifier id)
+	{
+		if (id == null || !id.IsValid() || _model == null)
+			return "";
+		Tekla.Structures.Model.ModelObject mo = null;
+		try { mo = _model.SelectModelObject(id); } catch { }
+		Tekla.Structures.Model.Part part = mo as Tekla.Structures.Model.Part;
+		if (part == null && mo is Assembly asm)
+		{
+			try { part = asm.GetMainPart() as Tekla.Structures.Model.Part; } catch { }
+		}
+
+		string pos = "";
+		if (part != null)
+		{
+			try { part.GetReportProperty("PART_POS", ref pos); } catch { }
+			if (string.IsNullOrWhiteSpace(pos) || pos.IndexOf('?') >= 0)
+			{
+				pos = "";
+				try { part.GetReportProperty("ASSEMBLY_POS", ref pos); } catch { }
+			}
+			if (string.IsNullOrWhiteSpace(pos) || pos.IndexOf('?') >= 0)
+			{
+				try { pos = part.Name ?? ""; } catch { pos = ""; }
+			}
+		}
+		else if (mo is Assembly assembly)
+		{
+			try { assembly.GetReportProperty("ASSEMBLY_POS", ref pos); } catch { }
+		}
+		return (pos ?? "").Trim();
+	}
+
+	private static bool MarkLinksToRebar(MarkBase mark)
+	{
+		try
+		{
+			DrawingObjectEnumerator related = mark.GetRelatedObjects();
+			while (related != null && related.MoveNext())
+			{
+				if (related.Current is ReinforcementBase)
+					return true;
+			}
+		}
+		catch { }
+		return false;
+	}
+
+	private static string FlattenRelatedMarkText(MarkBase mark)
+	{
+		if (mark == null) return "";
+		try
+		{
+			var sb = new System.Text.StringBuilder();
+			DrawingObjectEnumerator en = mark.GetRelatedObjects();
+			while (en != null && en.MoveNext())
+			{
+				if (en.Current is Text t)
+					sb.Append(t.TextString ?? "");
+			}
+			return sb.ToString();
+		}
+		catch { return ""; }
+	}
+
+	private static string FirstNonEmpty(string a, string b)
+	{
+		if (!string.IsNullOrWhiteSpace(a)) return a;
+		if (!string.IsNullOrWhiteSpace(b)) return b;
+		return "";
+	}
+
+	private static string FlattenMarkText(MarkBase mark)
+	{
+		if (mark == null) return "";
+		try
+		{
+			if (mark is Mark m && m.Attributes?.Content != null)
+			{
+				var sb = new System.Text.StringBuilder();
+				FlattenMarkContainer(m.Attributes.Content, sb);
+				return sb.ToString();
+			}
+		}
+		catch { }
+		try
+		{
+			var p = mark.GetType().GetProperty("TextString");
+			if (p != null)
+			{
+				object v = p.GetValue(mark, null);
+				if (v != null) return v.ToString();
+			}
+		}
+		catch { }
+		return "";
+	}
+
+	private static void FlattenMarkContainer(IEnumerable container, System.Text.StringBuilder sb)
+	{
+		if (container == null || sb == null) return;
+		foreach (object el in container)
+		{
+			if (el is TextElement te) sb.Append(te.Value ?? "");
+			else if (el is PropertyElement pe)
+				sb.Append(string.IsNullOrEmpty(pe.Value) ? (pe.Name ?? "") : pe.Value);
+			else if (el is ContainerElement ce) FlattenMarkContainer(ce, sb);
+			else if (el != null) sb.Append(el.ToString());
+		}
+	}
+
 	private static void PurgeTemporaryTags(ContainerView sheet)
 	{
 		if (sheet == null)
@@ -1935,132 +2461,13 @@ public class PrecastDimensionPostProcessor
 					doomed.Add(text);
 				}
 			}
-			else if (drawingObjectEnumerator.Current is MarkBase item)
-			{
-				doomed.Add(item);
-			}
 			else if (drawingObjectEnumerator.Current is WeldMark item2)
 			{
 				doomed.Add(item2);
 			}
+			// Part/assembly numbering marks (MarkBase) are kept — do not mass-delete.
 		}
-		try
-		{
-			DrawingObjectEnumerator objects = host.GetObjects(new Type[3]
-			{
-				typeof(MarkBase),
-				typeof(Mark),
-				typeof(WeldMark)
-			});
-			while (objects != null && objects.MoveNext())
-			{
-				DrawingObject current = objects.Current;
-				if (current != null && !doomed.Contains(current))
-				{
-					doomed.Add(current);
-				}
-			}
-		}
-		catch
-		{
-		}
-		try
-		{
-			DrawingObjectEnumerator allObjects = host.GetAllObjects(typeof(MarkBase));
-			while (allObjects != null && allObjects.MoveNext())
-			{
-				DrawingObject current2 = allObjects.Current;
-				if (current2 != null && !doomed.Contains(current2))
-				{
-					doomed.Add(current2);
-				}
-			}
-		}
-		catch
-		{
-		}
-		if (!(host is View view))
-		{
-			return;
-		}
-		try
-		{
-			DrawingObjectEnumerator relatedObjects = view.GetRelatedObjects(new Type[3]
-			{
-				typeof(MarkBase),
-				typeof(Mark),
-				typeof(WeldMark)
-			});
-			while (relatedObjects != null && relatedObjects.MoveNext())
-			{
-				DrawingObject current3 = relatedObjects.Current;
-				if (current3 != null && !doomed.Contains(current3))
-				{
-					doomed.Add(current3);
-				}
-			}
-		}
-		catch
-		{
-		}
-		try
-		{
-			DrawingObjectEnumerator objects2 = view.GetObjects(new Type[1] { typeof(Tekla.Structures.Drawing.Part) });
-			while (objects2 != null && objects2.MoveNext())
-			{
-				if (!(objects2.Current is Tekla.Structures.Drawing.Part part))
-				{
-					continue;
-				}
-				try
-				{
-					DrawingObjectEnumerator relatedObjects2 = part.GetRelatedObjects();
-					while (relatedObjects2 != null && relatedObjects2.MoveNext())
-					{
-						DrawingObject current4 = relatedObjects2.Current;
-						if (current4 != null && !doomed.Contains(current4))
-						{
-							doomed.Add(current4);
-						}
-					}
-				}
-				catch
-				{
-				}
-			}
-		}
-		catch
-		{
-		}
-		try
-		{
-			DrawingObjectEnumerator objects3 = view.GetObjects(new Type[1] { typeof(ReinforcementBase) });
-			while (objects3 != null && objects3.MoveNext())
-			{
-				if (!(objects3.Current is ReinforcementBase reinforcementBase))
-				{
-					continue;
-				}
-				try
-				{
-					DrawingObjectEnumerator relatedObjects3 = reinforcementBase.GetRelatedObjects();
-					while (relatedObjects3 != null && relatedObjects3.MoveNext())
-					{
-						DrawingObject current5 = relatedObjects3.Current;
-						if (current5 != null && !doomed.Contains(current5))
-						{
-							doomed.Add(current5);
-						}
-					}
-				}
-				catch
-				{
-				}
-			}
-		}
-		catch
-		{
-		}
+		// Do not walk Part/Rebar related MarkBase — numbering marks must stay visible.
 	}
 
 	private static void PurgeOldDimensions(View view)
@@ -2137,12 +2544,19 @@ public class PrecastDimensionPostProcessor
 		}
 	}
 
-	private void PlaceTiers(View view, PanelAxis axis, StationBuckets buckets, List<double> tape, List<double[]> micros, int scale)
+	private void PlaceTiers(View view, PanelAxis axis, StationBuckets buckets, List<double> tape, List<double[]> micros, int scale, bool overallOnly = false)
 	{
 		PurgeOldDimensions(view);
 		// Engineer ladder: 12 mm first offset, 7 mm between tiers (paper mm → view mm).
 		double topDist = 12.0 * (double)scale;
 		double step = 7.0 * (double)scale;
+		if (overallOnly || buckets == null)
+		{
+			PlaceString(view, axis, tape, isBottom: false, topDist, "OVERALL PROFILE", scale);
+			PlaceString(view, axis, tape, isBottom: true, topDist, "OVERALL PROFILE", scale);
+			PlaceVerticalDimensions(view, axis, buckets ?? new StationBuckets(), scale);
+			return;
+		}
 		if (buckets.Lifters.Count > 0)
 		{
 			PlaceString(view, axis, buckets.Lifters, isBottom: false, topDist, "P-205 LIFTERS", scale);
@@ -2303,8 +2717,9 @@ public class PrecastDimensionPostProcessor
 			{
 				try
 				{
-					set.Distance = paper;
+					// CreateDimensionSet 4th arg = paper mm; .Distance property = view units (paper×scale).
 					set.Attributes = attrs;
+					try { set.Distance = distance; } catch { }
 					set.Modify();
 				}
 				catch (Exception ex)
@@ -2354,6 +2769,7 @@ public class PrecastDimensionPostProcessor
 		}
 		try
 		{
+			// Engineer style: tier labels on the RIGHT end of the dimension ladder.
 			Point obj = (isBottom ? axis.PaperBottomPoint(axis.Min + axis.Span) : axis.PaperPoint(axis.Min + axis.Span));
 			Vector vector = (isBottom ? new Vector(0.0, -1.0, 0.0) : new Vector(0.0, 1.0, 0.0));
 			double x = obj.X + 2.0 * (double)scale;
@@ -2361,7 +2777,7 @@ public class PrecastDimensionPostProcessor
 			Text text2 = new Text(view, new Point(x, y, 0.0), text);
 			try
 			{
-				text2.Attributes.Frame.Type = FrameTypes.Rectangular;
+				text2.Attributes.Frame.Type = FrameTypes.None;
 				text2.Attributes.Font.Height = 2.0;
 			}
 			catch
@@ -2484,8 +2900,8 @@ public class PrecastDimensionPostProcessor
 			Console.WriteLine("[DimSuccess] Created vertical DimSet at paper " + paper.ToString("0.#", CultureInfo.InvariantCulture) + " mm with " + pointList.Count + " pts.");
 			try
 			{
-				set.Distance = paper;
 				set.Attributes = attrs;
+				try { set.Distance = distance; } catch { }
 				set.Modify();
 			}
 			catch (Exception ex)
@@ -2764,6 +3180,7 @@ public class PrecastDimensionPostProcessor
 				catReport.Sheet2Updated = PushSheet2(Sheet2Mark(drawing.Mark ?? ""), front, axis, micros, list);
 			}
 		}
+		ApplyLeaderElbowSpringRelaxation(drawing, front, scale);
 		return catReport;
 	}
 
@@ -3962,5 +4379,188 @@ public class PrecastDimensionPostProcessor
 			return "n/a";
 		}
 		return v.ToString("0.###", CultureInfo.InvariantCulture);
+	}
+
+	// PG2 = rebar placing sheet - 2; PG3 = BBS/table sheet - 3.
+	public static bool IsPlacingSheet(Drawing d)
+	{
+		if (d == null) return false;
+		string mark = "";
+		string name = "";
+		try { mark = (d.Mark ?? "").Trim().Trim('[', ']').Trim(); } catch { }
+		try { name = d.Name ?? ""; } catch { }
+		if (Regex.IsMatch(mark, "-\\s*[13]\\s*$")) return false;
+		if (Regex.IsMatch(mark, "-\\s*2\\s*$")) return true;
+		return name.IndexOf("REINF. PLACING", StringComparison.OrdinalIgnoreCase) >= 0
+			|| name.IndexOf("REINFORCING PLACING", StringComparison.OrdinalIgnoreCase) >= 0
+			|| name.IndexOf("CU REINF. PLACING", StringComparison.OrdinalIgnoreCase) >= 0;
+	}
+
+	public static bool IsSectionsSheet(Drawing d)
+	{
+		// Sidecar sections/3D PDF is exported from sheet-1; no dedicated "- 2 sections" CU mark.
+		// Keep helper for any future sheet named SECTIONS / 3D only (not PG2 placing).
+		if (d == null) return false;
+		string name = "";
+		try { name = d.Name ?? ""; } catch { }
+		if (IsPlacingSheet(d) || IsBbsSheet(d) || IsHardwareShopSheet(d)) return false;
+		return name.IndexOf("SECTION", StringComparison.OrdinalIgnoreCase) >= 0
+			&& name.IndexOf("PLACING", StringComparison.OrdinalIgnoreCase) < 0;
+	}
+
+	public void CleanPlacing(Drawing drawing)
+	{
+		if (drawing == null) return;
+		try
+		{
+			ContainerView sheet = drawing.GetSheet();
+			if (sheet == null) return;
+			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
+			
+			ParkViewOffSheet(view3D);
+			if (otherViews != null) {
+				foreach(var v in otherViews) ParkViewOffSheet(v);
+			}
+			
+			if (front != null) {
+				Tekla.Structures.Model.Part part = ResolveMainPart(drawing);
+				double num = LiveLength(part);
+				double h = LiveHeight(part);
+				double sheetWidth = ((sheet.Width > 1.0) ? sheet.Width : 431.8);
+				double sheetHeight = ((sheet.Height > 1.0) ? sheet.Height : 279.4);
+				int scale = SelectScale(num);
+				
+				double targetCenterX = sheetWidth / 2.0;
+				
+				GetSolidBoundsInView(front, part, out double minX, out double maxX, out double minY, out double maxY);
+				double curSolidCenterX = (minX + maxX) / (2.0 * scale);
+				double curSolidCenterY = (minY + maxY) / (2.0 * scale);
+				
+				double frontY = 225.0; // Push higher to make room for rebar dims
+				front.Origin = new Point(targetCenterX - curSolidCenterX, frontY - curSolidCenterY, 0.0);
+				front.Modify();
+				
+				// 2. Position bottom (VIEW B / END 2) below front
+				if (bottom != null) {
+					var bAttrs = bottom.Attributes;
+					bAttrs.Scale = scale;
+					try { bAttrs.FixedViewPlacing = true; } catch { }
+					bottom.Attributes = bAttrs;
+					bottom.Origin = new Point(targetCenterX - curSolidCenterX, 40.0, 0.0); // Push lower
+					bottom.Modify();
+				}
+				
+				// 3. Position section (A-A) to the right of bottom
+				if (section != null) {
+					var sAttrs = section.Attributes;
+					sAttrs.Scale = scale;
+					try { sAttrs.FixedViewPlacing = true; } catch { }
+					section.Attributes = sAttrs;
+					section.Origin = new Point(targetCenterX + 140.0, 40.0, 0.0); // Push further right
+					section.Modify();
+				}
+			}
+			drawing.CommitChanges();
+			_handler.SaveActiveDrawing();
+			Console.WriteLine("[Placing] Arranged TOP IN FORM, VIEW B, and SECTION A-A.");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Placing] CleanPlacing failed: " + ex.Message);
+		}
+	}
+
+	public void CleanSections(Drawing drawing)
+	{
+		if (drawing == null) return;
+		try
+		{
+			ContainerView sheet = drawing.GetSheet();
+			if (sheet != null)
+			{
+				FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
+				ParkViewOffSheet(front);
+				double x = 45.0;
+				double y = 140.0;
+				
+				void PlaceSection(View v) {
+					if (v == null) return;
+					var attrs = v.Attributes;
+					attrs.Scale = 50; // Force 1:50 scale to prevent huge overlap
+					try { attrs.FixedViewPlacing = true; } catch {}
+					v.Attributes = attrs;
+					v.Origin = new Point(x, y, 0);
+					v.Modify();
+					x += 85.0; // 85mm spacing
+				}
+				
+				PlaceSection(view3D);
+				PlaceSection(section);
+				PlaceSection(bottom);
+				if (otherViews != null) {
+					foreach (var v in otherViews) {
+						PlaceSection(v);
+					}
+				}
+				drawing.CommitChanges();
+				_handler.SaveActiveDrawing();
+				Console.WriteLine("[Sections] Parked main view and arranged extra views on sheet 4.");
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Sections] CleanSections failed: " + ex.Message);
+		}
+	}
+
+	private void ApplyLeaderElbowSpringRelaxation(Drawing drawing, View view, int scale)
+	{
+		if (view == null || drawing == null) return;
+		try {
+			var rightMarks = new List<dynamic>();
+			var all = view.GetObjects(null);
+			while(all.MoveNext()) {
+				var obj = all.Current;
+				if (obj.GetType().Name == "AssociativeNote" || obj is MarkBase) {
+					var pProp = obj.GetType().GetProperty("Placing");
+					if (pProp != null) {
+						var placing = pProp.GetValue(obj);
+						if (placing is LeaderLinePlacing lp) {
+							// Filter right side
+							GetSolidBoundsInView(view, ResolveMainPart(drawing), out _, out double maxX, out _, out _);
+							if (lp.StartPoint.X > maxX - (50 * scale)) {
+								rightMarks.Add(new { Obj = obj, Placing = lp });
+							}
+						}
+					}
+				}
+			}
+			if (rightMarks.Count < 2) return;
+			rightMarks.Sort((a,b) => (a.Placing as LeaderLinePlacing).StartPoint.Y.CompareTo((b.Placing as LeaderLinePlacing).StartPoint.Y));
+			
+			double targetSpacing = 8.0 * scale;
+			int iterations = 10;
+			for (int k=0; k<iterations; k++) {
+				for (int i=1; i<rightMarks.Count; i++) {
+					var prev = rightMarks[i-1].Placing as LeaderLinePlacing;
+					var curr = rightMarks[i].Placing as LeaderLinePlacing;
+					double dy = curr.StartPoint.Y - prev.StartPoint.Y;
+					if (dy < targetSpacing) {
+						double push = (targetSpacing - dy) / 2.0;
+						prev.StartPoint.Y -= push;
+						curr.StartPoint.Y += push;
+					}
+				}
+			}
+			
+			foreach(var r in rightMarks) {
+				var pProp = r.Obj.GetType().GetProperty("Placing");
+				pProp.SetValue(r.Obj, r.Placing);
+				r.Obj.GetType().GetMethod("Modify").Invoke(r.Obj, null);
+			}
+			Console.WriteLine($"[SpringRelaxation] Relaxed {rightMarks.Count} labels successfully.");
+		} catch (Exception ex) {
+			Console.WriteLine("[SpringRelaxation] failed: " + ex.Message);
+		}
 	}
 }

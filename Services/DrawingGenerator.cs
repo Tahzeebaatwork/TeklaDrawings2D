@@ -446,7 +446,10 @@ namespace TeklaExtractor.Services
                     }
                     AgentLogPrintIdentity(drawing, path);
                     bool okPdf = TryPrint(drawing, dpm, path);
-                    return okPdf && File.Exists(path);
+                    bool pdfOk = okPdf && File.Exists(path);
+                    if (pdfOk)
+                        TryStripInnerPdfBorder(path);
+                    return pdfOk;
                 }
 
                 var attrs = new PrintAttributes
@@ -496,12 +499,63 @@ namespace TeklaExtractor.Services
                     catch { /* best effort */ }
                 }
 
-                return ok && File.Exists(path);
+                bool exists = ok && File.Exists(path);
+                if (exists)
+                    TryStripInnerPdfBorder(path);
+                return exists;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"[DrawingGenerator] {outputType} export failed: {ex.Message}");
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Layout templates bake nested sheet frames that are not Drawing.Line objects.
+        /// Cover the inner full-sheet rectangle in the PDF (keep outer border + BOM divider).
+        /// </summary>
+        private static void TryStripInnerPdfBorder(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path)) return;
+            string name = Path.GetFileName(path) ?? "";
+            // Sheet-1 fabrication elevation only (…_-_1.pdf).
+            if (name.IndexOf("_-_1.pdf", StringComparison.OrdinalIgnoreCase) < 0) return;
+            try
+            {
+                string root = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", ".."));
+                string script = Path.Combine(root, "Scripts", "strip_inner_sheet_border.py");
+                if (!File.Exists(script))
+                    script = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", "strip_inner_sheet_border.py");
+                if (!File.Exists(script))
+                {
+                    Console.WriteLine("[border] strip script missing; skip " + name);
+                    return;
+                }
+                var psi = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "python",
+                    Arguments = "\"" + script + "\" \"" + path + "\"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                };
+                using (var p = System.Diagnostics.Process.Start(psi))
+                {
+                    if (p == null) return;
+                    string stdout = p.StandardOutput.ReadToEnd();
+                    string stderr = p.StandardError.ReadToEnd();
+                    p.WaitForExit(60000);
+                    if (!string.IsNullOrWhiteSpace(stdout))
+                        Console.Write(stdout.TrimEnd() + Environment.NewLine);
+                    if (!string.IsNullOrWhiteSpace(stderr))
+                        Console.Write(stderr.TrimEnd() + Environment.NewLine);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[border] " + ex.Message);
             }
         }
 

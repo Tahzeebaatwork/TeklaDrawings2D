@@ -69,6 +69,10 @@ namespace TeklaExtractor.Services
                 return 0;
             }
 
+            // Do not recreate PG sheets while model numbering is stale (magenta '?' marks).
+            if (!_extractOnly && PrecastDimensionPostProcessor.AbortIfNumberingStale("Civil"))
+                return 1;
+
             var runner = new LocalDrawingMacroRunner(_model, _outputRoot);
             int drawingsBefore = runner.CountDrawings();
             Console.WriteLine("[Civil] drawings before macros=" + drawingsBefore);
@@ -378,8 +382,12 @@ namespace TeklaExtractor.Services
                         ShopFitResult fit = null;
                         if (PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))
                             fit = new PrecastDimensionPostProcessor(_model, _handler, pdfDir).Fit(drawing);
+                        else if (PrecastDimensionPostProcessor.IsPlacingSheet(drawing))
+                            new PrecastDimensionPostProcessor(_model, _handler, pdfDir).CleanPlacing(drawing);
                         else if (PrecastDimensionPostProcessor.IsBbsSheet(drawing))
                             new PrecastDimensionPostProcessor(_model, _handler, pdfDir).CleanBbs(drawing);
+                        else if (PrecastDimensionPostProcessor.IsSectionsSheet(drawing))
+                            new PrecastDimensionPostProcessor(_model, _handler, pdfDir).CleanSections(drawing);
                         if (fit != null && fit.Sheet2Updated)
                             ReprintSibling(printer, pdfDir, fit.SiblingMark);
                         if (_preflightQa && PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))

@@ -92,6 +92,16 @@
     <Compile Remove="LocalMacros\**\*.cs" />
     <Compile Remove="TeklaExtractor_Standalone_v2026\**\*.cs" />
     <Compile Remove="Final Check\**\*.cs" />
+    <Compile Remove="Services_Backup\**\*.cs" />
+    <Compile Remove="Tools\**\*.cs" />
+    <Compile Remove="Scripts\**\*.cs" />
+    <Compile Remove="_build_cast\**\*.cs" />
+    <Compile Remove="temp.cs" />
+    <Compile Remove="test.cs" />
+    <Compile Remove="old.cs" />
+    <Compile Remove="check_*.cs" />
+    <Compile Remove="update_*.cs" />
+    <Compile Remove="recover_*.cs" />
     <Content Include="LocalMacros\*.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
