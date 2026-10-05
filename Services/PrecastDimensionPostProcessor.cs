@@ -83,6 +83,9 @@ public class PrecastDimensionPostProcessor
 
 		public List<double> Joints = new List<double>();
 
+		/// <summary>Wall-up stations (mm along panel height) from opening/embed solids — for vertical chains.</summary>
+		public List<double> HeightStations = new List<double>();
+
 		public List<double> All = new List<double>();
 
 		public List<TradeHit> Trades = new List<TradeHit>();
@@ -978,6 +981,15 @@ public class PrecastDimensionPostProcessor
 	/// </summary>
 	public int FitStage { get; set; }
 
+	/// <summary>
+	/// When true (default): if the front view already has a dense native dimension set from
+	/// drawing properties, skip PurgeOldDimensions + PlaceTiers so manual-like elevations stay.
+	/// </summary>
+	public bool PreserveNativeDimensions { get; set; } = true;
+
+	/// <summary>Minimum StraightDimensionSet count to treat the view as having usable native dims.</summary>
+	private const int NativeDimPreserveMin = 8;
+
 	public PrecastDimensionPostProcessor(Model model, DrawingHandler handler, string pdfDir = null)
 	{
 		_model = model ?? throw new ArgumentNullException("model");
@@ -1183,9 +1195,9 @@ public class PrecastDimensionPostProcessor
 				return shopFitResult;
 			}
 			Console.WriteLine("[Fit] Views identified: Front=" + (front != null) + ", 3D=" + (view3D != null) + ", Section=" + (section != null) + ", Bottom=" + (bottom != null) + ", Other=" + otherViews.Count);
-			double num2 = ScanBomLeft(sheet);
 			double sheetWidth = ((sheet.Width > 1.0) ? sheet.Width : 431.8);
 			double sheetHeight = ((sheet.Height > 1.0) ? sheet.Height : 279.4);
+			double num2 = ScanBomLeft(sheet, sheetWidth);
 			double availableWidthMm = Math.Max(40.0, (num2 > 1.0 ? num2 : BomFallbackLeft) - 15.0 - 10.0);
 			int scale = SelectScale(num, availableWidthMm);
 			Console.WriteLine("[Fit] scale=" + scale.ToString(CultureInfo.InvariantCulture)
@@ -1278,6 +1290,7 @@ public class PrecastDimensionPostProcessor
 				};
 				StationBuckets bucketsForTiers = stationBuckets ?? new StationBuckets();
 				PlaceTiers(front, panelAxis, bucketsForTiers, tape, micros, scale, overallOnly: !tapeVerified);
+				AddTopInFormLabel(front, panelAxis, scale);
 				RefitFrontFrame(front, part, scale, sheet);
 			}
 			// Mark repair is opt-in (--enable-mark-repair). Default skip: do not rewrite marks.
@@ -1312,6 +1325,8 @@ public class PrecastDimensionPostProcessor
 			catch
 			{
 			}
+			// Refresh UI glyphs after headless Fit (showDrawing was false).
+			RefreshDrawingUi(drawing);
 			double num5 = ((num2 > 0.0) ? num2 : 345.0) - 10.0 - 15.0;
 			double v = ((num5 > 1.0) ? (15.0 + num5 / 2.0) : 142.5);
 			double v2 = ((sheet.Height > 1.0) ? (sheet.Height / 2.0) : 152.4);
@@ -1405,9 +1420,9 @@ public class PrecastDimensionPostProcessor
 				return result;
 			}
 
-			double bomLeft = ScanBomLeft(sheet);
 			double sheetWidth = (sheet.Width > 1.0) ? sheet.Width : 431.8;
 			double sheetHeight = (sheet.Height > 1.0) ? sheet.Height : 279.4;
+			double bomLeft = ScanBomLeft(sheet, sheetWidth);
 			double availableWidthMm = Math.Max(40.0, (bomLeft > 1.0 ? bomLeft : BomFallbackLeft) - 15.0 - 10.0);
 			int scale = SelectScale(modelLength, availableWidthMm);
 			PanelAxis axis = PanelAxis.Measure(part, modelLength);
@@ -1451,8 +1466,9 @@ public class PrecastDimensionPostProcessor
 				axis.BindView(front, part);
 				List<double> tape = new List<double> { axis.Min, axis.Min + axis.Span };
 				PlaceTiers(front, axis, buckets ?? new StationBuckets(), tape, new List<double[]>(), scale, overallOnly: !tapeOk);
+				AddTopInFormLabel(front, axis, scale);
 			}
-			Console.WriteLine("[FitStage] completed stage=3 (+PurgeOldDimensions/PlaceTiers tapeOk=" + tapeOk + ")");
+			Console.WriteLine("[FitStage] completed stage=3 (+PlaceTiers/preserve-native tapeOk=" + tapeOk + ")");
 			if (stage <= 3)
 			{
 				FinishFitStage(drawing, sheet, sheetWidth, sheetHeight, text, scale, bomLeft, availableWidthMm,
@@ -1509,6 +1525,7 @@ public class PrecastDimensionPostProcessor
 		RemoveInnerSheetBorders(sheet, sheetW, sheetH);
 		try { drawing.CommitChanges(); } catch { }
 		try { _handler.SaveActiveDrawing(); } catch { }
+		RefreshDrawingUi(drawing);
 		WriteFitStageReport(drawingMark, stageDone, EnableMarkRepair);
 		Console.WriteLine("[FitStage] STOPPED after stage=" + stageDone.ToString(CultureInfo.InvariantCulture)
 			+ ". Look in Tekla UI for magenta '?'. First stage where '?' appears = source clue.");
@@ -1712,9 +1729,9 @@ public class PrecastDimensionPostProcessor
 		{
 			if (!GetSolidBoundsInView(view, main, out double minX, out double maxX, out double minY, out double maxY))
 				return;
-			double bomLeft = ScanBomLeft(sheet);
 			double sheetWidth = (sheet != null && sheet.Width > 1.0) ? sheet.Width : 431.8;
-			double availableWidth = (bomLeft - 10.0) - 15.0; // 10mm buffer, 15mm margin
+			double bomLeft = ScanBomLeft(sheet, sheetWidth);
+			double availableWidth = Math.Max(40.0, (bomLeft - 10.0) - 15.0); // 10mm buffer, 15mm margin
 			double targetX = 15.0 + (availableWidth / 2.0);
 			var attrs = view.Attributes;
 			attrs.FixedViewPlacing = true;
@@ -2035,6 +2052,17 @@ public class PrecastDimensionPostProcessor
 
 	private static double ScanBomLeft(ContainerView sheet)
 	{
+		double sheetW = (sheet != null && sheet.Width > 1.0) ? sheet.Width : 431.8;
+		return ScanBomLeft(sheet, sheetW);
+	}
+
+	/// <summary>
+	/// Left edge of BOM / notes block in sheet mm. Only objects with MinX inside the sheet
+	/// (and &gt;= BomFallbackLeft) count — avoids parked/off-sheet AABBs inflating bomLeft.
+	/// </summary>
+	private static double ScanBomLeft(ContainerView sheet, double sheetWidthMm)
+	{
+		double sheetCap = (sheetWidthMm > 40.0) ? sheetWidthMm : 431.8;
 		double num = double.MaxValue;
 		DrawingObjectEnumerator drawingObjectEnumerator = null;
 		try
@@ -2058,17 +2086,58 @@ public class PrecastDimensionPostProcessor
 				{
 					continue;
 				}
-				if (aABB != null && !(aABB.MinPoint == null) && aABB.MinPoint.X >= 345.0 && aABB.MinPoint.X < num)
-				{
-					num = aABB.MinPoint.X;
-				}
+				if (aABB == null || aABB.MinPoint == null)
+					continue;
+				double x = aABB.MinPoint.X;
+				// Must sit on the printable sheet, right of the elevation band.
+				if (x >= BomFallbackLeft && x < sheetCap && x < num)
+					num = x;
 			}
 		}
 		if (!(num < 100000.0))
 		{
-			return 345.0;
+			return BomFallbackLeft;
 		}
 		return num;
+	}
+
+	private static int CountStraightDimensionSets(View view)
+	{
+		if (view == null) return 0;
+		int n = 0;
+		try
+		{
+			DrawingObjectEnumerator en = view.GetObjects(new Type[1] { typeof(StraightDimensionSet) });
+			while (en != null && en.MoveNext())
+			{
+				if (en.Current is StraightDimensionSet) n++;
+			}
+		}
+		catch { }
+		return n;
+	}
+
+	/// <summary>
+	/// After headless Fit (showDrawing:false), briefly show the drawing so UI glyphs refresh.
+	/// Does not rewrite marks. Verified: DrawingHandler.SetActiveDrawing(Drawing, bool showDrawing).
+	/// </summary>
+	private void RefreshDrawingUi(Drawing drawing)
+	{
+		if (drawing == null || _handler == null) return;
+		try
+		{
+			bool ok = false;
+			try { ok = _handler.SetActiveDrawing(drawing, showDrawing: true); } catch { }
+			if (!ok)
+			{
+				try { ok = _handler.SetActiveDrawing(drawing, showDrawing: true, forceOpen: true); } catch { }
+			}
+			Console.WriteLine("[Fit] UI refresh showDrawing=true ok=" + ok);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Fit] UI refresh: " + ex.Message);
+		}
 	}
 
 	private static void HideSheet1Rebar(ContainerView sheet)
@@ -2724,7 +2793,12 @@ public class PrecastDimensionPostProcessor
 				{
 					continue;
 				}
-				if (text2.Contains("???") || Regex.IsMatch(text2, "^(AF\\d+|TEMP_|LIFTING BALANCE|PROFILE RECESS|BCMBD|RECESS)", RegexOptions.IgnoreCase) || text2.IndexOf("SEE DETAIL A", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("SECTION CLUSTER", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("PROFILE RECESS", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("RECESS", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("BCMBD", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("PAINT BENJAMIN MOORE", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("IN FORM", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("TOP IN FORM", StringComparison.OrdinalIgnoreCase) >= 0)
+				// Keep TOP IN FORM / IN FORM — engineer sheet-1 title (do not purge).
+				if (text2.IndexOf("TOP IN FORM", StringComparison.OrdinalIgnoreCase) >= 0
+					|| (text2.IndexOf("IN FORM", StringComparison.OrdinalIgnoreCase) >= 0
+						&& text2.IndexOf("TOP", StringComparison.OrdinalIgnoreCase) >= 0))
+					continue;
+				if (text2.Contains("???") || Regex.IsMatch(text2, "^(AF\\d+|TEMP_|LIFTING BALANCE|PROFILE RECESS|BCMBD|RECESS)", RegexOptions.IgnoreCase) || text2.IndexOf("SEE DETAIL A", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("SECTION CLUSTER", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("PROFILE RECESS", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("RECESS", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("BCMBD", StringComparison.OrdinalIgnoreCase) >= 0 || text2.IndexOf("PAINT BENJAMIN MOORE", StringComparison.OrdinalIgnoreCase) >= 0)
 				{
 					doomed.Add(text);
 				}
@@ -2814,6 +2888,21 @@ public class PrecastDimensionPostProcessor
 
 	private void PlaceTiers(View view, PanelAxis axis, StationBuckets buckets, List<double> tape, List<double[]> micros, int scale, bool overallOnly = false)
 	{
+		int nativeDims = CountStraightDimensionSets(view);
+		bool preserve = PreserveNativeDimensions && nativeDims >= NativeDimPreserveMin;
+		if (preserve)
+		{
+			// Manual / props-created mesh is the dense H/V elevation source — do not wipe it.
+			Console.WriteLine("[Fit] preserve-native dims count=" + nativeDims.ToString(CultureInfo.InvariantCulture)
+				+ " (>= " + NativeDimPreserveMin.ToString(CultureInfo.InvariantCulture)
+				+ ") — skip PurgeOldDimensions and PlaceTiers");
+			return;
+		}
+		if (nativeDims > 0)
+			Console.WriteLine("[Fit] native dims count=" + nativeDims.ToString(CultureInfo.InvariantCulture)
+				+ " < " + NativeDimPreserveMin.ToString(CultureInfo.InvariantCulture)
+				+ " — recreate category tiers from model stations");
+
 		PurgeOldDimensions(view);
 		// Engineer ladder: 12 mm first offset, 7 mm between tiers (paper mm → view mm).
 		double topDist = 12.0 * (double)scale;
@@ -2827,7 +2916,7 @@ public class PrecastDimensionPostProcessor
 		}
 		if (buckets.Lifters.Count > 0)
 		{
-			PlaceString(view, axis, buckets.Lifters, isBottom: false, topDist, "P-205 LIFTERS", scale);
+			PlaceString(view, axis, buckets.Lifters, isBottom: false, topDist, "LIFTERS", scale);
 			topDist += step;
 		}
 		List<string> list = new List<string>(buckets.Splicers.Keys);
@@ -2845,50 +2934,35 @@ public class PrecastDimensionPostProcessor
 			if (list2.Count > 0)
 			{
 				string tagLabel = item + " HARDWARE";
-				switch (item)
-				{
-				case "SP25":
-					tagLabel = "SP25-1067 HARDWARE";
-					break;
-				case "SP15":
-					tagLabel = "SP15-457 HARDWARE";
-					break;
-				case "SP30":
-					tagLabel = "SP30-1219 HARDWARE";
-					break;
-				}
 				PlaceString(view, axis, list2, isBottom: false, topDist, tagLabel, scale);
 				topDist += step;
 			}
 		}
 		if (buckets.Bracing.Count > 0)
 		{
-			PlaceString(view, axis, buckets.Bracing, isBottom: false, topDist, "P-300 BRACING", scale);
+			PlaceString(view, axis, buckets.Bracing, isBottom: false, topDist, "BRACING", scale);
 			topDist += step;
 		}
 		if (buckets.TopEmbeds.Count > 0)
 		{
-			PlaceString(view, axis, buckets.TopEmbeds, isBottom: false, topDist, "P-602 HARDWARE", scale);
+			PlaceString(view, axis, buckets.TopEmbeds, isBottom: false, topDist, "HARDWARE", scale);
 			topDist += step;
 		}
-		bool flag = false;
+		// One tier step per category (do not share reveal/hole/opening on one rung).
 		if (buckets.Reveals.Count > 0)
 		{
 			PlaceString(view, axis, buckets.Reveals, isBottom: false, topDist, "REVEAL (B)", scale);
-			flag = true;
+			topDist += step;
 		}
 		if (buckets.Holes.Count > 0)
 		{
 			PlaceString(view, axis, buckets.Holes, isBottom: false, topDist, "HOLE PROFILE", scale);
-			flag = true;
+			topDist += step;
 		}
 		if (buckets.Openings.Count > 0)
 		{
-			PlaceString(view, axis, buckets.Openings, isBottom: false, topDist, "OPENING PROFILE", scale);
-			flag = true;
-		}
-		if (flag)
-		{
+			List<double> openingChain = ConsolidateOpeningStations(buckets.Openings, axis);
+			PlaceString(view, axis, openingChain, isBottom: false, topDist, "OPENING PROFILE", scale);
 			topDist += step;
 		}
 		if (buckets.Ledge.Count > 0)
@@ -2928,6 +3002,24 @@ public class PrecastDimensionPostProcessor
 		}
 		PlaceString(view, axis, tape, isBottom: true, botDist, "OVERALL PROFILE", scale);
 		PlaceVerticalDimensions(view, axis, buckets, scale);
+	}
+
+	/// <summary>
+	/// Sort/dedupe opening edge stations along the panel. Does not hardcode piece lengths.
+	/// </summary>
+	private static List<double> ConsolidateOpeningStations(List<double> openings, PanelAxis axis)
+	{
+		if (openings == null || openings.Count == 0 || axis == null)
+			return openings ?? new List<double>();
+		List<double> sorted = new List<double>(openings);
+		sorted.Sort();
+		List<double> deduped = new List<double>();
+		foreach (double s in sorted)
+		{
+			if (deduped.Count == 0 || Math.Abs(s - deduped[deduped.Count - 1]) > 1.0)
+				deduped.Add(s);
+		}
+		return deduped;
 	}
 
 	private void PlaceString(View view, PanelAxis axis, List<double> stations, bool isBottom, double distance, string tagLabel, int scale)
@@ -3086,27 +3178,14 @@ public class PrecastDimensionPostProcessor
 		{
 			num2 = ((axis.Height > 0.0) ? axis.Height : 2975.0);
 		}
+		// Model-driven height stations (panel-local mm → view Y using wall paper span).
+		double modelH = (axis.Height > 1.0) ? axis.Height : num2;
+		double toView = (modelH > 1.0) ? (num2 / modelH) : 1.0;
+		List<double> heightChain = BuildHeightChain(buckets, modelH, toView, num2);
 		List<double[]> list = new List<double[]>();
-		// Always include overall height 0 → Height (~2975) like the engineer sample.
 		list.Add(new double[2] { 0.0, num2 });
-		if (buckets.TopEmbeds.Count > 0)
-		{
-			list.Add(new double[3]
-			{
-				0.0,
-				Math.Min(num2 * 0.9, num2 - 200.0),
-				num2
-			});
-		}
-		if (buckets.Bracing.Count > 0)
-		{
-			list.Add(new double[3]
-			{
-				0.0,
-				Math.Min(num2 * 0.8, num2 - 400.0),
-				num2
-			});
-		}
+		if (heightChain.Count >= 3)
+			list.Add(heightChain.ToArray());
 		double num3 = 12.0 * (double)scale;
 		double num4 = 7.0 * (double)scale;
 		foreach (double[] item in list)
@@ -3116,23 +3195,14 @@ public class PrecastDimensionPostProcessor
 		}
 		List<double[]> list2 = new List<double[]>();
 		list2.Add(new double[2] { 0.0, num2 });
-		if (buckets.Lifters.Count > 0)
+		if (buckets != null && (buckets.Lifters.Count > 0 || buckets.Splicers.Count > 0) && heightChain.Count >= 3)
 		{
-			list2.Add(new double[3]
-			{
-				0.0,
-				Math.Min(num2 * 0.95, num2 - 100.0),
-				num2
-			});
-		}
-		if (buckets.Splicers.Count > 0)
-		{
-			list2.Add(new double[3]
-			{
-				0.0,
-				Math.Min(num2 * 0.5, num2 / 2.0),
-				num2
-			});
+			// Right column: overall + mid feature heights from the same model stations.
+			List<double> right = new List<double> { 0.0 };
+			if (heightChain.Count >= 2)
+				right.Add(heightChain[heightChain.Count / 2]);
+			right.Add(num2);
+			list2.Add(right.ToArray());
 		}
 		double num5 = 12.0 * (double)scale;
 		foreach (double[] item2 in list2)
@@ -3140,6 +3210,29 @@ public class PrecastDimensionPostProcessor
 			EmitVerticalDim(view, edgeX2, num, item2, new Vector(1.0, 0.0, 0.0), num5, scale);
 			num5 += num4;
 		}
+	}
+
+	/// <summary>
+	/// 0 … sorted unique HeightStations (panel mm × toView) … viewWallHeight.
+	/// </summary>
+	private static List<double> BuildHeightChain(StationBuckets buckets, double modelWallHeight, double toView, double viewWallHeight)
+	{
+		List<double> chain = new List<double> { 0.0 };
+		if (buckets?.HeightStations != null)
+		{
+			List<double> hs = new List<double>(buckets.HeightStations);
+			hs.Sort();
+			foreach (double hModel in hs)
+			{
+				if (hModel <= 1.0 || hModel >= modelWallHeight - 1.0) continue;
+				double hView = hModel * toView;
+				if (chain.Count == 0 || Math.Abs(hView - chain[chain.Count - 1]) > 0.5)
+					chain.Add(hView);
+			}
+		}
+		if (Math.Abs(chain[chain.Count - 1] - viewWallHeight) > 0.5)
+			chain.Add(viewWallHeight);
+		return chain;
 	}
 
 	private void EmitVerticalDim(View view, double edgeX, double bottomY, double[] heights, Vector dir, double distance, int scale)
@@ -3322,25 +3415,7 @@ public class PrecastDimensionPostProcessor
 			}
 		}
 		AddSheetParts(front, axis, stationBuckets, main);
-		string value = "";
-		try
-		{
-			main.GetReportProperty("ASSEMBLY_POS", ref value);
-		}
-		catch
-		{
-		}
-		if (value.IndexOf("W10-175", StringComparison.OrdinalIgnoreCase) >= 0)
-		{
-			stationBuckets.Openings.Clear();
-			stationBuckets.Openings.AddRange(new double[4] { 373.0, 1348.0, 6276.0, 7251.0 });
-			stationBuckets.BaseOpenings.Clear();
-			stationBuckets.BaseOpenings.AddRange(new double[2] { 2684.0, 4514.0 });
-			if (stationBuckets.Ledge.Count == 0)
-			{
-				stationBuckets.Ledge.Add(axis.Min + 74.0);
-			}
-		}
+		// No piece-specific station overrides — openings/heights come from live geometry only.
 		return stationBuckets;
 	}
 
@@ -3495,14 +3570,12 @@ public class PrecastDimensionPostProcessor
 				Point point7 = axis.PaperPoint(station4);
 				double x2 = (point4.X + point5.X) / 2.0;
 				double x3 = (point6.X + point7.X) / 2.0;
+				// One SIDE C/D + END 3/4 at left opening; END 5 only at right (no duplicate SIDE/END 4).
 				InsertFramedText(front, new Point(point4.X + 2.0 * (double)scale, num, 0.0), "SIDE C", scale);
 				InsertFramedText(front, new Point(point5.X - 2.0 * (double)scale, num, 0.0), "SIDE D", scale);
 				InsertFramedText(front, new Point(x2, num + 6.0 * (double)scale, 0.0), "END 3", scale);
 				InsertFramedText(front, new Point(x2, num - 6.0 * (double)scale, 0.0), "END 4", scale);
-				InsertFramedText(front, new Point(point6.X + 2.0 * (double)scale, num, 0.0), "SIDE C", scale);
-				InsertFramedText(front, new Point(point7.X - 2.0 * (double)scale, num, 0.0), "SIDE D", scale);
 				InsertFramedText(front, new Point(x3, num + 6.0 * (double)scale, 0.0), "END 5", scale);
-				InsertFramedText(front, new Point(x3, num - 6.0 * (double)scale, 0.0), "END 4", scale);
 			}
 		}
 		catch (Exception ex)
@@ -3519,11 +3592,17 @@ public class PrecastDimensionPostProcessor
 		}
 		try
 		{
+			if (ViewHasTopInFormText(front))
+			{
+				Console.WriteLine("[Fit] TOP IN FORM already present — skip insert");
+				return;
+			}
 			Point point = axis.PaperPoint(axis.Min);
 			Point point2 = axis.PaperBottomPoint(axis.Min);
-			double x = point.X - 55.0 * (double)scale;
-			double y = point2.Y - 70.0 * (double)scale;
-			Text text = new Text(front, new Point(x, y, 0.0), "TOP IN FORM\n1:75");
+			double x = (point.X + axis.PaperPoint(axis.Min + axis.Span).X) / 2.0;
+			double y = point2.Y - 12.0 * (double)scale;
+			int sc = (scale < 1) ? 50 : scale;
+			Text text = new Text(front, new Point(x, y, 0.0), "TOP IN FORM\n1:" + sc.ToString(CultureInfo.InvariantCulture));
 			try
 			{
 				text.Attributes.Frame.Type = FrameTypes.None;
@@ -3533,10 +3612,33 @@ public class PrecastDimensionPostProcessor
 			{
 			}
 			text.Insert();
+			Console.WriteLine("[Fit] inserted TOP IN FORM 1:" + sc.ToString(CultureInfo.InvariantCulture));
 		}
 		catch
 		{
 		}
+	}
+
+	private static bool ViewHasTopInFormText(View front)
+	{
+		if (front == null) return false;
+		try
+		{
+			DrawingObjectEnumerator en = null;
+			try { en = front.GetObjects(new Type[1] { typeof(Text) }); }
+			catch { try { en = front.GetAllObjects(); } catch { return false; } }
+			while (en != null && en.MoveNext())
+			{
+				if (en.Current is Text t)
+				{
+					string s = t.TextString ?? "";
+					if (s.IndexOf("TOP IN FORM", StringComparison.OrdinalIgnoreCase) >= 0)
+						return true;
+				}
+			}
+		}
+		catch { }
+		return false;
 	}
 
 	private static Text InsertFramedText(ViewBase host, Point at, string text, int scale)
@@ -4167,6 +4269,28 @@ public class PrecastDimensionPostProcessor
 		{
 			Point global = new Point((solid.MinimumPoint.X + solid.MaximumPoint.X) / 2.0, (solid.MinimumPoint.Y + solid.MaximumPoint.Y) / 2.0, (solid.MinimumPoint.Z + solid.MaximumPoint.Z) / 2.0);
 			Point point = axis.LocalAlongAcross(global);
+			// Height stations from solid corners in panel local up (Y).
+			double hMin = double.MaxValue;
+			double hMax = double.MinValue;
+			double[] ax = array;
+			foreach (double x in ax)
+			{
+				foreach (double y in array2)
+				{
+					foreach (double z in array3)
+					{
+						Point loc = axis.LocalAlongAcross(new Point(x, y, z));
+						if (loc == null) continue;
+						if (loc.Y < hMin) hMin = loc.Y;
+						if (loc.Y > hMax) hMax = loc.Y;
+					}
+				}
+			}
+			if (hMin < double.MaxValue && hMax > hMin + 10.0)
+			{
+				buckets.HeightStations.Add(hMin);
+				buckets.HeightStations.Add(hMax);
+			}
 			if (point != null && axis.Height > 0.0 && point.Y < 0.25 * axis.Height)
 			{
 				buckets.BaseOpenings.Add(num);
