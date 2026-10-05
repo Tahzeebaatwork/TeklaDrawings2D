@@ -965,6 +965,19 @@ public class PrecastDimensionPostProcessor
 
 	private static bool _loggedDimUnits;
 
+	/// <summary>
+	/// When false (default), Fit skips RepairBrokenPartMarks. Opt-in via --enable-mark-repair.
+	/// Default skip is intentional: manual props-only drawings have no magenta '?';
+	/// mass TextElement rewrite is a workaround under investigation.
+	/// </summary>
+	public bool EnableMarkRepair { get; set; }
+
+	/// <summary>
+	/// Diagnostic: 0 = full Fit (mark repair still gated by EnableMarkRepair).
+	/// 1–5 = stop after investigation stage (see Fit stage log). Used with --fit-stage N.
+	/// </summary>
+	public int FitStage { get; set; }
+
 	public PrecastDimensionPostProcessor(Model model, DrawingHandler handler, string pdfDir = null)
 	{
 		_model = model ?? throw new ArgumentNullException("model");
@@ -1092,6 +1105,8 @@ public class PrecastDimensionPostProcessor
 		{
 			return shopFitResult;
 		}
+		if (FitStage >= 1 && FitStage <= 5)
+			return FitStagedInvestigation(drawing);
 		string text = "";
 		try
 		{
@@ -1265,11 +1280,21 @@ public class PrecastDimensionPostProcessor
 				PlaceTiers(front, panelAxis, bucketsForTiers, tape, micros, scale, overallOnly: !tapeVerified);
 				RefitFrontFrame(front, part, scale, sheet);
 			}
-			// Repair unresolved part marks (magenta '?') from model PART_POS — never hide numbering.
-			MarkRepairResult markRepair = RepairBrokenPartMarks(drawing, sheet, front);
-			Console.WriteLine("[Fit] repaired " + markRepair.Repaired.ToString(CultureInfo.InvariantCulture)
-				+ " part mark(s); unresolved " + markRepair.Unresolved.ToString(CultureInfo.InvariantCulture)
-				+ " (no PART_POS)");
+			// Mark repair is opt-in (--enable-mark-repair). Default skip: do not rewrite marks.
+			// Never hide numbering marks. Model already has PART_POS.
+			MarkRepairResult markRepair = default(MarkRepairResult);
+			if (EnableMarkRepair && (FitStage == 0 || FitStage >= 5))
+			{
+				markRepair = RepairBrokenPartMarks(drawing, sheet, front);
+				Console.WriteLine("[Fit] repaired " + markRepair.Repaired.ToString(CultureInfo.InvariantCulture)
+					+ " part mark(s); unresolved " + markRepair.Unresolved.ToString(CultureInfo.InvariantCulture)
+					+ " (no PART_POS)");
+			}
+			else
+			{
+				Console.WriteLine("[Fit] mark-repair SKIPPED (default). Opt-in: --enable-mark-repair"
+					+ (FitStage > 0 ? " fit-stage=" + FitStage.ToString(CultureInfo.InvariantCulture) : ""));
+			}
 			WriteFitReport(text, scale, sheetWidth, sheetHeight, num2, availableWidthMm, num, num4, tapeVerified,
 				markRepair.Repaired, markRepair.Unresolved, hasSectionsSheet);
 			RemoveInnerSheetBorders(sheet, sheetWidth, sheetHeight);
@@ -1321,6 +1346,206 @@ public class PrecastDimensionPostProcessor
 			}
 		}
 		return shopFitResult;
+	}
+
+	/// <summary>
+	/// Task 1b staged Fit for "?" source isolation. Stops after FitStage (1–5).
+	/// Does not hide numbering marks. Stage 5 runs mark repair only if EnableMarkRepair.
+	/// </summary>
+	private ShopFitResult FitStagedInvestigation(Drawing drawing)
+	{
+		ShopFitResult result = new ShopFitResult();
+		string text = "";
+		try { text = drawing.Mark ?? drawing.Name ?? ""; } catch { text = ""; }
+		result.SiblingMark = Sheet2Mark(text);
+		int stage = FitStage;
+		bool openedHere = false;
+		bool wasAlreadyActive = false;
+		Console.WriteLine("[FitStage] START stage=" + stage.ToString(CultureInfo.InvariantCulture)
+			+ " enableMarkRepair=" + EnableMarkRepair
+			+ " drawing='" + text + "'");
+		Console.WriteLine("[FitStage] Operator: after this run, inspect Tekla UI for magenta '?' on elevation.");
+		try
+		{
+			try
+			{
+				Drawing active = _handler.GetActiveDrawing();
+				if (active != null && string.Equals(active.Mark, drawing.Mark, StringComparison.OrdinalIgnoreCase))
+					wasAlreadyActive = true;
+			}
+			catch { }
+
+			if (!wasAlreadyActive)
+			{
+				try { _handler.UpdateDrawing(drawing); } catch { }
+				try { openedHere = _handler.SetActiveDrawing(drawing, showDrawing: false); } catch { }
+				if (!openedHere)
+				{
+					try { openedHere = _handler.SetActiveDrawing(drawing, showDrawing: false, forceOpen: true); } catch { }
+				}
+			}
+
+			Tekla.Structures.Model.Part part = ResolveMainPart(drawing);
+			double modelLength = LiveLength(part);
+			if (part == null || modelLength <= 0.0)
+			{
+				Console.WriteLine("[FitStage] abort: no live solid length");
+				return result;
+			}
+			ContainerView sheet = drawing.GetSheet();
+			if (sheet == null)
+			{
+				Console.WriteLine("[FitStage] abort: no sheet");
+				return result;
+			}
+			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
+			if (front == null)
+			{
+				Console.WriteLine("[FitStage] abort: no front view");
+				return result;
+			}
+
+			double bomLeft = ScanBomLeft(sheet);
+			double sheetWidth = (sheet.Width > 1.0) ? sheet.Width : 431.8;
+			double sheetHeight = (sheet.Height > 1.0) ? sheet.Height : 279.4;
+			double availableWidthMm = Math.Max(40.0, (bomLeft > 1.0 ? bomLeft : BomFallbackLeft) - 15.0 - 10.0);
+			int scale = SelectScale(modelLength, availableWidthMm);
+			PanelAxis axis = PanelAxis.Measure(part, modelLength);
+			if (axis != null)
+				axis.BindView(front, part);
+
+			// Stage 1: shell only — open/update, axis/scale. No purge, park, tiers, formwork, mark repair.
+			Console.WriteLine("[FitStage] completed stage=1 (shell: open/update/axis/scale="
+				+ scale.ToString(CultureInfo.InvariantCulture) + " bomLeft="
+				+ bomLeft.ToString("0.###", CultureInfo.InvariantCulture) + ")");
+			if (stage <= 1)
+			{
+				FinishFitStage(drawing, sheet, sheetWidth, sheetHeight, text, scale, bomLeft, availableWidthMm,
+					modelLength, axis, front, openedHere && !wasAlreadyActive, 1);
+				return result;
+			}
+
+			// Stage 2: + PurgeTemporaryTags
+			PurgeTemporaryTags(sheet);
+			Console.WriteLine("[FitStage] completed stage=2 (+PurgeTemporaryTags)");
+			if (stage <= 2)
+			{
+				FinishFitStage(drawing, sheet, sheetWidth, sheetHeight, text, scale, bomLeft, availableWidthMm,
+					modelLength, axis, front, openedHere && !wasAlreadyActive, 2);
+				return result;
+			}
+
+			// Stage 3: + PurgeOldDimensions + PlaceTiers (PlaceTiers calls PurgeOldDimensions)
+			StationBuckets buckets = null;
+			bool tapeOk = false;
+			double tapeDelta = double.NaN;
+			if (axis != null && Math.Abs(axis.Span - modelLength) <= 0.1)
+			{
+				buckets = CollectStations(part, axis, front);
+				List<double> chain = axis.Chain(new List<double>(buckets.All) { axis.Min, axis.Min + axis.Span });
+				tapeDelta = (chain.Count < 2) ? double.NaN : (chain[chain.Count - 1] - chain[0] - modelLength);
+				tapeOk = !double.IsNaN(tapeDelta) && Math.Abs(tapeDelta) <= 0.1;
+			}
+			if (axis != null)
+			{
+				axis.BindView(front, part);
+				List<double> tape = new List<double> { axis.Min, axis.Min + axis.Span };
+				PlaceTiers(front, axis, buckets ?? new StationBuckets(), tape, new List<double[]>(), scale, overallOnly: !tapeOk);
+			}
+			Console.WriteLine("[FitStage] completed stage=3 (+PurgeOldDimensions/PlaceTiers tapeOk=" + tapeOk + ")");
+			if (stage <= 3)
+			{
+				FinishFitStage(drawing, sheet, sheetWidth, sheetHeight, text, scale, bomLeft, availableWidthMm,
+					modelLength, axis, front, openedHere && !wasAlreadyActive, 3);
+				return result;
+			}
+
+			// Stage 4: + formwork tags + park views
+			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, modelLength,
+				sheetWidth, sheetHeight, bomLeft, result);
+			List<double[]> micros = new List<double[]>();
+			ApplyCats(drawing, sheet, front, part, axis, buckets, micros, bomLeft, result, modelLength, scale);
+			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, modelLength,
+				sheetWidth, sheetHeight, bomLeft, result);
+			SealView(front, modelLength, scale, sheetHeight, bomLeft);
+			Console.WriteLine("[FitStage] completed stage=4 (+formwork tags + park views)");
+			if (stage <= 4)
+			{
+				FinishFitStage(drawing, sheet, sheetWidth, sheetHeight, text, scale, bomLeft, availableWidthMm,
+					modelLength, axis, front, openedHere && !wasAlreadyActive, 4);
+				return result;
+			}
+
+			// Stage 5: + mark repair (only if EnableMarkRepair)
+			MarkRepairResult repair = default(MarkRepairResult);
+			if (EnableMarkRepair)
+			{
+				repair = RepairBrokenPartMarks(drawing, sheet, front);
+				Console.WriteLine("[FitStage] completed stage=5 (+mark repair repaired="
+					+ repair.Repaired.ToString(CultureInfo.InvariantCulture)
+					+ " unresolved=" + repair.Unresolved.ToString(CultureInfo.InvariantCulture) + ")");
+			}
+			else
+			{
+				Console.WriteLine("[FitStage] completed stage=5 (mark repair NOT run — pass --enable-mark-repair)");
+			}
+			WriteFitReport(text, scale, sheetWidth, sheetHeight, bomLeft, availableWidthMm, modelLength, tapeDelta, tapeOk,
+				repair.Repaired, repair.Unresolved, HasSiblingRole(drawing, SheetRole.Sections));
+			FinishFitStage(drawing, sheet, sheetWidth, sheetHeight, text, scale, bomLeft, availableWidthMm,
+				modelLength, axis, front, openedHere && !wasAlreadyActive, 5);
+			return result;
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[FitStage] failed: " + ex.Message);
+			return result;
+		}
+	}
+
+	private void FinishFitStage(Drawing drawing, ContainerView sheet, double sheetW, double sheetH,
+		string drawingMark, int scale, double bomLeft, double availableWidthMm, double modelLength,
+		PanelAxis axis, View front, bool closeIfOpened, int stageDone)
+	{
+		RemoveInnerSheetBorders(sheet, sheetW, sheetH);
+		try { drawing.CommitChanges(); } catch { }
+		try { _handler.SaveActiveDrawing(); } catch { }
+		WriteFitStageReport(drawingMark, stageDone, EnableMarkRepair);
+		Console.WriteLine("[FitStage] STOPPED after stage=" + stageDone.ToString(CultureInfo.InvariantCulture)
+			+ ". Look in Tekla UI for magenta '?'. First stage where '?' appears = source clue.");
+		if (closeIfOpened)
+		{
+			try { _handler.CloseActiveDrawing(save: true); }
+			catch
+			{
+				try { _handler.CloseActiveDrawing(save: false); } catch { }
+			}
+		}
+	}
+
+	private void WriteFitStageReport(string drawingMark, int stageDone, bool enableRepair)
+	{
+		try
+		{
+			string dir = string.IsNullOrEmpty(_pdfDir)
+				? Path.Combine("Export", "CivilDrawings", "new with macros")
+				: Path.GetDirectoryName(_pdfDir) ?? _pdfDir;
+			Directory.CreateDirectory(dir);
+			string piece = SheetRoleMap.PieceMark(drawingMark);
+			string path = Path.Combine(dir, "fit_stage_report_" + piece.Replace(' ', '_') + ".txt");
+			var sb = new System.Text.StringBuilder();
+			sb.AppendLine("FitStageReport " + DateTime.UtcNow.ToString("o"));
+			sb.AppendLine("drawing=" + drawingMark);
+			sb.AppendLine("stoppedAfterStage=" + stageDone.ToString(CultureInfo.InvariantCulture));
+			sb.AppendLine("enableMarkRepair=" + enableRepair);
+			sb.AppendLine("operatorAction=Inspect Tekla UI elevation for magenta '?' and record first stage where it appears.");
+			sb.AppendLine("stages=1:shell 2:+PurgeTemporaryTags 3:+PlaceTiers 4:+formwork/park 5:+markRepair");
+			File.WriteAllText(path, sb.ToString());
+			Console.WriteLine("[FitStage] wrote " + path);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[FitStage] report write failed: " + ex.Message);
+		}
 	}
 
 	private static string Sheet2Mark(string mark)

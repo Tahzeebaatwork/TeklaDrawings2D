@@ -29,10 +29,12 @@ namespace TeklaExtractor.Services
         private DateTime _runStart = DateTime.Now;
         private readonly bool _preflightQa;
         private bool _qaFailed;
+        private readonly bool _enableMarkRepair;
+        private readonly int _fitStage;
 
         public CivilDrawingBatchExtractor(TSModel.Model model, string baseDir, bool skipMacros = false,
             bool extractOnly = false, string markFilter = null, bool selectedOnly = false, bool toRoot = false,
-            bool preflightQa = false)
+            bool preflightQa = false, bool enableMarkRepair = false, int fitStage = 0)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _handler = new DrawingHandler();
@@ -41,6 +43,8 @@ namespace TeklaExtractor.Services
             _selectedOnly = selectedOnly;
             _toRoot = toRoot;
             _preflightQa = preflightQa;
+            _enableMarkRepair = enableMarkRepair;
+            _fitStage = fitStage;
             _markFilter = string.IsNullOrWhiteSpace(markFilter) ? null : markFilter.Trim();
             _civilRoot = Path.Combine(baseDir ?? ".", "Export", "CivilDrawings");
             // Sep 2 style: write PDF/JSON/CSV under Export/CivilDrawings itself (not a subfolder).
@@ -388,7 +392,11 @@ namespace TeklaExtractor.Services
                         string dwgPath = Path.Combine(dwgDir, stem + ".dwg");
                         Console.WriteLine("[Civil] role=" + role + " stem=" + stem);
                         ShopFitResult fit = null;
-                        var post = new PrecastDimensionPostProcessor(_model, _handler, pdfDir);
+                        var post = new PrecastDimensionPostProcessor(_model, _handler, pdfDir)
+                        {
+                            EnableMarkRepair = _enableMarkRepair,
+                            FitStage = _fitStage
+                        };
                         if (role == SheetRole.Hardware || PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))
                             fit = post.Fit(drawing);
                         else if (role == SheetRole.Sections || PrecastDimensionPostProcessor.IsSectionsSheet(drawing))

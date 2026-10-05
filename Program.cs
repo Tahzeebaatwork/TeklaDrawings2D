@@ -144,6 +144,23 @@ namespace TeklaExtractor
                 return MarkProbe.Run(tekla, mark, outRoot);
             }
 
+            if (HasFlag(args, "--dump-mark-attrs"))
+            {
+                string mark = FlagValue(args, "--mark") ?? "W10-175";
+                string outRoot = Path.Combine(baseDir, "Export", "CivilDrawings", "new with macros");
+                int sampleN = 2;
+                string nRaw = FlagValue(args, "--sample-count");
+                if (!string.IsNullOrWhiteSpace(nRaw) && int.TryParse(nRaw.Trim(), out int nParsed) && nParsed > 0)
+                    sampleN = nParsed;
+                return MarkProbe.DumpRichAttributes(tekla, mark, outRoot, sampleN);
+            }
+
+            if (HasFlag(args, "--reopen-drawing") || HasFlag(args, "--reopen-ui"))
+            {
+                string mark = FlagValue(args, "--mark") ?? "W10-175";
+                return ReopenDrawingShowTrue(tekla, mark);
+            }
+
             // Ground truth: interactive boot, or --extract.
             if (interactive || extractOnly)
                 GroundTruthExtractor.Run(tekla, baseDir);
@@ -277,7 +294,26 @@ namespace TeklaExtractor
                 bool preflightQa = args != null && HasFlag(args, "--preflight-qa");
                 if (preflightQa)
                     Console.WriteLine("[Civil] --preflight-qa → margin, BOM gap, tape delta");
-                return new CivilDrawingBatchExtractor(tekla, baseDir, skipMacros, extractOnly, mark, selectedOnly, toRoot, preflightQa).Run();
+                // Mark repair opt-in only. Default = skip (manual props drawings have no magenta '?').
+                bool enableMarkRepair = args != null && HasFlag(args, "--enable-mark-repair");
+                // --skip-mark-repair is the documented default; if both set, skip wins.
+                if (args != null && HasFlag(args, "--skip-mark-repair"))
+                    enableMarkRepair = false;
+                int fitStage = 0;
+                string fitStageRaw = FlagValue(args, "--fit-stage");
+                if (!string.IsNullOrWhiteSpace(fitStageRaw))
+                {
+                    int parsed;
+                    if (int.TryParse(fitStageRaw.Trim(), out parsed) && parsed >= 1 && parsed <= 5)
+                        fitStage = parsed;
+                    else
+                        Console.WriteLine("[Civil] --fit-stage expects 1..5 (ignored: " + fitStageRaw + ")");
+                }
+                Console.WriteLine("[Civil] mark-repair=" + (enableMarkRepair ? "ON (--enable-mark-repair)" : "SKIP (default)"));
+                if (fitStage > 0)
+                    Console.WriteLine("[Civil] --fit-stage=" + fitStage + " (stops after investigation stage; inspect UI for '?')");
+                return new CivilDrawingBatchExtractor(tekla, baseDir, skipMacros, extractOnly, mark, selectedOnly, toRoot,
+                    preflightQa, enableMarkRepair, fitStage).Run();
             }
             catch (Exception ex)
             {
@@ -456,7 +492,22 @@ namespace TeklaExtractor
                 if (handler.GetConnectionStatus())
                 {
                     string pdfDir = Path.Combine(baseDir, "Export", "CivilDrawings", "new with macros", "PDF");
-                    var precastPost = new PrecastDimensionPostProcessor(tekla, handler, pdfDir);
+                    bool enableMarkRepair = args != null && HasFlag(args, "--enable-mark-repair");
+                    if (args != null && HasFlag(args, "--skip-mark-repair"))
+                        enableMarkRepair = false;
+                    int fitStage = 0;
+                    string fitStageRaw = FlagValue(args, "--fit-stage");
+                    if (!string.IsNullOrWhiteSpace(fitStageRaw)
+                        && int.TryParse(fitStageRaw.Trim(), out int parsedStage)
+                        && parsedStage >= 1 && parsedStage <= 5)
+                        fitStage = parsedStage;
+                    var precastPost = new PrecastDimensionPostProcessor(tekla, handler, pdfDir)
+                    {
+                        EnableMarkRepair = enableMarkRepair,
+                        FitStage = fitStage
+                    };
+                    Console.WriteLine("[Correct] mark-repair=" + (enableMarkRepair ? "ON" : "SKIP (default)")
+                        + (fitStage > 0 ? " fit-stage=" + fitStage : ""));
 
                     var active = handler.GetActiveDrawing();
                     if (active != null && (string.IsNullOrWhiteSpace(mark) || (active.Mark ?? "").IndexOf(mark, StringComparison.OrdinalIgnoreCase) >= 0))
@@ -510,17 +561,7 @@ namespace TeklaExtractor
                 Console.WriteLine("[Open] DrawingHandler not connected. Open Tekla Structures with a model.");
                 return;
             }
-            var en = handler.GetDrawings();
-            Tekla.Structures.Drawing.Drawing target = null;
-            while (en != null && en.MoveNext())
-            {
-                var d = en.Current;
-                if (d != null && (d.Mark ?? "").IndexOf(mark, StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    target = d;
-                    break;
-                }
-            }
+            var target = FindHardwareOrFirstDrawing(handler, mark);
             if (target != null)
             {
                 try { handler.UpdateDrawing(target); } catch { }
@@ -535,6 +576,87 @@ namespace TeklaExtractor
             {
                 Console.WriteLine($"[Open] Drawing matching mark '{mark}' not found in Document Manager (Ctrl+L).");
             }
+        }
+
+        /// <summary>
+        /// Task 1d: close matching drawing, reopen with showDrawing:true — no Fit. Operator checks '?' glyphs.
+        /// SetActiveDrawing(Drawing, bool showDrawing) verified in Tekla.Structures.Drawing usage across this repo.
+        /// </summary>
+        static int ReopenDrawingShowTrue(Model tekla, string mark)
+        {
+            var handler = new Tekla.Structures.Drawing.DrawingHandler();
+            if (!handler.GetConnectionStatus())
+            {
+                Console.WriteLine("[Reopen] DrawingHandler not connected.");
+                return 3;
+            }
+            var target = FindHardwareOrFirstDrawing(handler, mark);
+            if (target == null)
+            {
+                Console.WriteLine("[Reopen] no drawing for mark " + mark);
+                return 4;
+            }
+            string piece = SheetRoleMap.PieceMark(mark ?? "piece");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Export", "CivilDrawings", "new with macros",
+                "reopen_test_" + piece.Replace(' ', '_') + ".txt");
+            try
+            {
+                try
+                {
+                    var active = handler.GetActiveDrawing();
+                    if (active != null)
+                    {
+                        Console.WriteLine("[Reopen] closing active '" + (active.Mark ?? "") + "' (save=true)");
+                        handler.CloseActiveDrawing(save: true);
+                    }
+                }
+                catch (Exception ex) { Console.WriteLine("[Reopen] close: " + ex.Message); }
+
+                try { handler.UpdateDrawing(target); } catch { }
+                bool opened = false;
+                try { opened = handler.SetActiveDrawing(target, showDrawing: true); }
+                catch (Exception ex) { Console.WriteLine("[Reopen] SetActiveDrawing(true): " + ex.Message); }
+                if (!opened)
+                {
+                    try { opened = handler.SetActiveDrawing(target, showDrawing: true, forceOpen: true); }
+                    catch (Exception ex) { Console.WriteLine("[Reopen] SetActiveDrawing(true,force): " + ex.Message); }
+                }
+                Directory.CreateDirectory(Path.GetDirectoryName(path) ?? ".");
+                var sb = new System.Text.StringBuilder();
+                sb.AppendLine("ReopenTest " + DateTime.UtcNow.ToString("o"));
+                sb.AppendLine("drawing=" + (target.Mark ?? ""));
+                sb.AppendLine("showDrawing=true");
+                sb.AppendLine("opened=" + opened);
+                sb.AppendLine("operatorAction=Inspect elevation for magenta '?'. Did glyphs change vs before reopen? (no other Fit)");
+                sb.AppendLine("result=PENDING_OPERATOR");
+                File.WriteAllText(path, sb.ToString());
+                Console.WriteLine("[Reopen] opened=" + opened + " showDrawing=true → '" + (target.Mark ?? "") + "'");
+                Console.WriteLine("[Reopen] wrote " + path);
+                return opened ? 0 : 5;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[Reopen] " + ex.Message);
+                return 1;
+            }
+        }
+
+        static Tekla.Structures.Drawing.Drawing FindHardwareOrFirstDrawing(Tekla.Structures.Drawing.DrawingHandler handler, string mark)
+        {
+            Tekla.Structures.Drawing.Drawing first = null;
+            Tekla.Structures.Drawing.Drawing hardware = null;
+            var en = handler.GetDrawings();
+            while (en != null && en.MoveNext())
+            {
+                var d = en.Current;
+                if (d == null) continue;
+                if ((d.Mark ?? "").IndexOf(mark ?? "", StringComparison.OrdinalIgnoreCase) < 0) continue;
+                if (first == null) first = d;
+                var role = SheetRoleMap.Resolve(d);
+                if (role == SheetRole.Hardware || PrecastDimensionPostProcessor.IsHardwareShopSheet(d))
+                    hardware = hardware ?? d;
+            }
+            return hardware ?? first;
         }
 
         static void RunDrawings(Model tekla, string baseDir, DrawingKind kind, bool correct = true)
@@ -802,6 +924,11 @@ namespace TeklaExtractor
             Console.WriteLine("    --civil-drawings --mark W10-50 --clean-mark   delete that piece's old sheets first");
             Console.WriteLine("    --civil-drawings --extract-only  extract selected existing CU sheets (add --all to resume whole model)");
             Console.WriteLine("    --civil-drawings --extract-only --all --to-root   Sep-2 layout → Export/CivilDrawings/PDF");
+            Console.WriteLine("    --skip-mark-repair      default: Fit does NOT rewrite marks (safe; manual drawings have no '?')");
+            Console.WriteLine("    --enable-mark-repair    opt-in: run RepairBrokenPartMarks (TextElement rewrite)");
+            Console.WriteLine("    --fit-stage 1..5        Task1b: stop Fit after stage; inspect UI for magenta '?'");
+            Console.WriteLine("    --dump-mark-attrs       rich Mark.Attributes dump for hardware sheet (--mark)");
+            Console.WriteLine("    --reopen-drawing        close+open with showDrawing:true (Task1d glyph test)");
             Console.WriteLine("    --preflight-qa          margin ≥ 15 mm, BOM gap ≥ 10 mm, tape delta ≤ 0.1 mm");
             Console.WriteLine("    --html-only             rebuild Export/CivilDrawings/index.html + manifest.json");
             Console.WriteLine("    --inventory             all drawings → drawings_inventory.json + .csv");
