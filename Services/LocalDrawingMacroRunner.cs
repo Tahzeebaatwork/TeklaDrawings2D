@@ -24,6 +24,9 @@ namespace TeklaExtractor.Services
         public const string Pg2Placing = "SP_M.CU_PG2_11X17.cs";
         public const string Pg3Table = "SP_M.CU_PG3_11X17.cs";
         public const string BeamSet = "SP_M.BM_SET_11x17.cs";
+        /// <summary>Open API attribute used for Document Manager sheet -2 (sections/3D).</summary>
+        public const string SectionsProps = "SP_M.CU_HARDWARE_PROPS_11X17";
+        public const string SectionsDrawingName = "CU SECTIONS 3D";
 
         private static readonly string[] ForbiddenMacros =
         {
@@ -89,9 +92,12 @@ namespace TeklaExtractor.Services
                     MacroLog("FAIL smoke: no WALL matching " + markFilter);
                     return;
                 }
+                // PG1–3 first (Tekla auto sheets -1/-2/-3). Sections sheet last as -4 so
+                // CreateCastUnitDrawing is not blocked by an Open API sheet occupying -2.
                 RunMacroInBatches(walls, Pg1Hardware, "smoke hardware CU");
                 RunMacroInBatches(walls, Pg2Placing, "smoke rebar placing CU");
                 RunMacroInBatches(walls, Pg3Table, "smoke rebar table CU");
+                CreateSectionsSheets(walls, "smoke sections CU");
                 MacroLog("smoke: skipped beams and floor GA");
                 MacroLog("session drawings " + sessionBefore + " → " + CountDrawings() + " after smoke macros");
                 return;
@@ -101,6 +107,7 @@ namespace TeklaExtractor.Services
             RunMacroInBatches(wallsAndColumns, Pg1Hardware, "hardware CU");
             RunMacroInBatches(wallsAndColumns, Pg2Placing, "rebar placing CU");
             RunMacroInBatches(wallsAndColumns, Pg3Table, "rebar table CU");
+            CreateSectionsSheets(wallsAndColumns, "sections CU");
             RunMacroInBatches(groups.Beams, BeamSet, "beam hardware+placing+table+fabricator");
 
             if (!selectedOnly)
@@ -380,9 +387,45 @@ namespace TeklaExtractor.Services
 
         private static int StartSheetForMacro(string macroFile)
         {
+            // PG macros: 1 hardware, 2 placing, 3 table. Sections Open API uses next free (≥4).
             if (string.Equals(macroFile, Pg2Placing, StringComparison.OrdinalIgnoreCase)) return 2;
             if (string.Equals(macroFile, Pg3Table, StringComparison.OrdinalIgnoreCase)) return 3;
             return 1;
+        }
+
+        /// <summary>
+        /// Create Document Manager Sections sheet (typically -4) after PG1–3 so Tekla UI has 4 base sheets.
+        /// Uses hardware props for 3D/section views, then renames to <see cref="SectionsDrawingName"/>.
+        /// </summary>
+        private void CreateSectionsSheets(List<TSModel.Part> parts, string label)
+        {
+            if (parts == null || parts.Count == 0) return;
+            int before = CountDrawings();
+            MacroLog(label + ": Open API sections sheet (props=" + SectionsProps + ")");
+            var created = new List<Drawing>();
+            try
+            {
+                InsertCastUnitOpenApi(parts, new[] { SectionsProps }, created);
+            }
+            catch (Exception ex)
+            {
+                Fail(label + " InsertCastUnitOpenApi", ex);
+            }
+            foreach (Drawing d in created)
+            {
+                try
+                {
+                    d.Name = SectionsDrawingName;
+                    d.Modify();
+                    MacroLog(label + ": renamed " + (d.Mark ?? "") + " → Name='" + SectionsDrawingName + "'");
+                }
+                catch (Exception ex)
+                {
+                    MacroLog(label + ": rename failed: " + ex.Message);
+                }
+            }
+            int after = CountDrawings();
+            MacroLog(label + ": drawings " + before + " → " + after + " created=" + created.Count);
         }
 
         private void InsertCastUnitWithAttributes(List<TSModel.Part> parts, string[] attributes, int startSheet = 1,

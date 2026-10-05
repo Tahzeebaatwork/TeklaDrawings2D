@@ -69,6 +69,8 @@ namespace TeklaExtractor.Services
                 return 0;
             }
 
+            AttributeFilesVerifier.VerifyAndRepair(_model);
+
             // Do not recreate PG sheets while model numbering is stale (magenta '?' marks).
             if (!_extractOnly && PrecastDimensionPostProcessor.AbortIfNumberingStale("Civil"))
                 return 1;
@@ -375,19 +377,26 @@ namespace TeklaExtractor.Services
 
                     try
                     {
-                        string stem = CivilDrawingSupport.Sanitize(
+                        var role = SheetRoleMap.Resolve(drawing);
+                        string pieceForPdf = SheetRoleMap.PieceMark(
                             CivilDrawingSupport.FirstNonEmpty(SafeMark(drawing), pieceGuess, "sheet"));
+                        string stem = role != SheetRole.Unknown
+                            ? CivilDrawingSupport.Sanitize(SheetRoleMap.PdfStem(pieceForPdf, role))
+                            : CivilDrawingSupport.Sanitize(
+                                CivilDrawingSupport.FirstNonEmpty(SafeMark(drawing), pieceGuess, "sheet"));
                         string pdfPath = Path.Combine(pdfDir, stem + ".pdf");
                         string dwgPath = Path.Combine(dwgDir, stem + ".dwg");
+                        Console.WriteLine("[Civil] role=" + role + " stem=" + stem);
                         ShopFitResult fit = null;
-                        if (PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))
-                            fit = new PrecastDimensionPostProcessor(_model, _handler, pdfDir).Fit(drawing);
-                        else if (PrecastDimensionPostProcessor.IsPlacingSheet(drawing))
-                            new PrecastDimensionPostProcessor(_model, _handler, pdfDir).CleanPlacing(drawing);
-                        else if (PrecastDimensionPostProcessor.IsBbsSheet(drawing))
-                            new PrecastDimensionPostProcessor(_model, _handler, pdfDir).CleanBbs(drawing);
-                        else if (PrecastDimensionPostProcessor.IsSectionsSheet(drawing))
-                            new PrecastDimensionPostProcessor(_model, _handler, pdfDir).CleanSections(drawing);
+                        var post = new PrecastDimensionPostProcessor(_model, _handler, pdfDir);
+                        if (role == SheetRole.Hardware || PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))
+                            fit = post.Fit(drawing);
+                        else if (role == SheetRole.Sections || PrecastDimensionPostProcessor.IsSectionsSheet(drawing))
+                            post.CleanSections(drawing);
+                        else if (role == SheetRole.Placing || PrecastDimensionPostProcessor.IsPlacingSheet(drawing))
+                            post.CleanPlacing(drawing);
+                        else if (role == SheetRole.BbsTable || PrecastDimensionPostProcessor.IsBbsSheet(drawing))
+                            post.CleanBbs(drawing);
                         if (fit != null && fit.Sheet2Updated)
                             ReprintSibling(printer, pdfDir, fit.SiblingMark);
                         if (_preflightQa && PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))

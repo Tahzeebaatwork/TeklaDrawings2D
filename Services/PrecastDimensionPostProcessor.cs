@@ -963,6 +963,8 @@ public class PrecastDimensionPostProcessor
 
 	private readonly string _pdfDir;
 
+	private static bool _loggedDimUnits;
+
 	public PrecastDimensionPostProcessor(Model model, DrawingHandler handler, string pdfDir = null)
 	{
 		_model = model ?? throw new ArgumentNullException("model");
@@ -1016,68 +1018,12 @@ public class PrecastDimensionPostProcessor
 
 	public static bool IsHardwareShopSheet(Drawing drawing)
 	{
-		if (drawing == null)
-		{
-			return false;
-		}
-		string input = "";
-		string text = "";
-		try
-		{
-			input = (drawing.Mark ?? "").Trim().Trim('[', ']').Trim();
-		}
-		catch
-		{
-		}
-		try
-		{
-			text = drawing.Name ?? "";
-		}
-		catch
-		{
-		}
-		if (Regex.IsMatch(input, "-\\s*[23]\\s*$"))
-		{
-			return false;
-		}
-		bool num = Regex.IsMatch(input, "-\\s*1\\s*$");
-		bool flag = text.IndexOf("CU HARDWARE PLACING", StringComparison.OrdinalIgnoreCase) >= 0;
-		return num || flag;
+		return SheetRoleMap.Resolve(drawing) == SheetRole.Hardware;
 	}
 
 	public static bool IsBbsSheet(Drawing drawing)
 	{
-		if (drawing == null)
-		{
-			return false;
-		}
-		string input = "";
-		string text = "";
-		try
-		{
-			input = (drawing.Mark ?? "").Trim().Trim('[', ']').Trim();
-		}
-		catch
-		{
-		}
-		try
-		{
-			text = drawing.Name ?? "";
-		}
-		catch
-		{
-		}
-		// PG3 rebar table is typically sheet - 3; also - 4 / REBAR_BBS / TABLE names.
-		if (Regex.IsMatch(input, "-\\s*3\\s*$"))
-			return true;
-		if (Regex.IsMatch(input, "-\\s*4\\s*$"))
-			return true;
-		if (text.IndexOf("REBAR_BBS", StringComparison.OrdinalIgnoreCase) >= 0)
-			return true;
-		if (text.IndexOf("REINF. TABLE", StringComparison.OrdinalIgnoreCase) >= 0
-			|| text.IndexOf("REINFORCING TABLE", StringComparison.OrdinalIgnoreCase) >= 0)
-			return true;
-		return text.IndexOf("BBS", StringComparison.OrdinalIgnoreCase) >= 0;
+		return SheetRoleMap.Resolve(drawing) == SheetRole.BbsTable;
 	}
 
 	public void CleanBbs(Drawing drawing)
@@ -1222,10 +1168,16 @@ public class PrecastDimensionPostProcessor
 				return shopFitResult;
 			}
 			Console.WriteLine("[Fit] Views identified: Front=" + (front != null) + ", 3D=" + (view3D != null) + ", Section=" + (section != null) + ", Bottom=" + (bottom != null) + ", Other=" + otherViews.Count);
-			int scale = SelectScale(num);
 			double num2 = ScanBomLeft(sheet);
 			double sheetWidth = ((sheet.Width > 1.0) ? sheet.Width : 431.8);
 			double sheetHeight = ((sheet.Height > 1.0) ? sheet.Height : 279.4);
+			double availableWidthMm = Math.Max(40.0, (num2 > 1.0 ? num2 : BomFallbackLeft) - 15.0 - 10.0);
+			int scale = SelectScale(num, availableWidthMm);
+			Console.WriteLine("[Fit] scale=" + scale.ToString(CultureInfo.InvariantCulture)
+				+ " availableWidthMm=" + availableWidthMm.ToString("0.###", CultureInfo.InvariantCulture)
+				+ " sheet=" + sheetWidth.ToString("0.#", CultureInfo.InvariantCulture) + "x"
+				+ sheetHeight.ToString("0.#", CultureInfo.InvariantCulture)
+				+ " bomLeft=" + num2.ToString("0.###", CultureInfo.InvariantCulture));
 			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, num, sheetWidth, sheetHeight, num2, shopFitResult);
 			WarnIfNumberingStale();
 			PanelAxis panelAxis = PanelAxis.Measure(part, num);
@@ -1269,7 +1221,9 @@ public class PrecastDimensionPostProcessor
 			catch
 			{
 			}
-			if (!string.IsNullOrEmpty(_pdfDir) && (view3D != null || section != null || bottom != null))
+			// Prefer a real Document Manager sections sheet (role Sections). Sidecar PDF only if none.
+			bool hasSectionsSheet = HasSiblingRole(drawing, SheetRole.Sections);
+			if (!hasSectionsSheet && !string.IsNullOrEmpty(_pdfDir) && (view3D != null || section != null || bottom != null))
 			{
 				string value = "";
 				try
@@ -1293,6 +1247,8 @@ public class PrecastDimensionPostProcessor
 				string page2Path = Path.Combine(_pdfDir, value + "_-_2_Sections_3D.pdf");
 				ExportNativePage2(drawing, front, view3D, section, bottom, otherViews, part, page2Path);
 			}
+			else if (hasSectionsSheet)
+				Console.WriteLine("[Fit] sections sibling exists — skip sidecar ExportNativePage2");
 			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, num, sheetWidth, sheetHeight, num2, shopFitResult);
 			SealView(front, num, scale, sheetHeight, num2);
 			PurgeTemporaryTags(sheet);
@@ -1314,6 +1270,8 @@ public class PrecastDimensionPostProcessor
 			Console.WriteLine("[Fit] repaired " + markRepair.Repaired.ToString(CultureInfo.InvariantCulture)
 				+ " part mark(s); unresolved " + markRepair.Unresolved.ToString(CultureInfo.InvariantCulture)
 				+ " (no PART_POS)");
+			WriteFitReport(text, scale, sheetWidth, sheetHeight, num2, availableWidthMm, num, num4, tapeVerified,
+				markRepair.Repaired, markRepair.Unresolved, hasSectionsSheet);
 			RemoveInnerSheetBorders(sheet, sheetWidth, sheetHeight);
 			try
 			{
@@ -1785,11 +1743,20 @@ public class PrecastDimensionPostProcessor
 
 	private static int SelectScale(double modelLength)
 	{
+		return SelectScale(modelLength, MaxViewWidth);
+	}
+
+	/// <summary>
+	/// Pick the smallest standard scale whose model length fits in <paramref name="availableWidthMm"/>
+	/// (paper mm left of BOM minus margins). Falls back to largest AllowedScales entry.
+	/// </summary>
+	private static int SelectScale(double modelLength, double availableWidthMm)
+	{
+		double cap = availableWidthMm > 10.0 ? availableWidthMm : MaxViewWidth;
 		int result = AllowedScales[AllowedScales.Length - 1];
-		int[] allowedScales = AllowedScales;
-		foreach (int num in allowedScales)
+		foreach (int num in AllowedScales)
 		{
-			if (modelLength / (double)num <= 140.0)
+			if (modelLength / (double)num <= cap)
 			{
 				result = num;
 				break;
@@ -2044,7 +2011,7 @@ public class PrecastDimensionPostProcessor
 		{
 			var neu = new Mark(target);
 			neu.Attributes.Content.Clear();
-			neu.Attributes.Content.Add(new TextElement(resolved, new FontAttributes { Height = 2.5 }));
+			neu.Attributes.Content.Add(new TextElement(resolved, MarkFont()));
 			if (ip != null)
 				neu.InsertionPoint = new Point(ip.X, ip.Y, 0.0);
 			try { if (neu.Hideable != null) neu.Hideable.ShowInDrawingView(); } catch { }
@@ -2132,19 +2099,95 @@ public class PrecastDimensionPostProcessor
 	private static bool TryRewriteMarkContent(MarkBase mark, string resolved)
 	{
 		if (string.IsNullOrWhiteSpace(resolved)) return false;
-		var font = new FontAttributes { Height = 2.5 };
 		try
 		{
 			if (mark is Mark m && m.Attributes?.Content != null)
 			{
 				m.Attributes.Content.Clear();
-				m.Attributes.Content.Add(new TextElement(resolved, font));
+				m.Attributes.Content.Add(new TextElement(resolved, MarkFont()));
 				try { if (m.Hideable != null) m.Hideable.ShowInDrawingView(); } catch { }
 				return m.Modify();
 			}
 		}
 		catch { }
 		return false;
+	}
+
+	/// <summary>Non-magenta mark text (template vpm.text_colour 165 is magenta; ? glyphs inherit it).</summary>
+	private static FontAttributes MarkFont()
+	{
+		return new FontAttributes
+		{
+			Height = 2.5,
+			Color = DrawingColors.Yellow,
+		};
+	}
+
+	private bool HasSiblingRole(Drawing drawing, SheetRole role)
+	{
+		string piece = SheetRoleMap.PieceMark(drawing?.Mark ?? "");
+		if (string.IsNullOrWhiteSpace(piece)) return false;
+		try
+		{
+			DrawingEnumerator en = _handler.GetDrawings();
+			while (en != null && en.MoveNext())
+			{
+				var d = en.Current as Drawing;
+				if (d == null) continue;
+				string m = "";
+				string n = "";
+				try { m = d.Mark ?? ""; } catch { }
+				try { n = d.Name ?? ""; } catch { }
+				if (!SheetRoleMap.PieceMark(m).Equals(piece, StringComparison.OrdinalIgnoreCase))
+					continue;
+				if (SheetRoleMap.Resolve(m, n) == role)
+					return true;
+				// Explicit sections rename used by LocalDrawingMacroRunner.
+				if (role == SheetRole.Sections
+					&& n.IndexOf("SECTIONS 3D", StringComparison.OrdinalIgnoreCase) >= 0)
+					return true;
+			}
+		}
+		catch { }
+		return false;
+	}
+
+	private void WriteFitReport(string drawingMark, int scale, double sheetW, double sheetH, double bomLeft,
+		double availableWidthMm, double modelLength, double tapeDelta, bool tapeOk, int marksRepaired,
+		int marksUnresolved, bool sectionsSibling)
+	{
+		try
+		{
+			string dir = string.IsNullOrEmpty(_pdfDir)
+				? Path.Combine("Export", "CivilDrawings", "new with macros")
+				: Path.GetDirectoryName(_pdfDir) ?? _pdfDir;
+			Directory.CreateDirectory(dir);
+			string piece = SheetRoleMap.PieceMark(drawingMark);
+			string path = Path.Combine(dir, "fit_report_" + piece.Replace(' ', '_') + ".txt");
+			var sb = new System.Text.StringBuilder();
+			sb.AppendLine("FitReport " + DateTime.UtcNow.ToString("o"));
+			sb.AppendLine("drawing=" + drawingMark);
+			sb.AppendLine("piece=" + piece);
+			sb.AppendLine("scale=1:" + scale.ToString(CultureInfo.InvariantCulture));
+			sb.AppendLine("sheetMm=" + sheetW.ToString("0.###", CultureInfo.InvariantCulture) + "x"
+				+ sheetH.ToString("0.###", CultureInfo.InvariantCulture));
+			sb.AppendLine("bomLeftMm=" + bomLeft.ToString("0.###", CultureInfo.InvariantCulture));
+			sb.AppendLine("availableWidthMm=" + availableWidthMm.ToString("0.###", CultureInfo.InvariantCulture));
+			sb.AppendLine("modelLengthMm=" + modelLength.ToString("0.###", CultureInfo.InvariantCulture));
+			sb.AppendLine("tapeDeltaMm=" + (double.IsNaN(tapeDelta) ? "n/a" : tapeDelta.ToString("0.###", CultureInfo.InvariantCulture)));
+			sb.AppendLine("tapeVerified=" + tapeOk);
+			if (!tapeOk) sb.AppendLine("warning=TAPE_UNVERIFIED");
+			sb.AppendLine("marksRepaired=" + marksRepaired.ToString(CultureInfo.InvariantCulture));
+			sb.AppendLine("marksUnresolved=" + marksUnresolved.ToString(CultureInfo.InvariantCulture));
+			sb.AppendLine("sectionsSibling=" + sectionsSibling);
+			sb.AppendLine("sheetCountHint=" + (sectionsSibling ? "4+" : "3+sidecar"));
+			File.WriteAllText(path, sb.ToString());
+			Console.WriteLine("[Fit] report → " + path);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Fit] report failed: " + ex.Message);
+		}
 	}
 
 	private static bool IsMarkContentBroken(MarkBase mark, string displayed)
@@ -2712,6 +2755,15 @@ public class PrecastDimensionPostProcessor
 				Console.WriteLine("[DimError] CreateDimensionSet returned NULL for distance " + paper.ToString("0", CultureInfo.InvariantCulture));
 			else
 				Console.WriteLine("[DimSuccess] Created DimSet at paper " + paper.ToString("0.#", CultureInfo.InvariantCulture) + " mm with " + pointList.Count + " pts.");
+
+			if (!_loggedDimUnits && set != null)
+			{
+				_loggedDimUnits = true;
+				Console.WriteLine("[DimUnit] CreateDimensionSet arg=paperMm=" + paper.ToString("0.###", CultureInfo.InvariantCulture)
+					+ " then set.Distance=viewUnits=" + distance.ToString("0.###", CultureInfo.InvariantCulture)
+					+ " scale=" + scale.ToString(CultureInfo.InvariantCulture)
+					+ " (paper×scale=" + (paper * scale).ToString("0.###", CultureInfo.InvariantCulture) + ")");
+			}
 
 			if (set != null)
 			{
@@ -4381,31 +4433,14 @@ public class PrecastDimensionPostProcessor
 		return v.ToString("0.###", CultureInfo.InvariantCulture);
 	}
 
-	// PG2 = rebar placing sheet - 2; PG3 = BBS/table sheet - 3.
 	public static bool IsPlacingSheet(Drawing d)
 	{
-		if (d == null) return false;
-		string mark = "";
-		string name = "";
-		try { mark = (d.Mark ?? "").Trim().Trim('[', ']').Trim(); } catch { }
-		try { name = d.Name ?? ""; } catch { }
-		if (Regex.IsMatch(mark, "-\\s*[13]\\s*$")) return false;
-		if (Regex.IsMatch(mark, "-\\s*2\\s*$")) return true;
-		return name.IndexOf("REINF. PLACING", StringComparison.OrdinalIgnoreCase) >= 0
-			|| name.IndexOf("REINFORCING PLACING", StringComparison.OrdinalIgnoreCase) >= 0
-			|| name.IndexOf("CU REINF. PLACING", StringComparison.OrdinalIgnoreCase) >= 0;
+		return SheetRoleMap.Resolve(d) == SheetRole.Placing;
 	}
 
 	public static bool IsSectionsSheet(Drawing d)
 	{
-		// Sidecar sections/3D PDF is exported from sheet-1; no dedicated "- 2 sections" CU mark.
-		// Keep helper for any future sheet named SECTIONS / 3D only (not PG2 placing).
-		if (d == null) return false;
-		string name = "";
-		try { name = d.Name ?? ""; } catch { }
-		if (IsPlacingSheet(d) || IsBbsSheet(d) || IsHardwareShopSheet(d)) return false;
-		return name.IndexOf("SECTION", StringComparison.OrdinalIgnoreCase) >= 0
-			&& name.IndexOf("PLACING", StringComparison.OrdinalIgnoreCase) < 0;
+		return SheetRoleMap.Resolve(d) == SheetRole.Sections;
 	}
 
 	public void CleanPlacing(Drawing drawing)

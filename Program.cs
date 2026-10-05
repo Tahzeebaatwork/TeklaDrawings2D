@@ -89,9 +89,11 @@ namespace TeklaExtractor
             bool wantCivil = HasFlag(args, "--civil-drawings") || HasFlag(args, "--civil") || HasFlag(args, "--civil-extract");
             bool wantDelete = HasFlag(args, "--delete") || HasFlag(args, "--delete-drawing") || HasFlag(args, "--clean");
             bool wantOpen = HasFlag(args, "--open") || HasFlag(args, "--open-drawing");
+            bool wantProbeMarks = HasFlag(args, "--probe-marks") || HasFlag(args, "--mark-probe");
             bool interactive = !extractOnly && !wantDrawings && !wantDeep && !wantDrawingJson
                 && !pdfOnly && !wantCorrect && !wantFloorWise && !wantGad && !wantCastUnits
-                && !wantDrawingQa && !wantShop && !wantInventory && !wantCivil && !wantDelete && !wantOpen;
+                && !wantDrawingQa && !wantShop && !wantInventory && !wantCivil && !wantDelete && !wantOpen
+                && !wantProbeMarks;
 
             if (pdfOnly && !wantDrawings && !extractOnly && !wantDeep && !wantCorrect && !wantFloorWise && !wantGad && !wantCastUnits && !wantDrawingQa && !wantShop && !wantInventory && !wantCivil)
             {
@@ -133,6 +135,13 @@ namespace TeklaExtractor
                 string mark = FlagValue(args, "--mark");
                 OpenDrawingInUi(tekla, mark);
                 return 0;
+            }
+
+            if (wantProbeMarks)
+            {
+                string mark = FlagValue(args, "--mark") ?? "W10-175";
+                string outRoot = Path.Combine(baseDir, "Export", "CivilDrawings", "new with macros");
+                return MarkProbe.Run(tekla, mark, outRoot);
             }
 
             // Ground truth: interactive boot, or --extract.
