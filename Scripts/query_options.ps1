@@ -1,5 +1,7 @@
-Add-Type -Path "c:\Users\ASUS\Desktop\2d_tekla\bin\Release\net48\Tekla.Structures.dll"
-Add-Type -Path "c:\Users\ASUS\Desktop\2d_tekla\bin\Release\net48\Tekla.Structures.Model.dll"
+$root = Split-Path -Parent $PSScriptRoot
+$bin = Join-Path $root "bin\x64\Release\net48"
+Add-Type -Path (Join-Path $bin "Tekla.Structures.dll")
+Add-Type -Path (Join-Path $bin "Tekla.Structures.Model.dll")
 
 $m = New-Object Tekla.Structures.Model.Model
 if ($m.GetConnectionStatus()) {

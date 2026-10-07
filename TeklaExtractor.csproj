@@ -48,55 +48,54 @@
   <ItemGroup>
 
     <Reference Include="Tekla.Structures">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\Net48Runtime\Tekla.Structures.dll</HintPath>
+      <HintPath>$(TeklaBin)\Net48Runtime\Tekla.Structures.dll</HintPath>
       <Private>true</Private>
     </Reference>
 
     <Reference Include="Tekla.Structures.Model">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\Tekla.Structures.Model.dll</HintPath>
+      <HintPath>$(TeklaBin)\Tekla.Structures.Model.dll</HintPath>
       <Private>true</Private>
     </Reference>
 
     <!-- Needed for DrawingGenerator.cs (DrawingHandler API) -->
     <Reference Include="Tekla.Structures.Drawing">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\Tekla.Structures.Drawing.dll</HintPath>
+      <HintPath>$(TeklaBin)\Tekla.Structures.Drawing.dll</HintPath>
       <Private>true</Private>
     </Reference>
 
     <Reference Include="Tekla.Structures.Catalogs">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\Tekla.Structures.Catalogs.dll</HintPath>
+      <HintPath>$(TeklaBin)\Tekla.Structures.Catalogs.dll</HintPath>
       <Private>true</Private>
     </Reference>
 
     <Reference Include="Tekla.Structures.Plugins">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\Net48Runtime\Tekla.Structures.Plugins.dll</HintPath>
+      <HintPath>$(TeklaBin)\Net48Runtime\Tekla.Structures.Plugins.dll</HintPath>
       <Private>true</Private>
     </Reference>
 
     <!-- Trimble.Remoting (pulled by Tekla.Structures) needs these beside the exe -->
     <Reference Include="System.Memory">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\System.Memory.dll</HintPath>
+      <HintPath>$(TeklaBin)\System.Memory.dll</HintPath>
       <Private>true</Private>
     </Reference>
     <Reference Include="System.Buffers">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\System.Buffers.dll</HintPath>
+      <HintPath>$(TeklaBin)\System.Buffers.dll</HintPath>
       <Private>true</Private>
     </Reference>
     <Reference Include="System.Numerics.Vectors">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\System.Numerics.Vectors.dll</HintPath>
+      <HintPath>$(TeklaBin)\System.Numerics.Vectors.dll</HintPath>
       <Private>true</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>C:\Program Files\Tekla Structures\2026.0\bin\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>$(TeklaBin)\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
       <Private>true</Private>
     </Reference>
 
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="LocalMacros\**\*.cs" />
-    <Compile Remove="TeklaExtractor_Standalone_v2026\**\*.cs" />
-    <Compile Remove="Final Check\**\*.cs" />
+    <Compile Remove="src\LocalMacros\**\*.cs" />
+    <Compile Remove="packaging\**\*.cs" />
     <Compile Remove="Services_Backup\**\*.cs" />
     <Compile Remove="Tools\**\*.cs" />
     <Compile Remove="Scripts\**\*.cs" />
@@ -107,7 +106,8 @@
     <Compile Remove="check_*.cs" />
     <Compile Remove="update_*.cs" />
     <Compile Remove="recover_*.cs" />
-    <Content Include="LocalMacros\*.cs">
+    <Content Include="src\LocalMacros\*.cs">
+      <Link>LocalMacros\%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\DrawingViewer\index.html">
@@ -118,11 +118,11 @@
   <!-- PdfPig nuget copies a different System.Memory; restore Tekla's after build -->
   <Target Name="CopyTeklaRuntimeDlls" AfterTargets="Build">
     <ItemGroup>
-      <TeklaRuntimeDll Include="C:\Program Files\Tekla Structures\2026.0\bin\System.Memory.dll" />
-      <TeklaRuntimeDll Include="C:\Program Files\Tekla Structures\2026.0\bin\System.Buffers.dll" />
-      <TeklaRuntimeDll Include="C:\Program Files\Tekla Structures\2026.0\bin\System.Numerics.Vectors.dll" />
-      <TeklaRuntimeDll Include="C:\Program Files\Tekla Structures\2026.0\bin\System.Runtime.CompilerServices.Unsafe.dll" />
-      <TeklaRuntimeDll Include="C:\Program Files\Tekla Structures\2026.0\bin\System.Threading.Tasks.Extensions.dll" />
+      <TeklaRuntimeDll Include="$(TeklaBin)\System.Memory.dll" />
+      <TeklaRuntimeDll Include="$(TeklaBin)\System.Buffers.dll" />
+      <TeklaRuntimeDll Include="$(TeklaBin)\System.Numerics.Vectors.dll" />
+      <TeklaRuntimeDll Include="$(TeklaBin)\System.Runtime.CompilerServices.Unsafe.dll" />
+      <TeklaRuntimeDll Include="$(TeklaBin)\System.Threading.Tasks.Extensions.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(TeklaRuntimeDll)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="false" OverwriteReadOnlyFiles="true" />
   </Target>

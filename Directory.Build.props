@@ -1,0 +1,7 @@
+<Project>
+  <!-- Default Tekla 2026 install. A Directory.Build.user.props file can override TeklaBin. -->
+  <PropertyGroup>
+    <TeklaBin Condition="'$(TeklaBin)' == ''">C:\Program Files\Tekla Structures\2026.0\bin</TeklaBin>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Build.user.props" Condition="Exists('$(MSBuildThisFileDirectory)Directory.Build.user.props')" />
+</Project>

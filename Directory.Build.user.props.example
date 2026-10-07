@@ -1,0 +1,6 @@
+<Project>
+  <!-- Copy to Directory.Build.user.props only when Tekla is not in the default 2026 path. -->
+  <PropertyGroup>
+    <TeklaBin>C:\Program Files\Tekla Structures\2026.0\bin</TeklaBin>
+  </PropertyGroup>
+</Project>

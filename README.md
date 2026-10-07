@@ -13,7 +13,7 @@ Live Open API tool that connects to an open Tekla model, runs Paisley cast-unit 
 3. Run from a normal **CMD / PowerShell** window — not from a Cursor agent terminal (Tekla remoting can hang there).
 
 ```powershell
-cd C:\Users\ASUS\Desktop\2d_tekla
+cd D:\Github\TeklaDrawings2D
 dotnet build -c Release -p:Platform=x64
 ```
 
@@ -29,6 +29,10 @@ If the build fails with a file lock:
 Get-Process TeklaExtractor -ErrorAction SilentlyContinue | Stop-Process -Force
 ```
 
+Tekla is read from `C:\Program Files\Tekla Structures\2026.0\bin` unless `Directory.Build.user.props` exists. Copy `Directory.Build.user.props.example` to that name only when the install is somewhere else. The build and run commands above do not change.
+
+Git does not track generated output: `Export/`, `ground_truth.json`, `ground_truth.csv`, `_build_cast/`, and `packaging\TeklaExtractor_Standalone_v2026\bin\`.
+
 ---
 
 ## Terminal commands
@@ -38,7 +42,7 @@ All commands assume Tekla is open. Prefer the Release exe after a successful bui
 ### Everyday civil runs
 
 ```powershell
-cd C:\Users\ASUS\Desktop\2d_tekla
+cd D:\Github\TeklaDrawings2D
 
 # Selection only (safest) — macros → Fit/Clean → PDF/JSON
 dotnet run -c Release -p:Platform=x64 -- --civil-drawings
@@ -167,21 +171,21 @@ python Scripts\collate_production_booklet.py --mark W10-175
 | Placing sheet (often `-2` / name REINFORCING PLACING) | Placing | `CleanPlacing` — keep dense END 2 / VIEW A native dims; 2-tier on TOP IN FORM; pack in sheet bbox |
 | BBS / rebar table | BbsTable | `CleanBbs` |
 
-`SheetRoleMap` (`Services/SheetRole.cs`) is the single map used for Fit dispatch, PDF stems, and booklet collation.
+`SheetRoleMap` (`src/Drawings/SheetRole.cs`) is the single map used for Fit dispatch, PDF stems, and booklet collation.
 
 ### Key source files
 
 | File | Role |
 |------|------|
-| `Program.cs` | CLI entry, flag parse, interactive menu |
-| `Services/ModelReader.cs` | Connect to live Tekla with retries |
-| `Services/LocalDrawingMacroRunner.cs` | Copy `LocalMacros\` → model; `RunMacro` PG1/PG2/PG3/BM_SET |
-| `Services/CivilDrawingBatchExtractor.cs` | Orchestrate create → role → Fit/Clean → extract → PDF |
-| `Services/PrecastDimensionPostProcessor.cs` | `Fit`, `CleanPlacing`, `CleanSections`, `CleanBbs`, bbox assert |
-| `Services/SheetRole.cs` | Mark/name → Hardware / Sections / Placing / BbsTable |
-| `Services/*CivilExtractor.cs` | GA / Erection / Shop / Connection / Rebar-BBS JSON |
-| `Services/DrawingGenerator.cs` | `PrintDrawing` → PDF (TS PDF Writer) |
-| `LocalMacros/SP_M.CU_PG*.cs` | Paisley shop macros (source of dense native dims) |
+| `src/Program.cs` | CLI entry, flag parse, interactive menu |
+| `src/Model/ModelReader.cs` | Connect to live Tekla with retries |
+| `src/Drawings/LocalDrawingMacroRunner.cs` | Copy `src/LocalMacros\` → model; `RunMacro` PG1/PG2/PG3/BM_SET |
+| `src/Civil/CivilDrawingBatchExtractor.cs` | Orchestrate create → role → Fit/Clean → extract → PDF |
+| `src/Drawings/PrecastDimensionPostProcessor.cs` | `Fit`, `CleanPlacing`, `CleanSections`, `CleanBbs`, bbox assert |
+| `src/Drawings/SheetRole.cs` | Mark/name → Hardware / Sections / Placing / BbsTable |
+| `src/Civil/*Extractor.cs` | GA / Erection / Shop / Connection / Rebar-BBS JSON |
+| `src/Drawings/DrawingGenerator.cs` | `PrintDrawing` → PDF (TS PDF Writer) |
+| `src/LocalMacros/SP_M.CU_PG*.cs` | Paisley shop macros (source of dense native dims) |
 | `Scripts/collate_production_booklet.py` | Optional multi-page PDF booklet |
 
 ### Macros → 2-tier path (placing sheet)
@@ -253,7 +257,7 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-  BAT[Final Check/TeklaExtractor_Standalone_v2026<br/>run_tekla_standalone.bat]
+  BAT[packaging/TeklaExtractor_Standalone_v2026<br/>run_tekla_standalone.bat]
   EXE[TeklaExtractor.exe<br/>same codebase]
   COL[Scripts/collate_production_booklet.py]
   BAT -->|menu 1-4 civil / extract| EXE
@@ -266,7 +270,7 @@ flowchart LR
 
 ## Standalone package role
 
-**Path:** `Final Check\TeklaExtractor_Standalone_v2026\`
+**Path:** `packaging\TeklaExtractor_Standalone_v2026\`
 
 This is **not a second codebase**. It is a **portable launcher + snapshot** of the built engine for operators who should not open Visual Studio / Cursor.
 
@@ -278,7 +282,7 @@ This is **not a second codebase**. It is a **portable launcher + snapshot** of t
 
 ### How it works
 
-1. Bat finds the **project root** (`2d_tekla`) so outputs still land under `Export\…`.
+1. Bat finds the **repo root** (two levels above the bat) so outputs still land under `Export\…`.
 2. Menu options call the same CLI the repo uses, e.g.  
    `TeklaExtractor.exe --civil-drawings --mark W10-175 --clean-mark`.
 3. On success it runs `python Scripts\collate_production_booklet.py --mark …` to stitch pages.
@@ -290,7 +294,7 @@ This is **not a second codebase**. It is a **portable launcher + snapshot** of t
 bin\x64\Release\net48\TeklaExtractor.exe
 ```
 
-The bat historically looks for `bin\Release\net48\…` first, then falls back to `c:\Users\ASUS\Desktop\2d_tekla`. Prefer updating the standalone `bin\` folder after a good Release build, or invoke `bin\x64\Release\net48\TeklaExtractor.exe` directly from the repo root.
+The bat calls `bin\x64\Release\net48\TeklaExtractor.exe` from the repo root. Prefer that exe while iterating, and refresh `packaging\TeklaExtractor_Standalone_v2026\bin\` after a good Release build when operators use the frozen snapshot.
 
 Use standalone when you want a **double-click / menu** workflow without remembering flags. Use the repo CLI when iterating on `PrecastDimensionPostProcessor` / Fit / CleanPlacing.
 
@@ -322,9 +326,44 @@ Units are **raw millimetres** (mm³ / kg). Grade strings are not converted.
 
 ---
 
+## Repository layout
+
+```text
+TeklaExtractor.csproj          project file (output: bin\x64\Release\net48)
+TeklaExtractor.sln
+App.config
+src/Program.cs                 CLI entry
+src/Model/                     connect and 3D extract
+src/Drawings/                  create, Fit/Clean, print
+src/Civil/                     civil batch, role extractors, HTML, booklet
+src/Extract/                   inventory, shop, floor, and QA dumps
+src/LocalMacros/               Paisley macros copied into the Tekla model
+Scripts/                       booklet collation and sheet helpers
+Tools/DrawingViewer/           HTML review template
+Tools/probes/                  one-off mark listing probes
+packaging/TeklaExtractor_Standalone_v2026/
+docs/reference/                long specifications
+docs/investigation/            W10-175 QA notes
+```
+
+Namespaces stay `TeklaExtractor` and `TeklaExtractor.Services`. Folder names are for layout only.
+
+## Files left at the repo root
+
+These stayed in place. They are experiment scripts, recovered dumps, or generated output, not the product tree.
+
+- Experiment rewriters: `experiment_fix.py`, `experiment_fix2.py`, `experiment_fix3.py`, `experiment_fix_safe.py`, `update_refit.py`, `update_emitdim.py`
+- Transcript recovery: `recover_code.py`, `recover_code_full.py`, `check_tools.py`, `recovered.txt`, `recovered_best.txt`
+- Generated model extract from `--extract`: `ground_truth.json`, `ground_truth.csv`
+- Build cast, not source: `_build_cast/`
+- Generated exports: `Export/` (gitignored)
+
+Logs, screenshots, `Services.zip`, and extra copies of the specification PDFs also remain at the root.
+
 ## Docs
 
 - [docs/CivilDrawings-PDF-Extraction.md](docs/CivilDrawings-PDF-Extraction.md) — how PDFs were produced and sheet-boundary behavior
+- Long specifications under `docs/reference/`
 - Investigation notes under `docs/investigation/` for W10-175 QA vs Rev 2
 
 ---
@@ -335,7 +374,7 @@ Units are **raw millimetres** (mm³ / kg). Grade strings are not converted.
 2. From PowerShell (not Cursor agent terminal):
 
 ```powershell
-cd C:\Users\ASUS\Desktop\2d_tekla
+cd D:\Github\TeklaDrawings2D
 dotnet build -c Release -p:Platform=x64
 .\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --mark W10-175 --clean-mark
 ```
