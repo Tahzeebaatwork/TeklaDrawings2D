@@ -31,10 +31,11 @@ namespace TeklaExtractor.Services
         private bool _qaFailed;
         private readonly bool _enableMarkRepair;
         private readonly int _fitStage;
+        private readonly bool _preserveNativeDims;
 
         public CivilDrawingBatchExtractor(TSModel.Model model, string baseDir, bool skipMacros = false,
             bool extractOnly = false, string markFilter = null, bool selectedOnly = false, bool toRoot = false,
-            bool preflightQa = false, bool enableMarkRepair = false, int fitStage = 0)
+            bool preflightQa = false, bool enableMarkRepair = false, int fitStage = 0, bool preserveNativeDims = false)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _handler = new DrawingHandler();
@@ -45,6 +46,7 @@ namespace TeklaExtractor.Services
             _preflightQa = preflightQa;
             _enableMarkRepair = enableMarkRepair;
             _fitStage = fitStage;
+            _preserveNativeDims = preserveNativeDims;
             _markFilter = string.IsNullOrWhiteSpace(markFilter) ? null : markFilter.Trim();
             _civilRoot = Path.Combine(baseDir ?? ".", "Export", "CivilDrawings");
             // Sep 2 style: write PDF/JSON/CSV under Export/CivilDrawings itself (not a subfolder).
@@ -395,7 +397,8 @@ namespace TeklaExtractor.Services
                         var post = new PrecastDimensionPostProcessor(_model, _handler, pdfDir)
                         {
                             EnableMarkRepair = _enableMarkRepair,
-                            FitStage = _fitStage
+                            FitStage = _fitStage,
+                            PreserveNativeDimensions = _preserveNativeDims
                         };
                         if (role == SheetRole.Hardware || PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))
                             fit = post.Fit(drawing);

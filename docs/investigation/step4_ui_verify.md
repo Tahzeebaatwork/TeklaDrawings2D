@@ -1,36 +1,61 @@
-# Step 4 — UI verify (after preserve-native Fit)
+# Step 4 / fabrication — Tekla UI verify (operator)
 
-**Build:** `dotnet build -c Release -p:PlatformTarget=x64`  
-**Exe:** `bin\Release\net48\TeklaExtractor.exe` (or `bin\x64\Release\net48\` if present)
+**Pass/fail = Document Manager sheets, not Export/PDF cosmetics.**  
+**GT:** `P22-132.W10-175.Rev 2.pdf` + `Desktop\dd\P22-132.W10-175 - N..pdf`  
+**QA matrix:** [`w10-175_pdf_vs_tekla_qa.md`](w10-175_pdf_vs_tekla_qa.md)
 
-## Recommended path (fresh manual props drawing)
-
-1. In Tekla: delete automated `[W10-175 - 1]` if needed.
-2. Create Cast Unit drawing with **only** `SP_M.CU_HARDWARE_PROPS_11X17` — confirm **no** magenta `?` and dense green dims.
-3. Run Fit (mark repair stays off; native dims preserved when ≥8 sets):
+After build (`bin\x64\Release\net48\TeklaExtractor.exe`), in **normal CMD** (not Cursor):
 
 ```powershell
 cd c:\Users\ASUS\Desktop\2d_tekla\bin\x64\Release\net48
 .\TeklaExtractor.exe --civil-drawings --extract-only --mark W10-175
 ```
 
-Console should include:
-- `mark-repair=SKIP (default)` / `mark-repair SKIPPED`
-- `preserve-native dims count=…` **or** `native dims count=… < 8 — recreate…`
-- `UI refresh showDrawing=true`
+## Console checks
 
-## Pass / fail
+| Log | Expect |
+|-----|--------|
+| `[Fit] scale=1:75` / `TOP IN FORM synced 1:75` | yes |
+| `[Fit] OPENING chain=` vs PDF `373\|975\|4928\|975\|2115` (W10-175) | OK or logged MISMATCH from model |
+| `[Fit] SideA verts` / SideB / notch/recess | present |
+| `[Fit] bboxAssert failures=0` | yes (view-CS false positives fixed) |
+| `[BomQty] SP15-457` / `GT100-1219` | may MISMATCH model vs PDF — PDF wins for table |
+| `[NotesUDA] WARNING` | empty stripping / PSI vs MPa |
+| `[Sections] Sheet-2 arranged` | on sections role sheets |
+| `[Placing] preserve-native` KEEP or REBUILD | per view |
+| `[Placing] SyncViewScaleLabel 'A-A'` / `'END 2'` | `1:75` (not `1:??`) |
+| `[Placing] Sheet-3 … preserved=` / `rebuilt=` | no `VIEW VIEW`; no left dump |
+| `[BBS] Sheet-4` | on rebar BBS sheets |
 
-| Check | Pass? |
-|-------|-------|
-| No magenta `?` on elevation | |
-| Dense H/V dim elevations still visible (like manual) | |
-| TOP IN FORM present | |
-| Clicked mark is still Mark linked to part | |
-| Second extract-only run: no dim duplicates / no mass mark rewrite | |
+## Sheet checklist
 
-Peer wall (optional): same for `W10-78`.
+| Check | W10-175 | W10-78 | W10-48 |
+|-------|---------|--------|--------|
+| Sheet 1 inside border, no BOM overlap | | | |
+| Scale 1:75 + TOP IN FORM once | | | |
+| OPENING chain not fractured (pier merged) | | | |
+| Side A/B verticals + notch/recess dims | | | |
+| Tier merges SP+GT / EB+CNDT labels | | | |
+| Paint / NO PAINT kept (Rev 2) | | | |
+| Sheet 2 sections/3D legible grid | | | |
+| Sheet 3 / placing: TOP IN FORM has overall+opening+verts (not only 9366) | | | |
+| VIEW END 2 has H dims | | | |
+| VIEW A / A-A has V dims + A-A label | | | |
+| No left-border dim dump | | | |
+| Sheet 4 BBS table clean (views parked) | | | |
+| No magenta `?` (mark repair off + purge unresolved) | | | |
 
-## If `?` still appear after preserve-native
+## Reports
 
-Finish Step 0 staged Fit (`--fit-stage 1..5`) and record first stage with Y — that stage is the remaining culprit (not mark repair by default).
+- `fit_report_W10-175.txt` — bboxFailures, tiers, labels  
+- `final_report.md`  
+- `docs/investigation/w10-175_pdf_vs_tekla_qa.md` — PDF vs Tekla OK/MISMATCH  
+
+## Peers
+
+```powershell
+.\TeklaExtractor.exe --civil-drawings --extract-only --mark W10-78
+.\TeklaExtractor.exe --civil-drawings --extract-only --mark W10-48
+```
+
+Screenshot each Document Manager sheet `- 1` (and W10-175 sheets 2–4).

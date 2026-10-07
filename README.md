@@ -1,241 +1,345 @@
-# Tekla Structures 2026 — Civil drawing extractors
+# TeklaExtractor — 2D Civil Drawing Pipeline (Tekla Structures 2026)
 
-Live Open API extraction of five 2D drawing types used by civil engineers. Output is JSON (nested by piece) plus flat CSV (one row per BOM/rebar line, `PieceMark` as join key).
+Live Open API tool that connects to an open Tekla model, runs Paisley cast-unit macros (PG1 / PG2 / PG3 / BM_SET), fits and cleans each sheet role with a 2-tier dimension algorithm, then extracts JSON / CSV / PDF.
 
-Background reading: [docs/CivilDrawings-PDF-Extraction.md](docs/CivilDrawings-PDF-Extraction.md) explains how the PDFs in `Export\CivilDrawings\PDF` were produced and how a drawing ends up inside the sheet boundary.
+**Stack:** .NET Framework 4.8 · x64 only · Tekla Structures 2026 Open API
 
-## Build (x64 only)
+---
 
-Tekla Structures **2026 only loads x64** Open API extensions. **x86 / AnyCPU will not load.**
+## Prerequisites
 
-This install’s Open API is **.NET Framework 4.8** (`Net48Runtime\Tekla.Structures.dll`), not .NET 8. The project is locked to that:
-
-| Setting | Value |
-|---|---|
-| `TargetFramework` | `net48` |
-| `PlatformTarget` | `x64` |
-| `Platforms` | `x64` |
-| Tekla DLLs | `C:\Program Files\Tekla Structures\2026.0\bin\` (2026 only — do not mix older versions) |
+1. **Tekla Structures 2026** running with the target model open.
+2. Cast unit selected in the model (for selection-based runs), **or** use `--mark`.
+3. Run from a normal **CMD / PowerShell** window — not from a Cursor agent terminal (Tekla remoting can hang there).
 
 ```powershell
 cd C:\Users\ASUS\Desktop\2d_tekla
-dotnet build -p:PlatformTarget=x64
+dotnet build -c Release -p:Platform=x64
 ```
 
-Tekla Structures must be open with a model, with a cast unit selected:
+Executable after build:
 
-```powershell
-dotnet run -- --civil-drawings
+```text
+bin\x64\Release\net48\TeklaExtractor.exe
 ```
 
-Outputs go to `Export\CivilDrawings\new with macros\`. See the section below for every run mode.
-
-## Terminal run commands
-
-All commands are run from the project root with Tekla Structures open on the target model.
-
-```powershell
-cd C:\Users\ASUS\Desktop\2d_tekla
-dotnet build -p:PlatformTarget=x64
-dotnet run --no-build -- <flags>
-```
-
-If the build fails with a file-lock error, a previous run is still alive. Stop it first:
+If the build fails with a file lock:
 
 ```powershell
 Get-Process TeklaExtractor -ErrorAction SilentlyContinue | Stop-Process -Force
 ```
 
-### Civil drawing runs
+---
 
-- `dotnet run -- --civil-drawings`  
-  Default and safest mode. Runs the local macros (PG1 / PG2 / PG3 for walls and columns, BM_SET for beams) on the **current Tekla selection only**, then extracts. Select a cast unit in the model first. Output: `Export\CivilDrawings\new with macros\`.
+## Terminal commands
 
-- `dotnet run -- --civil-drawings --mark W10-67`  
-  Single-piece run for one piece mark. Ignores the Tekla selection, so nothing has to be picked in the model.
+All commands assume Tekla is open. Prefer the Release exe after a successful build.
 
-- `dotnet run -- --civil-drawings --skip-macros --mark W10-67`  
-  No `RunMacro` at all. Creates sheets through the Open API (`CastUnitDrawing.Insert`) and extracts only the sheets created by that run. Output: `Export\CivilDrawings\new without macros\`.
-
-- `dotnet run -- --civil-drawings --extract-only`  
-  Extracts existing sheets without creating anything. Add `--all` to resume across the whole model.
-
-- `dotnet run -- --civil-drawings --extract-only --all --to-root`  
-  Same as the **2 Sep** root extract: prints existing CU sheets into `Export\CivilDrawings\PDF` (plus SHOP/ERECTION/CONNECTION/REBAR_BBS at the CivilDrawings root). No macros, no leftover creates.
-
-- `dotnet run -- --civil-drawings --mark W10-67 --clean-mark`  
-  Deletes that piece's existing sheets in Tekla before creating new ones. Destructive, and requires `--mark`.
-
-- `dotnet run -- --civil-drawings --all`  
-  Whole WALL / COLUMN / BEAM model. Long-running and prone to crashing Tekla, which is why it must be requested explicitly.
-
-### Flag reference
-
-| Flag | Effect |
-|---|---|
-| `--civil-drawings` (`--civil`, `--civil-extract`) | Entry point for the five civil extractors |
-| `--skip-macros` | Open API sheet creation instead of macros; writes to `new without macros` |
-| `--extract-only` (`--resume`) | Skip creation, extract what already exists |
-| `--mark <piece>` | Limit the run to one piece mark |
-| `--all` (`--full`) | Whole model instead of the Tekla selection |
-| `--to-root` (`--legacy-root`) | Write under `Export/CivilDrawings` (PDF at root) like the 2 Sep run |
-| `--clean-mark` (`--delete-existing`) | Delete that mark's sheets before creating; needs `--mark` |
-
-Without `--all` and without `--mark`, the run is restricted to the Tekla selection. This is deliberate: earlier full-model runs crashed Tekla.
-
-### Other useful runs
+### Everyday civil runs
 
 ```powershell
-dotnet run -- --extract                  # ground-truth model dump
-dotnet run -- --inventory                # every drawing → drawings_inventory.json + .csv
-dotnet run -- --shop-drawings            # up-to-date cast unit shop drawings with contours
-dotnet run -- --drawings --kind cast     # create drawings by kind, then export PDFs
-dotnet run -- --gad                      # GADrawing JSON + PDF, floor-wise
-dotnet run -- --floor-wise               # Export/<floor>/*.pdf + floor_wise.json
-dotnet run -- --correct                  # fix existing drawings (CatA-CatG)
-dotnet run -- --html-only                # rebuild index.html + manifest.json only
-dotnet run -- --coverage-only            # rebuild coverage_report.txt only
+cd C:\Users\ASUS\Desktop\2d_tekla
+
+# Selection only (safest) — macros → Fit/Clean → PDF/JSON
+dotnet run -c Release -p:Platform=x64 -- --civil-drawings
+
+# One piece mark (ignores selection)
+dotnet run -c Release -p:Platform=x64 -- --civil-drawings --mark W10-175
+
+# Delete that mark's old sheets, recreate with macros, then Fit/Clean
+dotnet run -c Release -p:Platform=x64 -- --civil-drawings --mark W10-175 --clean-mark
+
+# Or call the built exe directly (same flags)
+.\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --mark W10-175 --clean-mark
 ```
 
-Run `dotnet run` with no flags for the interactive menu, which accepts `civil`, `civil skip-macros`, `civil all`, `deep`, `inventory` and similar commands.
+### Extract-only / Open API / full model
 
-Before `--drawings`, run Numbering for modified objects in Tekla, otherwise sheets cannot be set active and PDF export fails.
+```powershell
+# Print existing sheets only (no macros, no create)
+.\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --extract-only --mark W10-175
 
-### What a run prints
+# Root PDF folder layout (like older Sep-2 extracts)
+.\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --extract-only --all --to-root
 
-Progress lines are prefixed by stage: `[Civil]` for the batch extractor, `[Macros]` for macro or Open API creation, `[DrawingGenerator]` for PDF and DWG output. Useful markers:
+# Open API CastUnitDrawing.Insert (no RunMacro) → new without macros
+.\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --skip-macros --mark W10-175
 
-- `drawings <before> → <after> (delta=N)` — how many sheets the run created
-- `matched=N` — sheets that passed the filter and were extracted
-- `blockedMacroSheets=N` — sheets deliberately excluded from an Open API run
-- `PDFs=N` / `DWGs=N` — files written
+# Whole WALL/COLUMN/BEAM model — long, crash risk; must be explicit
+.\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --all
+```
 
-PDF export uses `DrawingHandler.PrintDrawing` with the `TS PDF Writer` instance. DWG has no output type in Tekla 2026, so it is attempted through a catalog printer named `DWG`, `DWG/DXF` or `DXF`; if none exists, the DWG step is skipped and only PDFs are written.
+### Other useful flags
 
-### Output folders
+```powershell
+.\bin\x64\Release\net48\TeklaExtractor.exe --extract          # ground_truth.json + .csv
+.\bin\x64\Release\net48\TeklaExtractor.exe --inventory        # all drawings inventory
+.\bin\x64\Release\net48\TeklaExtractor.exe --shop-drawings    # CU shop contours export
+.\bin\x64\Release\net48\TeklaExtractor.exe --html-only        # rebuild Export HTML indexes
+.\bin\x64\Release\net48\TeklaExtractor.exe --coverage-only    # coverage_report.txt
+.\bin\x64\Release\net48\TeklaExtractor.exe --preflight-qa     # with civil: tape/margin checks
+```
 
-| Path | Produced by |
-|---|---|
-| `Export\CivilDrawings\new with macros\` | macro runs (default, `--mark`, `--all`) |
-| `Export\CivilDrawings\new without macros\` | `--skip-macros` Open API runs |
-| `Export\CivilDrawings\PDF\`, `SHOP\`, `ERECTION\`, ... | older runs made before the folder split |
+### Flag cheat sheet
 
-Each output folder holds `PDF\`, `DWG\`, the five JSON type folders, the combined CSVs, `macros.log`, `extract_errors.log`, `coverage_report.txt` and `index.html`.
+| Flag | Effect |
+|------|--------|
+| `--civil-drawings` | Main civil pipeline entry |
+| `--mark <piece>` | Limit to one piece (e.g. `W10-175`) |
+| `--clean-mark` | Delete that mark's sheets before macros (needs `--mark`) |
+| `--extract-only` | Skip create; extract existing Document Manager sheets |
+| `--skip-macros` | Create via Open API instead of PG1/PG2/PG3 |
+| `--all` | Full WALL/COLUMN/BEAM model (crash risk) |
+| `--to-root` | Write under `Export/CivilDrawings` root `PDF/` |
+| `--enable-mark-repair` | Opt-in mark rewrite (off by default) |
+| `--preflight-qa` | Fail run if Fit margins / tape conservation fail |
 
-## Modules
+### What a successful placing run looks like (W10-175 - 2)
 
-Folders below are relative to the run's output folder (`new with macros` or `new without macros`).
+```text
+[Civil] role=Placing stem=W10-175_-_3
+[Placing] native dims elev=… END2=33 VIEW_A=20
+[Placing] TOP IN FORM 2-tier …
+[Placing] END 2 preserve-native dims=33
+[Placing] VIEW A preserve-native dims=20
+[Fit] bboxAssert failures=0
+[Placing] W10-175-2 macros+2tier: … bboxFailures=0
+```
+
+Then reopen **`[W10-175 - 2]`** in Tekla Document Manager.
+
+### Fabrication booklet (auto)
+
+After every successful `--civil-drawings` run (macros, `--clean-mark`, or `--extract-only`), the tool collates that wall’s role PDFs into **one multi-page booklet**:
+
+| Booklet page | Role PDF |
+|--------------|----------|
+| PAGE - 1 | `{mark}_-_1.pdf` Hardware |
+| PAGE - 2 | `{mark}_-_2_Sections_3D.pdf` (or `_-_2`) |
+| PAGE - 3 | `{mark}_-_3.pdf` Placing |
+| PAGE - 4 | `{mark}_-_4.pdf` BBS |
+| PAGE - 5/6 | optional overflow |
+
+Output example:
+
+```text
+Export\CivilDrawings\new with macros\PDF\P22-132.W10-175.Rev 2.pdf
+```
+
+Requires Python + PyMuPDF (`pip install pymupdf`). Skip with `--no-booklet`.
+
+**Note:** Tekla Document Manager still shows 4–5 separate sheets (Open API / macros create one sheet each). The **booklet** is the combined PDF for print/issue — same as the standalone menu’s collate step.
+
+```powershell
+# Same as before — booklet is automatic at the end
+.\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --mark W10-175 --clean-mark
+.\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --extract-only --mark W10-175
+
+# Collate only (no Tekla Fit), if PDFs already exist
+python Scripts\collate_production_booklet.py --mark W10-175
+```
+
+
+---
+
+## How the codebase works
+
+### High-level idea
+
+```text
+3D Tekla model (open)
+    → ModelReader connects via Open API remoting
+    → LocalDrawingMacroRunner runs PG1 / PG2 / PG3 (or BM_SET)
+         creates CU booklet sheets in Document Manager
+    → CivilDrawingBatchExtractor walks drawings
+         SheetRoleMap classifies each sheet
+         PrecastDimensionPostProcessor Fit / Clean*
+         extractors write JSON/CSV; DrawingGenerator prints PDF
+    → Export\CivilDrawings\...
+```
+
+### Sheet roles (4-page booklet)
+
+| Document Manager | Role | Post-process |
+|------------------|------|--------------|
+| `[W10-175 - 1]` | Hardware | `Fit` — elevation + 7-tier / 2-tier shop dims |
+| `[W10-175 - 2]` | Sections (or sibling) | `CleanSections` |
+| Placing sheet (often `-2` / name REINFORCING PLACING) | Placing | `CleanPlacing` — keep dense END 2 / VIEW A native dims; 2-tier on TOP IN FORM; pack in sheet bbox |
+| BBS / rebar table | BbsTable | `CleanBbs` |
+
+`SheetRoleMap` (`Services/SheetRole.cs`) is the single map used for Fit dispatch, PDF stems, and booklet collation.
+
+### Key source files
+
+| File | Role |
+|------|------|
+| `Program.cs` | CLI entry, flag parse, interactive menu |
+| `Services/ModelReader.cs` | Connect to live Tekla with retries |
+| `Services/LocalDrawingMacroRunner.cs` | Copy `LocalMacros\` → model; `RunMacro` PG1/PG2/PG3/BM_SET |
+| `Services/CivilDrawingBatchExtractor.cs` | Orchestrate create → role → Fit/Clean → extract → PDF |
+| `Services/PrecastDimensionPostProcessor.cs` | `Fit`, `CleanPlacing`, `CleanSections`, `CleanBbs`, bbox assert |
+| `Services/SheetRole.cs` | Mark/name → Hardware / Sections / Placing / BbsTable |
+| `Services/*CivilExtractor.cs` | GA / Erection / Shop / Connection / Rebar-BBS JSON |
+| `Services/DrawingGenerator.cs` | `PrintDrawing` → PDF (TS PDF Writer) |
+| `LocalMacros/SP_M.CU_PG*.cs` | Paisley shop macros (source of dense native dims) |
+| `Scripts/collate_production_booklet.py` | Optional multi-page PDF booklet |
+
+### Macros → 2-tier path (placing sheet)
+
+1. **Macros** create views and dense dimension stacks (especially END 2).
+2. **`CleanPlacing`** selectively purges only the elevation dims (and left junk), **preserves** native END 2 / VIEW A when dense enough.
+3. Relayout: TOP IN FORM on top, END 2 bottom-left, VIEW A to the right of END 2 (no overlap).
+4. **2-tier** algorithm places elevation overall / opening / side verticals from live model length.
+5. **bboxAssert** checks everything stays inside the sheet / BOM gap.
+
+PDF numbers win over invented values; Fit does not stretch `Layout.SheetSize`.
+
+---
+
+## Architectural workflow chart
+
+```mermaid
+flowchart TD
+  subgraph input [Input]
+    TS[Tekla Structures 2026<br/>model open]
+    CLI[Program.cs CLI<br/>--civil-drawings --mark ...]
+  end
+
+  subgraph connect [Connect]
+    MR[ModelReader.Connect]
+  end
+
+  subgraph create [Create sheets]
+    LMR[LocalDrawingMacroRunner]
+    PG1[PG1 Hardware]
+    PG2[PG2 Rebar Placing]
+    PG3[PG3 Rebar Table]
+    BM[BM_SET for beams]
+  end
+
+  subgraph batch [CivilDrawingBatchExtractor]
+    ENUM[DrawingHandler.GetDrawings]
+    ROLE[SheetRoleMap.Resolve]
+    FIT[Fit Hardware]
+    CP[CleanPlacing]
+    CS[CleanSections]
+    CB[CleanBbs]
+    EXT[GA / Shop / Erection / Connection / BBS extractors]
+    PDF[DrawingGenerator PrintDrawing PDF]
+  end
+
+  subgraph out [Output]
+    EXP[Export/CivilDrawings/new with macros]
+    UI[Tekla UI Document Manager sheets]
+  end
+
+  TS --> MR
+  CLI --> MR
+  MR --> LMR
+  LMR --> PG1 & PG2 & PG3 & BM
+  PG1 & PG2 & PG3 & BM --> ENUM
+  ENUM --> ROLE
+  ROLE -->|Hardware| FIT
+  ROLE -->|Placing| CP
+  ROLE -->|Sections| CS
+  ROLE -->|BbsTable| CB
+  FIT & CP & CS & CB --> EXT
+  EXT --> PDF
+  PDF --> EXP
+  FIT & CP & CS & CB --> UI
+```
+
+### Standalone launcher path
+
+```mermaid
+flowchart LR
+  BAT[Final Check/TeklaExtractor_Standalone_v2026<br/>run_tekla_standalone.bat]
+  EXE[TeklaExtractor.exe<br/>same codebase]
+  COL[Scripts/collate_production_booklet.py]
+  BAT -->|menu 1-4 civil / extract| EXE
+  EXE -->|success + mark| COL
+  EXE --> OUT[Export PDFs + JSON]
+  COL --> BOOK[Multi-page booklet PDF]
+```
+
+---
+
+## Standalone package role
+
+**Path:** `Final Check\TeklaExtractor_Standalone_v2026\`
+
+This is **not a second codebase**. It is a **portable launcher + snapshot** of the built engine for operators who should not open Visual Studio / Cursor.
+
+| Item | Purpose |
+|------|---------|
+| `run_tekla_standalone.bat` | Menu: W10-175 / W10-78 / custom mark / selection / ground truth / rebuild |
+| `bin\TeklaExtractor.exe` + Tekla + PdfPig DLLs | Frozen copy of the Release build |
+| `bin\LocalMacros\` | Bundled PG1/PG2/PG3 macros copied into the model on run |
+
+### How it works
+
+1. Bat finds the **project root** (`2d_tekla`) so outputs still land under `Export\…`.
+2. Menu options call the same CLI the repo uses, e.g.  
+   `TeklaExtractor.exe --civil-drawings --mark W10-175 --clean-mark`.
+3. On success it runs `python Scripts\collate_production_booklet.py --mark …` to stitch pages.
+4. Option **[6]** rebuilds from source (`dotnet build -c Release`).
+
+**Important:** Day-to-day development builds go to:
+
+```text
+bin\x64\Release\net48\TeklaExtractor.exe
+```
+
+The bat historically looks for `bin\Release\net48\…` first, then falls back to `c:\Users\ASUS\Desktop\2d_tekla`. Prefer updating the standalone `bin\` folder after a good Release build, or invoke `bin\x64\Release\net48\TeklaExtractor.exe` directly from the repo root.
+
+Use standalone when you want a **double-click / menu** workflow without remembering flags. Use the repo CLI when iterating on `PrecastDimensionPostProcessor` / Fit / CleanPlacing.
+
+---
+
+## Modules (extract types)
 
 | Drawing type | Class | Folder |
-|---|---|---|
-| GA (General Arrangement) | `GaCivilExtractor` | `GA/` |
+|--------------|-------|--------|
+| GA | `GaCivilExtractor` | `GA/` |
 | Erection | `ErectionCivilExtractor` | `ERECTION/` |
-| Shop / production piece | `ShopProductionExtractor` | `SHOP/` |
-| Connection detail | `ConnectionDetailExtractor` | `CONNECTION/` |
+| Shop / production | `ShopProductionExtractor` | `SHOP/` |
+| Connection | `ConnectionDetailExtractor` | `CONNECTION/` |
 | Rebar / BBS | `RebarBbsExtractor` | `REBAR_BBS/` |
 
-Batch entry: `CivilDrawingBatchExtractor` (`DrawingHandler.GetDrawings()`). Failed pieces are logged to `extract_errors.log` in the output folder and the run continues.
+Batch entry: `CivilDrawingBatchExtractor`. Failures go to `extract_errors.log`; the run continues.
 
-File names: `{ProjectCode}_{PieceMark}_{DrawingType}.json`  
-PDF names come from the Tekla drawing mark, so `[W10-67 - 1]` becomes `PDF\W10-67_-_1.pdf`.  
-Combined CSVs: `GA.csv`, `ERECTION.csv`, `SHOP.csv`, `CONNECTION.csv`, `REBAR_BBS.csv` (deduplicated after every run)  
-One sample JSON per type is copied to `samples/`.
+Units are **raw millimetres** (mm³ / kg). Grade strings are not converted.
 
-Units are **raw millimetres** (and mm³ / kg). Grade strings (`400W`, `C40`, `40 MPa`) are not converted.
+---
 
-## Field → Tekla Open API (TS2026)
+## Build matrix
 
-### Shared
+| Setting | Value |
+|---------|--------|
+| `TargetFramework` | `net48` |
+| Platform | **x64** (x86 / AnyCPU will not load Tekla 2026) |
+| Tekla DLLs | `C:\Program Files\Tekla Structures\2026.0\bin\` |
 
-| Field | API |
-|---|---|
-| Live connection | `Tekla.Structures.Model.Model.GetConnectionStatus()` |
-| Drawings | `DrawingHandler.GetDrawings()` → `DrawingEnumerator` |
-| Link sheet → 3D | `SinglePartDrawing.PartIdentifier`, `AssemblyDrawing.AssemblyIdentifier`, `CastUnitDrawing.CastUnitIdentifier`, `DrawingHandler.GetModelObjectIdentifiers(Drawing)` |
-| Resolve object | `Model.SelectModelObject(Identifier)`, `Assembly.GetMainPart()`, `GetSecondaries()` |
-| Piece mark | `GetReportProperty("CAST_UNIT_POS" / "ASSEMBLY_POS" / "PART_POS")` |
-| Project code | `Model.GetProjectInfo().ProjectNumber` |
-| Report / UDA | `ModelObject.GetReportProperty`, `GetUserProperty` |
-| Drawing plugin input | `Tekla.Structures.Drawing.Plugin.GetPluginInput()` (**new in TS2026**) |
-| Shared models | `ModelSharingHandler` exists on this SDK; extractors do **not** call it (live local model only) |
+---
 
-### 1. GA
+## Docs
 
-| Field | API |
-|---|---|
-| Grid lines / labels | `Grid.CoordinateX/Y`, `Grid.LabelX/Y` |
-| Piece XYZ | `Beam.StartPoint` / `EndPoint`; `Part.GetCoordinateSystem().Origin` |
-| Floor / level | UDA `FLOOR_LEVEL`, `FLOOR`, `STOREY`, … |
-| Overall building size | min/max of piece start/end |
-| Piece list per grid/level | grouped by floor UDA + inferred grid from XY |
-| Plan views | `Drawing.GetSheet().GetViews()` when a `GADrawing` exists |
+- [docs/CivilDrawings-PDF-Extraction.md](docs/CivilDrawings-PDF-Extraction.md) — how PDFs were produced and sheet-boundary behavior
+- Investigation notes under `docs/investigation/` for W10-175 QA vs Rev 2
 
-If the model has no `GADrawing` sheets, a model-level GA is written from grids + assembly main parts.
+---
 
-### 2. Erection
+## Quick start checklist (W10-175 placing like screenshot 2)
 
-| Field | API |
-|---|---|
-| Piece mark / position | `CAST_UNIT_POS` / `ASSEMBLY_POS`, coordinate-system origin |
-| Orientation | `GetCoordinateSystem().AxisX/Y` |
-| Anchors / embeds | secondary parts + `Part.GetBolts()` (`BoltGroup.BoltPositions`, `BoltStandard`, `BoltSize`) |
-| Plan / elevation refs | drawing `View.ViewType` (`TopView` / `FrontView`) |
-| Sequence notes | `Drawing.Title1/2/3`, `Drawing.Name` |
+1. Open Paisley model in Tekla 2026.
+2. From PowerShell (not Cursor agent terminal):
 
-### 3. Shop / production (piece ticket)
-
-Aligned to civil piece drawings (e.g. P22-132 / W8-22):
-
-| Field | API |
-|---|---|
-| 28-day strength | UDA `STRENGTH_28DAY` / `FCK` / `FC_PRIME`, else parsed from `MATERIAL` / `CONCRETE_GRADE` |
-| Stripping strength | UDA `STRIPPING_STRENGTH` |
-| Weight (kg, lbs derived) | `GetReportProperty("WEIGHT")` — kg is raw; lbs is display-only (`× 2.2046226218`) |
-| Air entrainment | UDA `AIR_ENTRAINMENT` |
-| Min cover | `COVER` / `COVER_THICKNESS` |
-| Class | `Part.Class` |
-| Concrete volume | `VOLUME` (mm³ raw; m³ derived `/ 1e9`) |
-| Hardware BOM | secondary parts (anchors, inserts, sleeves, grout tubes, conduit, plates) |
-| Views End1 / End2 / Side A / B | `View.Name` / `View.ViewType` mapped by `MapShopViewName` |
-| Identification | `Drawing.Name`, `Mark`, `CreationDate`, project info |
-
-### 4. Connection detail
-
-| Field | API |
-|---|---|
-| Joint type | heuristic from hardware + names (`piece-to-piece` vs `piece-to-foundation`) |
-| Hardware list | same embed/bolt pass as shop |
-| Detail dims / callouts | `StraightDimension` / `StraightDimensionSet` on sheet views |
-
-### 5. Rebar / BBS
-
-TS2026 unified **rebar sets** and groups. Extractor reads whichever is present:
-
-| Source | API |
-|---|---|
-| Group | `RebarGroup` (`Size`, `Grade`, `Spacings`, hooks, `GetRebarGeometries(true)`) |
-| Single | `SingleRebar` |
-| Set | `RebarSet` + `RebarSet.RebarProperties` + `RebarSet.GetReinforcements()` (child `SingleRebar`) |
-| Frozen (post-fab) | `RebarSet.FrozenState` = `NOT_FROZEN` / `PARTIALLY_FROZEN` / `FULLY_FROZEN` |
-| Parenting | `RebarSet.FatherPart`, `RebarSet.GetAssembly()` |
-| Bend A–H, H2, J, K, K2, O | `GetReportProperty("DIM_A"…"DIM_O")`, else legs from `RebarGeometry.Shape.Points` |
-| Qty / length / area | `GetNumberOfRebars()`, `LENGTH`, `AREA`, `WEIGHT` |
-| Shape | `SHAPE` / `SHAPE_CODE`; classified straight / bent / stirrup |
-
-`Part.GetReinforcements()` is scanned first; leftover `RebarSet` objects are picked up via `GetAllObjectsWithType(typeof(RebarSet))`.
-
-## JSON shape (shop example)
-
-```json
-{
-  "Header": { "DrawingType": "SHOP", "ProjectCode": "...", "PieceMark": "W8-22", "Units": "mm" },
-  "GeneralNotes": { "ConcreteGrade": "40 MPa", "WeightKg": 1234.5, "MinCoverMm": 40, "Class": "1" },
-  "Bom": [ { "Mark": "...", "Description": "...", "Quantity": 4 } ],
-  "Hardware": [ { "Kind": "GROUT_TUBE", "Position": { "X": 0, "Y": 0, "Z": 0 } } ],
-  "Rebar": [ { "Mark": "R1", "Size": "15M", "Grade": "400W", "A": 1200, "B": 200 } ],
-  "Dimensions": [],
-  "Views": [ { "Name": "End1" }, { "Name": "Side A" } ]
-}
+```powershell
+cd C:\Users\ASUS\Desktop\2d_tekla
+dotnet build -c Release -p:Platform=x64
+.\bin\x64\Release\net48\TeklaExtractor.exe --civil-drawings --mark W10-175 --clean-mark
 ```
 
-Missing optional fields are `null` in JSON and blank in CSV.
+3. Wait for `[Placing] … preserve-native … bboxFailures=0`.
+4. In Tekla, open **`[W10-175 - 2]`** (placing) from Document Manager.
+5. Confirm END 2 dense dims kept, VIEW A separate, TOP IN FORM 2-tier, content inside blue sheet border.

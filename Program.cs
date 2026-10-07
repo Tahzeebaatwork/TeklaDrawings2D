@@ -52,6 +52,16 @@ namespace TeklaExtractor
             string baseDir = ResolveBaseDir(args);
             Console.WriteLine($"  Base dir   : {baseDir}\n");
 
+            // PRE-STEP b / S1: startup log BEFORE Tekla connect (never run exe from Cursor — hangs).
+            bool enableMarkRepairEarly = args != null && HasFlag(args, "--enable-mark-repair");
+            string markEarly = FlagValue(args, "--mark");
+            Console.WriteLine("[Startup] args=" + (args == null || args.Length == 0 ? "(none)" : string.Join(" ", args)));
+            Console.WriteLine("[Startup] mark-repair=" + (enableMarkRepairEarly ? "ON (--enable-mark-repair)" : "SKIP (default)"));
+            if (!string.IsNullOrWhiteSpace(markEarly))
+                Console.WriteLine("[Startup] mark=" + markEarly.Trim());
+            Console.WriteLine("[Startup] connect: ModelReader maxRetries=4 retryDelayMs=2000 (~8s timeout); clear error if remoting pipe missing");
+            Console.WriteLine("[Startup] Do not launch this exe from Cursor agent terminals (Tekla connect hangs). Use normal CMD/PowerShell.");
+
             if (HasFlag(args, "--coverage-only") || HasFlag(args, "--coverage"))
             {
                 CivilCoverageReporter.Write(Path.Combine(baseDir, "Export", "CivilDrawings"));
@@ -296,6 +306,7 @@ namespace TeklaExtractor
                     Console.WriteLine("[Civil] --preflight-qa → margin, BOM gap, tape delta");
                 // Mark repair opt-in only. Default = skip (manual props drawings have no magenta '?').
                 bool enableMarkRepair = args != null && HasFlag(args, "--enable-mark-repair");
+                bool preserveNativeDims = args != null && HasFlag(args, "--preserve-native-dims");
                 // --skip-mark-repair is the documented default; if both set, skip wins.
                 if (args != null && HasFlag(args, "--skip-mark-repair"))
                     enableMarkRepair = false;
@@ -312,8 +323,27 @@ namespace TeklaExtractor
                 Console.WriteLine("[Civil] mark-repair=" + (enableMarkRepair ? "ON (--enable-mark-repair)" : "SKIP (default)"));
                 if (fitStage > 0)
                     Console.WriteLine("[Civil] --fit-stage=" + fitStage + " (stops after investigation stage; inspect UI for '?')");
-                return new CivilDrawingBatchExtractor(tekla, baseDir, skipMacros, extractOnly, mark, selectedOnly, toRoot,
-                    preflightQa, enableMarkRepair, fitStage).Run();
+                if (preserveNativeDims)
+                    Console.WriteLine("[Civil] --preserve-native-dims → skip rebuild when ≥8 native dim sets");
+                int civilCode = new CivilDrawingBatchExtractor(tekla, baseDir, skipMacros, extractOnly, mark, selectedOnly, toRoot,
+                    preflightQa, enableMarkRepair, fitStage, preserveNativeDims).Run();
+
+                // Always bind that wall's 4–6 role PDFs into one fabrication booklet
+                // (same for --clean-mark recreate and --extract-only). Opt out: --no-booklet.
+                bool noBooklet = args != null && (HasFlag(args, "--no-booklet") || HasFlag(args, "--skip-booklet"));
+                if (!noBooklet && civilCode != 1)
+                {
+                    string civilRoot = Path.Combine(baseDir ?? ".", "Export", "CivilDrawings");
+                    string outputRoot = toRoot
+                        ? civilRoot
+                        : Path.Combine(civilRoot, skipMacros ? CivilDrawingTypes.OpenApiFolder : CivilDrawingTypes.MacrosFolder);
+                    Console.WriteLine("[Booklet] collating multi-page fabrication PDF from role sheets…");
+                    ProductionBookletCollator.Collate(baseDir, outputRoot, mark);
+                }
+                else if (noBooklet)
+                    Console.WriteLine("[Booklet] skipped (--no-booklet)");
+
+                return civilCode;
             }
             catch (Exception ex)
             {
@@ -924,6 +954,7 @@ namespace TeklaExtractor
             Console.WriteLine("    --civil-drawings --mark W10-50 --clean-mark   delete that piece's old sheets first");
             Console.WriteLine("    --civil-drawings --extract-only  extract selected existing CU sheets (add --all to resume whole model)");
             Console.WriteLine("    --civil-drawings --extract-only --all --to-root   Sep-2 layout → Export/CivilDrawings/PDF");
+            Console.WriteLine("    (after civil) auto booklet: P22-132.<mark>.Rev 2.pdf from _-_1…_-_4 sheets; --no-booklet to skip");
             Console.WriteLine("    --skip-mark-repair      default: Fit does NOT rewrite marks (safe; manual drawings have no '?')");
             Console.WriteLine("    --enable-mark-repair    opt-in: run RepairBrokenPartMarks (TextElement rewrite)");
             Console.WriteLine("    --fit-stage 1..5        Task1b: stop Fit after stage; inspect UI for magenta '?'");

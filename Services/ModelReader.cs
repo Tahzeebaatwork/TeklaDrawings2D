@@ -132,7 +132,7 @@ namespace TeklaExtractor.Services
             try { title = tekla[0].MainWindowTitle ?? ""; } catch { /* optional */ }
 
             return
-                "Tekla is running" + (string.IsNullOrWhiteSpace(title) ? "" : " (" + title + ")") +
+                "CONNECT FAILED after retries: Tekla is running" + (string.IsNullOrWhiteSpace(title) ? "" : " (" + title + ")") +
                 " but the Open API remoting pipe is not published.\n" +
                 "  This is not a --cast-units bug. The Model() connection failed " +
                 "(Tekla.Structures.Model-TeklaStructures-Console).\n" +
@@ -140,9 +140,8 @@ namespace TeklaExtractor.Services
                 "    1. Close every TeklaExtractor.exe (Task Manager).\n" +
                 "    2. In Tekla: click the model view so the document is active.\n" +
                 "    3. If it still fails: File → Close, reopen the same model (or restart Tekla).\n" +
-                "    4. Then run:   dotnet run -- --cast-units\n" +
-                "       or the exe: bin\\Debug\\net48\\TeklaExtractor.exe --cast-units" +
-                (last == null ? "" : "\n  Last error: " + last.Message);
+                "    4. Then run from normal CMD (not Cursor): TeklaExtractor.exe --civil-drawings --extract-only --mark W10-175\n" +
+                (last == null ? "" : "  Last error: " + last.Message);
         }
 
         private static string SafePath(Process p)
