@@ -5,6 +5,11 @@
     <TargetFramework>net48</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
     <Platforms>x64</Platforms>
+    <Platform>x64</Platform>
+    <!-- Operator commands and README use this path. Keep every build here. -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>bin\x64\Release\net48\</OutputPath>
     <!-- TS2026 Open API for this install is net48 x64 (Net48Runtime). x86/AnyCPU will not load. -->
     <LangVersion>latest</LangVersion>
 
