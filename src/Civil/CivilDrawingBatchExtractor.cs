@@ -32,10 +32,21 @@ namespace TeklaExtractor.Services
         private readonly bool _enableMarkRepair;
         private readonly int _fitStage;
         private readonly bool _preserveNativeDims;
+        private readonly bool _rebarMesh;
+        private readonly bool _rebarMeshReplace;
+
+        /// <summary>Page-1 chain style for --dim-type trials; null keeps the "standard" attribute file.</summary>
+        public DimensionSetBaseAttributes.DimensionTypes? DimType { get; set; }
+
+        /// <summary>The --dim-type flag value; page 1 is also copied to {stem}__dimtype-{name}.pdf so trials sit side by side.</summary>
+        public string DimTypeName { get; set; }
+
+        /// <summary>--log-unlisted-embeds: log model embeds whose family is not on the BOM.</summary>
+        public bool LogUnlistedEmbeds { get; set; }
 
         public CivilDrawingBatchExtractor(TSModel.Model model, string baseDir, bool skipMacros = false,
             bool extractOnly = false, string markFilter = null, bool selectedOnly = false, bool toRoot = false,
-            bool preflightQa = false, bool enableMarkRepair = false, int fitStage = 0, bool preserveNativeDims = false)
+            bool preflightQa = false, bool enableMarkRepair = false, int fitStage = 0, bool preserveNativeDims = false, bool rebarMesh = false, bool rebarMeshReplace = false)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _handler = new DrawingHandler();
@@ -47,6 +58,8 @@ namespace TeklaExtractor.Services
             _enableMarkRepair = enableMarkRepair;
             _fitStage = fitStage;
             _preserveNativeDims = preserveNativeDims;
+            _rebarMesh = rebarMesh;
+            _rebarMeshReplace = rebarMeshReplace;
             _markFilter = string.IsNullOrWhiteSpace(markFilter) ? null : markFilter.Trim();
             _civilRoot = Path.Combine(baseDir ?? ".", "Export", "CivilDrawings");
             // Sep 2 style: write PDF/JSON/CSV under Export/CivilDrawings itself (not a subfolder).
@@ -101,6 +114,19 @@ namespace TeklaExtractor.Services
 
             try
             {
+                if (_rebarMesh && !_extractOnly)
+                {
+                    Console.WriteLine("[RebarMesh] Generating mesh before drawing creation...");
+                    var groups = runner.CollectMembers(_markFilter, selectedOnly: _selectedOnly);
+                    var meshBuilder = new TeklaExtractor.RebarMeshBuilder(_model);
+                    foreach (var part in groups.Walls)
+                        meshBuilder.Generate(part, replace: _rebarMeshReplace);
+                    foreach (var part in groups.Columns)
+                        meshBuilder.Generate(part, replace: _rebarMeshReplace);
+                    foreach (var part in groups.Beams)
+                        meshBuilder.Generate(part, replace: _rebarMeshReplace);
+                }
+
                 if (_extractOnly)
                 {
                     Console.WriteLine("[Civil] extract-only: skip drawing create");
@@ -243,13 +269,17 @@ namespace TeklaExtractor.Services
                 ? " mark=" + _markFilter
                 : filtered ? " selected=" + _selectedMarks.Count : "";
 
+            var orchestrator = new PrecastDrawingOrchestrator(pdfDir);
             try
             {
+                var all = new List<Drawing>();
                 var en = _handler.GetDrawings();
                 while (en != null && en.MoveNext())
                 {
-                    var drawing = en.Current as Drawing;
-                    if (drawing == null) continue;
+                    if (en.Current is Drawing d) all.Add(d);
+                }
+                foreach (var drawing in PrecastDrawingOrchestrator.Order(all))
+                {
                     drawings++;
                     if (drawings % progressEvery == 0)
                         Console.WriteLine("[Civil] progress sheets=" + drawings + filterLabel +
@@ -336,6 +366,8 @@ namespace TeklaExtractor.Services
                     }
 
                     matched++;
+                    if (!_extractOnly)
+                        orchestrator.Preflight(pieceGuess, CivilDrawingSupport.MainPart(parts));
                     CivilSheetCapture capture = null;
                     try
                     {
@@ -398,7 +430,9 @@ namespace TeklaExtractor.Services
                         {
                             EnableMarkRepair = _enableMarkRepair,
                             FitStage = _fitStage,
-                            PreserveNativeDimensions = _preserveNativeDims
+                            PreserveNativeDimensions = _preserveNativeDims,
+                            ElevationDimensionType = DimType,
+                            LogUnlistedEmbeds = LogUnlistedEmbeds
                         };
                         if (role == SheetRole.Hardware || PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))
                             fit = post.Fit(drawing);
@@ -419,6 +453,20 @@ namespace TeklaExtractor.Services
                         {
                             pdfOk++;
                             Console.WriteLine("[Civil] PDF → " + pdfPath);
+                            if (fit != null && DimType.HasValue && !string.IsNullOrWhiteSpace(DimTypeName))
+                            {
+                                string trialPath = Path.Combine(pdfDir, stem + "__dimtype-"
+                                    + CivilDrawingSupport.Sanitize(DimTypeName.Trim().ToLowerInvariant()) + ".pdf");
+                                try
+                                {
+                                    File.Copy(pdfPath, trialPath, true);
+                                    Console.WriteLine("[Civil] dim-type trial PDF → " + trialPath);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine("[Civil] dim-type trial copy failed: " + ex.Message);
+                                }
+                            }
                         }
                         if (printer.ExportToDwg(drawing, dwgPath))
                         {

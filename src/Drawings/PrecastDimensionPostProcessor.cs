@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Tekla.Structures;
 using Tekla.Structures.Drawing;
@@ -13,7 +14,7 @@ using Tekla.Structures.Solid;
 
 namespace TeklaExtractor.Services;
 
-public class PrecastDimensionPostProcessor
+public partial class PrecastDimensionPostProcessor
 {
 	private sealed class CatReport
 	{
@@ -62,6 +63,7 @@ public class PrecastDimensionPostProcessor
 		public List<double> Bracing = new List<double>();
 
 		public List<double> TopEmbeds = new List<double>();
+		public List<double> TopGroutTubes = new List<double>();
 
 		public List<double> Openings = new List<double>();
 
@@ -276,7 +278,20 @@ public class PrecastDimensionPostProcessor
 				});
 				return;
 			}
-			if (text.Contains("GT76") || text.Contains("P-602") || text.Contains("P-616") || text.Contains("PLATE") || text.Contains("EMBED"))
+			if (text.Contains("GT76"))
+			{
+				TopGroutTubes.Add(station);
+				Trades.Add(new TradeHit
+				{
+					Trade = "embed",
+					Label = ShortMark(label, "embed"),
+					Global = pt,
+					Station = station,
+					IsBottom = false
+				});
+				return;
+			}
+			if (text.Contains("P-602") || text.Contains("P-616") || text.Contains("PLATE") || text.Contains("EMBED"))
 			{
 				TopEmbeds.Add(station);
 				Trades.Add(new TradeHit
@@ -548,8 +563,52 @@ public class PrecastDimensionPostProcessor
 				}
 			}
 			panelAxis.Height = ((num11 > num10) ? (num11 - num10) : 0.0);
+			panelAxis.AcrossMin = num10;
+			panelAxis._depth = 3 - panelAxis._along - panelAxis._across;
+			panelAxis.DepthMin = double.MaxValue;
+			panelAxis.DepthMax = double.MinValue;
+			foreach (Point item3 in list)
+			{
+				double d = Coord(item3, panelAxis._depth);
+				if (d < panelAxis.DepthMin) panelAxis.DepthMin = d;
+				if (d > panelAxis.DepthMax) panelAxis.DepthMax = d;
+			}
 			panelAxis.Hull = ConvexHull(list, panelAxis._along, panelAxis._across);
 			return panelAxis;
+		}
+
+		/// <summary>Panel-local bottom (across) and the two face planes (depth).</summary>
+		public double AcrossMin;
+		public double DepthMin;
+		public double DepthMax;
+		private int _depth = 2;
+
+		/// <summary>
+		/// Local box of a global AABB: [0]=along (station), [1]=height above the panel bottom, [2]=depth.
+		/// </summary>
+		public bool LocalBox(Point gmin, Point gmax, out double[] lo, out double[] hi)
+		{
+			lo = new[] { double.MaxValue, double.MaxValue, double.MaxValue };
+			hi = new[] { double.MinValue, double.MinValue, double.MinValue };
+			if (gmin == null || gmax == null || _toLocal == null) return false;
+			double[] xs = { gmin.X, gmax.X }, ys = { gmin.Y, gmax.Y }, zs = { gmin.Z, gmax.Z };
+			try
+			{
+				foreach (double x in xs)
+				foreach (double y in ys)
+				foreach (double z in zs)
+				{
+					Point p = _toLocal.Transform(new Point(x, y, z));
+					double[] v = { Coord(p, _along), Coord(p, _across) - AcrossMin, Coord(p, _depth) };
+					for (int i = 0; i < 3; i++)
+					{
+						if (v[i] < lo[i]) lo[i] = v[i];
+						if (v[i] > hi[i]) hi[i] = v[i];
+					}
+				}
+			}
+			catch { return false; }
+			return true;
 		}
 
 		public Point LocalAlongAcross(Point global)
@@ -968,10 +1027,6 @@ public class PrecastDimensionPostProcessor
 
 	private const double SheetBorderMarginMm = 3.0;
 
-	private const double TierStepMaxPaperMm = 6.0;
-
-	private const double TierStepMinPaperMm = 4.0;
-
 	private const double TierFirstOffsetPaperMm = 6.0;
 
 	private const double VertFirstOffsetPaperMm = 6.0;
@@ -984,7 +1039,7 @@ public class PrecastDimensionPostProcessor
 
 	/// <summary>Historical elevation-band wall budget (paper mm). With BOM path alone
 	/// (~320 mm free) SelectScale wrongly picks 1:50; capping wall band at 140 forces
-	/// ~1:75 for a ~9366 mm panel on 11×17 after L/R + label reserves.</summary>
+	/// ~1:75 for a 9-10 m panel on 11×17 after L/R + label reserves.</summary>
 	private const double MaxViewWidth = 140.0;
 
 	/// <summary>Paper mm reserved left of wall for vertical dim columns (S1/S3).</summary>
@@ -1039,6 +1094,27 @@ public class PrecastDimensionPostProcessor
 
 	private readonly string _pdfDir;
 
+	private string _activePiece = "";
+
+	/// <summary>
+	/// The ModelObject constructor reads attributes from a model object; every call site here loads
+	/// "standard" instead, so the parameterless form is the one that matches.
+	/// </summary>
+	private static StraightDimensionSet.StraightDimensionSetAttributes NewDimensionSetAttributes()
+	{
+#pragma warning disable CS0618
+		return new StraightDimensionSet.StraightDimensionSetAttributes();
+#pragma warning restore CS0618
+	}
+
+	private string MicrosDirectory()
+	{
+		if (string.IsNullOrEmpty(_pdfDir))
+			return Path.Combine("Export", "CivilDrawings", "new with macros");
+		string dir = Path.GetDirectoryName(_pdfDir);
+		return string.IsNullOrEmpty(dir) ? _pdfDir : dir;
+	}
+
 	private static bool _loggedDimUnits;
 
 	/// <summary>
@@ -1063,6 +1139,18 @@ public class PrecastDimensionPostProcessor
 
 	/// <summary>Minimum StraightDimensionSet count to treat the view as having usable native dims.</summary>
 	private const int NativeDimPreserveMin = 8;
+
+	/// <summary>Page-1 chain style (--dim-type). Null keeps whatever the "standard" file sets.</summary>
+	public DimensionSetBaseAttributes.DimensionTypes? ElevationDimensionType { get; set; }
+
+	/// <summary>True while Fit draws page 1: no dim-type override or digit grouping elsewhere.</summary>
+	private bool _elevationMode;
+
+	/// <summary>99 disables combining; rebar sheets use 2 so 3 equal gaps read n@s=total.</summary>
+	private int _combineMin = 99;
+
+	/// <summary>Paper mm between horizontal tier rows on page 1.</summary>
+	private const double TierRowStepPaperMm = 10.0;
 
 	public PrecastDimensionPostProcessor(Model model, DrawingHandler handler, string pdfDir = null)
 	{
@@ -1252,6 +1340,8 @@ public class PrecastDimensionPostProcessor
 				}
 			}
 			Tekla.Structures.Model.Part part = ResolveMainPart(drawing);
+			_activePiece = SheetRoleMap.PieceMark(text);
+			DimensionRouter.Clear(MicrosDirectory(), _activePiece);
 			double num = LiveLength(part);
 			if (part == null || num <= 0.0)
 			{
@@ -1264,6 +1354,7 @@ public class PrecastDimensionPostProcessor
 				Console.WriteLine("[Fit] '" + text + "' skipped: no sheet");
 				return shopFitResult;
 			}
+			LogQuestionMarkObjects(sheet, "page 1 '" + text + "' before cleanup");
 			HideSheet1Rebar(sheet);
 			PurgeTemporaryTags(sheet);
 			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
@@ -1281,7 +1372,11 @@ public class PrecastDimensionPostProcessor
 			double num2 = canvas.BomLeft;
 			double availableWidthMm = canvas.AvailableWidthMm;
 			int scale = canvas.Scale;
-			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, num, sheetWidth, sheetHeight, num2, shopFitResult);
+			// 3-page pack: no separate sections sheet, so A-A stays on page 1.
+			bool sectionsOnPage1 = section != null && !HasSiblingRole(drawing, SheetRole.Sections);
+			if (sectionsOnPage1)
+				Console.WriteLine("[Fit] no sections sheet for this piece — section '" + (section.Name ?? "") + "' kept on page 1 (3-page pack)");
+			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, num, sheetWidth, sheetHeight, num2, shopFitResult, sectionsOnPage1);
 			WarnIfNumberingStale();
 			PanelAxis panelAxis = PanelAxis.Measure(part, num);
 			int num3 = 0;
@@ -1325,8 +1420,8 @@ public class PrecastDimensionPostProcessor
 			{
 			}
 			// Prefer a real Document Manager sections sheet (role Sections). Sidecar PDF only if none.
-			bool hasSectionsSheet = HasSiblingRole(drawing, SheetRole.Sections);
-			if (!hasSectionsSheet && !string.IsNullOrEmpty(_pdfDir) && (view3D != null || section != null || bottom != null))
+			bool hasSectionsSheet = !sectionsOnPage1 && HasSiblingRole(drawing, SheetRole.Sections);
+			if (!hasSectionsSheet && !sectionsOnPage1 && !string.IsNullOrEmpty(_pdfDir) && (view3D != null || section != null || bottom != null))
 			{
 				string value = "";
 				try
@@ -1352,7 +1447,7 @@ public class PrecastDimensionPostProcessor
 			}
 			else if (hasSectionsSheet)
 				Console.WriteLine("[Fit] sections sibling exists — skip sidecar ExportNativePage2");
-			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, num, sheetWidth, sheetHeight, num2, shopFitResult);
+			ArrangeAllSheet1Views(drawing, front, view3D, section, bottom, otherViews, part, scale, num, sheetWidth, sheetHeight, num2, shopFitResult, sectionsOnPage1);
 			SealView(front, num, scale, sheetHeight, num2);
 			PurgeTemporaryTags(sheet);
 			// Dimension mesh last — after page-2 export and the final elevation-only arrange.
@@ -1360,6 +1455,8 @@ public class PrecastDimensionPostProcessor
 			{
 				panelAxis.BindView(front, part);
 				WarnGeneralNotesUdas(part);
+				LogTitleBlockData(drawing, part);
+				SyncStrengthUnit(drawing, sheet, part);
 				EngineerSheet1Sanitize(sheet, front, part);
 				List<double> tape = new List<double>
 				{
@@ -1367,7 +1464,8 @@ public class PrecastDimensionPostProcessor
 					panelAxis.Min + panelAxis.Span
 				};
 				StationBuckets bucketsForTiers = stationBuckets ?? new StationBuckets();
-				PlaceTiers(front, panelAxis, bucketsForTiers, tape, micros, scale, overallOnly: !tapeVerified, sheet, num2, canvas.SheetH);
+				PlaceTiers(front, panelAxis, bucketsForTiers, tape, micros, scale, overallOnly: !tapeVerified, sheet, num2, canvas.SheetH, part);
+				PlacePaintLegend(sheet, part);
 				SyncTopInFormLabel(front, panelAxis, scale);
 				RefitFrontFrame(front, part, scale, sheet);
 				try
@@ -1378,6 +1476,7 @@ public class PrecastDimensionPostProcessor
 					front.Modify();
 				}
 				catch { }
+				ScorePage1(front, panelAxis, scale);
 			}
 			// Mark repair is opt-in (--enable-mark-repair). Default skip: do not rewrite marks.
 			// Never hide numbering marks. Model already has PART_POS.
@@ -1557,7 +1656,7 @@ public class PrecastDimensionPostProcessor
 			{
 				axis.BindView(front, part);
 				List<double> tape = new List<double> { axis.Min, axis.Min + axis.Span };
-				PlaceTiers(front, axis, buckets ?? new StationBuckets(), tape, new List<double[]>(), scale, overallOnly: !tapeOk, sheet, bomLeft, sheetHeight);
+				PlaceTiers(front, axis, buckets ?? new StationBuckets(), tape, new List<double[]>(), scale, overallOnly: !tapeOk, sheet, bomLeft, sheetHeight, part);
 				SyncTopInFormLabel(front, axis, scale);
 			}
 			Console.WriteLine("[FitStage] completed stage=3 (+PlaceTiers/preserve-native tapeOk=" + tapeOk + ")");
@@ -1768,7 +1867,7 @@ public class PrecastDimensionPostProcessor
 	/// <summary>
 	/// Sheet 1 canvas = TOP IN FORM only. END 2, section, and 3D stay parked.
 	/// </summary>
-	private static void ArrangeAllSheet1Views(Drawing drawing, View front, View view3D, View section, View bottom, List<View> otherViews, Tekla.Structures.Model.Part main, int scale, double modelLength, double sheetWidth, double sheetHeight, double bomLeft, ShopFitResult result)
+	private static void ArrangeAllSheet1Views(Drawing drawing, View front, View view3D, View section, View bottom, List<View> otherViews, Tekla.Structures.Model.Part main, int scale, double modelLength, double sheetWidth, double sheetHeight, double bomLeft, ShopFitResult result, bool keepSection = false)
 	{
 		if (front == null)
 			return;
@@ -1794,7 +1893,10 @@ public class PrecastDimensionPostProcessor
 
 			ParkViewOffSheet(bottom);
 			ParkViewOffSheet(view3D);
-			ParkViewOffSheet(section);
+			if (keepSection)
+				PlaceSectionOnPage1(section, main, bomLeft);
+			else
+				ParkViewOffSheet(section);
 			if (otherViews != null)
 			{
 				foreach (View ov in otherViews)
@@ -1814,6 +1916,30 @@ public class PrecastDimensionPostProcessor
 		catch (Exception ex)
 		{
 			Console.WriteLine("[ViewArrange] Error: " + ex.Message);
+		}
+	}
+
+	/// <summary>Lower right of the drawing area, left of the BOM, at the view's own scale.</summary>
+	private static void PlaceSectionOnPage1(View section, Tekla.Structures.Model.Part main, double bomLeft)
+	{
+		if (section == null) return;
+		try
+		{
+			int sc = 50;
+			try { sc = (int)Math.Round(section.Attributes.Scale); } catch { }
+			if (sc < 1) sc = 50;
+			double right = (bomLeft > 1.0 ? bomLeft : BomFallbackLeft) - BomGap - 25.0;
+			double bottomY = BottomMarginMm + 20.0;
+			if (main != null && GetSolidBoundsInView(section, main, out double minX, out double maxX, out double minY, out double maxY))
+				section.Origin = new Point(right - maxX / sc, bottomY - minY / sc, 0.0);
+			else
+				section.Origin = new Point(right - 20.0, bottomY, 0.0);
+			section.Modify();
+			Console.WriteLine("[ViewArrange] section kept on page 1 at 1:" + sc.ToString(CultureInfo.InvariantCulture));
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[ViewArrange] section on page 1: " + ex.Message);
 		}
 	}
 
@@ -2094,7 +2220,7 @@ public class PrecastDimensionPostProcessor
 	/// <summary>
 	/// Pick the smallest standard scale whose wall paper size fits in the wall band
 	/// AND wall+tier stacks fit in available height. Wall-width-only selection is the
-	/// scale bug (Fix C / S1): without L/R + label reserves, 9366 mm → 1:50 on a 320 mm band.
+	/// scale bug (Fix C / S1): without L/R + label reserves, a 9-10 m panel → 1:50 on a 320 mm band.
 	/// </summary>
 	private static int SelectScale(double modelLength, double availableWidthMm)
 	{
@@ -2217,7 +2343,7 @@ public class PrecastDimensionPostProcessor
 		reason.Append(" tierTB=").Append(TierStackTopBudgetMm.ToString("0.#", CultureInfo.InvariantCulture))
 			.Append("/").Append(TierStackBottomBudgetMm.ToString("0.#", CultureInfo.InvariantCulture));
 		if (c.Scale != 75 && modelLength > 8000.0 && modelLength < 11000.0)
-			reason.Append(" NOTE: expected ~1:75 for ~9366 on 11x17 — see budgets/bomLeft");
+			reason.Append(" NOTE: expected ~1:75 for an 8-11 m panel on 11x17 — see budgets/bomLeft");
 		c.ScaleReason = reason.ToString();
 		return c;
 	}
@@ -3045,6 +3171,9 @@ public class PrecastDimensionPostProcessor
 
 	private static bool IsMarkContentBroken(MarkBase mark, string displayed)
 	{
+		// "ISSUED FOR FAB***" / "Un***" are written that way, not truncated.
+		if (!string.IsNullOrEmpty(displayed) && displayed.Contains("***"))
+			return false;
 		if (string.IsNullOrWhiteSpace(displayed) || displayed.IndexOf('?') >= 0)
 			return true;
 		if (LooksLikeUnresolvedPropertyToken(displayed))
@@ -3445,7 +3574,7 @@ public class PrecastDimensionPostProcessor
 		}
 	}
 
-	private void PlaceTiers(View view, PanelAxis axis, StationBuckets buckets, List<double> tape, List<double[]> micros, int scale, bool overallOnly = false, ContainerView sheet = null, double bomLeftSheetMm = 0.0, double sheetHeightMm = 279.4)
+	private void PlaceTiers(View view, PanelAxis axis, StationBuckets buckets, List<double> tape, List<double[]> micros, int scale, bool overallOnly = false, ContainerView sheet = null, double bomLeftSheetMm = 0.0, double sheetHeightMm = 279.4, Tekla.Structures.Model.Part part = null)
 	{
 		int nativeDims = CountStraightDimensionSets(view);
 		_fitAudit.DimSetsBefore = nativeDims;
@@ -3462,122 +3591,250 @@ public class PrecastDimensionPostProcessor
 			Console.WriteLine("[Fit] native dims count=" + nativeDims.ToString(CultureInfo.InvariantCulture)
 				+ " — rebuild engineer sheet-1 tiers from model stations");
 
+		_elevationMode = true;
+		try
+		{
+			PlaceTierRows(view, axis, buckets, tape, scale, overallOnly, sheet, bomLeftSheetMm, sheetHeightMm, part);
+		}
+		finally
+		{
+			_elevationMode = false;
+		}
+	}
+
+	private sealed class TierRow
+	{
+		public string Label;
+		public List<double> Stations;
+		public bool IsBottom;
+		/// <summary>Catalog row behind this tier (null for PROFILE OVERALL).</summary>
+		public CatalogRow Source;
+		/// <summary>Set distance (view units) EmitRows used; the row's line sits this far from the panel edge.</summary>
+		public double DistanceView;
+		public bool Emitted;
+	}
+
+	/// <summary>Hardware families that have a page-1 catalog row; ordinates and callouts skip these.</summary>
+	private readonly HashSet<string> _catalogRowFamilies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+	private void PlaceTierRows(View view, PanelAxis axis, StationBuckets buckets, List<double> tape, int scale, bool overallOnly, ContainerView sheet, double bomLeftSheetMm, double sheetHeightMm, Tekla.Structures.Model.Part part)
+	{
 		PurgeOldDimensions(view);
+		int survivors = CountStraightDimensionSets(view);
+		int sheetLevel = PurgeSheetLevelDimensions(sheet);
+		string purgeLine = "[Elev] purge survivors=" + survivors.ToString(CultureInfo.InvariantCulture)
+			+ " sheet-level purged=" + sheetLevel.ToString(CultureInfo.InvariantCulture);
+		Console.WriteLine(purgeLine);
+		PreflightQaChecker.Append(_pdfDir, _activePiece, purgeLine);
+		int connectors = PurgeHeightConnectors(view, axis);
+		if (connectors > 0)
+			PreflightQaChecker.Append(_pdfDir, _activePiece, "[HeightCol] purged " + connectors.ToString(CultureInfo.InvariantCulture) + " old connector lines");
+		PurgeTierLabels(view);
+		_emittedChains.Clear();
+		_catalogRowFamilies.Clear();
 		double bomLeft = bomLeftSheetMm > 1.0 ? bomLeftSheetMm : ((sheet != null && sheet.Width > 1.0) ? ScanBomLeft(sheet, sheet.Width) : BomFallbackLeft);
-		int topTierCount = CountTopTiers(buckets, overallOnly);
-		int botTierCount = CountBottomTiers(buckets, overallOnly);
-		double topStepPaper = ComputeTierStepPaperMm(sheetHeightMm, topTierCount, TierStackTopBudgetMm);
-		double botStepPaper = ComputeTierStepPaperMm(sheetHeightMm, botTierCount, TierStackBottomBudgetMm);
-		double topDist = TierFirstOffsetPaperMm * (double)scale;
-		double step = topStepPaper * (double)scale;
-		double botDist = TierFirstOffsetPaperMm * (double)scale;
-		double botStep = botStepPaper * (double)scale;
-		_fitAudit.TiersAbove = topTierCount;
-		_fitAudit.TiersBelow = botTierCount;
-		Console.WriteLine("[Fit] tierStepPaper top=" + topStepPaper.ToString("0.##", CultureInfo.InvariantCulture)
-			+ " bot=" + botStepPaper.ToString("0.##", CultureInfo.InvariantCulture)
-			+ " tiersAbove=" + topTierCount.ToString(CultureInfo.InvariantCulture)
-			+ " tiersBelow=" + botTierCount.ToString(CultureInfo.InvariantCulture));
-		if (overallOnly || buckets == null)
+		var top = new List<TierRow>();
+		var bottom = new List<TierRow>();
+		_hardwareFamilies = null;
+		if (!overallOnly && part != null)
 		{
-			PlaceString(view, axis, tape, isBottom: false, topDist, "OVERALL PROFILE", scale, bomLeft);
-			PlaceString(view, axis, tape, isBottom: true, topDist, "OVERALL PROFILE", scale, bomLeft);
-			PlaceVerticalDimensions(view, axis, buckets ?? new StationBuckets(), scale, sheet, bomLeft);
-			return;
-		}
-		// One row per category (S2). Stations from model; above/below via mid-height rule in AddItem.
-		if (buckets.Lifters.Count > 0)
-		{
-			PlaceString(view, axis, buckets.Lifters, isBottom: false, topDist, "P-205 LIFTERS", scale, bomLeft);
-			topDist += step;
-		}
-		List<string> list = new List<string>(buckets.Splicers.Keys);
-		list.Sort(delegate(string a, string b)
-		{
-			if (a == "SP25")
+			FeatureCatalog cat = BuildFeatureCatalog(part, axis, view);
+			_hardwareFamilies = ResolveHardwareFamilies(sheet, bomLeft, cat, out string familySource);
+			if (!string.IsNullOrEmpty(_activePiece)) _familiesByPiece[_activePiece] = _hardwareFamilies;
+			LogCatalog(cat, axis, familySource);
+			List<CatalogRow> rows = BuildCatalogRows(cat, axis, _hardwareFamilies);
+			// Inside each stack: hardware/reveals inner, profile rows outer; nearest features innermost.
+			foreach (CatalogRow r in rows.OrderBy(r => r.Group).ThenBy(r => r.EdgeDistance))
 			{
-				return -1;
-			}
-			return (b == "SP25") ? 1 : string.Compare(a, b, StringComparison.OrdinalIgnoreCase);
-		});
-		foreach (string item in list)
-		{
-			List<double> list2 = buckets.Splicers[item];
-			if (list2.Count > 0)
-			{
-				string tagLabel = SplicerTagLabel(item);
-				PlaceString(view, axis, list2, isBottom: false, topDist, tagLabel, scale, bomLeft);
-				topDist += step;
+				var tr = new TierRow { Label = r.Label, Stations = r.Stations, IsBottom = r.IsBottom, Source = r };
+				(r.IsBottom ? bottom : top).Add(tr);
+				if (r.Kind == "hardware")
+					foreach (string fam in r.Families) _catalogRowFamilies.Add(fam);
+				Console.WriteLine("[Elev] row '" + r.Label + "' " + (r.IsBottom ? "bottom" : "top")
+					+ " edgeDist=" + F(r.EdgeDistance) + " medianZ=" + F(r.MedianZ) + " pts=" + r.Stations.Count.ToString(CultureInfo.InvariantCulture));
 			}
 		}
-		if (buckets.Bracing.Count > 0)
-		{
-			PlaceString(view, axis, buckets.Bracing, isBottom: false, topDist, "P-300 BRACING", scale, bomLeft);
-			topDist += step;
-		}
-		if (buckets.TopEmbeds.Count > 0)
-		{
-			PlaceString(view, axis, buckets.TopEmbeds, isBottom: false, topDist, "P-602 HARDWARE", scale, bomLeft);
-			topDist += step;
-		}
-		// One tier step per category (do not share reveal/hole/opening on one rung).
-		if (buckets.Reveals.Count > 0)
-		{
-			PlaceString(view, axis, buckets.Reveals, isBottom: false, topDist, "REVEAL (B)", scale, bomLeft);
-			topDist += step;
-		}
-		// Engineer page 1: no separate HOLE tier (openings/reveal only).
-		if (buckets.Openings.Count > 0)
-		{
-			List<double> openingChain = ConsolidateOpeningStations(buckets.Openings, axis);
-			PlaceString(view, axis, openingChain, isBottom: false, topDist, "OPENING PROFILE", scale, bomLeft);
-			topDist += step;
-		}
-		if (buckets.NoPaint != null && buckets.NoPaint.Count > 0)
-		{
-			List<double> noPaintChain = ConsolidateOpeningStations(buckets.NoPaint, axis);
-			PlaceString(view, axis, noPaintChain, isBottom: false, topDist, "NO PAINT", scale, bomLeft);
-			topDist += step;
-		}
-		if (buckets.Ledge.Count > 0)
-		{
-			PlaceString(view, axis, buckets.Ledge, isBottom: false, topDist, "LEDGE", scale, bomLeft);
-			topDist += step;
-		}
-		PlaceString(view, axis, tape, isBottom: false, topDist, "OVERALL PROFILE", scale, bomLeft);
-		List<string> list3 = new List<string>(buckets.BottomGroutTubes.Keys);
-		list3.Sort(delegate(string a, string b)
-		{
-			if (a.Contains("GT75-1219"))
-			{
-				return -1;
-			}
-			return b.Contains("GT75-1219") ? 1 : string.Compare(a, b, StringComparison.OrdinalIgnoreCase);
-		});
-		foreach (string item2 in list3)
-		{
-			List<double> list4 = buckets.BottomGroutTubes[item2];
-			if (list4.Count > 0)
-			{
-				PlaceString(view, axis, list4, isBottom: true, botDist, GroutTubeTagLabel(item2), scale, bomLeft);
-				botDist += botStep;
-			}
-		}
-		if (buckets.BottomSecondary.Count > 0)
-		{
-			PlaceString(view, axis, buckets.BottomSecondary, isBottom: true, botDist, "EB-S-PL + CNDT", scale, bomLeft);
-			botDist += botStep;
-		}
-		if (buckets.BaseOpenings.Count > 0)
-		{
-			PlaceString(view, axis, buckets.BaseOpenings, isBottom: true, botDist, "OPENING PROFILE", scale, bomLeft);
-			botDist += botStep;
-		}
-		PlaceString(view, axis, tape, isBottom: true, botDist, "OVERALL PROFILE", scale, bomLeft);
-		PlaceNotchRecessDims(view, axis, buckets, scale, bomLeft);
-		PlaceVerticalDimensions(view, axis, buckets, scale, sheet, bomLeftSheetMm);
+		top.Add(new TierRow { Label = "PROFILE OVERALL", Stations = tape, IsBottom = false });
+
+		double topStep = RowStepPaperMm(view, axis, scale, top.Count, false, sheetHeightMm);
+		double botStep = RowStepPaperMm(view, axis, scale, bottom.Count, true, sheetHeightMm);
+		_fitAudit.TiersAbove = top.Count;
+		_fitAudit.TiersBelow = bottom.Count;
+		Console.WriteLine("[Fit] tier rows top=" + top.Count.ToString(CultureInfo.InvariantCulture)
+			+ " bottom=" + bottom.Count.ToString(CultureInfo.InvariantCulture)
+			+ " stepPaper top=" + topStep.ToString("0.##", CultureInfo.InvariantCulture)
+			+ " bottom=" + botStep.ToString("0.##", CultureInfo.InvariantCulture));
+		EmitRows(view, axis, top, topStep, scale, bomLeft);
+		EmitRows(view, axis, bottom, botStep, scale, bomLeft);
+		if (!overallOnly && buckets != null)
+			PlaceNotchRecessDims(view, axis, buckets, scale, bomLeft);
+		int heightColumns = (!overallOnly && part != null) ? PlaceHeightColumns(view, axis, top, bottom, scale, bomLeft) : 0;
+		if (heightColumns == 0)
+			PlaceVerticalDimensions(view, part, axis, buckets ?? new StationBuckets(), scale, sheet, bomLeftSheetMm);
+		else
+			PreflightQaChecker.Append(_pdfDir, _activePiece, "[HeightCol] " + heightColumns.ToString(CultureInfo.InvariantCulture)
+				+ " columns placed; old Side A/B chains skipped on page 1");
+		if (!overallOnly && buckets != null)
+			PlaceHardwareOrdinates(view, axis, buckets, scale, bomLeftSheetMm);
 		_fitAudit.DimSetsAfter = CountStraightDimensionSets(view);
-		InsertGt76CalloutIfPresent(view, axis, buckets, scale);
+		if (buckets != null)
+			InsertGt76CalloutIfPresent(view, axis, buckets, scale);
+	}
+
+	private void EmitRows(View view, PanelAxis axis, List<TierRow> rows, double stepPaper, int scale, double bomLeft)
+	{
+		double dist = TierFirstOffsetPaperMm * (double)scale;
+		foreach (TierRow row in rows)
+		{
+			if (PlaceString(view, axis, row.Stations, row.IsBottom, dist, row.Label, scale, bomLeft, RowStationMergeMm))
+			{
+				row.Emitted = true;
+				row.DistanceView = dist;
+				dist += stepPaper * (double)scale;
+			}
+		}
+	}
+
+	/// <summary>Catalog rows keep every family point; only coincident points (two faces, same station) merge.</summary>
+	private const double RowStationMergeMm = 5.0;
+
+	private static bool BomHasFamily(HashSet<string> bom, string[] families)
+	{
+		foreach (string f in families)
+		{
+			if (string.IsNullOrWhiteSpace(f)) continue;
+			string fam = f.ToUpperInvariant();
+			foreach (string token in bom)
+			{
+				if (token.StartsWith(fam, StringComparison.OrdinalIgnoreCase) || fam.StartsWith(token, StringComparison.OrdinalIgnoreCase))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	private static string BomToken(HashSet<string> bom, string prefix)
+	{
+		if (bom == null) return null;
+		foreach (string token in bom.OrderBy(t => t, StringComparer.OrdinalIgnoreCase))
+		{
+			if (token.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+				return token;
+		}
+		return null;
+	}
+
+	/// <summary>Rotated absolute values need about 6-7 mm of paper between rows to stay readable.</summary>
+	private const double TierRowStepFloorPaperMm = 7.0;
+
+	/// <summary>
+	/// ~10 mm between rows. If the stack does not fit between the wall and the sheet edge, the step
+	/// shrinks to a 7 mm floor; past that the rows keep 7 mm and run outward, and the overflow is logged.
+	/// </summary>
+	private double RowStepPaperMm(View view, PanelAxis axis, int scale, int rows, bool isBottom, double sheetHeightMm)
+	{
+		if (rows <= 1) return TierRowStepPaperMm;
+		double minStep = TierRowStepFloorPaperMm;
+		double avail = isBottom ? TierStackBottomBudgetMm : TierStackTopBudgetMm;
+		try
+		{
+			int sc = scale < 1 ? 1 : scale;
+			double originY = view.Origin != null ? view.Origin.Y : 0.0;
+			Point edge = isBottom ? axis.PaperBottomPoint(axis.Min) : axis.PaperPoint(axis.Min);
+			double wallSheetY = originY + edge.Y / sc;
+			double sh = sheetHeightMm > 1.0 ? sheetHeightMm : 279.4;
+			// Bottom keeps room for the TOP IN FORM caption.
+			avail = isBottom
+				? wallSheetY - BottomMarginMm - 10.0 - TierFirstOffsetPaperMm
+				: sh - TopMarginMm - wallSheetY - TierFirstOffsetPaperMm;
+		}
+		catch { }
+		double need = TierRowStepPaperMm * (rows - 1);
+		if (avail <= 0.0 || need <= avail) return TierRowStepPaperMm;
+		double step = Math.Max(minStep, avail / (rows - 1));
+		bool atFloor = avail / (rows - 1) < minStep;
+		string msg = (isBottom ? "bottom" : "top") + " stack " + rows.ToString(CultureInfo.InvariantCulture)
+			+ " rows needs " + need.ToString("0.#", CultureInfo.InvariantCulture) + " mm, has "
+			+ avail.ToString("0.#", CultureInfo.InvariantCulture) + " mm → step "
+			+ step.ToString("0.#", CultureInfo.InvariantCulture) + " mm";
+		Console.WriteLine("[Fit] WARNING " + msg);
+		PreflightQaChecker.Append(_pdfDir, _activePiece, (atFloor ? "[Elev] row overflow at 7 mm floor " : "[Elev] row step shrunk ") + msg);
+		return step;
+	}
+
+	private const string HardwareTokenPattern = @"(P-\d+|GT\d+(-\d+)?|SP\d+(-\d+)?|SLV-\d+(-\d+)*|EB-S-PL|CNDT)";
+
+	private static readonly Regex TierLabelPattern = new Regex(
+		@"^(PROFILE [A-Z]+|OVERALL PROFILE|OPENING PROFILE|BRACING INSERTS|NO PAINT|LEDGE|NOTCH / RECESS|REVEAL( \([TB]\))?"
+		+ @"|" + HardwareTokenPattern + @"( (\+|,) " + HardwareTokenPattern + @")*"
+		+ @"( (HARDWARE|LIFTERS|BRACING INSERTS|BRACING|HARDWARE W/ RECESS [0-9X]+MM))?( \([TB]\))?)$",
+		RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+	/// <summary>Old tier tags go once, before rows are rebuilt (the same tag sits top and bottom).</summary>
+	private static void PurgeTierLabels(View view)
+	{
+		if (view == null) return;
+		var doomed = new List<Text>();
+		try
+		{
+			DrawingObjectEnumerator en = view.GetObjects(new Type[1] { typeof(Text) });
+			while (en != null && en.MoveNext())
+			{
+				if (en.Current is Text t && TierLabelPattern.IsMatch((t.TextString ?? "").Trim()))
+					doomed.Add(t);
+			}
+		}
+		catch { }
+		foreach (Text t in doomed)
+		{
+			try { t.Delete(); } catch { }
+		}
+	}
+
+	/// <summary>
+	/// One ordinate string from a 0 datum through every distinct hardware height, outside the
+	/// silhouette chain on the left.
+	/// </summary>
+	private void PlaceHardwareOrdinates(View view, PanelAxis axis, StationBuckets buckets, int scale, double bomLeftSheetMm)
+	{
+		if (view == null || axis == null || buckets?.Trades == null || buckets.Trades.Count == 0) return;
+		double acrossMin = 0.0;
+		if (axis.Hull != null && axis.Hull.Count > 0)
+			acrossMin = axis.Hull.Min(p => p.Y);
+		double modelH = axis.Height > 1.0 ? axis.Height : 0.0;
+		if (modelH <= 0.0) return;
+		var heights = new List<double>();
+		int skippedForRows = 0;
+		foreach (TradeHit t in buckets.Trades)
+		{
+			if (!HardwareAllowed(t.Label)) continue;
+			if (HasCatalogRow(t.Label)) { skippedForRows++; continue; }
+			Point local = axis.LocalAlongAcross(t.Global);
+			if (local == null) continue;
+			double h = local.Y - acrossMin;
+			if (h > 5.0 && h < modelH - 5.0) heights.Add(h);
+		}
+		if (skippedForRows > 0)
+			PreflightQaChecker.Append(_pdfDir, _activePiece, "[Elev] hardware ordinates: " + skippedForRows.ToString(CultureInfo.InvariantCulture)
+				+ " items skipped (their family has a page-1 row)");
+		if (heights.Count == 0) return;
+		heights.Sort();
+		Point topLeft = axis.PaperPoint(axis.Min);
+		Point botLeft = axis.PaperBottomPoint(axis.Min);
+		double wallH = Math.Abs(topLeft.Y - botLeft.Y);
+		double toView = wallH > 1.0 ? wallH / modelH : 1.0;
+		var pts = new List<double> { 0.0 };
+		foreach (double h in heights)
+		{
+			double v = h * toView;
+			if (v - pts[pts.Count - 1] > 5.0) pts.Add(v);
+		}
+		if (pts.Count < 2) return;
+		double edgeX = Math.Min(topLeft.X, axis.PaperPoint(axis.Min + axis.Span).X);
+		double bottomY = Math.Min(botLeft.Y, axis.PaperBottomPoint(axis.Min + axis.Span).Y);
+		double dist = (VertFirstOffsetPaperMm + TierRowStepPaperMm) * (double)scale;
+		EmitVerticalDim(view, edgeX, bottomY, pts.ToArray(), new Vector(-1.0, 0.0, 0.0), dist, scale, DimensionSetBaseAttributes.DimensionTypes.Absolute);
+		Console.WriteLine("[Fit] hardware ordinate heights=" + string.Join("|", heights.Select(h => Math.Round(h, 0, MidpointRounding.ToEven).ToString("0", CultureInfo.InvariantCulture))));
 	}
 
 	/// <summary>
@@ -3600,9 +3857,22 @@ public class PrecastDimensionPostProcessor
 				}
 				if (dedup.Count >= 2)
 				{
-					double dist = TierFirstOffsetPaperMm * 0.5 * (double)scale;
-					EmitDim(view, axis, dedup, isBottom: true, dist, "NOTCH / RECESS", scale, bomLeft);
-					Console.WriteLine("[Fit] notch/recess H stations count=" + dedup.Count.ToString(CultureInfo.InvariantCulture));
+					if (DimensionRouter.KeepChainOnElevation(dedup, axis.Span))
+					{
+						double dist = TierFirstOffsetPaperMm * 0.5 * (double)scale;
+						EmitDim(view, axis, dedup, isBottom: true, dist, "NOTCH / RECESS", scale, bomLeft);
+						Console.WriteLine("[Fit] notch/recess H stations count=" + dedup.Count.ToString(CultureInfo.InvariantCulture));
+					}
+					else
+					{
+						for (int i = 1; i < dedup.Count; i++)
+						{
+							double len = dedup[i] - dedup[i - 1];
+							if (len < DimensionRouter.MicroMaxMm)
+								DimensionRouter.Remember(MicrosDirectory(), _activePiece, "NOTCH / RECESS", len);
+						}
+						Console.WriteLine("[Router] notch/recess moved to section");
+					}
 				}
 			}
 		}
@@ -3612,46 +3882,30 @@ public class PrecastDimensionPostProcessor
 		}
 	}
 
-	private static int CountTopTiers(StationBuckets buckets, bool overallOnly)
+	private bool HasCatalogRow(string labelOrFamily)
 	{
-		if (overallOnly || buckets == null) return 1;
-		int n = 1;
-		if (buckets.Lifters.Count > 0) n++;
-		n += buckets.Splicers.Count;
-		if (buckets.Bracing.Count > 0) n++;
-		if (buckets.TopEmbeds.Count > 0) n++;
-		if (buckets.Reveals.Count > 0) n++;
-		if (buckets.Openings.Count > 0) n++;
-		if (buckets.NoPaint != null && buckets.NoPaint.Count > 0) n++;
-		if (buckets.Ledge.Count > 0) n++;
-		return n;
+		if (_catalogRowFamilies.Count == 0) return false;
+		Match m = HardwareFamilyRegex.Match((labelOrFamily ?? "").ToUpperInvariant());
+		return m.Success && _catalogRowFamilies.Contains(m.Value.ToUpperInvariant());
 	}
 
-	private static int CountBottomTiers(StationBuckets buckets, bool overallOnly)
-	{
-		if (overallOnly || buckets == null) return 1;
-		int n = 1;
-		n += buckets.BottomGroutTubes.Count;
-		if (buckets.BottomSecondary.Count > 0) n++;
-		if (buckets.BaseOpenings.Count > 0) n++;
-		return n;
-	}
-
-	private static double ComputeTierStepPaperMm(double sheetHeightMm, int tierCount, double stackBudgetMm)
-	{
-		double budget = stackBudgetMm > 20.0 ? stackBudgetMm : Math.Max(40.0, sheetHeightMm * 0.22);
-		double step = tierCount > 1 ? (budget / (double)tierCount) : TierStepMaxPaperMm;
-		step = Math.Max(TierStepMinPaperMm, Math.Min(TierStepMaxPaperMm, step));
-		return Math.Max(step, MinDimTextHeightMm + 1.5);
-	}
-
-	private static void InsertGt76CalloutIfPresent(View view, PanelAxis axis, StationBuckets buckets, int scale)
+	private void InsertGt76CalloutIfPresent(View view, PanelAxis axis, StationBuckets buckets, int scale)
 	{
 		if (view == null || axis == null || buckets?.Trades == null) return;
 		foreach (TradeHit t in buckets.Trades)
 		{
 			string lbl = (t.Label ?? "").ToUpperInvariant();
 			if (lbl.IndexOf("GT76", StringComparison.Ordinal) < 0) continue;
+			if (!HardwareAllowed(lbl))
+			{
+				Console.WriteLine("[BOM] GT76 callout skipped: family not in BOM/model list");
+				return;
+			}
+			if (HasCatalogRow(lbl))
+			{
+				PreflightQaChecker.Append(_pdfDir, _activePiece, "[Elev] GT76 callout skipped: GT76 already has a page-1 row");
+				return;
+			}
 			Point p = axis.PaperPoint(t.Station);
 			if (p == null) continue;
 			InsertFramedText(view, new Point(p.X, p.Y + 4.0 * scale, 0.0), "GT76-254", scale);
@@ -3665,7 +3919,7 @@ public class PrecastDimensionPostProcessor
 		string k = (key ?? "").ToUpperInvariant();
 		if (k.Contains("SP30")) return "SP30-1219 + GT100-1219";
 		if (k.Contains("SP15")) return "SP15-457 + GT75-686";
-		if (k.Contains("SP25")) return "SP25-1067 + GT75-1219";
+		if (k.Contains("SP25")) return "SP25-1067 , GT76-254";
 		return k + " HARDWARE";
 	}
 
@@ -3679,70 +3933,14 @@ public class PrecastDimensionPostProcessor
 	}
 
 	/// <summary>
-	/// Build edge|window|pier|window|edge for two main openings (engineer OPENING PROFILE).
-	/// Pairs edges into window intervals (400–1500 mm), keeps the two largest, drops mid-fracture points.
-	/// Compares to PDF 373|975|4928|975|2115 (log only — no hardcode unless within 0.5 mm).
+	/// Every opening whose width is 400–1500 mm, left to right.
+	/// The pier is the gap between windows. One window stays edge|window|edge.
 	/// </summary>
 	private static List<double> ConsolidateOpeningStations(List<double> openings, PanelAxis axis)
 	{
 		if (openings == null || openings.Count == 0 || axis == null)
 			return openings ?? new List<double>();
-		List<double> sorted = new List<double>(openings);
-		sorted.Sort();
-		List<double> edges = new List<double>();
-		foreach (double s in sorted)
-		{
-			if (edges.Count == 0 || Math.Abs(s - edges[edges.Count - 1]) > 1.0)
-				edges.Add(s);
-		}
-		// Pair consecutive edges into candidate windows.
-		var windows = new List<Tuple<double, double, double>>(); // L, R, width
-		for (int i = 0; i + 1 < edges.Count; i++)
-		{
-			double w = edges[i + 1] - edges[i];
-			if (w >= 400.0 && w <= 1500.0)
-				windows.Add(Tuple.Create(edges[i], edges[i + 1], w));
-		}
-		windows.Sort((a, b) => b.Item3.CompareTo(a.Item3));
-		List<double> chain = new List<double> { axis.Min };
-		if (windows.Count >= 2)
-		{
-			var w0 = windows[0];
-			var w1 = windows[1];
-			// Order left-to-right.
-			if (w0.Item1 > w1.Item1)
-			{
-				var tmp = w0; w0 = w1; w1 = tmp;
-			}
-			chain.Add(w0.Item1);
-			chain.Add(w0.Item2);
-			chain.Add(w1.Item1);
-			chain.Add(w1.Item2);
-		}
-		else if (windows.Count == 1)
-		{
-			chain.Add(windows[0].Item1);
-			chain.Add(windows[0].Item2);
-		}
-		else
-		{
-			// Fallback: deduped edges only (legacy).
-			foreach (double e in edges)
-			{
-				if (Math.Abs(e - axis.Min) > 0.5 && Math.Abs(e - (axis.Min + axis.Span)) > 0.5)
-					chain.Add(e);
-			}
-		}
-		if (Math.Abs(chain[chain.Count - 1] - (axis.Min + axis.Span)) > 0.5)
-			chain.Add(axis.Min + axis.Span);
-		// Dedupe sorted.
-		chain.Sort();
-		List<double> deduped = new List<double>();
-		foreach (double s in chain)
-		{
-			if (deduped.Count == 0 || Math.Abs(s - deduped[deduped.Count - 1]) > 0.5)
-				deduped.Add(s);
-		}
+		List<double> deduped = TeklaExtractor.Modeling.FeatureDetector.OpeningChain(openings, axis.Min, axis.Min + axis.Span);
 		var segs = new List<string>();
 		double sum = 0.0;
 		for (int i = 1; i < deduped.Count; i++)
@@ -3757,34 +3955,18 @@ public class PrecastDimensionPostProcessor
 			+ " Σ=" + sum.ToString("0.###", CultureInfo.InvariantCulture)
 			+ " span=" + axis.Span.ToString("0.###", CultureInfo.InvariantCulture)
 			+ " delta=" + delta.ToString("0.###", CultureInfo.InvariantCulture)
-			+ " (PDF target 373|975|4928|975|2115)");
+			+ " stations=" + deduped.Count.ToString(CultureInfo.InvariantCulture));
 		if (Math.Abs(delta) > ConservationTolerance)
 			Console.WriteLine("[TAPE_UNVERIFIED] opening chain sum vs span");
-		// Optional: if model segs within 0.5 of PDF target segs, accept; else log MISMATCH (no hardcode).
-		double[] pdfSegs = { 373, 975, 4928, 975, 2115 };
-		if (segs.Count == pdfSegs.Length)
-		{
-			bool close = true;
-			for (int i = 0; i < pdfSegs.Length; i++)
-			{
-				double v;
-				if (!double.TryParse(segs[i], NumberStyles.Float, CultureInfo.InvariantCulture, out v)
-					|| Math.Abs(v - pdfSegs[i]) > 0.5)
-					close = false;
-			}
-			Console.WriteLine(close
-				? "[Fit] OPENING vs PDF: OK (within 0.5 mm)"
-				: "[Fit] OPENING vs PDF: MISMATCH model=" + chainStr + " PDF=373|975|4928|975|2115");
-		}
 		return deduped;
 	}
 
-	private void PlaceString(View view, PanelAxis axis, List<double> stations, bool isBottom, double distance, string tagLabel, int scale, double bomLeftSheetMm = 0.0)
+	private bool PlaceString(View view, PanelAxis axis, List<double> stations, bool isBottom, double distance, string tagLabel, int scale, double bomLeftSheetMm = 0.0, double mergeTolMm = 30.0)
 	{
 		if (stations != null && stations.Count != 0)
 		{
 			// Collapse micro-gaps (e.g. SP25 spurious 28|28) before chaining.
-			List<double> cleaned = DeduplicateStations(stations, 30.0);
+			List<double> cleaned = DeduplicateStations(stations, mergeTolMm);
 			List<double> stations2 = new List<double>(cleaned)
 			{
 				axis.Min,
@@ -3793,9 +3975,23 @@ public class PrecastDimensionPostProcessor
 			List<double> list = axis.Chain(stations2);
 			if (list.Count >= 2)
 			{
-				EmitDim(view, axis, list, isBottom, distance, tagLabel, scale, bomLeftSheetMm);
+				if (DimensionRouter.IsConservingTape(list, axis.Span))
+				{
+					int micro = 0;
+					for (int i = 1; i < list.Count; i++)
+					{
+						if (Math.Abs(list[i] - list[i - 1]) < DimensionRouter.MicroMaxMm)
+							micro++;
+					}
+					if (micro > 0)
+						Console.WriteLine("[Router] kept " + micro.ToString(CultureInfo.InvariantCulture)
+							+ " sub-70 mm segments on " + (tagLabel ?? "chain"));
+				}
+				PreflightQaChecker.LogChainDrift(_pdfDir, _activePiece, tagLabel, list, axis.Span);
+				return EmitDim(view, axis, list, isBottom, distance, tagLabel, scale, bomLeftSheetMm);
 			}
 		}
+		return false;
 	}
 
 	private static List<double> DeduplicateStations(List<double> stations, double tolMm)
@@ -3812,11 +4008,15 @@ public class PrecastDimensionPostProcessor
 		return outList;
 	}
 
-	private void EmitDim(View view, PanelAxis axis, List<double> stations, bool isBottom, double distance, string tagLabel = null, int scale = 20, double bomLeftSheetMm = 0.0)
+	private bool EmitDim(View view, PanelAxis axis, List<double> stations, bool isBottom, double distance, string tagLabel = null, int scale = 20, double bomLeftSheetMm = 0.0)
 	{
 		if (stations == null || stations.Count < 2)
 		{
-			return;
+			return false;
+		}
+		if (ChainAlreadyEmitted(view, stations, tagLabel))
+		{
+			return false;
 		}
 		PointList pointList = new PointList();
 		foreach (double station in stations)
@@ -3828,13 +4028,14 @@ public class PrecastDimensionPostProcessor
 		double paper = distance / (double)((scale < 1) ? 1 : scale);
 		try
 		{
-			var attrs = new StraightDimensionSet.StraightDimensionSetAttributes();
+			var attrs = NewDimensionSetAttributes();
 			try { attrs.LoadAttributes("standard"); } catch { }
 			attrs.ExtensionLine = DimensionSetBaseAttributes.ExtensionLineTypes.Yes;
 			attrs.Color = DrawingColors.Green;
-			try { attrs.CombinedDimension.MinimumNumberToCombine = 99; } catch { }
 			try { attrs.Text.Font.Color = DrawingColors.Yellow; } catch { }
 			try { attrs.Text.Font.Height = MinDimTextHeightMm; } catch { }
+			try { attrs.ShortDimension = Tekla.Structures.Drawing.DimensionSetBaseAttributes.ShortDimensionTypes.Outside; } catch { }
+			ApplyChainFormat(attrs, _elevationMode ? ElevationDimensionType : null);
 
 			StraightDimensionSet set = null;
 			try { set = _dims.CreateDimensionSet(view, pointList, upDirection, paper, attrs); }
@@ -3874,10 +4075,36 @@ public class PrecastDimensionPostProcessor
 				PlaceTagBox(view, axis, isBottom, distance, tagLabel, scale, bomLeftSheetMm);
 				_fitAudit.LabelCount++;
 			}
+			return set != null;
 		}
 		catch (Exception ex)
 		{
 			Console.WriteLine("[Fit] tier " + (isBottom ? "bottom " : "top ") + distance.ToString("0", CultureInfo.InvariantCulture) + ": " + ex.Message);
+		}
+		return false;
+	}
+
+	/// <summary>
+	/// Shared dim formatting. Page 1 drops the thousands space (4500, not 4 500); rebar sheets keep
+	/// their own format and combine equal gaps from 2 as n*s=total.
+	/// </summary>
+	private void ApplyChainFormat(StraightDimensionSet.StraightDimensionSetAttributes attrs, DimensionSetBaseAttributes.DimensionTypes? type)
+	{
+		if (attrs == null) return;
+		try
+		{
+			attrs.CombinedDimension.MinimumNumberToCombine = _combineMin;
+			if (_combineMin < 99)
+				attrs.CombinedDimension.Format = DimensionSetBaseAttributes.CombineFormats.NumberOfItemsTimesLengthEqualsResult;
+		}
+		catch { }
+		if (_elevationMode)
+		{
+			try { attrs.Format.UseDigitGrouping = false; } catch { }
+		}
+		if (type.HasValue)
+		{
+			try { attrs.DimensionType = type.Value; } catch { }
 		}
 	}
 
@@ -3914,8 +4141,6 @@ public class PrecastDimensionPostProcessor
 		}
 		try
 		{
-			// Idempotent replace: drop prior same-label tier tags (S2).
-			RemoveTextsMatching(view, text);
 			// Engineer style: tier labels on the RIGHT end of the dimension ladder, left of BOM.
 			Point obj = (isBottom ? axis.PaperBottomPoint(axis.Min + axis.Span) : axis.PaperPoint(axis.Min + axis.Span));
 			Vector vector = (isBottom ? new Vector(0.0, -1.0, 0.0) : new Vector(0.0, 1.0, 0.0));
@@ -3933,7 +4158,21 @@ public class PrecastDimensionPostProcessor
 				}
 				catch { }
 			}
-			Text text2 = new Text(view, new Point(x, y, 0.0), text);
+			Point desired = new Point(x, y, 0.0);
+			// Tags slide along their own row only; a vertical nudge would land on the next row's numbers.
+			AntiCollisionEngine.PlaceResult placed = AntiCollisionEngine.Place(view, desired, text, scale, new Vector(1.0, 0.0, 0.0), allowLeader: false);
+			Point at = placed.At;
+			if (bomLeftSheetMm > 1.0 && scale >= 1)
+			{
+				try
+				{
+					double originX = view.Origin != null ? view.Origin.X : 0.0;
+					if (originX + at.X / (double)scale > bomLeftSheetMm - BomGap - 2.0)
+						at = desired;
+				}
+				catch { }
+			}
+			Text text2 = new Text(view, at, text);
 			try
 			{
 				text2.Attributes.Frame.Type = FrameTypes.None;
@@ -3977,7 +4216,7 @@ public class PrecastDimensionPostProcessor
 		catch { }
 	}
 
-	private void PlaceVerticalDimensions(View view, PanelAxis axis, StationBuckets buckets, int scale, ContainerView sheet = null, double bomLeftSheetMm = 0.0)
+	private void PlaceVerticalDimensions(View view, Tekla.Structures.Model.Part part, PanelAxis axis, StationBuckets buckets, int scale, ContainerView sheet = null, double bomLeftSheetMm = 0.0)
 	{
 		if (view == null || axis == null)
 			return;
@@ -3994,8 +4233,8 @@ public class PrecastDimensionPostProcessor
 		double modelH = (axis.Height > 1.0) ? axis.Height : wallH;
 		double toView = (modelH > 1.0) ? (wallH / modelH) : 1.0;
 		// Engineer Side A ≈ base step + body (375+2600); Side B ≈ notch + mid + top (275+1850+850).
-		double[] leftPts = BuildSideVerticalViewHeights(buckets, modelH, toView, wallH, sideA: true);
-		double[] rightPts = BuildSideVerticalViewHeights(buckets, modelH, toView, wallH, sideA: false);
+		double[] leftPts = BuildSideVerticalViewHeights(part, axis, modelH, toView, wallH, sideA: true);
+		double[] rightPts = BuildSideVerticalViewHeights(part, axis, modelH, toView, wallH, sideA: false);
 		double leftDist = VertFirstOffsetPaperMm * (double)scale;
 		double rightDist = VertFirstOffsetPaperMm * (double)scale;
 		double maxLeftPaper = VertChainLeftBudgetMm;
@@ -4015,37 +4254,47 @@ public class PrecastDimensionPostProcessor
 			leftDist = maxLeftPaper * (double)scale;
 		if (rightDist / (double)((scale < 1) ? 1 : scale) > maxRightPaper)
 			rightDist = maxRightPaper * (double)scale;
-		EmitVerticalDim(view, edgeX, bottomY, leftPts, new Vector(-1.0, 0.0, 0.0), leftDist, scale);
+		EmitVerticalDim(view, edgeX, bottomY, leftPts, new Vector(-1.0, 0.0, 0.0), leftDist, scale, Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.Absolute);
 		_fitAudit.VertChainsLeft = 1;
-		EmitVerticalDim(view, edgeX2, bottomY, rightPts, new Vector(1.0, 0.0, 0.0), rightDist, scale);
+		EmitVerticalDim(view, edgeX2, bottomY, rightPts, new Vector(1.0, 0.0, 0.0), rightDist, scale, Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.Absolute);
 		_fitAudit.VertChainsRight = 1;
 		Console.WriteLine("[Fit] SideA verts pts=" + leftPts.Length.ToString(CultureInfo.InvariantCulture)
-			+ " SideB verts pts=" + rightPts.Length.ToString(CultureInfo.InvariantCulture)
-			+ " (PDF targets SideA 375+2600 SideB 275+1850+850)");
+			+ " SideB verts pts=" + rightPts.Length.ToString(CultureInfo.InvariantCulture));
 	}
 
 	/// <summary>
 	/// Side A: 0 + base-step (~200–500) + wallH. Side B: 0 + notch (~200–400) + opening sill/mid + wallH.
 	/// Heights from model NotchHeights / HeightStations — never hardcoded PDF numbers.
 	/// </summary>
-	private static double[] BuildSideVerticalViewHeights(StationBuckets buckets, double modelH, double toView, double wallH, bool sideA)
+	private static double[] BuildSideVerticalViewHeights(Tekla.Structures.Model.Part part, PanelAxis axis, double modelH, double toView, double wallH, bool sideA)
 	{
 		var modelPts = new List<double> { 0.0 };
-		if (buckets?.NotchHeights != null)
+		double targetX = sideA ? axis.Min : (axis.Min + axis.Span);
+		if (part != null && axis != null)
 		{
-			foreach (double h in buckets.NotchHeights)
+			try
 			{
-				if (h > 50.0 && h < modelH - 50.0)
-					modelPts.Add(h);
+				Solid solid = part.GetSolid();
+				if (solid != null)
+				{
+					EdgeEnumerator edges = solid.GetEdgeEnumerator();
+					while (edges != null && edges.MoveNext())
+					{
+						Edge edge = edges.Current as Edge;
+						if (edge != null && edge.StartPoint != null && edge.EndPoint != null)
+						{
+							Point p1 = axis.LocalAlongAcross(edge.StartPoint);
+							Point p2 = axis.LocalAlongAcross(edge.EndPoint);
+							if (p1 != null && p2 != null)
+							{
+								if (Math.Abs(p1.X - targetX) < 10.0 && p1.Y > 5.0) modelPts.Add(p1.Y);
+								if (Math.Abs(p2.X - targetX) < 10.0 && p2.Y > 5.0) modelPts.Add(p2.Y);
+							}
+						}
+					}
+				}
 			}
-		}
-		if (buckets?.HeightStations != null)
-		{
-			foreach (double h in buckets.HeightStations)
-			{
-				if (h > 50.0 && h < modelH - 50.0)
-					modelPts.Add(h);
-			}
+			catch { }
 		}
 		modelPts.Sort();
 		List<double> unique = new List<double>();
@@ -4054,54 +4303,20 @@ public class PrecastDimensionPostProcessor
 			if (unique.Count == 0 || Math.Abs(h - unique[unique.Count - 1]) > 5.0)
 				unique.Add(h);
 		}
-		var pick = new List<double> { 0.0 };
-		if (sideA)
-		{
-			// Prefer a single base-step station in 200–500 band.
-			double step = NearestInBand(unique, 200.0, 500.0, 375.0);
-			if (!double.IsNaN(step)) pick.Add(step);
-		}
-		else
-		{
-			double notch = NearestInBand(unique, 200.0, 450.0, 275.0);
-			if (!double.IsNaN(notch)) pick.Add(notch);
-			double mid = NearestInBand(unique, 1800.0, 2300.0, 2125.0);
-			if (!double.IsNaN(mid)) pick.Add(mid);
-			else
-			{
-				double mid2 = NearestInBand(unique, 800.0, 2500.0, 1850.0);
-				if (!double.IsNaN(mid2) && (pick.Count < 2 || Math.Abs(mid2 - pick[pick.Count - 1]) > 50.0))
-					pick.Add(mid2);
-			}
-		}
-		pick.Add(modelH);
 		var viewPts = new List<double>();
-		foreach (double h in pick)
+		foreach (double h in unique)
 		{
-			double v = (h <= 0.0) ? 0.0 : ((h >= modelH - 0.5) ? wallH : h * toView);
+			double v = (h <= 0.0) ? 0.0 : h * toView;
 			if (viewPts.Count == 0 || Math.Abs(v - viewPts[viewPts.Count - 1]) > 0.5)
 				viewPts.Add(v);
 		}
+		var segs = new List<string>();
+		for (int i = 1; i < viewPts.Count; i++)
+			segs.Add((viewPts[i] - viewPts[i - 1]).ToString("0", CultureInfo.InvariantCulture));
+		Console.WriteLine($"[Fit] {(sideA ? "Left" : "Right")} vertical chain=" + string.Join("|", segs));
 		if (viewPts.Count < 2)
 			return new double[2] { 0.0, wallH };
 		return viewPts.ToArray();
-	}
-
-	private static double NearestInBand(List<double> sorted, double lo, double hi, double prefer)
-	{
-		double best = double.NaN;
-		double bestD = double.MaxValue;
-		foreach (double h in sorted)
-		{
-			if (h < lo || h > hi) continue;
-			double d = Math.Abs(h - prefer);
-			if (d < bestD)
-			{
-				bestD = d;
-				best = h;
-			}
-		}
-		return best;
 	}
 
 	/// <summary>
@@ -4127,11 +4342,11 @@ public class PrecastDimensionPostProcessor
 		return chain;
 	}
 
-	private void EmitVerticalDim(View view, double edgeX, double bottomY, double[] heights, Vector dir, double distance, int scale)
+	private StraightDimensionSet EmitVerticalDim(View view, double edgeX, double bottomY, double[] heights, Vector dir, double distance, int scale, DimensionSetBaseAttributes.DimensionTypes? type = null)
 	{
 		if (heights == null || heights.Length < 2)
 		{
-			return;
+			return null;
 		}
 		PointList pointList = new PointList();
 		foreach (double num in heights)
@@ -4141,13 +4356,14 @@ public class PrecastDimensionPostProcessor
 		try
 		{
 			double paper = distance / (double)((scale < 1) ? 1 : scale);
-			var attrs = new StraightDimensionSet.StraightDimensionSetAttributes();
+			var attrs = NewDimensionSetAttributes();
 			try { attrs.LoadAttributes("standard"); } catch { }
 			attrs.ExtensionLine = DimensionSetBaseAttributes.ExtensionLineTypes.Yes;
 			attrs.Color = DrawingColors.Green;
-			try { attrs.CombinedDimension.MinimumNumberToCombine = 99; } catch { }
 			try { attrs.Text.Font.Color = DrawingColors.Yellow; } catch { }
 			try { attrs.Text.Font.Height = MinDimTextHeightMm; } catch { }
+			try { attrs.ShortDimension = Tekla.Structures.Drawing.DimensionSetBaseAttributes.ShortDimensionTypes.Outside; } catch { }
+			ApplyChainFormat(attrs, type);
 
 			StraightDimensionSet set = null;
 			try { set = _dims.CreateDimensionSet(view, pointList, dir, paper, attrs); }
@@ -4158,7 +4374,7 @@ public class PrecastDimensionPostProcessor
 			if (set == null)
 			{
 				Console.WriteLine("[DimError] vertical CreateDimensionSet returned NULL for distance " + paper.ToString("0", CultureInfo.InvariantCulture));
-				return;
+				return null;
 			}
 			Console.WriteLine("[DimSuccess] Created vertical DimSet at paper " + paper.ToString("0.#", CultureInfo.InvariantCulture) + " mm with " + pointList.Count + " pts.");
 			try
@@ -4171,10 +4387,12 @@ public class PrecastDimensionPostProcessor
 			{
 				Console.WriteLine("[Fit] vertical dimension lines: " + ex.Message);
 			}
+			return set;
 		}
 		catch (Exception ex)
 		{
 			Console.WriteLine("[Fit] EmitVerticalDim error: " + ex.Message);
+			return null;
 		}
 	}
 
@@ -4416,8 +4634,6 @@ public class PrecastDimensionPostProcessor
 	private static void WarnGeneralNotesUdas(Tekla.Structures.Model.Part main)
 	{
 		if (main == null) return;
-		// PDF Rev 2 targets (do not hardcode into drawing attributes here — warn only).
-		Console.WriteLine("[NotesUDA] PDF targets: 28-day=6000 PSI, stripping=3500 PSI, class=F2, air=4-7%, cover=25 mm, weight=24822 lb, vol=6.05 yd3");
 		string[] props = { "STRENGTH_28DAY", "STRIPPING_STRENGTH", "RELEASE_STRENGTH", "WEIGHT", "CONCRETE_VOLUME", "COVER", "CLASS", "AIR_ENTRAINMENT" };
 		foreach (string p in props)
 		{
@@ -4440,11 +4656,203 @@ public class PrecastDimensionPostProcessor
 			if (wKg > 0.0)
 			{
 				double wLb = wKg * 2.2046226218;
-				Console.WriteLine("[NotesUDA] model weight≈" + wLb.ToString("0.#", CultureInfo.InvariantCulture)
-					+ " lb vs PDF 24822 → " + (Math.Abs(wLb - 24822.0) < 50.0 ? "OK" : "MISMATCH"));
+				Console.WriteLine("[NotesUDA] model weight≈" + wLb.ToString("0.#", CultureInfo.InvariantCulture) + " lb");
 			}
 		}
 		catch { }
+	}
+
+	/// <summary>
+	/// Title block values come from the model and drawing. Logged so an empty field is visible;
+	/// nothing is typed into the template.
+	/// </summary>
+	private void LogTitleBlockData(Drawing drawing, Tekla.Structures.Model.Part main)
+	{
+		if (main == null) return;
+		var rows = new List<string>();
+		rows.Add("AIR=" + CivilDrawingSupport.Uda(main, "AIR_ENTRAINMENT"));
+		rows.Add("CLASS=" + CivilDrawingSupport.FirstNonEmpty(CivilDrawingSupport.Uda(main, "CLASS"), CivilDrawingSupport.Uda(main, "EXPOSURE_CLASS")));
+		string finish = "";
+		try { finish = main.Finish ?? ""; } catch { }
+		rows.Add("FINISH=" + finish);
+		double wKg = CivilDrawingSupport.ReportDouble(main, "WEIGHT");
+		rows.Add("WEIGHT=" + (wKg > 0.0 ? (wKg * 2.2046226218).ToString("0", CultureInfo.InvariantCulture) + " lb" : ""));
+		if (drawing != null)
+		{
+			rows.Add("DRAFTER=" + DrawingUda(drawing, "DR_DRAWN_BY", "DRAWN_BY", "DR_DRAFTER"));
+			rows.Add("REVISION=" + DrawingUda(drawing, "DR_REVISION", "REVISION", "REV"));
+			try { rows.Add("CREATED=" + drawing.CreationDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)); } catch { }
+			try { rows.Add("MODIFIED=" + drawing.ModificationDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)); } catch { }
+		}
+		string line = "title block " + string.Join(" ", rows);
+		Console.WriteLine("[TitleBlock] " + line);
+		PreflightQaChecker.Append(_pdfDir, _activePiece, line);
+	}
+
+	private static string DrawingUda(Drawing drawing, params string[] names)
+	{
+		foreach (string n in names)
+		{
+			string v = "";
+			try { if (drawing.GetUserProperty(n, ref v) && !string.IsNullOrWhiteSpace(v)) return v.Trim(); } catch { }
+		}
+		return "";
+	}
+
+	/// <summary>
+	/// Strength above 1000 is PSI. Only the drawing property is written; no drawing text is edited.
+	/// </summary>
+	private void SyncStrengthUnit(Drawing drawing, ContainerView sheet, Tekla.Structures.Model.Part main)
+	{
+		if (drawing == null || sheet == null || main == null) return;
+		double strength = 0.0;
+		foreach (string p in new[] { "STRENGTH_28DAY", "CONCRETE_STRENGTH" })
+		{
+			string raw = CivilDrawingSupport.Uda(main, p);
+			if (double.TryParse(raw, NumberStyles.Any, CultureInfo.InvariantCulture, out strength) && strength > 0.0) break;
+			strength = 0.0;
+		}
+		if (strength <= 0.0)
+		{
+			string mat = "";
+			try { mat = main.Material?.MaterialString ?? ""; } catch { }
+			Match m = Regex.Match(mat, @"\d{4,5}");
+			if (m.Success) double.TryParse(m.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out strength);
+		}
+		if (strength <= 0.0)
+		{
+			PreflightQaChecker.Append(_pdfDir, _activePiece, "[TitleBlock] no strength UDA or material value; STRENGTH_UNIT not set");
+			return;
+		}
+		string unit = strength > 1000.0 ? "PSI" : "MPa";
+		bool ok = false;
+		try { ok = drawing.SetUserProperty("STRENGTH_UNIT", unit); } catch { }
+		string msg = "[TitleBlock] strength " + strength.ToString("0", CultureInfo.InvariantCulture) + " → drawing STRENGTH_UNIT=" + unit
+			+ (ok ? "" : " (SetUserProperty failed)")
+			+ "; the title text comes from the layout template (PSI layout variant: template owner)";
+		Console.WriteLine(msg);
+		PreflightQaChecker.Append(_pdfDir, _activePiece, msg);
+	}
+
+	private const string PaintLegendHeader = "PAINT LEGEND";
+
+	/// <summary>
+	/// One hatched swatch per paint source: surface treatment objects on the part, then paint/colour UDAs.
+	/// Form and trowel finish fields are not paint and are not read here.
+	/// </summary>
+	private void PlacePaintLegend(ContainerView sheet, Tekla.Structures.Model.Part main)
+	{
+		if (sheet == null || main == null) return;
+		var entries = new List<string>();
+		try
+		{
+			ModelObjectEnumerator en = main.GetSurfaceTreatments();
+			while (en != null && en.MoveNext())
+			{
+				if (!(en.Current is SurfaceTreatment st)) continue;
+				string name = (st.Name ?? "").Trim();
+				string mat = "";
+				try { mat = (st.Material?.MaterialString ?? "").Trim(); } catch { }
+				string label = CivilDrawingSupport.FirstNonEmpty(name, mat, st.Type.ToString());
+				if (mat.Length > 0 && !string.Equals(mat, label, StringComparison.OrdinalIgnoreCase))
+					label += " - " + mat;
+				if (!entries.Contains(label, StringComparer.OrdinalIgnoreCase)) entries.Add(label);
+			}
+		}
+		catch { }
+		try
+		{
+			Hashtable udas = new Hashtable();
+			main.GetStringUserProperties(ref udas);
+			foreach (DictionaryEntry kv in udas)
+			{
+				string key = Convert.ToString(kv.Key, CultureInfo.InvariantCulture) ?? "";
+				string val = (Convert.ToString(kv.Value, CultureInfo.InvariantCulture) ?? "").Trim();
+				if (val.Length == 0) continue;
+				string k = key.ToUpperInvariant();
+				if (k.Contains("PAINT") || k.Contains("COLOR") || k.Contains("COLOUR"))
+				{
+					if (!entries.Contains(val, StringComparer.OrdinalIgnoreCase)) entries.Add(val);
+				}
+			}
+		}
+		catch { }
+
+		const double x0 = 20.0;
+		const double y0 = 12.0;
+		const double rowH = 6.0;
+		RemovePaintLegend(sheet, x0, y0, rowH * (entries.Count + 6));
+		if (entries.Count == 0)
+		{
+			Console.WriteLine("[Paint] no surface treatment or paint UDA on part — no legend");
+			return;
+		}
+		string[] patterns = { "ANSI31", "ANSI37", "ANSI32", "ANSI38", "ANSI35", "ANSI33" };
+		DrawingHatchColors[] colors = { DrawingHatchColors.Red, DrawingHatchColors.Blue, DrawingHatchColors.Green, DrawingHatchColors.Magenta, DrawingHatchColors.Cyan, DrawingHatchColors.Yellow };
+		for (int i = 0; i < entries.Count; i++)
+		{
+			double y = y0 + rowH * i;
+			try
+			{
+				var attrs = new Tekla.Structures.Drawing.Rectangle.RectangleAttributes();
+				attrs.Hatch.Name = patterns[i % patterns.Length];
+				attrs.Hatch.Color = colors[i % colors.Length];
+				new Tekla.Structures.Drawing.Rectangle(sheet, new Point(x0, y, 0.0), new Point(x0 + 8.0, y + 4.0, 0.0), attrs).Insert();
+			}
+			catch (Exception ex) { Console.WriteLine("[Paint] swatch: " + ex.Message); }
+			InsertSheetText(sheet, new Point(x0 + 10.0, y + 0.5, 0.0), entries[i]);
+		}
+		InsertSheetText(sheet, new Point(x0, y0 + rowH * entries.Count, 0.0), PaintLegendHeader);
+		Console.WriteLine("[Paint] legend rows=" + entries.Count.ToString(CultureInfo.InvariantCulture)
+			+ " at sheet (" + x0.ToString("0", CultureInfo.InvariantCulture) + "," + y0.ToString("0", CultureInfo.InvariantCulture) + "): " + string.Join("; ", entries));
+	}
+
+	private static void InsertSheetText(ViewBase host, Point at, string s)
+	{
+		try
+		{
+			var t = new Text(host, at, s);
+			try
+			{
+				t.Attributes.Frame.Type = FrameTypes.None;
+				t.Attributes.Font.Height = MinDimTextHeightMm;
+			}
+			catch { }
+			t.Insert();
+		}
+		catch { }
+	}
+
+	/// <summary>A rerun replaces the previous legend: header, swatches and labels inside its box.</summary>
+	private static void RemovePaintLegend(ContainerView sheet, double x0, double y0, double height)
+	{
+		var doomed = new List<DrawingObject>();
+		bool hadHeader = false;
+		try
+		{
+			DrawingObjectEnumerator en = sheet.GetObjects();
+			while (en != null && en.MoveNext())
+			{
+				if (en.Current is Text t && string.Equals((t.TextString ?? "").Trim(), PaintLegendHeader, StringComparison.OrdinalIgnoreCase))
+					hadHeader = true;
+			}
+			if (!hadHeader) return;
+			en = sheet.GetObjects();
+			while (en != null && en.MoveNext())
+			{
+				Point p = null;
+				if (en.Current is Text t) p = t.InsertionPoint;
+				else if (en.Current is Tekla.Structures.Drawing.Rectangle r) p = r.StartPoint;
+				if (p == null) continue;
+				if (p.X >= x0 - 1.0 && p.X <= x0 + 120.0 && p.Y >= y0 - 1.0 && p.Y <= y0 + height)
+					doomed.Add(en.Current as DrawingObject);
+			}
+		}
+		catch { }
+		foreach (DrawingObject o in doomed)
+		{
+			try { o.Delete(); } catch { }
+		}
 	}
 
 	private void EngineerSheet1Sanitize(ContainerView sheet, View front, Tekla.Structures.Model.Part main)
@@ -4452,110 +4860,68 @@ public class PrecastDimensionPostProcessor
 		// Rev 2 fabrication: KEEP paint / NO PAINT / Gemite colour notes (do not purge).
 		PurgeStrayFilledGraphicsInNotesBand(sheet);
 		SuppressPhantomPartMarks(front, sheet);
-		PurgeUnresolvedQuestionMarks(front);
+		ReportUnresolvedMarks(front);
 		PurgeStaleScaleLabels(front);
 		LogBomQtyVsPdfTarget(main);
 		WarnIfNumberingStale();
 	}
 
 	/// <summary>
-	/// Remove marks that already display '?' / unresolved tokens. Does not rewrite PART_POS; numbering must be up to date.
+	/// Counts marks that display '?' or an unresolved token and points to qmarks_{piece}.log.
+	/// Deletes nothing: the object type and creator are identified first.
 	/// </summary>
-	private void PurgeUnresolvedQuestionMarks(View front)
+	private void ReportUnresolvedMarks(View view)
 	{
-		if (front == null) return;
+		if (view == null) return;
 		int n = 0;
-		foreach (MarkBase mark in EnumerateMarks(front))
+		foreach (MarkBase mark in EnumerateMarks(view))
 		{
 			string shown = FlattenMarkText(mark);
 			if (string.IsNullOrWhiteSpace(shown)) continue;
 			if (shown.IndexOf('?') >= 0 || LooksLikeUnresolvedPropertyToken(shown))
-			{
-				TryDeleteMark(mark);
 				n++;
-			}
 		}
 		if (n > 0)
-		{
-			_fitAudit.SuppressedPhantomMarks += n;
-			Console.WriteLine("[Fit] purged unresolved/??? marks count=" + n.ToString(CultureInfo.InvariantCulture)
-				+ " (fix numbering in Tekla — do not use --enable-mark-repair by default)");
-		}
+			Console.WriteLine("[Fit] view '" + (view.Name ?? "") + "' shows " + n.ToString(CultureInfo.InvariantCulture)
+				+ " unresolved/'?' mark(s) - kept; see qmarks_" + _activePiece + ".log");
 	}
 
 	/// <summary>
-	/// PDF BOM display targets (Rev 2). Model instance counts may differ — log MISMATCH; PDF wins for table.
+	/// BOM quantities from the piece's fixture ("bom" block) vs model counts. Log only; the drawing BOM is never edited.
 	/// </summary>
-	private static void LogBomQtyVsPdfTarget(Tekla.Structures.Model.Part main)
+	private void LogBomQtyVsPdfTarget(Tekla.Structures.Model.Part main)
 	{
-		var pdfQty = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+		RegressionChecker.Fixture fixture = RegressionChecker.Load(_activePiece);
+		if (fixture == null || fixture.Bom.Count == 0)
 		{
-			{ "P-205", 4 }, { "GT75-686", 2 }, { "GT75-1219", 8 }, { "GT76-254", 6 },
-			{ "GT100-1219", 1 }, { "P-300", 5 }, { "P-602", 1 }, { "SP15-457", 2 },
-			{ "SP25-1067", 8 }, { "SP30-1219", 1 }, { "CNDT", 1 }, { "EB-S-PL", 1 }
-		};
-		var modelQty = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-		if (main == null)
-		{
-			Console.WriteLine("[BomQty] PDF targets logged; no main part for model count");
+			Console.WriteLine("[BomQty] no fixture BOM targets for '" + _activePiece + "'");
 			return;
 		}
-		try
+		var modelQty = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+		if (main != null)
 		{
-			ModelObjectEnumerator en = null;
-			try { en = main.GetComponents(); } catch { }
-			// Count from assembly children + booleans via CollectStations trades is done after; here scan parts.
+			var cat = new FeatureCatalog();
+			try { cat.Seen.Add(main.Identifier.ID); } catch { }
+			PanelAxis axis = PanelAxis.Measure(main, LiveLength(main));
 			Assembly assy = null;
 			try { assy = main.GetAssembly(); } catch { }
-			if (assy != null)
+			if (axis != null && assy != null)
+				WalkAssembly(cat, assy, axis, 0, new HashSet<int>());
+			foreach (PanelFeature f in cat.Hardware)
 			{
-				ArrayList children = null;
-				try { children = assy.GetSecondaries(); } catch { }
-				if (children != null)
-				{
-					foreach (object o in children)
-					{
-						if (!(o is Tekla.Structures.Model.Part p)) continue;
-						string label = PartLabel(p);
-						BumpBomKey(modelQty, label);
-					}
-				}
+				string key = fixture.Bom.Keys.FirstOrDefault(k => f.Family.StartsWith(k, StringComparison.OrdinalIgnoreCase)) ?? f.Family;
+				modelQty.TryGetValue(key, out int q);
+				modelQty[key] = q + 1;
 			}
 		}
-		catch { }
-		foreach (var kv in pdfQty)
+		foreach (var kv in fixture.Bom)
 		{
-			int m = modelQty.ContainsKey(kv.Key) ? modelQty[kv.Key] : 0;
-			// Also try short family match
-			if (m == 0)
-			{
-				foreach (var mk in modelQty)
-				{
-					if (mk.Key.IndexOf(kv.Key, StringComparison.OrdinalIgnoreCase) >= 0)
-					{ m += mk.Value; }
-				}
-			}
+			modelQty.TryGetValue(kv.Key, out int m);
 			string status = m == kv.Value ? "OK" : "MISMATCH";
-			Console.WriteLine("[BomQty] " + kv.Key + " PDF=" + kv.Value.ToString(CultureInfo.InvariantCulture)
-				+ " model≈" + m.ToString(CultureInfo.InvariantCulture) + " " + status
-				+ (status == "MISMATCH" ? " (drawing BOM target=PDF)" : ""));
-		}
-	}
-
-	private static void BumpBomKey(Dictionary<string, int> map, string label)
-	{
-		if (string.IsNullOrWhiteSpace(label)) return;
-		string u = label.ToUpperInvariant();
-		string[] keys = { "P-205", "GT75-686", "GT75-1219", "GT76-254", "GT100-1219", "P-300", "P-602",
-			"SP15-457", "SP25-1067", "SP30-1219", "CNDT", "EB-S-PL", "MPX11", "BCMBD" };
-		foreach (string k in keys)
-		{
-			if (u.IndexOf(k, StringComparison.OrdinalIgnoreCase) >= 0)
-			{
-				if (!map.ContainsKey(k)) map[k] = 0;
-				map[k]++;
-				return;
-			}
+			string line = "[BomQty] " + kv.Key + " PDF=" + kv.Value.ToString(CultureInfo.InvariantCulture)
+				+ " model=" + m.ToString(CultureInfo.InvariantCulture) + " " + status;
+			Console.WriteLine(line);
+			PreflightQaChecker.Append(_pdfDir, _activePiece, line);
 		}
 	}
 
@@ -4595,44 +4961,53 @@ public class PrecastDimensionPostProcessor
 	private void SuppressPhantomPartMarks(View front, ContainerView sheet)
 	{
 		if (front == null) return;
-		HashSet<string> bomMarks = CollectBomMarkTokens(sheet);
+		double bomLeft = 0;
+		try { bomLeft = ScanBomLeft(sheet, sheet.Width > 1.0 ? sheet.Width : 431.8); } catch { }
+		HashSet<string> bomMarks = CollectBomMarkTokens(sheet, bomLeft);
+		int notInBom = 0;
 		foreach (MarkBase mark in EnumerateMarks(front))
 		{
 			if (MarkLinksToRebar(mark)) continue;
 			string shown = FlattenMarkText(mark);
 			if (string.IsNullOrWhiteSpace(shown)) continue;
-			if (shown.IndexOf("BCMBD", StringComparison.OrdinalIgnoreCase) >= 0
-				|| shown.IndexOf("MPX11", StringComparison.OrdinalIgnoreCase) >= 0)
+			string exact = Regex.Replace(shown, @"\s+", "").ToUpperInvariant();
+			// Only these two named phantoms are deleted; every other native mark stays.
+			if (exact == "BCMBD" || exact == "MPX11")
 			{
 				TryDeleteMark(mark);
 				_fitAudit.SuppressedPhantomMarks++;
+				PreflightQaChecker.Append(_pdfDir, _activePiece, "[Marks] deleted phantom mark '" + shown.Trim() + "'");
 				continue;
 			}
 			if (bomMarks.Count > 0 && !BomAllowsMark(shown, bomMarks))
 			{
-				TryDeleteMark(mark);
-				_fitAudit.SuppressedPhantomMarks++;
+				notInBom++;
+				PreflightQaChecker.Append(_pdfDir, _activePiece, "[Marks] kept native mark not in BOM: '" + shown.Trim() + "'");
 			}
 		}
+		if (notInBom > 0)
+			Console.WriteLine("[Marks] " + notInBom.ToString(CultureInfo.InvariantCulture) + " native mark(s) not in BOM kept (logged)");
 	}
 
-	private static HashSet<string> CollectBomMarkTokens(ContainerView sheet)
+	private static HashSet<string> CollectBomMarkTokens(ContainerView sheet, double bomLeft)
 	{
 		var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 		if (sheet == null) return set;
 		try
 		{
-			DrawingObjectEnumerator en = sheet.GetAllObjects();
+			// Sheet children only, and only the table zone to the right of bomLeft.
+			DrawingObjectEnumerator en = sheet.GetObjects();
 			while (en != null && en.MoveNext())
 			{
 				if (!(en.Current is Text t)) continue;
+				if (bomLeft > 1.0)
+				{
+					Point ip = null;
+					try { ip = t.InsertionPoint; } catch { }
+					if (ip != null && ip.X < bomLeft - 2.0) continue;
+				}
 				string s = t.TextString ?? "";
-				if (s.IndexOf("BILL OF MATERIAL", StringComparison.OrdinalIgnoreCase) < 0
-					&& s.IndexOf("P-205", StringComparison.OrdinalIgnoreCase) < 0
-					&& s.IndexOf("GT75", StringComparison.OrdinalIgnoreCase) < 0
-					&& s.IndexOf("SP25", StringComparison.OrdinalIgnoreCase) < 0)
-					continue;
-				foreach (Match m in Regex.Matches(s, @"(P-\d+|GT\d+[-\d]*|SP\d+[-\d]*|EB-S-PL|CNDT)", RegexOptions.IgnoreCase))
+				foreach (Match m in Regex.Matches(s, @"(P-\d+|GT\d+[-\d]*|SP\d+[-\d]*|SLV-[\d-]+|EB-S-PL|CNDT)", RegexOptions.IgnoreCase))
 					set.Add(m.Value.ToUpperInvariant());
 			}
 		}
@@ -4645,12 +5020,11 @@ public class PrecastDimensionPostProcessor
 		string u = shown.ToUpperInvariant();
 		foreach (string token in bomMarks)
 		{
-			if (u.IndexOf(token, StringComparison.Ordinal) >= 0)
+			if (string.IsNullOrEmpty(token)) continue;
+			if (Regex.IsMatch(u, @"\b" + Regex.Escape(token) + @"\b", RegexOptions.CultureInvariant))
 				return true;
 		}
-		return u.IndexOf("P-", StringComparison.Ordinal) >= 0
-			|| u.IndexOf("GT", StringComparison.Ordinal) >= 0
-			|| u.IndexOf("SP", StringComparison.Ordinal) >= 0;
+		return false;
 	}
 
 	private static void TryDeleteMark(MarkBase mark)
@@ -4722,7 +5096,7 @@ public class PrecastDimensionPostProcessor
 		if (front != null && axis != null && buckets != null)
 		{
 			Console.WriteLine("[Fit] trades=" + buckets.Trades.Count + " lifters=" + buckets.Lifters.Count + " couplers=" + buckets.Couplers.Count + " bracing=" + buckets.Bracing.Count + " embeds=" + buckets.Embeds.Count + " secondary=" + buckets.Secondary.Count + " openings=" + buckets.Openings.Count);
-			AddFormworkEdgeTags(front, axis, buckets, scale);
+			AddFormworkEdgeTags(front, main, axis, buckets, scale);
 			// Engineer sheet 1: tier labels carry the story. Magenta trade marks crush the mesh.
 			catReport.Marks = 0;
 			catReport.Nudged = 0;
@@ -4742,7 +5116,7 @@ public class PrecastDimensionPostProcessor
 		return catReport;
 	}
 
-	private static void AddFormworkEdgeTags(View front, PanelAxis axis, StationBuckets buckets, int scale)
+	private static void AddFormworkEdgeTags(View front, Tekla.Structures.Model.Part main, PanelAxis axis, StationBuckets buckets, int scale)
 	{
 		if (front == null || axis == null)
 		{
@@ -4762,32 +5136,85 @@ public class PrecastDimensionPostProcessor
 			InsertFramedText(front, new Point(x, y2 + 3.0 * (double)scale, 0.0), "END 2", scale);
 			InsertFramedText(front, new Point(point.X + 3.0 * (double)scale, num, 0.0), "SIDE A", scale);
 			InsertFramedText(front, new Point(point2.X - 3.0 * (double)scale, num, 0.0), "SIDE B", scale);
-			if (buckets.Openings.Count >= 4)
+			List<double> corners = buckets != null && buckets.Openings.Count >= 4
+				? OpeningFaceStations(buckets)
+				: OutlineCornerStations(main, axis);
+			if (corners.Count >= 1)
 			{
-				List<double> list = new List<double>(buckets.Openings);
-				list.Sort();
-				double station = list[0];
-				double station2 = list[1];
-				double station3 = list[list.Count - 2];
-				double station4 = list[list.Count - 1];
+				double station = corners[0];
+				double stationLast = corners[corners.Count - 1];
 				Point point4 = axis.PaperPoint(station);
-				Point point5 = axis.PaperPoint(station2);
-				Point point6 = axis.PaperPoint(station3);
-				Point point7 = axis.PaperPoint(station4);
-				double x2 = (point4.X + point5.X) / 2.0;
-				double x3 = (point6.X + point7.X) / 2.0;
-				// One SIDE C/D + END 3/4 at left opening; END 5 only at right (no duplicate SIDE/END 4).
+				Point point5 = axis.PaperPoint(stationLast);
+				double x2 = point4.X;
+				double x3 = point5.X;
 				InsertFramedText(front, new Point(point4.X + 2.0 * (double)scale, num, 0.0), "SIDE C", scale);
-				InsertFramedText(front, new Point(point5.X - 2.0 * (double)scale, num, 0.0), "SIDE D", scale);
+				if (corners.Count >= 2)
+					InsertFramedText(front, new Point(point5.X - 2.0 * (double)scale, num, 0.0), "SIDE D", scale);
 				InsertFramedText(front, new Point(x2, num + 6.0 * (double)scale, 0.0), "END 3", scale);
 				InsertFramedText(front, new Point(x2, num - 6.0 * (double)scale, 0.0), "END 4", scale);
-				InsertFramedText(front, new Point(x3, num + 6.0 * (double)scale, 0.0), "END 5", scale);
+				if (corners.Count >= 2)
+					InsertFramedText(front, new Point(x3, num + 6.0 * (double)scale, 0.0), "END 5", scale);
+				Console.WriteLine("[Fit] form faces corners=" + corners.Count.ToString(CultureInfo.InvariantCulture)
+					+ (buckets != null && buckets.Openings.Count >= 4 ? " from openings" : " from outline"));
 			}
 		}
 		catch (Exception ex)
 		{
 			Console.WriteLine("[Fit] Formwork tags error: " + ex.Message);
 		}
+	}
+
+	private static List<double> OpeningFaceStations(StationBuckets buckets)
+	{
+		var list = new List<double>();
+		if (buckets?.Openings == null) return list;
+		foreach (double s in buckets.Openings)
+		{
+			if (list.Count == 0 || Math.Abs(s - list[list.Count - 1]) > 1.0)
+				list.Add(s);
+		}
+		list.Sort();
+		var dedup = new List<double>();
+		foreach (double s in list)
+		{
+			if (dedup.Count == 0 || Math.Abs(s - dedup[dedup.Count - 1]) > 1.0)
+				dedup.Add(s);
+		}
+		return dedup;
+	}
+
+	/// <summary>Interior vertical faces of a stepped outline. Not the panel's two outer ends.</summary>
+	private static List<double> OutlineCornerStations(Tekla.Structures.Model.Part part, PanelAxis axis)
+	{
+		var found = new List<double>();
+		if (part == null || axis == null) return found;
+		try
+		{
+			Solid solid = part.GetSolid();
+			EdgeEnumerator edges = solid?.GetEdgeEnumerator();
+			while (edges != null && edges.MoveNext())
+			{
+				Edge edge = edges.Current as Edge;
+				if (edge?.StartPoint == null || edge.EndPoint == null) continue;
+				Point a = axis.LocalAlongAcross(edge.StartPoint);
+				Point b = axis.LocalAlongAcross(edge.EndPoint);
+				if (a == null || b == null) continue;
+				double dx = Math.Abs(a.X - b.X);
+				double dy = Math.Abs(a.Y - b.Y);
+				if (dx > 15.0 || dy < 80.0) continue;
+				double x = (a.X + b.X) / 2.0;
+				if (x < axis.Min + 30.0 || x > axis.Min + axis.Span - 30.0) continue;
+				bool seen = false;
+				foreach (double s in found)
+				{
+					if (Math.Abs(s - x) < 20.0) { seen = true; break; }
+				}
+				if (!seen) found.Add(x);
+			}
+		}
+		catch { }
+		found.Sort();
+		return found;
 	}
 
 	private static void AddTopInFormLabel(View front, PanelAxis axis, int scale)
@@ -6061,10 +6488,25 @@ public class PrecastDimensionPostProcessor
 	public void CleanPlacing(Drawing drawing)
 	{
 		if (drawing == null) return;
+		_combineMin = 2;
 		try
 		{
+			CleanPlacingCore(drawing);
+		}
+		finally
+		{
+			_combineMin = 99;
+		}
+	}
+
+	private void CleanPlacingCore(Drawing drawing)
+	{
+		try
+		{
+			try { _activePiece = SheetRoleMap.PieceMark(drawing.Mark ?? ""); } catch { }
 			ContainerView sheet = drawing.GetSheet();
 			if (sheet == null) return;
+			LogQuestionMarkObjects(sheet, "placing '" + (drawing.Mark ?? "") + "' before cleanup");
 			double sheetWidth = sheet.Width > 1.0 ? sheet.Width : 431.8;
 			double sheetHeight = sheet.Height > 1.0 ? sheet.Height : 279.4;
 
@@ -6094,9 +6536,8 @@ public class PrecastDimensionPostProcessor
 				+ " END2=" + endNative.ToString(CultureInfo.InvariantCulture)
 				+ " VIEW_A=" + secNative.ToString(CultureInfo.InvariantCulture));
 
-			// Selective purge: only wipe elev + sheet orphans. KEEP macro END 2 / VIEW A dim stacks (screenshot 2).
-			int purged = PurgeAllViewDimensions(front);
-			purged += NuclearPurgeLeftDumpOnly(sheet, sheetWidth, sheetHeight);
+			// Elevation placement chains are kept; only isolated full-length/height chains go (after layout below).
+			int purged = NuclearPurgeLeftDumpOnly(sheet, sheetWidth, sheetHeight);
 			if (otherViews != null)
 			{
 				foreach (View ov in otherViews)
@@ -6143,11 +6584,16 @@ public class PrecastDimensionPostProcessor
 					elevAxis.BindView(front, part);
 					elevBuckets = CollectStations(part, elevAxis, front);
 					EnsureOpeningStationsFromSolid(part, elevAxis, elevBuckets);
-					PlacePlacingTwoTierElevDims(front, elevAxis, elevBuckets, scale, sheet, bomLeft);
+					var rebuilt = new List<double> { elevAxis.Min, elevAxis.Min + elevAxis.Span };
+					if (elevBuckets.Openings.Count >= 2)
+						rebuilt.AddRange(ConsolidateOpeningStations(elevBuckets.Openings, elevAxis));
+					purged += PurgeIsolatedAndStaleChains(front, elevAxis, modelLen, LiveHeight(part), rebuilt, out bool placementSpansPanel);
+					CombineNativeChains(front, _combineMin);
+					PlacePlacingTwoTierElevDims(front, elevAxis, elevBuckets, scale, sheet, bomLeft, part, skipOverall: placementSpansPanel);
 					SealView(front, modelLen, scale, sheetHeight, bomLeft);
 				}
 				SyncTopInFormLabel(front, elevAxis, scale);
-				PurgeUnresolvedQuestionMarks(front);
+				ReportUnresolvedMarks(front);
 				elevDims = CountStraightDimensionSets(front);
 				Console.WriteLine("[Placing] TOP IN FORM 2-tier dims=" + elevDims.ToString(CultureInfo.InvariantCulture)
 					+ " scale=1:" + scale.ToString(CultureInfo.InvariantCulture)
@@ -6169,7 +6615,7 @@ public class PrecastDimensionPostProcessor
 					Console.WriteLine("[Placing] END 2 preserve-native dims=" + endNative.ToString(CultureInfo.InvariantCulture));
 				RemoveTextsMatching(bottom, "VIEW VIEW");
 				SyncViewScaleLabel(bottom, part, "END 2", endScale);
-				PurgeUnresolvedQuestionMarks(bottom);
+				ReportUnresolvedMarks(bottom);
 			}
 
 			// VIEW A to the RIGHT of END 2 — use solid bounds so they never crash (screenshot 1 failure).
@@ -6198,7 +6644,7 @@ public class PrecastDimensionPostProcessor
 				else
 					Console.WriteLine("[Placing] VIEW A preserve-native dims=" + secNative.ToString(CultureInfo.InvariantCulture));
 				SyncViewScaleLabel(section, part, "VIEW A", secScale);
-				PurgeUnresolvedQuestionMarks(section);
+				ReportUnresolvedMarks(section);
 			}
 
 			// Non-junk leftover details (if any) sit further right — never on END 2.
@@ -6209,12 +6655,21 @@ public class PrecastDimensionPostProcessor
 				{
 					if (ov == null || IsJunkPlacingDetail(ov)) continue;
 					ApplyPlacingViewLayout(ov, part, 50, ox, rowY + 20.0);
-					PurgeUnresolvedQuestionMarks(ov);
+					ReportUnresolvedMarks(ov);
 					ox += 70.0;
 				}
 			}
 
 			purged += NuclearPurgeLeftDumpOnly(sheet, sheetWidth, sheetHeight);
+			CombineNativeChains(bottom, _combineMin);
+			CombineNativeChains(section, _combineMin);
+			RewriteCombinedStars(front, "placing front");
+			RewriteCombinedStars(bottom, "placing end");
+			RewriteCombinedStars(section, "placing section");
+			AntiCollisionEngine.PlaceRebarRuns(front, part, scale, CollectMarkTexts(front));
+			var placingViews = new List<View> { front, bottom, section };
+			if (otherViews != null) placingViews.AddRange(otherViews);
+			PreflightQaChecker.CompareViewToBbs(_model, part, placingViews, _activePiece, _pdfDir);
 			ReaffirmPlacingScale(front, scale);
 			ReaffirmPlacingScale(bottom, endScale);
 			if (section != null) ReaffirmPlacingScale(section, secScale);
@@ -6351,30 +6806,32 @@ public class PrecastDimensionPostProcessor
 	}
 
 	/// <summary>Exactly two H tiers (OVERALL + OPENING) + Side A/B verts — fits placing bbox.</summary>
-	private void PlacePlacingTwoTierElevDims(View front, PanelAxis axis, StationBuckets buckets, int scale, ContainerView sheet, double bomLeft)
+	private void PlacePlacingTwoTierElevDims(View front, PanelAxis axis, StationBuckets buckets, int scale, ContainerView sheet, double bomLeft, Tekla.Structures.Model.Part part = null, bool skipOverall = false)
 	{
 		if (front == null || axis == null) return;
+		PurgeTierLabels(front);
 		List<double> tape = new List<double> { axis.Min, axis.Min + axis.Span };
 		double tier1 = TierFirstOffsetPaperMm * (double)scale;
-		double tier2 = (TierFirstOffsetPaperMm + 7.0) * (double)scale;
-		PlaceString(front, axis, tape, isBottom: false, tier1, "OVERALL PROFILE", scale, bomLeft);
+		double tier2 = (TierFirstOffsetPaperMm + TierRowStepPaperMm) * (double)scale;
+		// A kept placement chain already spans the panel; a lone overall would be the chain we just deleted.
+		if (skipOverall)
+			Console.WriteLine("[Placing] placement chain spans panel — no separate PROFILE OVERALL");
+		else
+			PlaceString(front, axis, tape, isBottom: false, tier1, "PROFILE OVERALL", scale, bomLeft);
 		List<double> openings = buckets != null ? new List<double>(buckets.Openings) : null;
 		if ((openings == null || openings.Count < 2) && buckets?.BaseOpenings != null && buckets.BaseOpenings.Count >= 2)
 			openings = new List<double>(buckets.BaseOpenings);
 		if (openings != null && openings.Count >= 2)
 		{
 			List<double> chain = ConsolidateOpeningStations(openings, axis);
-			PlaceString(front, axis, chain, isBottom: false, tier2, "OPENING PROFILE", scale, bomLeft);
+			PlaceString(front, axis, chain, isBottom: false, tier2, "PROFILE OPENING", scale, bomLeft);
 			Console.WriteLine("[Placing] 2-tier OPENING placed");
 		}
 		else
-		{
-			// Still emit a second tier as overall so "2 tier" always present.
-			PlaceString(front, axis, tape, isBottom: false, tier2, "OVERALL PROFILE", scale, bomLeft);
-			Console.WriteLine("[Placing] 2-tier OPENING missing — duplicate OVERALL as tier-2");
-		}
-		PlaceString(front, axis, tape, isBottom: true, tier1, "OVERALL PROFILE", scale, bomLeft);
-		PlaceVerticalDimensions(front, axis, buckets ?? new StationBuckets(), scale, sheet, bomLeft);
+			Console.WriteLine("[Placing] no opening stations — overall row only");
+		if (!skipOverall)
+			PlaceString(front, axis, tape, isBottom: true, tier1, "PROFILE OVERALL", scale, bomLeft);
+		PlaceVerticalDimensions(front, part, axis, buckets ?? new StationBuckets(), scale, sheet, bomLeft);
 	}
 
 	/// <summary>If CollectStations missed cutouts, seed Openings from ALL boolean operative solids (width gate in AddOpeningEdges).</summary>
@@ -6497,6 +6954,138 @@ public class PrecastDimensionPostProcessor
 		return false;
 	}
 
+	/// <summary>
+	/// Rebar elevation: delete a one-segment chain equal to the panel length or height (|--- L ---|),
+	/// and older chains whose points all sit on rows that are about to be rebuilt.
+	/// Chains with intermediate placement points stay.
+	/// </summary>
+	private static int PurgeIsolatedAndStaleChains(View view, PanelAxis axis, double lengthMm, double heightMm, List<double> rebuiltStations, out bool keptFullSpan)
+	{
+		keptFullSpan = false;
+		if (view == null) return 0;
+		var sets = new Dictionary<DimensionSetBase, List<StraightDimension>>();
+		try
+		{
+			DrawingObjectEnumerator en = view.GetObjects(new Type[1] { typeof(StraightDimension) });
+			while (en != null && en.MoveNext())
+			{
+				if (!(en.Current is StraightDimension sd)) continue;
+				DimensionSetBase set = null;
+				try { set = sd.GetDimensionSet(); } catch { }
+				if (set == null) continue;
+				if (!sets.TryGetValue(set, out var list)) sets[set] = list = new List<StraightDimension>();
+				list.Add(sd);
+			}
+		}
+		catch { }
+		var rebuiltX = new List<double>();
+		if (axis != null && rebuiltStations != null)
+		{
+			foreach (double s in rebuiltStations)
+			{
+				try { rebuiltX.Add(axis.PaperPoint(s).X); } catch { }
+			}
+		}
+		int isolated = 0, stale = 0;
+		foreach (var kv in sets)
+		{
+			List<StraightDimension> segs = kv.Value;
+			bool doomed = false;
+			if (segs.Count == 1)
+			{
+				Point a = segs[0].StartPoint, b = segs[0].EndPoint;
+				if (a != null && b != null)
+				{
+					double len = Distance.PointToPoint(a, b);
+					if ((lengthMm > 1.0 && Math.Abs(len - lengthMm) <= 1.0) || (heightMm > 1.0 && Math.Abs(len - heightMm) <= 1.0))
+					{
+						doomed = true;
+						isolated++;
+					}
+				}
+			}
+			else if (rebuiltX.Count >= 2)
+			{
+				bool allOnRebuilt = true;
+				foreach (StraightDimension sd in segs)
+				{
+					Point a = sd.StartPoint, b = sd.EndPoint;
+					if (a == null || b == null || Math.Abs(a.Y - b.Y) > 1.0
+						|| !rebuiltX.Any(x => Math.Abs(x - a.X) <= 2.0) || !rebuiltX.Any(x => Math.Abs(x - b.X) <= 2.0))
+					{
+						allOnRebuilt = false;
+						break;
+					}
+				}
+				if (allOnRebuilt)
+				{
+					doomed = true;
+					stale++;
+				}
+			}
+			if (doomed)
+			{
+				try { kv.Key.Delete(); } catch { }
+			}
+			else if (segs.Count > 1 && lengthMm > 1.0)
+			{
+				double span = segs.Sum(sd => sd.StartPoint != null && sd.EndPoint != null ? Distance.PointToPoint(sd.StartPoint, sd.EndPoint) : 0.0);
+				if (Math.Abs(span - lengthMm) <= 1.0) keptFullSpan = true;
+			}
+		}
+		Console.WriteLine("[Placing] purge kept " + (sets.Count - isolated - stale).ToString(CultureInfo.InvariantCulture)
+			+ " chains, deleted isolated full-span=" + isolated.ToString(CultureInfo.InvariantCulture)
+			+ " stale rebuilt-row=" + stale.ToString(CultureInfo.InvariantCulture));
+		return isolated + stale;
+	}
+
+	/// <summary>Rendered text of the marks already on a view (native rebar marks included).</summary>
+	private static List<string> CollectMarkTexts(View view)
+	{
+		var list = new List<string>();
+		if (view == null) return list;
+		try
+		{
+			foreach (MarkBase m in EnumerateMarks(view))
+			{
+				string s = FlattenMarkText(m);
+				if (!string.IsNullOrWhiteSpace(s)) list.Add(s);
+			}
+		}
+		catch { }
+		return list;
+	}
+
+	/// <summary>Native chains on rebar views combine equal gaps from 2 (n*s=total).</summary>
+	private static void CombineNativeChains(View view, int minCombine)
+	{
+		if (view == null) return;
+		int n = 0;
+		try
+		{
+			DrawingObjectEnumerator en = view.GetObjects(new Type[1] { typeof(StraightDimensionSet) });
+			var list = new List<StraightDimensionSet>();
+			while (en != null && en.MoveNext())
+				if (en.Current is StraightDimensionSet s) list.Add(s);
+			foreach (StraightDimensionSet s in list)
+			{
+				try
+				{
+					var attrs = s.Attributes as StraightDimensionSet.StraightDimensionSetAttributes;
+					if (attrs == null) continue;
+					attrs.CombinedDimension.MinimumNumberToCombine = minCombine;
+					attrs.CombinedDimension.Format = DimensionSetBaseAttributes.CombineFormats.NumberOfItemsTimesLengthEqualsResult;
+					s.Attributes = attrs;
+					if (s.Modify()) n++;
+				}
+				catch { }
+			}
+		}
+		catch { }
+		if (n > 0)
+			Console.WriteLine("[Placing] combine from " + minCombine.ToString(CultureInfo.InvariantCulture) + " on " + n.ToString(CultureInfo.InvariantCulture) + " native chains in '" + (view.Name ?? "?") + "'");
+	}
+
 	private static int PurgeAllViewDimensions(View view)
 	{
 		if (view == null) return 0;
@@ -6589,13 +7178,14 @@ public class PrecastDimensionPostProcessor
 	}
 
 	/// <summary>Engineer-style H/V tiers on TOP IN FORM elevation (overall + opening + notch + Side A/B).</summary>
-	private void PlacePlacingElevDims(View front, PanelAxis axis, StationBuckets buckets, int scale, ContainerView sheet, double bomLeft)
+	private void PlacePlacingElevDims(View front, PanelAxis axis, StationBuckets buckets, int scale, ContainerView sheet, double bomLeft, Tekla.Structures.Model.Part part = null)
 	{
 		if (front == null || axis == null) return;
+		PurgeTierLabels(front);
 		List<double> tape = new List<double> { axis.Min, axis.Min + axis.Span };
-		double step = 7.0 * (double)scale;
+		double step = TierRowStepPaperMm * (double)scale;
 		double topDist = TierFirstOffsetPaperMm * (double)scale;
-		PlaceString(front, axis, tape, isBottom: false, topDist, "OVERALL PROFILE", scale, bomLeft);
+		PlaceString(front, axis, tape, isBottom: false, topDist, "PROFILE OVERALL", scale, bomLeft);
 		topDist += step;
 		List<double> openings = buckets != null ? new List<double>(buckets.Openings) : null;
 		if ((openings == null || openings.Count < 2) && buckets?.BaseOpenings != null && buckets.BaseOpenings.Count >= 2)
@@ -6608,7 +7198,7 @@ public class PrecastDimensionPostProcessor
 		if (openings != null && openings.Count > 0)
 		{
 			List<double> opening = ConsolidateOpeningStations(openings, axis);
-			PlaceString(front, axis, opening, isBottom: false, topDist, "OPENING PROFILE", scale, bomLeft);
+			PlaceString(front, axis, opening, isBottom: false, topDist, "PROFILE OPENING", scale, bomLeft);
 			topDist += step;
 			Console.WriteLine("[Placing] OPENING chain placed on elev");
 		}
@@ -6617,14 +7207,14 @@ public class PrecastDimensionPostProcessor
 			PlaceString(front, axis, buckets.Ledge, isBottom: false, topDist, "LEDGE", scale, bomLeft);
 			topDist += step;
 		}
-		PlaceString(front, axis, tape, isBottom: true, TierFirstOffsetPaperMm * (double)scale, "OVERALL PROFILE", scale, bomLeft);
+		PlaceString(front, axis, tape, isBottom: true, TierFirstOffsetPaperMm * (double)scale, "PROFILE OVERALL", scale, bomLeft);
 		if (openings != null && openings.Count > 0)
 		{
 			List<double> openingBot = ConsolidateOpeningStations(openings, axis);
-			PlaceString(front, axis, openingBot, isBottom: true, TierFirstOffsetPaperMm * (double)scale + step, "OPENING PROFILE", scale, bomLeft);
+			PlaceString(front, axis, openingBot, isBottom: true, TierFirstOffsetPaperMm * (double)scale + step, "PROFILE OPENING", scale, bomLeft);
 		}
 		PlaceNotchRecessDims(front, axis, buckets ?? new StationBuckets(), scale, bomLeft);
-		PlaceVerticalDimensions(front, axis, buckets ?? new StationBuckets(), scale, sheet, bomLeft);
+		PlaceVerticalDimensions(front, part, axis, buckets ?? new StationBuckets(), scale, sheet, bomLeft);
 	}
 
 	/// <summary>END 2 / plan: overall + opening H chains along panel length.</summary>
@@ -6636,9 +7226,10 @@ public class PrecastDimensionPostProcessor
 			PanelAxis axis = PanelAxis.Measure(part, modelLen > 1.0 ? modelLen : LiveLength(part));
 			if (axis == null) return;
 			axis.BindView(endView, part);
+			PurgeTierLabels(endView);
 			List<double> tape = new List<double> { axis.Min, axis.Min + axis.Span };
 			double dist = TierFirstOffsetPaperMm * (double)scale;
-			PlaceString(endView, axis, tape, isBottom: true, dist, "OVERALL PROFILE", scale, bomLeft);
+			PlaceString(endView, axis, tape, isBottom: true, dist, "PROFILE OVERALL", scale, bomLeft);
 			List<double> openings = elevBuckets != null ? elevBuckets.Openings : null;
 			if (openings == null || openings.Count == 0)
 			{
@@ -6648,7 +7239,7 @@ public class PrecastDimensionPostProcessor
 			if (openings != null && openings.Count > 0)
 			{
 				List<double> chain = ConsolidateOpeningStations(openings, axis);
-				PlaceString(endView, axis, chain, isBottom: true, dist + 7.0 * (double)scale, "OPENING PROFILE", scale, bomLeft);
+				PlaceString(endView, axis, chain, isBottom: true, dist + 7.0 * (double)scale, "PROFILE OPENING", scale, bomLeft);
 			}
 			if (GetSolidBoundsInView(endView, part, out double minX, out double maxX, out double minY, out double maxY))
 			{
@@ -6706,25 +7297,6 @@ public class PrecastDimensionPostProcessor
 				}
 			}
 			List<double> chain = BuildHeightChain(buckets, modelH, toView, wallH);
-			// Also inject Side-B style mid bands if chain is only overall.
-			if (chain.Count <= 2)
-			{
-				var bandSrc = new List<double>(buckets.HeightStations ?? new List<double>());
-				if (buckets.NotchHeights != null) bandSrc.AddRange(buckets.NotchHeights);
-				bandSrc.Sort();
-				double notch = NearestInBand(bandSrc, 200.0, 450.0, 275.0);
-				double mid = NearestInBand(bandSrc, 1800.0, 2300.0, 2125.0);
-				var pick = new List<double> { 0.0 };
-				if (!double.IsNaN(notch)) pick.Add(notch * toView);
-				if (!double.IsNaN(mid)) pick.Add(mid * toView);
-				pick.Add(wallH);
-				chain = new List<double>();
-				foreach (double h in pick)
-				{
-					if (chain.Count == 0 || Math.Abs(h - chain[chain.Count - 1]) > 0.5)
-						chain.Add(h);
-				}
-			}
 
 			double leftDist = VertFirstOffsetPaperMm * (double)scale;
 			double rightDist = VertFirstOffsetPaperMm * (double)scale;
@@ -6738,7 +7310,7 @@ public class PrecastDimensionPostProcessor
 				try
 				{
 					double paper = (TierFirstOffsetPaperMm * (double)scale) / (double)((scale < 1) ? 1 : scale);
-					var attrs = new StraightDimensionSet.StraightDimensionSetAttributes();
+					var attrs = NewDimensionSetAttributes();
 					try { attrs.LoadAttributes("standard"); } catch { }
 					attrs.Color = DrawingColors.Green;
 					try { attrs.Text.Font.Color = DrawingColors.Yellow; } catch { }
@@ -6845,27 +7417,51 @@ public class PrecastDimensionPostProcessor
 			ContainerView sheet = drawing.GetSheet();
 			if (sheet == null) return;
 			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
+			DimensionRouter.ApplyPending(MicrosDirectory(), drawing, sheet);
 			double sw = sheet.Width > 1.0 ? sheet.Width : 431.8;
 			double sh = sheet.Height > 1.0 ? sheet.Height : 279.4;
 			// Sheet 2 = sections / details / 3D only — park full elevation front.
 			ParkViewOffSheet(front);
+			Tekla.Structures.Model.Part part = ResolveMainPart(drawing);
+			try { _activePiece = SheetRoleMap.PieceMark(drawing.Mark ?? ""); } catch { }
+			LogQuestionMarkObjects(sheet, "sections '" + (drawing.Mark ?? "") + "'");
+			const double margin = 20.0;
+			const double gap = 12.0;
+
+			// One master section (A-A). Further section views per embed are parked, not drawn.
+			View master = section;
 			var views = new List<View>();
-			if (section != null) views.Add(section);
-			if (bottom != null) views.Add(bottom);
-			if (view3D != null) views.Add(view3D);
 			if (otherViews != null)
 			{
 				foreach (View ov in otherViews)
 				{
-					if (ov != null && !views.Contains(ov)) views.Add(ov);
+					if (ov == null) continue;
+					bool isSection = false;
+					try { isSection = ov.ViewType == View.ViewTypes.SectionView; } catch { }
+					if (isSection)
+					{
+						if (master == null) { master = ov; continue; }
+						ParkViewOffSheet(ov);
+						Console.WriteLine("[Sections] parked extra section '" + (ov.Name ?? "?") + "' (one master A-A)");
+						continue;
+					}
+					if (!views.Contains(ov)) views.Add(ov);
 				}
 			}
-			// 2×N grid inside sheet margins; 3D prefers 1:50 (Rev 2), sections readable ≤1:50.
-			const double margin = 20.0;
-			const double gap = 12.0;
-			int cols = Math.Min(3, Math.Max(1, views.Count));
-			int rows = (views.Count + cols - 1) / cols;
-			double cellW = (sw - 2.0 * margin - (cols - 1) * gap) / cols;
+			if (bottom != null) views.Insert(0, bottom);
+			if (view3D != null) views.Insert(0, view3D);
+
+			double leftW = 0.0;
+			if (master != null)
+			{
+				leftW = (sw - 2.0 * margin) * (views.Count > 0 ? 0.4 : 1.0);
+				LayoutMasterSection(master, part, margin, margin, leftW, sh - 2.0 * margin);
+			}
+			double gridX = margin + (leftW > 0.0 ? leftW + gap : 0.0);
+			double gridW = sw - margin - gridX;
+			int cols = Math.Min(2, Math.Max(1, views.Count));
+			int rows = (views.Count + cols - 1) / Math.Max(1, cols);
+			double cellW = (gridW - (cols - 1) * gap) / cols;
 			double cellH = (sh - 2.0 * margin - (rows - 1) * gap) / Math.Max(1, rows);
 			for (int i = 0; i < views.Count; i++)
 			{
@@ -6892,7 +7488,7 @@ public class PrecastDimensionPostProcessor
 				attrs.Scale = sc;
 				try { attrs.FixedViewPlacing = true; } catch { }
 				v.Attributes = attrs;
-				double ox = margin + col * (cellW + gap) + cellW * 0.15;
+				double ox = gridX + col * (cellW + gap) + cellW * 0.15;
 				double oy = sh - margin - (row + 1) * cellH - row * gap + cellH * 0.2;
 				if (oy < margin) oy = margin;
 				v.Origin = new Point(ox, oy, 0.0);
@@ -6912,6 +7508,214 @@ public class PrecastDimensionPostProcessor
 		catch (Exception ex)
 		{
 			Console.WriteLine("[Sections] CleanSections failed: " + ex.Message);
+		}
+	}
+
+	/// <summary>
+	/// Largest scale at which the cut profile plus its dimension margins fits the cell, then the
+	/// overall height chain and one thickness row per hardware family at that hardware's height.
+	/// </summary>
+	private void LayoutMasterSection(View master, Tekla.Structures.Model.Part part, double cellX, double cellY, double cellW, double cellH)
+	{
+		try
+		{
+			List<Point> profile = SectionProfile(master, part);
+			if (profile.Count < 2)
+			{
+				Console.WriteLine("[Sections] master '" + (master.Name ?? "?") + "' has no cut profile — scale unchanged");
+				return;
+			}
+			double minX = profile.Min(p => p.X), maxX = profile.Max(p => p.X);
+			double minY = profile.Min(p => p.Y), maxY = profile.Max(p => p.Y);
+			// Paper reserved for the height chains (left) and family tags (right), and caption room.
+			const double padX = 70.0;
+			const double padY = 30.0;
+			double fitW = Math.Max(10.0, cellW - padX);
+			double fitH = Math.Max(10.0, cellH - padY);
+			int denom = (int)Math.Ceiling(Math.Max((maxX - minX) / fitW, (maxY - minY) / fitH));
+			denom = Math.Max(5, Math.Min(200, denom));
+			var attrs = master.Attributes;
+			attrs.Scale = denom;
+			try { attrs.FixedViewPlacing = true; } catch { }
+			master.Attributes = attrs;
+			double cx = cellX + 35.0 + fitW / 2.0;
+			double cy = cellY + padY / 2.0 + fitH / 2.0;
+			master.Origin = new Point(cx - (minX + maxX) / (2.0 * denom), cy - (minY + maxY) / (2.0 * denom), 0.0);
+			master.Modify();
+			Console.WriteLine("[Sections] master '" + (master.Name ?? "?") + "' auto scale 1:" + denom.ToString(CultureInfo.InvariantCulture)
+				+ " profile " + (maxX - minX).ToString("0", CultureInfo.InvariantCulture) + "x" + (maxY - minY).ToString("0", CultureInfo.InvariantCulture));
+			PlaceMasterSectionDims(master, part, profile, denom);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Sections] master layout: " + ex.Message);
+		}
+	}
+
+	/// <summary>Cut-plane outline of the part in view coordinates (model mm). Falls back to the solid box.</summary>
+	private static List<Point> SectionProfile(View view, Tekla.Structures.Model.Part part)
+	{
+		var pts = new List<Point>();
+		if (view == null || part == null) return pts;
+		try
+		{
+			Matrix toView = MatrixFactory.ToCoordinateSystem(view.ViewCoordinateSystem);
+			Matrix toGlobal = MatrixFactory.FromCoordinateSystem(view.ViewCoordinateSystem);
+			Solid solid = part.GetSolid();
+			IEnumerator faces = solid?.IntersectAllFaces(toGlobal.Transform(new Point(0, 0, 0)),
+				toGlobal.Transform(new Point(1000, 0, 0)), toGlobal.Transform(new Point(0, 1000, 0)));
+			CollectPoints(faces, pts, toView);
+		}
+		catch { }
+		if (pts.Count < 2 && GetSolidBoundsInView(view, part, out double a, out double b, out double c, out double d))
+		{
+			pts.Add(new Point(a, c, 0));
+			pts.Add(new Point(b, d, 0));
+		}
+		return pts;
+	}
+
+	private static void CollectPoints(object node, List<Point> sink, Matrix toView)
+	{
+		if (node == null) return;
+		if (node is Point p)
+		{
+			Point v = toView.Transform(p);
+			sink.Add(new Point(v.X, v.Y, 0));
+			return;
+		}
+		if (node is IEnumerator en)
+		{
+			while (en.MoveNext()) CollectPoints(en.Current, sink, toView);
+			return;
+		}
+		if (node is IEnumerable items)
+		{
+			foreach (object o in items) CollectPoints(o, sink, toView);
+		}
+	}
+
+	private void PlaceMasterSectionDims(View view, Tekla.Structures.Model.Part part, List<Point> profile, int scale)
+	{
+		double minX = profile.Min(p => p.X), maxX = profile.Max(p => p.X);
+		double minY = profile.Min(p => p.Y), maxY = profile.Max(p => p.Y);
+
+		// Overall height: every profile break, then the closing total further out.
+		var ys = profile.Select(p => p.Y).OrderBy(y => y).ToList();
+		var breaks = new List<double>();
+		foreach (double y in ys)
+		{
+			if (breaks.Count == 0 || y - breaks[breaks.Count - 1] > 3.0) breaks.Add(y);
+		}
+		double[] rel = breaks.Select(y => y - minY).ToArray();
+		EmitVerticalDim(view, minX, minY, rel, new Vector(-1.0, 0.0, 0.0), VertFirstOffsetPaperMm * scale, scale, DimensionSetBaseAttributes.DimensionTypes.Relative);
+		if (rel.Length > 2)
+			EmitVerticalDim(view, minX, minY, new[] { 0.0, maxY - minY }, new Vector(-1.0, 0.0, 0.0), (VertFirstOffsetPaperMm + TierRowStepPaperMm) * scale, scale, DimensionSetBaseAttributes.DimensionTypes.Relative);
+		Console.WriteLine("[Sections] height chain=" + string.Join("|", Enumerable.Range(1, Math.Max(0, rel.Length - 1))
+			.Select(i => Math.Round(rel[i] - rel[i - 1], 0, MidpointRounding.ToEven).ToString("0", CultureInfo.InvariantCulture)))
+			+ " total=" + Math.Round(maxY - minY, 0, MidpointRounding.ToEven).ToString("0", CultureInfo.InvariantCulture));
+		PreflightQaChecker.LogChainDrift(_pdfDir, _activePiece, "A-A HEIGHT", rel, maxY - minY);
+
+		// Thickness rows sit at each family's own height, nearest instance to the cut plane.
+		Matrix toView = MatrixFactory.ToCoordinateSystem(view.ViewCoordinateSystem);
+		Matrix toGlobal = MatrixFactory.FromCoordinateSystem(view.ViewCoordinateSystem);
+		var nearest = new Dictionary<string, double[]>(StringComparer.OrdinalIgnoreCase);
+		List<PanelFeature> hardware = PieceHardware(part, out HashSet<string> families, out string familySource);
+		PreflightQaChecker.Append(_pdfDir, _activePiece, "[Sections] hardware families from " + familySource + ": "
+			+ string.Join(",", (families ?? new HashSet<string>()).OrderBy(f => f)));
+		{
+			foreach (PanelFeature feature in hardware)
+			{
+				var hw = feature.Part;
+				if (hw == null) continue;
+				if (families == null || !BomHasFamily(families, new[] { feature.Family })) continue;
+				Match fam = HardwareFamilyRegex.Match(feature.Family);
+				if (!fam.Success) continue;
+				double[] box = ViewBox(hw, toView);
+				if (box == null) continue;
+				double cy = (box[2] + box[3]) / 2.0;
+				if (cy < minY || cy > maxY) continue;
+				double depth = Math.Abs((box[4] + box[5]) / 2.0);
+				string key = fam.Value.ToUpperInvariant();
+				if (!nearest.TryGetValue(key, out double[] cur) || depth < cur[4])
+					nearest[key] = new[] { box[0], box[1], cy, 0.0, depth };
+			}
+		}
+		Solid solid = null;
+		try { solid = part.GetSolid(); } catch { }
+		double lastY = double.NaN;
+		foreach (var kv in nearest.OrderBy(k => k.Value[2]))
+		{
+			double y = kv.Value[2];
+			if (!double.IsNaN(lastY) && Math.Abs(y - lastY) < (MinDimTextHeightMm + 1.5) * scale)
+				y = lastY + (MinDimTextHeightMm + 1.5) * scale;
+			lastY = y;
+			double faceL = minX, faceR = maxX;
+			try
+			{
+				ArrayList hits = solid?.Intersect(toGlobal.Transform(new Point(minX - 1000.0, kv.Value[2], 0)), toGlobal.Transform(new Point(maxX + 1000.0, kv.Value[2], 0)));
+				if (hits != null && hits.Count >= 2)
+				{
+					var xs = hits.Cast<object>().OfType<Point>().Select(p => toView.Transform(p).X).ToList();
+					faceL = xs.Min();
+					faceR = xs.Max();
+				}
+			}
+			catch { }
+			var stations = new List<double> { faceL, faceR };
+			foreach (double x in new[] { kv.Value[0], kv.Value[1] })
+			{
+				if (x > faceL + 3.0 && x < faceR - 3.0 && !stations.Any(s => Math.Abs(s - x) <= 3.0)) stations.Add(x);
+			}
+			stations.Sort();
+			EmitSectionRow(view, stations, y, scale);
+			InsertSheetText(view, new Point(faceR + 3.0 * scale, y, 0.0), kv.Key);
+			Console.WriteLine("[Sections] " + kv.Key + " thickness row at y=" + Math.Round(y - minY, 0, MidpointRounding.ToEven).ToString("0", CultureInfo.InvariantCulture)
+				+ " " + string.Join("|", Enumerable.Range(1, stations.Count - 1).Select(i => Math.Round(stations[i] - stations[i - 1], 0, MidpointRounding.ToEven).ToString("0", CultureInfo.InvariantCulture))));
+		}
+	}
+
+	/// <summary>View-coordinate box of a part: minX, maxX, minY, maxY, minZ, maxZ.</summary>
+	private static double[] ViewBox(Tekla.Structures.Model.Part part, Matrix toView)
+	{
+		try
+		{
+			Solid s = part.GetSolid();
+			if (s?.MinimumPoint == null || s.MaximumPoint == null) return null;
+			var r = new[] { double.MaxValue, double.MinValue, double.MaxValue, double.MinValue, double.MaxValue, double.MinValue };
+			foreach (double x in new[] { s.MinimumPoint.X, s.MaximumPoint.X })
+			foreach (double y in new[] { s.MinimumPoint.Y, s.MaximumPoint.Y })
+			foreach (double z in new[] { s.MinimumPoint.Z, s.MaximumPoint.Z })
+			{
+				Point p = toView.Transform(new Point(x, y, z));
+				r[0] = Math.Min(r[0], p.X); r[1] = Math.Max(r[1], p.X);
+				r[2] = Math.Min(r[2], p.Y); r[3] = Math.Max(r[3], p.Y);
+				r[4] = Math.Min(r[4], p.Z); r[5] = Math.Max(r[5], p.Z);
+			}
+			return r;
+		}
+		catch { return null; }
+	}
+
+	private void EmitSectionRow(View view, List<double> xs, double y, int scale)
+	{
+		if (xs == null || xs.Count < 2) return;
+		var pts = new PointList();
+		foreach (double x in xs) pts.Add(new Point(x, y, 0.0));
+		try
+		{
+			var attrs = NewDimensionSetAttributes();
+			try { attrs.LoadAttributes("standard"); } catch { }
+			attrs.Color = DrawingColors.Green;
+			try { attrs.Text.Font.Color = DrawingColors.Yellow; } catch { }
+			try { attrs.Text.Font.Height = MinDimTextHeightMm; } catch { }
+			try { attrs.ShortDimension = Tekla.Structures.Drawing.DimensionSetBaseAttributes.ShortDimensionTypes.Outside; } catch { }
+			ApplyChainFormat(attrs, DimensionSetBaseAttributes.DimensionTypes.Relative);
+			_dims.CreateDimensionSet(view, pts, new Vector(0.0, 1.0, 0.0), 2.0, attrs);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Sections] thickness row: " + ex.Message);
 		}
 	}
 

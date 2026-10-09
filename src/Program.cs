@@ -307,6 +307,9 @@ namespace TeklaExtractor
                 // Mark repair opt-in only. Default = skip (manual props drawings have no magenta '?').
                 bool enableMarkRepair = args != null && HasFlag(args, "--enable-mark-repair");
                 bool preserveNativeDims = args != null && HasFlag(args, "--preserve-native-dims");
+                bool rebarMesh = args != null && HasFlag(args, "--rebar-mesh");
+                bool rebarMeshReplace = args != null && HasFlag(args, "--rebar-mesh-replace");
+                if (rebarMeshReplace) rebarMesh = true;
                 // --skip-mark-repair is the documented default; if both set, skip wins.
                 if (args != null && HasFlag(args, "--skip-mark-repair"))
                     enableMarkRepair = false;
@@ -325,8 +328,48 @@ namespace TeklaExtractor
                     Console.WriteLine("[Civil] --fit-stage=" + fitStage + " (stops after investigation stage; inspect UI for '?')");
                 if (preserveNativeDims)
                     Console.WriteLine("[Civil] --preserve-native-dims → skip rebuild when ≥8 native dim sets");
+                Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes? dimType = null;
+                string dimTypeRaw = FlagValue(args, "--dim-type");
+                if (!string.IsNullOrWhiteSpace(dimTypeRaw))
+                {
+                    switch (dimTypeRaw.Trim().ToLowerInvariant())
+                    {
+                        case "relabs":
+                            dimType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.RelativeAndAbsolute;
+                            break;
+                        case "allrelabove":
+                            dimType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.AbsoluteWithAllRelativesAbove;
+                            break;
+                        case "usabs":
+                            dimType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.USAbsolute;
+                            break;
+                        case "relative":
+                            dimType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.Relative;
+                            break;
+                        default:
+                            Console.WriteLine("[Civil] --dim-type expects relabs|allrelabove|usabs|relative (ignored: " + dimTypeRaw + ")");
+                            break;
+                    }
+                    if (dimType.HasValue)
+                        Console.WriteLine("[Civil] --dim-type " + dimType.Value + " on page-1 chains");
+                }
+                string fixturesDir = FlagValue(args, "--fixtures");
+                if (!string.IsNullOrWhiteSpace(fixturesDir))
+                {
+                    RegressionChecker.FixtureRoot = Path.GetFullPath(fixturesDir.Trim());
+                    Console.WriteLine("[Civil] --fixtures " + RegressionChecker.FixtureRoot);
+                }
+                string runTag = FlagValue(args, "--run-tag");
+                if (!string.IsNullOrWhiteSpace(runTag))
+                    RegressionChecker.RunTag = runTag.Trim();
+                bool logUnlistedEmbeds = args != null && HasFlag(args, "--log-unlisted-embeds");
                 int civilCode = new CivilDrawingBatchExtractor(tekla, baseDir, skipMacros, extractOnly, mark, selectedOnly, toRoot,
-                    preflightQa, enableMarkRepair, fitStage, preserveNativeDims).Run();
+                    preflightQa, enableMarkRepair, fitStage, preserveNativeDims, rebarMesh, rebarMeshReplace)
+                {
+                    DimType = dimType,
+                    DimTypeName = dimType.HasValue ? dimTypeRaw : null,
+                    LogUnlistedEmbeds = logUnlistedEmbeds
+                }.Run();
 
                 // Always bind that wall's 4–6 role PDFs into one fabrication booklet
                 // (same for --clean-mark recreate and --extract-only). Opt out: --no-booklet.
@@ -954,6 +997,16 @@ namespace TeklaExtractor
             Console.WriteLine("    --civil-drawings --mark W10-50 --clean-mark   delete that piece's old sheets first");
             Console.WriteLine("    --civil-drawings --extract-only  extract selected existing CU sheets (add --all to resume whole model)");
             Console.WriteLine("    --civil-drawings --extract-only --all --to-root   Sep-2 layout → Export/CivilDrawings/PDF");
+            Console.WriteLine("    --rebar-mesh            opt-in mesh on parts that have no bars yet");
+            Console.WriteLine("    --rebar-mesh-replace    with --rebar-mesh, delete existing bars first");
+            Console.WriteLine("    --dim-type <t>          page-1 chain style trial: relabs | allrelabove | usabs | relative");
+            Console.WriteLine("                            (page 1 also copied to <stem>__dimtype-<t>.pdf)");
+            Console.WriteLine("    --fixtures <dir>        regression fixtures root (default: tests/regression found upward)");
+            Console.WriteLine("    --run-tag <tag>         'run' column in regression_scores.csv (e.g. run1-baseline)");
+            Console.WriteLine("    --log-unlisted-embeds   log model embeds whose family is not on the sheet BOM");
+            Console.WriteLine("    (civil) preflight_<piece>.log in PDF folder: bent-bar shape/pin/legs, BBS qty, [RowClosure]");
+            Console.WriteLine("    (civil) qmarks_<piece>.log: '?' marks/texts + magenta symbols with model object (log only)");
+            Console.WriteLine("    (civil) [Regression] lines in preflight_<piece>.log + regression_scores.csv: page-1 rows vs fixture");
             Console.WriteLine("    (after civil) auto booklet: P22-132.<mark>.Rev 2.pdf from _-_1…_-_4 sheets; --no-booklet to skip");
             Console.WriteLine("    --skip-mark-repair      default: Fit does NOT rewrite marks (safe; manual drawings have no '?')");
             Console.WriteLine("    --enable-mark-repair    opt-in: run RepairBrokenPartMarks (TextElement rewrite)");

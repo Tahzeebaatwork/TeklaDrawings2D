@@ -97,6 +97,46 @@ dotnet run -c Release -p:Platform=x64 -- --civil-drawings --mark W10-175 --clean
 | `--to-root` | Write under `Export/CivilDrawings` root `PDF/` |
 | `--enable-mark-repair` | Opt-in mark rewrite (off by default) |
 | `--preflight-qa` | Fail run if Fit margins / tape conservation fail |
+| `--dim-type <t>` | Page-1 chain style trial: `relabs`, `allrelabove`, `usabs`, `relative`; page 1 is also saved as `<stem>__dimtype-<t>.pdf` |
+| `--fixtures <dir>` | Regression fixtures root (default: `tests/regression`, found by searching upward) |
+| `--run-tag <tag>` | Value of the `run` column in `regression_scores.csv` (e.g. `run1-baseline`) |
+| `--log-unlisted-embeds` | Log model embeds whose family is not on the sheet BOM (never drawn) |
+
+Every civil run writes `PDF/preflight_<piece>.log` before the sheets are touched: bent bars with an empty or Unknown shape, a missing pin, or legs shorter than the cut length; placing-view rebar count vs the BBS (bent bars by mark, straights by size + length such as `10M-STR 3120`); and `[RowClosure]` lines for any chain whose per-segment rounded sum is off the rounded panel length (`within-1` for 1 mm, `MISS` beyond). It only logs. Nothing on the drawing is adjusted to close a gap.
+
+### Regression scoring
+
+Fixtures live in `tests/regression/tuning/` (W10-78, W10-175: rules are tuned on these) and `tests/regression/holdout/` (W10-8, W10-12: test only, never tuned against). Each holds the engineer PDF's page-1 rows, and optionally `sections[]`, `rebar{}`, `title{}` and `bom{}`. A row whose segments don't sum to `lengthMm` (within `sumTol`) is logged `FIXTURE-ERROR` and left out of the score.
+
+A civil run adds to `preflight_<piece>.log`:
+
+- `[Classify]` / `[Cluster]` / `[P300]`: every part and cut on page 1 with family (and which attribute gave it: `PART_POS`, `NAME`, `PROFILE`, `ASSEMBLY_POS`), face, Z range, recess and row key.
+- `[HeightCol]`: the per-row height columns (below), with every rule decision: skipped rows and why, shared columns, side and reason, step and overflow drops, and each hardware item's z min / centre / max.
+- `[Regression]`: the dimension sets actually drawn on page 1, read back and scored per fixture row (`PASS`, `PASS-within-1`, `KNOWN-DEVIATION`, `FAIL`, `FAIL side`, `MISSING`, `EXTRA`), with one summary line appended to `regression_scores.csv` next to the `PDF` folder. `[Regression] HCOL` lines score the height columns against fixture `heights[]` (set `<set>:heights`).
+
+### Page-1 height columns
+
+Each page-1 row whose features sit at their own heights gets an absolute vertical column from Z=0 through those heights to the panel top, joined to its row by a connector line (tagged `TX_ROLE=HCOL`, so re-runs delete only these). The rules come from model geometry only:
+
+- Cuts, reveals and NO PAINT give the ends of their Z ranges; hardware gives one reference height per item (`HardwareHeightRef`, default centre).
+- `PROFILE OVERALL` always has a column. A hardware row whose items all touch the top or bottom edge has none (its height is the edge; the product length is in the label). Rows with identical columns share one.
+- Side: the panel end nearer the row's nearest feature; ties go to the side with more room (`HeightColumnSideRule`). Outer rows get outer columns, so connectors never cross. 10 mm step, 7 mm floor, innermost hardware columns dropped first on overflow.
+- When columns are placed, the old single Side A/B chains are skipped on page 1.
+
+Fixture rows may carry `heights[]` (with a top-level `heightMm`; either reading direction is accepted) and an info-only `heightSide`.
+- `qmarks_<piece>.log`: every `?` mark/text and magenta symbol with its related model object. Nothing is deleted.
+
+The exported PDFs are scored for what the API cannot read back (rotated absolutes, height columns and whether their `0` printed, A-A numbers, rebar spacing strings and callouts, title-block fields):
+
+```powershell
+python Scripts/check_pdf_targets.py --piece W10-78 --run-tag run1-baseline
+python Scripts/check_pdf_targets.py --pdf-dir "Export/CivilDrawings/PDF"          # every fixture
+python Scripts/check_pdf_targets.py --piece W10-78 --expect tests/regression/tuning/W10-78.json
+```
+
+It also scores every `<piece>_-_1__dimtype-<t>.pdf` trial and appends `set=pdf:<check>` lines to the same `regression_scores.csv`. The `28 DAY ... PSI` title target stays `KNOWN-DEVIATION (template)` until a PSI layout variant exists; the code only sets the `STRENGTH_UNIT` drawing property.
+
+Sheets are processed and collated as elevation, sections, rebar, BBS last. A piece with no separate sections sheet keeps A-A on page 1 and collates as 3 pages.
 
 ### What a successful placing run looks like (W10-175 - 2)
 
@@ -182,11 +222,15 @@ python Scripts\collate_production_booklet.py --mark W10-175
 | `src/Drawings/LocalDrawingMacroRunner.cs` | Copy `src/LocalMacros\` → model; `RunMacro` PG1/PG2/PG3/BM_SET |
 | `src/Civil/CivilDrawingBatchExtractor.cs` | Orchestrate create → role → Fit/Clean → extract → PDF |
 | `src/Drawings/PrecastDimensionPostProcessor.cs` | `Fit`, `CleanPlacing`, `CleanSections`, `CleanBbs`, bbox assert |
+| `src/Drawings/PrecastElevationRows.cs` | Page-1 feature catalog, (family, face, height) rows, BOM family gate, page-1 reader, `?` diagnostic |
+| `src/Drawings/PrecastHeightColumns.cs` | Page-1 per-row height columns, connectors and their purge |
+| `src/Drawings/RegressionChecker.cs` | Fixture loading, self-check and page-1 scoring → `regression_scores.csv` |
 | `src/Drawings/SheetRole.cs` | Mark/name → Hardware / Sections / Placing / BbsTable |
 | `src/Civil/*Extractor.cs` | GA / Erection / Shop / Connection / Rebar-BBS JSON |
 | `src/Drawings/DrawingGenerator.cs` | `PrintDrawing` → PDF (TS PDF Writer) |
 | `src/LocalMacros/SP_M.CU_PG*.cs` | Paisley shop macros (source of dense native dims) |
 | `Scripts/collate_production_booklet.py` | Optional multi-page PDF booklet |
+| `Scripts/check_pdf_targets.py` | Score exported PDFs against the fixtures (page 1, A-A, rebar, title) |
 
 ### Macros → 2-tier path (placing sheet)
 
