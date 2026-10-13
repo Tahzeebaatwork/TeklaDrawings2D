@@ -110,13 +110,13 @@ Fixtures live in `tests/regression/tuning/` (W10-78, W10-175: rules are tuned on
 
 A civil run adds to `preflight_<piece>.log`:
 
-- `[Classify]` / `[Cluster]` / `[P300]`: every part and cut on page 1 with family (and which attribute gave it: `PART_POS`, `NAME`, `PROFILE`, `ASSEMBLY_POS`), face, Z range, recess and row key.
+- `[Classify]` / `[Cluster]` / `[P300]`: every part and cut on page 1 with family (and which attribute gave it: `PART_POS`, `NAME`, `PROFILE`, `ASSEMBLY_POS`), face, Z range, recess and row key. A cut named `FALSE JOINT` is classed `FALSEJOINT` and a cut named `DRIP` is classed `DRIP`; both are logged with `strip=yes/no` and are not dimensioned. A hole is only a cut named `HOLE`, `SLEEVE`, `BLOCKOUT` or `CUTPART`.
 - `[HeightCol]`: the per-row height columns (below), with every rule decision: skipped rows and why, shared columns, side and reason, step and overflow drops, and each hardware item's z min / centre / max.
 - `[Regression]`: the dimension sets actually drawn on page 1, read back and scored per fixture row (`PASS`, `PASS-within-1`, `KNOWN-DEVIATION`, `FAIL`, `FAIL side`, `MISSING`, `EXTRA`), with one summary line appended to `regression_scores.csv` next to the `PDF` folder. `[Regression] HCOL` lines score the height columns against fixture `heights[]` (set `<set>:heights`).
 
 ### Page-1 height columns
 
-Each page-1 row whose features sit at their own heights gets an absolute vertical column from Z=0 through those heights to the panel top, joined to its row by a connector line (tagged `TX_ROLE=HCOL`, so re-runs delete only these). The rules come from model geometry only:
+Each page-1 row whose features sit at their own heights gets an absolute vertical column from Z=0 through those heights to the panel top, joined to its row by a connector line (tagged `TX_ROLE=HCOL`, so re-runs delete only these). `--hcol-type relative` draws the same columns as segment values; the default is `absolute`. The rules come from model geometry only:
 
 - Cuts, reveals and NO PAINT give the ends of their Z ranges; hardware gives one reference height per item (`HardwareHeightRef`, default centre).
 - `PROFILE OVERALL` always has a column. A hardware row whose items all touch the top or bottom edge has none (its height is the edge; the product length is in the label). Rows with identical columns share one.
@@ -125,6 +125,7 @@ Each page-1 row whose features sit at their own heights gets an absolute vertica
 
 Fixture rows may carry `heights[]` (with a top-level `heightMm`; either reading direction is accepted) and an info-only `heightSide`.
 - `qmarks_<piece>.log`: every `?` mark/text and magenta symbol with its related model object. Nothing is deleted.
+- `[CoordCheck]` (only with `--coord-check`): view scale and coordinate systems, bbox ratios, handedness, layout budget, the `SelectScale` candidates, every page-1 dimension set read back after a commit, the model objects behind each row, and the height-column points. One row per item goes to `coordcheck_<runtag>.csv`. `--coord-probe` adds a calibration probe on scratch views (deleted again), and `--coord-probe-keep` leaves it in the drawing for the PDF. Summarise with `python Scripts/summarize_coordcheck.py --run-tag <tag>`; see `docs/investigation/coordcheck_diag1.md`. Each `--mark` run rewrites only its own piece's rows (probe rows only on a probe run) and swaps the file in atomically. Run one exe at a time, and give `--coord-probe-keep` its own tag (e.g. `diag1-keep`); a later normal `--clean-mark` run removes the kept probe views.
 
 The exported PDFs are scored for what the API cannot read back (rotated absolutes, height columns and whether their `0` printed, A-A numbers, rebar spacing strings and callouts, title-block fields):
 

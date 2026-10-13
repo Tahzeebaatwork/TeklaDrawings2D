@@ -149,6 +149,26 @@ namespace TeklaExtractor.Services
             return SheetRole.Unknown;
         }
 
+        /// <summary>Document Manager suffix: 1 hardware, 2 placing, 3 table, 4 sections.</summary>
+        public static SheetRole RoleForSheetNumber(int sheetNumber)
+        {
+            if (sheetNumber == 1) return SheetRole.Hardware;
+            if (sheetNumber == 2) return SheetRole.Placing;
+            if (sheetNumber == 3) return SheetRole.BbsTable;
+            if (sheetNumber == 4) return SheetRole.Sections;
+            return SheetRole.Unknown;
+        }
+
+        /// <summary>True when the suffix is n, or the name/suffix role is the role that belongs to n.</summary>
+        public static bool MatchesOnlySheet(string mark, string name, int sheetNumber)
+        {
+            SheetRole want = RoleForSheetNumber(sheetNumber);
+            if (want == SheetRole.Unknown) return false;
+            int? suffix = SuffixNumber(NormalizeMark(mark));
+            if (suffix == sheetNumber) return true;
+            return Resolve(mark, name) == want;
+        }
+
         public static SheetRole Resolve(string mark, string name)
         {
             int? suffix = SuffixNumber(NormalizeMark(mark));

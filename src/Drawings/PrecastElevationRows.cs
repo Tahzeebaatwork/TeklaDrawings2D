@@ -21,17 +21,14 @@ namespace TeklaExtractor.Services;
 /// </summary>
 public partial class PrecastDimensionPostProcessor
 {
-	/// <summary>Within one (family, face), a new height cluster starts above this gap.</summary>
-	private const double HeightClusterGapMm = 100.0;
-
 	/// <summary>Cut edges within this distance of a panel edge or end count as touching it.</summary>
 	private const double EdgeTouchMm = 10.0;
 
 	/// <summary>An item within this distance of exactly one face plane is a face item (T or B).</summary>
 	private const double FaceTouchMm = 5.0;
 
-	/// <summary>Elevated cuts smaller than this (largest side) are holes, otherwise openings.</summary>
-	private const double HoleMaxSideMm = 900.0;
+	/// <summary>A cut is a strip when its long side is at least this many times its short side. Logged only; the class comes from the name.</summary>
+	private const double StripAspectMin = 10.0;
 
 	/// <summary>Strips narrower than this along the panel give one centre station, not two edges.</summary>
 	private const double StripCentreMaxMm = 50.0;
@@ -41,12 +38,6 @@ public partial class PrecastDimensionPostProcessor
 	/// meaning in the API; Run 1's [Classify] lines for EB-S-PL decide this.
 	/// </summary>
 	private const bool TopFaceIsMaxDepth = true;
-
-	/// <summary>
-	/// Role of the higher P-300 cluster when the family splits by height and neither sits in a recess.
-	/// The W10-175 PDF implies HARDWARE is higher; Run 1's [Cluster] lines confirm or flip it.
-	/// </summary>
-	private const string P300HigherClusterRole = "HARDWARE";
 
 	/// <summary>Opt-in (--log-unlisted-embeds): log model embeds missing from the BOM. Never draws.</summary>
 	public bool LogUnlistedEmbeds { get; set; }
@@ -68,6 +59,12 @@ public partial class PrecastDimensionPostProcessor
 		public string FamilySource = "";
 		public string Label = "";
 		public string Name = "";
+		/// <summary>Read once in AddCatalogPart. ClassifyCatalog must not call the profile API again.</summary>
+		public string Profile = "";
+		public string Description = "";
+		public string Component = "";
+		public string Finish = "";
+		public string Surface = "";
 		public int Id;
 		public double Left;
 		public double Right;
@@ -90,6 +87,7 @@ public partial class PrecastDimensionPostProcessor
 		public readonly List<PanelFeature> Items = new List<PanelFeature>();
 		public readonly HashSet<int> Seen = new HashSet<int>();
 		public int MaxDepth;
+		public int PaintHits;
 		public IEnumerable<PanelFeature> Hardware => Items.Where(i => i.Kind == "hardware");
 	}
 
@@ -114,6 +112,8 @@ public partial class PrecastDimensionPostProcessor
 
 	private FeatureCatalog BuildFeatureCatalog(Tekla.Structures.Model.Part main, PanelAxis axis, View front)
 	{
+		using (StageTimer.Begin("BuildFeatureCatalog"))
+		{
 		var cat = new FeatureCatalog();
 		if (main == null || axis == null) return cat;
 		int mainId = 0;
@@ -124,6 +124,7 @@ public partial class PrecastDimensionPostProcessor
 		try { booleans = main.GetBooleans(); } catch { }
 		while (booleans != null && booleans.MoveNext())
 		{
+			StageTimer.Note(cat.Seen.Count + 1);
 			if (!(booleans.Current is BooleanPart bp) || bp.OperativePart == null) continue;
 			AddCatalogPart(cat, bp.OperativePart, axis, fromBoolean: true);
 		}
@@ -139,6 +140,7 @@ public partial class PrecastDimensionPostProcessor
 			try { en = front.GetModelObjects(); } catch { }
 			while (en != null && en.MoveNext())
 			{
+				StageTimer.Note(cat.Seen.Count + 1);
 				if (!(en.Current is Tekla.Structures.Drawing.ModelObject dmo)) continue;
 				Tekla.Structures.Model.ModelObject mo = null;
 				try { mo = _model.SelectModelObject(dmo.ModelIdentifier); } catch { }
@@ -147,7 +149,10 @@ public partial class PrecastDimensionPostProcessor
 		}
 
 		ClassifyCatalog(cat, axis);
+		if (cat.PaintHits == 0)
+			Console.WriteLine("[Paint] none (NO PAINT row stays empty)");
 		return cat;
+		}
 	}
 
 	/// <summary>Secondaries, then every sub-assembly down the tree (embeds inside sub-assemblies count).</summary>
@@ -192,21 +197,43 @@ public partial class PrecastDimensionPostProcessor
 		int id = 0;
 		try { id = part.Identifier.ID; } catch { }
 		if (id != 0 && !cat.Seen.Add(id)) return;
+		StageTimer.Note(cat.Seen.Count);
 		Solid solid = null;
 		try { solid = part.GetSolid(); } catch { }
 		if (solid?.MinimumPoint == null || solid.MaximumPoint == null) return;
 		if (!axis.LocalBox(solid.MinimumPoint, solid.MaximumPoint, out double[] lo, out double[] hi)) return;
 		double max = axis.Min + axis.Span;
 		if (hi[0] < axis.Min - 1.0 || lo[0] > max + 1.0) return;
-		string label = PartLabel(part);
-		string name = "";
-		try { name = (part.Name ?? "").ToUpperInvariant(); } catch { }
+		string rawName = "";
+		try { rawName = part.Name ?? ""; } catch { }
+		string profile = "";
+		try { profile = part.Profile?.ProfileString ?? ""; } catch { }
+		string partPos = "", assemblyPos = "", description = "", finish = "", surface = "";
+		try { part.GetReportProperty("PART_POS", ref partPos); } catch { }
+		try { part.GetReportProperty("ASSEMBLY_POS", ref assemblyPos); } catch { }
+		try { part.GetReportProperty("DESCRIPTION", ref description); } catch { }
+		try { part.GetReportProperty("FINISH", ref finish); } catch { }
+		try { part.GetReportProperty("SURFACE_TREATMENT", ref surface); } catch { }
+		string component = "";
+		try
+		{
+			Tekla.Structures.Model.BaseComponent father = part.GetFatherComponent();
+			if (father != null) component = father.Name ?? "";
+		}
+		catch { }
+		string name = rawName.ToUpperInvariant();
+		string label = (rawName + " " + partPos + " " + assemblyPos + " " + profile).ToUpperInvariant();
 		var f = new PanelFeature
 		{
 			Id = id,
 			Part = part,
 			Label = label,
 			Name = name,
+			Profile = profile,
+			Description = description ?? "",
+			Component = component ?? "",
+			Finish = finish ?? "",
+			Surface = surface ?? "",
 			Left = Math.Max(lo[0], axis.Min),
 			Right = Math.Min(hi[0], max),
 			ZMin = Math.Max(lo[1], 0.0),
@@ -215,7 +242,7 @@ public partial class PrecastDimensionPostProcessor
 			DMax = Math.Min(hi[2], axis.DepthMax)
 		};
 		string text = label + " " + name;
-		string family = FamilyOf(part, name, out string familySource);
+		string family = FamilyOf(name, profile, partPos, assemblyPos, out string familySource);
 		if (text.Contains("NO PAINT") || text.Contains("NOPAINT") || text.Contains("PAINT ZONE") || text.Contains("PAINT BOUND"))
 			f.Kind = "nopaint";
 		else if (text.Contains("RECESS"))
@@ -237,19 +264,99 @@ public partial class PrecastDimensionPostProcessor
 		else
 			f.Kind = "unclassified";
 		cat.Items.Add(f);
+		LogPartFields(cat, f, partPos, fromBoolean);
+		if (Mentions(partPos, rawName, profile, "GT76"))
+			LogGt76Children(cat, part, axis);
+	}
+
+	private static void LogPartFields(FeatureCatalog cat, PanelFeature f, string partPos, bool fromBoolean)
+	{
+		if (string.Equals(f.Family, "P-300", StringComparison.OrdinalIgnoreCase)
+			|| Mentions(partPos, f.Name, f.Profile, "P-300"))
+		{
+			Console.WriteLine("[P300] id=" + f.Id
+				+ " partPos='" + (partPos ?? "") + "' name='" + f.Name.Trim()
+				+ "' profile='" + (f.Profile ?? "") + "' description='" + f.Description.Trim()
+				+ "' component='" + f.Component.Trim()
+				+ "' x=" + Mm(f.Left) + ".." + Mm(f.Right)
+				+ " z=" + Mm(f.ZMin) + ".." + Mm(f.ZMax));
+		}
+		if (Mentions(partPos, f.Name, f.Profile, "GT76"))
+		{
+			Console.WriteLine("[GT76] id=" + f.Id
+				+ " partPos='" + (partPos ?? "") + "' name='" + f.Name.Trim()
+				+ "' profile='" + (f.Profile ?? "")
+				+ "' x=" + Mm(f.Left) + ".." + Mm(f.Right)
+				+ " z=" + Mm(f.ZMin) + ".." + Mm(f.ZMax)
+				+ " booleanChild=" + (fromBoolean ? "yes" : "no"));
+		}
+		LogPaintField(cat, f.Id, "NAME", f.Name);
+		LogPaintField(cat, f.Id, "PROFILE", f.Profile);
+		LogPaintField(cat, f.Id, "FINISH", f.Finish);
+		LogPaintField(cat, f.Id, "DESCRIPTION", f.Description);
+		if (!string.IsNullOrWhiteSpace(f.Surface))
+			LogPaintField(cat, f.Id, "SURFACE_TREATMENT", f.Surface, force: true);
+	}
+
+	private static void LogPaintField(FeatureCatalog cat, int id, string field, string text, bool force = false)
+	{
+		if (string.IsNullOrWhiteSpace(text)) return;
+		string upper = text.ToUpperInvariant();
+		if (!force && upper.IndexOf("PAINT", StringComparison.Ordinal) < 0
+			&& upper.IndexOf("FINISH", StringComparison.Ordinal) < 0
+			&& upper.IndexOf("TEXTURE", StringComparison.Ordinal) < 0)
+			return;
+		cat.PaintHits++;
+		Console.WriteLine("[Paint] id=" + id + " field=" + field + " text='" + text.Trim() + "'");
+	}
+
+	private static bool Mentions(string partPos, string name, string profile, string token)
+	{
+		return (partPos ?? "").IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0
+			|| (name ?? "").IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0
+			|| (profile ?? "").IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0;
+	}
+
+	/// <summary>Boolean children of a GT76 part are logged even when the assembly walk does not add them.</summary>
+	private static void LogGt76Children(FeatureCatalog cat, Tekla.Structures.Model.Part part, PanelAxis axis)
+	{
+		ModelObjectEnumerator booleans = null;
+		try { booleans = part.GetBooleans(); } catch { return; }
+		while (booleans != null && booleans.MoveNext())
+		{
+			if (!(booleans.Current is BooleanPart bp) || bp.OperativePart == null) continue;
+			Tekla.Structures.Model.Part child = bp.OperativePart;
+			int id = 0;
+			try { id = child.Identifier.ID; } catch { }
+			if (id != 0 && cat.Seen.Contains(id)) continue;
+			string childName = "", childProfile = "";
+			try { childName = child.Name ?? ""; } catch { }
+			try { childProfile = child.Profile?.ProfileString ?? ""; } catch { }
+			string x = "n/a", z = "n/a";
+			try
+			{
+				Solid solid = child.GetSolid();
+				if (solid?.MinimumPoint != null && solid.MaximumPoint != null
+					&& axis.LocalBox(solid.MinimumPoint, solid.MaximumPoint, out double[] lo, out double[] hi))
+				{
+					x = Mm(lo[0]) + ".." + Mm(hi[0]);
+					z = Mm(lo[1]) + ".." + Mm(hi[1]);
+				}
+			}
+			catch { }
+			Console.WriteLine("[GT76] id=" + id
+				+ " partPos='' name='" + childName.Trim() + "' profile='" + childProfile
+				+ "' x=" + x + " z=" + z + " booleanChild=yes");
+		}
 	}
 
 	/// <summary>
 	/// Family from the part's own mark first (PART_POS), then NAME, then PROFILE. ASSEMBLY_POS comes
 	/// last: for an embed inside a sub-assembly it is the parent's mark, not the part's.
 	/// </summary>
-	private static string FamilyOf(Tekla.Structures.Model.Part part, string upperName, out string source)
+	private static string FamilyOf(string upperName, string profile, string partPos, string assemblyPos, out string source)
 	{
 		var candidates = new List<Tuple<string, string>>();
-		string partPos = "", assemblyPos = "", profile = "";
-		try { part.GetReportProperty("PART_POS", ref partPos); } catch { }
-		try { profile = part.Profile?.ProfileString ?? ""; } catch { }
-		try { part.GetReportProperty("ASSEMBLY_POS", ref assemblyPos); } catch { }
 		candidates.Add(Tuple.Create("PART_POS", partPos));
 		candidates.Add(Tuple.Create("NAME", upperName));
 		candidates.Add(Tuple.Create("PROFILE", profile));
@@ -267,10 +374,14 @@ public partial class PrecastDimensionPostProcessor
 
 	private static void ClassifyCatalog(FeatureCatalog cat, PanelAxis axis)
 	{
+		using (StageTimer.Beat beat = StageTimer.Begin("ClassifyCatalog", cat.Items.Count))
+		{
 		double max = axis.Min + axis.Span;
 		double h = axis.Height;
+		int itemNo = 0;
 		foreach (PanelFeature f in cat.Items)
 		{
+			beat.Item(++itemNo, cat.Items.Count);
 			bool touchMin = f.DMin <= axis.DepthMin + FaceTouchMm;
 			bool touchMax = f.DMax >= axis.DepthMax - FaceTouchMm;
 			if (touchMin != touchMax)
@@ -281,21 +392,22 @@ public partial class PrecastDimensionPostProcessor
 			bool top = h > 0.0 && f.ZMax >= h - EdgeTouchMm;
 			bool left = f.Left <= axis.Min + EdgeTouchMm;
 			bool right = f.Right >= max - EdgeTouchMm;
-			string n = f.Name + " " + f.Label;
-			if (bottom || top)
+			f.Side = bottom ? "bottom" : "top";
+			string n = (f.Name + " " + f.Label + " " + (f.Profile ?? "")).ToUpperInvariant();
+			if (n.Contains("FALSE JOINT") || n.Contains("FALSEJOINT"))
+				f.CutClass = "FALSEJOINT";
+			else if (n.Contains("DRIP"))
+				f.CutClass = "DRIP";
+			else if (n.Contains("HOLE") || n.Contains("SLEEVE") || n.Contains("BLOCKOUT") || n.Contains("CUTPART"))
+				f.CutClass = "HOLE";
+			else if (bottom || top)
 			{
-				f.Side = bottom ? "bottom" : "top";
 				if (left && right) f.CutClass = "LEDGE";
 				else if (left || right) f.CutClass = "NOTCH";
 				else f.CutClass = "OPENING";
 			}
 			else
-			{
-				f.Side = "top";
-				if (n.Contains("HOLE") || n.Contains("SLEEVE") || n.Contains("BLOCKOUT")) f.CutClass = "HOLE";
-				else if (n.Contains("OPENING") || n.Contains("WINDOW") || n.Contains("DOOR")) f.CutClass = "OPENING";
-				else f.CutClass = Math.Max(f.Right - f.Left, f.ZMax - f.ZMin) < HoleMaxSideMm ? "HOLE" : "OPENING";
-			}
+				f.CutClass = "OPENING";
 		}
 
 		List<PanelFeature> recesses = cat.Items.Where(i => i.Kind == "cut" && i.CutClass == "RECESS").ToList();
@@ -312,6 +424,7 @@ public partial class PrecastDimensionPostProcessor
 				break;
 			}
 		}
+		}
 	}
 
 	private static string Mm(double v) => Math.Round(v, 0, MidpointRounding.ToEven).ToString("0", CultureInfo.InvariantCulture);
@@ -320,27 +433,39 @@ public partial class PrecastDimensionPostProcessor
 
 	private List<CatalogRow> BuildCatalogRows(FeatureCatalog cat, PanelAxis axis, HashSet<string> families)
 	{
+		using (StageTimer.Beat beat = StageTimer.Begin("BuildCatalogRows", cat.Items.Count))
+		{
 		var rows = new List<CatalogRow>();
 		double h = axis.Height;
+		int g = 0;
 
-		// Hardware: (family, face, in-recess) then height clusters.
-		foreach (var grp in cat.Hardware.GroupBy(f => f.Family + "|" + f.Face + "|" + (f.InRecess ? f.RecessSize : "")))
+		// Hardware: one row per family + face + recess. Z is a height column, not a second row.
+		// A blank solid sitting inside a named sibling of the same family is not its own station.
+		List<PanelFeature> hardware = WithoutNestedBlanks(cat.Hardware.ToList());
+		foreach (var grp in hardware.GroupBy(f => f.Family + "|" + f.Face + "|" + (f.InRecess ? f.RecessSize : "")))
 		{
-			PanelFeature first = grp.First();
+			beat.Item(++g, cat.Items.Count);
+			List<PanelFeature> members = grp.ToList();
+			PanelFeature first = members[0];
 			if (families == null || !BomHasFamily(families, new[] { first.Family }))
 			{
 				Console.WriteLine("[Elev] skip hardware '" + first.Family + "': not in " + (families == null ? "any source" : "BOM/model family list"));
 				continue;
 			}
-			List<List<PanelFeature>> clusters = HeightClusters(grp.ToList());
-			for (int c = 0; c < clusters.Count; c++)
+			bool p300 = string.Equals(first.Family, "P-300", StringComparison.OrdinalIgnoreCase);
+			bool split = p300 && P300TextsDiffer(members);
+			List<List<PanelFeature>> subsets = split
+				? members.GroupBy(f => (f.Description ?? "").Trim() + "|" + (f.Component ?? "").Trim()).Select(s => s.ToList()).ToList()
+				: new List<List<PanelFeature>> { members };
+			for (int c = 0; c < subsets.Count; c++)
 			{
-				List<PanelFeature> cl = clusters[c];
+				List<PanelFeature> cl = subsets[c];
+				PanelFeature head = cl[0];
 				var row = new CatalogRow
 				{
 					Kind = "hardware",
-					Face = first.Face,
-					Families = { first.Family },
+					Face = head.Face,
+					Families = { head.Family },
 					Stations = cl.Select(f => f.Station).ToList(),
 					Items = cl
 				};
@@ -348,21 +473,38 @@ public partial class PrecastDimensionPostProcessor
 				row.MedianZ = med;
 				row.IsBottom = h > 0.0 && med < h / 2.0;
 				row.EdgeDistance = row.IsBottom ? med : h - med;
-				row.BaseLabel = first.InRecess
-					? first.Family + " HARDWARE W/ RECESS " + first.RecessSize
-					: first.Family;
+				row.BaseLabel = HardwareLabel(head, split);
 				rows.Add(row);
-				PreflightQaChecker.Append(_pdfDir, _activePiece, "[Cluster] " + first.Family + " face=" + (first.Face.Length > 0 ? first.Face : "-")
-					+ " k=" + (c + 1) + "/" + clusters.Count + " z=" + Mm(cl.Min(f => f.ZMin)) + ".." + Mm(cl.Max(f => f.ZMax))
-					+ " median=" + Mm(med) + " recess=" + (first.InRecess ? first.RecessSize : "no")
+				if (p300 && !split)
+					Console.WriteLine("[P300] keep stations reason=same description count="
+						+ cl.Count.ToString(CultureInfo.InvariantCulture)
+						+ " stations=" + string.Join("|", row.Stations.OrderBy(s => s).Select(Mm)));
+				if (head.Family.StartsWith("GT100", StringComparison.OrdinalIgnoreCase))
+				{
+					foreach (PanelFeature tube in cl.OrderBy(f => f.Station))
+						Console.WriteLine("[GT100] id=" + tube.Id.ToString(CultureInfo.InvariantCulture)
+							+ " name='" + (tube.Name ?? "").Trim() + "' profile='" + (tube.Profile ?? "")
+							+ "' x=" + Mm(tube.Left) + ".." + Mm(tube.Right)
+							+ " station=" + Mm(tube.Station)
+							+ " z=" + Mm(tube.ZMin) + ".." + Mm(tube.ZMax)
+							+ " row='" + row.BaseLabel + "'");
+				}
+				if (head.Family.StartsWith("GT76", StringComparison.OrdinalIgnoreCase))
+					Console.WriteLine("[GT76] row count=" + cl.Count.ToString(CultureInfo.InvariantCulture)
+						+ " ids=" + string.Join(",", cl.Select(f => f.Id.ToString(CultureInfo.InvariantCulture)))
+						+ " stations=" + string.Join("|", row.Stations.OrderBy(s => s).Select(Mm)));
+				PreflightQaChecker.Append(_pdfDir, _activePiece, "[Cluster] " + head.Family + " face=" + (head.Face.Length > 0 ? head.Face : "-")
+					+ " k=" + (c + 1) + "/" + subsets.Count + " z=" + Mm(cl.Min(f => f.ZMin)) + ".." + Mm(cl.Max(f => f.ZMax))
+					+ " median=" + Mm(med) + " recess=" + (head.InRecess ? head.RecessSize : "no")
+					+ " description='" + (head.Description ?? "").Trim() + "' component='" + (head.Component ?? "").Trim() + "'"
 					+ " stations=" + string.Join("|", row.Stations.OrderBy(s => s).Select(Mm)));
 			}
 		}
-		NameHardwareRoles(rows);
 
 		// Cuts: one row per (class, side). Recesses stay with the notch/recess dims.
-		foreach (var grp in cat.Items.Where(i => i.Kind == "cut" && i.CutClass != "RECESS" && i.CutClass.Length > 0).GroupBy(i => i.CutClass + "|" + i.Side))
+		foreach (var grp in cat.Items.Where(i => i.Kind == "cut" && i.CutClass != "RECESS" && i.CutClass != "FALSEJOINT" && i.CutClass != "DRIP" && i.CutClass.Length > 0).GroupBy(i => i.CutClass + "|" + i.Side))
 		{
+			beat.Item(++g, cat.Items.Count);
 			List<PanelFeature> cuts = grp.ToList();
 			var row = new CatalogRow
 			{
@@ -376,9 +518,32 @@ public partial class PrecastDimensionPostProcessor
 			rows.Add(row);
 		}
 
-		// Reveals by face, NO PAINT as one row; both by median height.
-		foreach (var grp in cat.Items.Where(i => i.Kind == "reveal").GroupBy(i => i.Face))
-			rows.Add(GeometryRow("reveal", "REVEAL", grp.Key, grp.ToList(), h));
+		// Vertical false-joint centres are the REVEAL chain. The named reveal solid stays
+		// only when the model has no vertical false joint.
+		var verticalJoints = new List<PanelFeature>();
+		foreach (PanelFeature f in cat.Items.Where(i => i.CutClass == "FALSEJOINT"))
+		{
+			double width = f.Right - f.Left;
+			double height = f.ZMax - f.ZMin;
+			bool vertical = height > width + 1.0;
+			Console.WriteLine("[Reveal] falsejoint id=" + f.Id.ToString(CultureInfo.InvariantCulture)
+				+ " vertical=" + (vertical ? "yes" : "no")
+				+ " centre=" + Mm(f.Station)
+				+ " width=" + Mm(width)
+				+ " x=" + Mm(f.Left) + ".." + Mm(f.Right)
+				+ " z=" + Mm(f.ZMin) + ".." + Mm(f.ZMax));
+			if (vertical) verticalJoints.Add(f);
+		}
+		if (verticalJoints.Count > 0)
+		{
+			foreach (var grp in verticalJoints.GroupBy(f => f.Face ?? ""))
+				rows.Add(GeometryRow("reveal", "REVEAL", grp.Key, grp.ToList(), h));
+		}
+		else
+		{
+			foreach (var grp in cat.Items.Where(i => i.Kind == "reveal").GroupBy(i => i.Face))
+				rows.Add(GeometryRow("reveal", "REVEAL", grp.Key, grp.ToList(), h));
+		}
 		List<PanelFeature> noPaint = cat.Items.Where(i => i.Kind == "nopaint").ToList();
 		if (noPaint.Count > 0)
 			rows.Add(GeometryRow("nopaint", "NO PAINT", "", noPaint, h));
@@ -389,7 +554,128 @@ public partial class PrecastDimensionPostProcessor
 				PreflightQaChecker.Append(_pdfDir, _activePiece, "[Elev] row empty: " + want + " (no matching geometry in the model)");
 		}
 
-		return MergeIdenticalRows(rows);
+		return AddSplicerUnionRows(MergeIdenticalRows(rows));
+		}
+	}
+
+	/// <summary>Lower rank is closer to the wall and is emitted first.</summary>
+	private static int StackRank(CatalogRow r)
+	{
+		if (r == null) return 100;
+		string l = (r.BaseLabel ?? "").ToUpperInvariant();
+		bool union = l.IndexOf(',') >= 0;
+		if (r.Kind == "hardware")
+		{
+			if (union) return 50;
+			if (l.StartsWith("P-205", StringComparison.Ordinal)) return 10;
+			if (l.StartsWith("SP25", StringComparison.Ordinal)) return 20;
+			if (l.StartsWith("GT76", StringComparison.Ordinal)) return 22;
+			if (l.StartsWith("SP30", StringComparison.Ordinal) || l.StartsWith("SP15", StringComparison.Ordinal)) return 30;
+			if (l.StartsWith("P-616", StringComparison.Ordinal) || l.StartsWith("P-602", StringComparison.Ordinal)) return 40;
+			if (l.StartsWith("P-300", StringComparison.Ordinal)) return 60;
+			if (l.IndexOf("1219", StringComparison.Ordinal) >= 0) return 5;
+			if (l.IndexOf("686", StringComparison.Ordinal) >= 0) return 15;
+			return 25;
+		}
+		if (l.IndexOf("REVEAL", StringComparison.Ordinal) >= 0) return 70;
+		if (l.IndexOf("HOLE", StringComparison.Ordinal) >= 0) return 80;
+		if (l.IndexOf("OPENING", StringComparison.Ordinal) >= 0) return 85;
+		if (l.IndexOf("LEDGE", StringComparison.Ordinal) >= 0) return 90;
+		if (l.IndexOf("NO PAINT", StringComparison.Ordinal) >= 0) return 95;
+		return 75;
+	}
+
+	private static bool IsPlainFamily(CatalogRow r, string token)
+	{
+		if (r == null || r.Kind != "hardware" || string.IsNullOrEmpty(token)) return false;
+		string l = r.BaseLabel ?? "";
+		if (l.IndexOf(',') >= 0) return false;
+		return l.StartsWith(token, StringComparison.OrdinalIgnoreCase)
+			|| r.Families.Any(f => f.StartsWith(token, StringComparison.OrdinalIgnoreCase));
+	}
+
+	/// <summary>
+	/// Adds a splicer+tube union row. The plain rows stay. A union that matches an existing chain is logged and not added.
+	/// </summary>
+	private List<CatalogRow> AddSplicerUnionRows(List<CatalogRow> rows)
+	{
+		if (rows == null) return rows;
+		var pairs = new[]
+		{
+			new[] { "SP25", "GT76" },
+			new[] { "SP15", "GT75" },
+			new[] { "SP30", "GT100" }
+		};
+		var added = new List<CatalogRow>();
+		foreach (string[] pair in pairs)
+		{
+			CatalogRow plain = rows.FirstOrDefault(r => IsPlainFamily(r, pair[0]));
+			List<CatalogRow> tubes = rows.Where(r => IsPlainFamily(r, pair[1])).ToList();
+			if (plain == null || tubes.Count != 1)
+			{
+				string skip = "[Merge] pair " + pair[0] + "+" + pair[1]
+					+ " plain=" + (plain == null ? "missing" : plain.BaseLabel)
+					+ " tubes=" + tubes.Count.ToString(CultureInfo.InvariantCulture);
+				Console.WriteLine(skip);
+				PreflightQaChecker.Append(_pdfDir, _activePiece, skip);
+				continue;
+			}
+			CatalogRow tube = tubes[0];
+			LogMergeStations(plain);
+			LogMergeStations(tube);
+			List<double> union = DistinctSorted(plain.Stations.Concat(tube.Stations).ToList());
+			CatalogRow same = rows.Concat(added).FirstOrDefault(r => SameStations(r.Stations, union));
+			if (same != null)
+			{
+				string eq = "[Merge] union " + pair[0] + "+" + pair[1] + " equals '" + same.BaseLabel + "'; kept; not deleted";
+				Console.WriteLine(eq);
+				PreflightQaChecker.Append(_pdfDir, _activePiece, eq);
+				continue;
+			}
+			var row = new CatalogRow
+			{
+				Kind = "hardware",
+				BaseLabel = SplicerTagLabel(pair[0]),
+				Face = plain.Face,
+				IsBottom = plain.IsBottom,
+				EdgeDistance = plain.EdgeDistance,
+				MedianZ = plain.MedianZ,
+				Stations = union,
+				Items = plain.Items.Concat(tube.Items).ToList()
+			};
+			row.Families.Add(pair[0]);
+			row.Families.Add(pair[1]);
+			added.Add(row);
+			string msg = "[Merge] added '" + row.BaseLabel + "' kept plain '" + plain.BaseLabel + "'";
+			Console.WriteLine(msg);
+			PreflightQaChecker.Append(_pdfDir, _activePiece, msg);
+			LogMergeStations(row);
+		}
+		rows.AddRange(added);
+		return rows;
+	}
+
+	private void LogMergeStations(CatalogRow row)
+	{
+		if (row == null) return;
+		if (row.Items != null && row.Items.Count > 0)
+		{
+			foreach (PanelFeature f in row.Items.OrderBy(i => i.Station))
+			{
+				string line = "[Merge] row='" + row.BaseLabel + "' station=" + Mm(f.Station)
+					+ " id=" + f.Id.ToString(CultureInfo.InvariantCulture)
+					+ " source=" + (f.Family ?? "");
+				Console.WriteLine(line);
+				PreflightQaChecker.Append(_pdfDir, _activePiece, line);
+			}
+			return;
+		}
+		foreach (double s in DistinctSorted(row.Stations))
+		{
+			string line = "[Merge] row='" + row.BaseLabel + "' station=" + Mm(s) + " id=none source=" + row.BaseLabel;
+			Console.WriteLine(line);
+			PreflightQaChecker.Append(_pdfDir, _activePiece, line);
+		}
 	}
 
 	private static IEnumerable<double> EdgeStations(PanelFeature f)
@@ -408,16 +694,60 @@ public partial class PrecastDimensionPostProcessor
 		return row;
 	}
 
-	private static List<List<PanelFeature>> HeightClusters(List<PanelFeature> items)
+	/// <summary>Blank-name solid whose X range sits inside a named part of the same family is not a station.</summary>
+	private static List<PanelFeature> WithoutNestedBlanks(List<PanelFeature> hardware)
 	{
-		var result = new List<List<PanelFeature>>();
-		foreach (PanelFeature f in items.OrderBy(i => i.ZMed))
+		var kept = new List<PanelFeature>();
+		foreach (PanelFeature f in hardware)
 		{
-			if (result.Count == 0 || f.ZMed - result[result.Count - 1].Last().ZMed > HeightClusterGapMm)
-				result.Add(new List<PanelFeature>());
-			result[result.Count - 1].Add(f);
+			bool blank = string.IsNullOrWhiteSpace(f.Name);
+			PanelFeature host = null;
+			if (blank)
+			{
+				host = hardware.FirstOrDefault(n => !string.IsNullOrWhiteSpace(n.Name)
+					&& string.Equals(n.Family, f.Family, StringComparison.OrdinalIgnoreCase)
+					&& f.Left >= n.Left - 1.0 && f.Right <= n.Right + 1.0
+					&& n.Id != f.Id);
+			}
+			if (host != null)
+			{
+				Console.WriteLine("[Elev] excluded nested blank id=" + f.Id + " inside id=" + host.Id
+					+ " family=" + f.Family + " x=" + Mm(f.Left) + ".." + Mm(f.Right));
+				continue;
+			}
+			kept.Add(f);
 		}
-		return result;
+		return kept;
+	}
+
+	private static bool P300TextsDiffer(List<PanelFeature> items)
+	{
+		var descriptions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+		var components = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+		foreach (PanelFeature f in items)
+		{
+			descriptions.Add((f.Description ?? "").Trim());
+			components.Add((f.Component ?? "").Trim());
+		}
+		return descriptions.Count > 1 || components.Count > 1;
+	}
+
+	private static string HardwareLabel(PanelFeature head, bool split)
+	{
+		if (string.Equals(head.Family, "P-205", StringComparison.OrdinalIgnoreCase))
+			return "P-205 LIFTERS";
+		if (string.Equals(head.Family, "P-300", StringComparison.OrdinalIgnoreCase))
+		{
+			if (head.InRecess)
+				return head.Family + " HARDWARE W/ RECESS " + head.RecessSize;
+			string label = "P-300 BRACING INSERTS";
+			if (split && !string.IsNullOrWhiteSpace(head.Description))
+				label += " " + head.Description.Trim();
+			return label;
+		}
+		if (head.InRecess)
+			return head.Family + " HARDWARE W/ RECESS " + head.RecessSize;
+		return head.Family;
 	}
 
 	private static double Median(IEnumerable<double> values)
@@ -425,29 +755,6 @@ public partial class PrecastDimensionPostProcessor
 		List<double> v = values.OrderBy(x => x).ToList();
 		if (v.Count == 0) return 0.0;
 		return v.Count % 2 == 1 ? v[v.Count / 2] : (v[v.Count / 2 - 1] + v[v.Count / 2]) / 2.0;
-	}
-
-	/// <summary>
-	/// P-205 = LIFTERS. P-300 outside a recess: one cluster = BRACING INSERTS; several = the higher one
-	/// takes P300HigherClusterRole, the rest the other role.
-	/// </summary>
-	private void NameHardwareRoles(List<CatalogRow> rows)
-	{
-		foreach (CatalogRow r in rows.Where(r => r.Kind == "hardware" && r.BaseLabel == "P-205"))
-			r.BaseLabel = "P-205 LIFTERS";
-		List<CatalogRow> p300 = rows.Where(r => r.Kind == "hardware" && r.BaseLabel == "P-300").ToList();
-		if (p300.Count == 0) return;
-		if (p300.Count == 1)
-		{
-			p300[0].BaseLabel = "P-300 BRACING INSERTS";
-			return;
-		}
-		string lowerRole = P300HigherClusterRole == "HARDWARE" ? "BRACING INSERTS" : "HARDWARE";
-		CatalogRow highest = p300.OrderByDescending(r => r.MedianZ).First();
-		foreach (CatalogRow r in p300)
-			r.BaseLabel = "P-300 " + (r == highest ? P300HigherClusterRole : lowerRole);
-		PreflightQaChecker.Append(_pdfDir, _activePiece, "[P300] " + p300.Count + " clusters; higher=" + P300HigherClusterRole
-			+ " (constant P300HigherClusterRole; check the [Cluster] z values against the PDF)");
 	}
 
 	/// <summary>Hardware rows on the same side and face with identical stations (±1 mm) become one chain.</summary>
@@ -502,6 +809,10 @@ public partial class PrecastDimensionPostProcessor
 		{
 			string key = f.Kind == "hardware" ? f.Family + "|" + (f.Face.Length > 0 ? f.Face : "-") + (f.InRecess ? "|recess" : "")
 				: f.Kind == "cut" ? f.CutClass + "|" + f.Side : f.Kind;
+			double along = f.Right - f.Left, rise = f.ZMax - f.ZMin;
+			bool strip = f.Kind == "cut" && along > 0.0 && rise > 0.0
+				&& Math.Max(along, rise) >= StripAspectMin * Math.Min(along, rise);
+			bool loggedOnly = f.Kind == "unclassified" || f.CutClass == "FALSEJOINT" || f.CutClass == "DRIP";
 			PreflightQaChecker.Append(_pdfDir, _activePiece, "[Classify] kind=" + f.Kind
 				+ " family=" + (f.Family.Length > 0 ? f.Family + " via " + f.FamilySource : "-")
 				+ " name='" + f.Name.Trim() + "' face=" + (f.Face.Length > 0 ? f.Face : "-")
@@ -510,8 +821,10 @@ public partial class PrecastDimensionPostProcessor
 				+ " depth=" + Mm(f.DMin - axis.DepthMin) + ".." + Mm(f.DMax - axis.DepthMin)
 				+ " recess=" + (f.InRecess ? f.RecessSize : "no")
 				+ " cut=" + (f.CutClass.Length > 0 ? f.CutClass : "-")
+				+ (f.Kind == "cut" ? " strip=" + (strip ? "yes" : "no") : "")
 				+ " rowkey=" + key
-				+ (f.Kind == "unclassified" ? " (logged only, never drawn) label='" + f.Label.Trim() + "'" : ""));
+				+ (loggedOnly ? " (logged only, not a dimension row)" : "")
+				+ (f.Kind == "unclassified" ? " label='" + f.Label.Trim() + "'" : ""));
 		}
 	}
 

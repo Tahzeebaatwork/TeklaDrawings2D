@@ -103,8 +103,19 @@ def words(text: str) -> list[str]:
 
 
 def drawing_area(page, lines):
+    """Canvas only: left of the BOM/title column and above the bottom title strip."""
     limit = page.rect.width * TITLE_COLUMN_FRACTION
-    return [ln for ln in lines if ln[1][0] < limit]
+    bottom = page.rect.height * 0.92
+    return [ln for ln in lines if ln[1][0] < limit and ln[1][1] < bottom]
+
+
+def whole_word(hay: str, needle: str) -> bool:
+    if not needle:
+        return False
+    return re.search(
+        r"(?<![A-Z0-9])" + re.escape(needle.upper()) + r"(?![A-Z0-9])",
+        (hay or "").upper(),
+    ) is not None
 
 
 def title_area(page, lines):
@@ -248,9 +259,22 @@ def check_page1(fixture: dict, pdf: Path, out: list[str]) -> Tally:
             result = "PASS" if diff < 0.5 else ("PASS-within-1" if diff <= 1.0 else "FAIL")
         else:
             result = "FAIL"
+        closure = abs(got[-1] - length) if got and length else None
+        first_diff = abs(got[0]) if got else None
+        if result.startswith("PASS") and (
+            (first_diff is not None and first_diff > 0.5)
+            or (closure is not None and closure > 1.0)
+        ):
+            result = "FAIL"
         if result == "FAIL" and known:
             result = "KNOWN-DEVIATION"
+        ends = ""
+        if got:
+            ends = f" first={got[0]:.0f} last={got[-1]:.0f}"
+            if closure is not None:
+                ends += f" closure={closure:.1f}"
         detail = "" if result == "PASS" else f"expected={fmt(want)} got={fmt(got)}"
+        detail = (detail + ends).strip()
         report(out, result, name, detail)
         tally.add(result)
     for j, (_, got) in enumerate(rows):
@@ -419,7 +443,7 @@ def check_sections(fixture: dict, pdfs: list[Path], out: list[str]) -> Tally:
         for v, n in need.items():
             pool[v] -= min(n, pool[v])
         tag_note = ""
-        if re.search(r"\d", tag) and tag.upper() not in blob:
+        if re.search(r"\d", tag) and not whole_word(blob, tag):
             tag_note = f" (tag '{tag}' not printed)"
         if short:
             result = "KNOWN-DEVIATION" if t.get("knownDeviation") else "FAIL"
@@ -428,6 +452,51 @@ def check_sections(fixture: dict, pdfs: list[Path], out: list[str]) -> Tally:
             result = "PASS"
             report(out, result, f"A-A {tag}", tag_note.strip())
         tally.add(result)
+    return tally
+
+
+def check_section_geometry(fixture: dict, pdfs: list[Path], out: list[str]) -> Tally:
+    """Chain closes on the panel height, no 1 mm piece, each tier sums to the thickness."""
+    tally = Tally()
+    targets = fixture.get("sections") or []
+    if not targets:
+        return tally
+    pool: set[float] = set()
+    for pdf in pdfs:
+        doc = fitz.open(pdf)
+        for page in doc:
+            for _, _, text in drawing_area(page, page_lines(page)):
+                pool.update(numbers_in(text))
+        doc.close()
+    overall = next((t for t in targets if str(t.get("tag", "")).upper() == "OVERALL"), None)
+    thickness = float(overall["segments"][0]) if overall and overall.get("segments") else None
+    for t in targets:
+        tag = str(t.get("tag", ""))
+        segs = [float(s) for s in (t.get("segments") or [])]
+        if any(0 < s < 2.0 for s in segs):
+            report(out, "FAIL", f"A-A {tag} min", "expected segment under 2")
+            tally.add("FAIL")
+        if tag.upper() in ("OVERALL", "HEIGHT") or thickness is None or len(segs) < 2:
+            continue
+        total = sum(segs)
+        ok = abs(total - thickness) <= 1.0
+        report(out, "PASS" if ok else "FAIL", f"A-A {tag} thickness",
+               f"sum={total:.0f} thickness={thickness:.0f}")
+        tally.add("PASS" if ok else "FAIL")
+    height = next((t for t in targets if str(t.get("tag", "")).upper() == "HEIGHT"), None)
+    if height and height.get("segments"):
+        segs = [float(s) for s in height["segments"]]
+        total = sum(segs)
+        found = any(abs(n - total) <= 1.0 for n in pool)
+        report(out, "PASS" if found else "FAIL", "A-A chain closure", f"height={total:.0f}")
+        tally.add("PASS" if found else "FAIL")
+        short = sorted(n for n in pool if 0 < n < 2.0)
+        if short:
+            report(out, "FAIL", "A-A min segment", "pdf has " + ",".join(f"{n:.0f}" for n in short[:8]))
+            tally.add("FAIL")
+        else:
+            report(out, "PASS", "A-A min segment", "")
+            tally.add("PASS")
     return tally
 
 
@@ -448,7 +517,7 @@ def check_rebar(fixture: dict, pdfs: list[Path], out: list[str]) -> Tally:
     report(out, "INFO", "rebar " + ", ".join(p.name for p in pdfs), f"lines={sum(lines.values())}")
 
     def occurrences(target: str) -> int:
-        return sum(n for line, n in lines.items() if target in line)
+        return sum(n for line, n in lines.items() if whole_word(line, target))
 
     for t in rebar.get("spacing", []):
         want = squash(t["text"])
@@ -493,6 +562,35 @@ def title_rows(page):
     if cur:
         rows.append(" ".join(t for _, t in sorted(cur)))
     return rows
+
+
+def check_sheet_text(fixture: dict, pdf: Path, out: list[str]) -> Tally:
+    """Whole-word checks. sheetText must appear; absentText must not. Page text, not a QA report."""
+    tally = Tally()
+    want = fixture.get("sheetText") or []
+    banned = fixture.get("absentText") or []
+    if not want and not banned:
+        return tally
+    doc = fitz.open(pdf)
+    blob = "\n".join(page.get_text("text") for page in doc)
+    doc.close()
+    for item in want:
+        text = item if isinstance(item, str) else str(item.get("text", ""))
+        if whole_word(blob, text):
+            report(out, "PASS", f"text '{text}'", "")
+            tally.add("PASS")
+        else:
+            report(out, "FAIL", f"text '{text}'", "not a whole word on the sheet")
+            tally.add("FAIL")
+    for item in banned:
+        text = item if isinstance(item, str) else str(item.get("text", ""))
+        if whole_word(blob, text):
+            report(out, "FAIL", f"absent '{text}'", "printed")
+            tally.add("FAIL")
+        else:
+            report(out, "PASS", f"absent '{text}'", "")
+            tally.add("PASS")
+    return tally
 
 
 def check_title(fixture: dict, pdf: Path, out: list[str]) -> Tally:
@@ -563,9 +661,12 @@ def check_piece(fixture_path: Path, pdf_dir: Path, csv_path: Path | None, run: s
         name = trial.stem.split("__dimtype-", 1)[1]
         checks.append((f"page1:{name}", check_page1(fixture, trial, out)))
         checks.append((f"heights:{name}", check_heights(fixture, trial, out)))
-    checks.append(("sections", check_sections(fixture, [p2] if p2 else [p1], out)))
+    section_pdfs = [p2] if p2 else [p1]
+    checks.append(("sections", check_sections(fixture, section_pdfs, out)))
+    checks.append(("sectionGeometry", check_section_geometry(fixture, section_pdfs, out)))
     checks.append(("rebar", check_rebar(fixture, rebar_pdfs or [p1], out)))
     checks.append(("title", check_title(fixture, p1, out)))
+    checks.append(("sheetText", check_sheet_text(fixture, p1, out)))
 
     for name, t in checks:
         if t.total() or t.c["extra"]:

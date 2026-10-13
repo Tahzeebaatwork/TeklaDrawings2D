@@ -203,7 +203,8 @@ namespace TeklaExtractor.Services
 				var box = new AABB(new Point(-80, -80, -500), new Point(80, 80, 500));
 				var view = new View(sheet, cs, cs, box);
 				view.Name = "A-A";
-				view.Attributes.Scale = 20;
+				view.Attributes.Scale = 50;
+				Console.WriteLine("[Sections] router inserted A-A at 1:50 (no section view was on the sheet)");
 				view.Origin = new Point(40.0, 40.0, 0.0);
 				if (!view.Insert()) return null;
 				return view;

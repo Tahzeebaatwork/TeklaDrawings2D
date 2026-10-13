@@ -34,6 +34,10 @@ public partial class PrecastDimensionPostProcessor
 	/// <summary>Heights closer than this merge into one level.</summary>
 	private const double HeightMergeMm = 5.0;
 
+	/// <summary>--hcol-type. Default Absolute, which is what the columns are drawn as until a PDF review says otherwise.</summary>
+	internal static DimensionSetBaseAttributes.DimensionTypes HeightColumnDimensionType { get; set; }
+		= DimensionSetBaseAttributes.DimensionTypes.Absolute;
+
 	private const string HeightConnectorTag = "TX_ROLE";
 	private const string HeightConnectorValue = "HCOL";
 
@@ -56,7 +60,7 @@ public partial class PrecastDimensionPostProcessor
 	/// Interior heights (above the panel bottom) of a row's features. Cuts, reveals and NO PAINT give their
 	/// Z range ends; hardware gives one reference height per item. Null + reason when the row gets no column.
 	/// </summary>
-	private List<double> RowHeights(CatalogRow row, double h, out string skip)
+	private List<double> RowHeights(CatalogRow row, double h, double? ledgeZ, out string skip)
 	{
 		skip = null;
 		var raw = new List<double>();
@@ -67,14 +71,17 @@ public partial class PrecastDimensionPostProcessor
 		}
 		if (row.Kind == "hardware")
 		{
-			bool allAtEdge = row.Items.All(f => f.ZMin <= EdgeTouchMm || f.ZMax >= h - EdgeTouchMm);
 			foreach (PanelFeature f in row.Items)
 				PreflightQaChecker.Append(_pdfDir, _activePiece, "[HeightCol] item '" + row.Label + "' " + f.Family
 					+ " along=" + Mm(f.Station) + " z min=" + Mm(f.ZMin) + " centre=" + Mm(f.ZMed) + " max=" + Mm(f.ZMax)
 					+ " ref=" + HardwareHeightRef);
-			if (allAtEdge)
+			bool touchesBottom = row.Items.Any(f => f.ZMin <= EdgeTouchMm);
+			bool meetsLedge = ledgeZ.HasValue && row.Items.Any(f => f.ZMax >= ledgeZ.Value - EdgeTouchMm);
+			if (touchesBottom || meetsLedge)
 			{
-				skip = "every item touches the top or bottom edge (height is the edge; length is in the label)";
+				skip = touchesBottom
+					? "an item touches Z=0"
+					: "an item meets the ledge cut at z=" + Mm(ledgeZ.Value);
 				return null;
 			}
 			foreach (PanelFeature f in row.Items)
@@ -99,7 +106,7 @@ public partial class PrecastDimensionPostProcessor
 	}
 
 	/// <summary>Returns the number of columns placed. Zero means the caller keeps the old Side A/B chains.</summary>
-	private int PlaceHeightColumns(View view, PanelAxis axis, List<TierRow> top, List<TierRow> bottom, int scale, double bomLeftSheetMm)
+	private int PlaceHeightColumns(View view, PanelAxis axis, List<TierRow> top, List<TierRow> bottom, int scale, double bomLeftSheetMm, double labelRightView)
 	{
 		if (view == null || axis == null || axis.Height <= 1.0) return 0;
 		int sc = scale < 1 ? 1 : scale;
@@ -112,6 +119,23 @@ public partial class PrecastDimensionPostProcessor
 		if (wallH <= 10.0) return 0;
 		double toView = wallH / h;
 		string minEndSide = tl.X <= tr.X ? "left" : "right";
+
+		double? ledgeZ = null;
+		foreach (TierRow row in top.Concat(bottom))
+		{
+			if (row?.Source == null) continue;
+			bool ledge = string.Equals(row.Source.BaseLabel, "PROFILE LEDGE", StringComparison.OrdinalIgnoreCase)
+				|| row.Source.Items.Any(f => string.Equals(f.CutClass, "LEDGE", StringComparison.OrdinalIgnoreCase));
+			if (!ledge) continue;
+			foreach (PanelFeature f in row.Source.Items)
+			{
+				if (!string.Equals(f.CutClass, "LEDGE", StringComparison.OrdinalIgnoreCase)
+					&& !string.Equals(row.Source.BaseLabel, "PROFILE LEDGE", StringComparison.OrdinalIgnoreCase))
+					continue;
+				if (!ledgeZ.HasValue || f.ZMin < ledgeZ.Value) ledgeZ = f.ZMin;
+			}
+		}
+		Console.WriteLine("[HeightCol] ledgeZ=" + (ledgeZ.HasValue ? Mm(ledgeZ.Value) : "none"));
 
 		// Candidates, innermost row first within each stack.
 		var cols = new List<HeightColumn>();
@@ -130,10 +154,12 @@ public partial class PrecastDimensionPostProcessor
 				}
 				else
 				{
-					List<double> interior = RowHeights(row.Source, h, out string skip);
+					List<double> interior = RowHeights(row.Source, h, ledgeZ, out string skip);
 					if (skip != null)
 					{
 						PreflightQaChecker.Append(_pdfDir, _activePiece, "[HeightCol] no column for '" + row.Label + "': " + skip);
+						CoordLogHcolSkip(row.Label, skip);
+						LogHcolDetail(axis, row, "dropped", "", double.NaN, skip);
 						continue;
 					}
 					c.Interior = interior;
@@ -152,9 +178,15 @@ public partial class PrecastDimensionPostProcessor
 			{
 				twin.Merged.Add(c.Label);
 				PreflightQaChecker.Append(_pdfDir, _activePiece, "[HeightCol] '" + c.Label + "' shares the column of '" + twin.Label + "'");
+				LogHcolDetail(axis, c.Row, "dropped", c.Side ?? "", double.NaN, "shares column of " + twin.Label);
 				continue;
 			}
 			unique.Add(c);
+		}
+		foreach (TierRow missed in (top ?? new List<TierRow>()).Concat(bottom ?? new List<TierRow>()))
+		{
+			if (missed != null && !missed.Emitted)
+				LogHcolDetail(axis, missed, "dropped", "", double.NaN, "not emitted");
 		}
 		if (unique.Count == 0) return 0;
 
@@ -198,56 +230,102 @@ public partial class PrecastDimensionPostProcessor
 		}
 
 		int placed = 0;
+		string pitchLine = "[Hcol] pitch=" + EngineerColumnPitchMm.ToString("0.00", CultureInfo.InvariantCulture)
+			+ " source=Scripts/measure_page1_layout.py column_pitch_mm";
+		Console.WriteLine(pitchLine);
+		PreflightQaChecker.Append(_pdfDir, _activePiece, pitchLine);
+		using (StageTimer.Beat colBeat = StageTimer.Begin("PlaceHeightColumns", unique.Count))
+		{
+		int colIndex = 0;
 		foreach (string side in new[] { "left", "right" })
 		{
 			// Innermost first: outer rows get outer columns, so connectors nest instead of crossing.
 			List<HeightColumn> list = unique.Where(c => c.Side == side)
 				.OrderBy(c => c.Rank).ThenBy(c => c.IsOverall ? 1 : 0).ToList();
 			if (list.Count == 0) continue;
-			double avail = (side == "left" ? budgetL : budgetR) - VertFirstOffsetPaperMm;
-			double step = TierRowStepPaperMm;
-			if (list.Count > 1 && step * (list.Count - 1) > avail)
+			int sideDigits = 1;
+			foreach (HeightColumn item in list)
+				sideDigits = Math.Max(sideDigits, RowDigits(axis, item.Row));
+			double rotated = sideDigits * DimTextHeightMm * DigitWidthFactor;
+			double clearance = Math.Max(VertFirstOffsetPaperMm, rotated + RowTextGapMm);
+			double step = EngineerColumnPitchMm;
+			double first = clearance;
+			if (side == "right" && labelRightView > edgeR)
 			{
-				step = Math.Max(TierRowStepFloorPaperMm, avail / (list.Count - 1));
-				PreflightQaChecker.Append(_pdfDir, _activePiece, "[HeightCol] " + side + " step shrunk to "
-					+ step.ToString("0.#", CultureInfo.InvariantCulture) + " mm (" + list.Count + " columns, "
-					+ avail.ToString("0.#", CultureInfo.InvariantCulture) + " mm)");
+				double past = (labelRightView - edgeR) / sc + LabelGapMm;
+				if (past > first) first = past;
 			}
-			while (list.Count > 1 && step * (list.Count - 1) > avail + 0.01)
+			double need = first + Math.Max(0, list.Count - 1) * step;
+			double have = side == "left" ? budgetL : budgetR;
+			string clearLine = "[Hcol] clearance side=" + side
+				+ " mm=" + clearance.ToString("0.##", CultureInfo.InvariantCulture)
+				+ " rotated=" + rotated.ToString("0.##", CultureInfo.InvariantCulture);
+			Console.WriteLine(clearLine);
+			PreflightQaChecker.Append(_pdfDir, _activePiece, clearLine);
+			if (need > have + 0.5)
 			{
-				HeightColumn victim = list.FirstOrDefault(c => c.Kind == "hardware") ?? list.First(c => !c.IsOverall);
-				list.Remove(victim);
-				PreflightQaChecker.Append(_pdfDir, _activePiece, "[HeightCol] overflow: dropped '" + victim.Label + "' on " + side
-					+ " (innermost " + (victim.Kind == "hardware" ? "hardware" : "") + " column)");
+				_layoutLaneOverflow = true;
+				string fail = "[Layout] FAIL lanes side=" + side
+					+ " need=" + need.ToString("0.#", CultureInfo.InvariantCulture)
+					+ " have=" + have.ToString("0.#", CultureInfo.InvariantCulture);
+				Console.WriteLine(fail);
+				PreflightQaChecker.Append(_pdfDir, _activePiece, fail);
 			}
+			double innerX = side == "left" ? edgeL : edgeR;
 			for (int k = 0; k < list.Count; k++)
 			{
 				HeightColumn c = list[k];
 				var model = new List<double> { 0.0 };
 				model.AddRange(c.Interior);
 				model.Add(h);
-				if (ChainAlreadyEmitted(view, model, "HCOL")) continue;
+				if (ChainAlreadyEmitted(view, model, "HCOL"))
+				{
+					Console.WriteLine("[Hcol] dropped row='" + c.Label + "' reason=already emitted");
+					continue;
+				}
+				colBeat.Item(++colIndex, unique.Count);
 				bool left = side == "left";
 				double edgeX = left ? edgeL : edgeR;
-				double distPaper = VertFirstOffsetPaperMm + k * step;
+				double distPaper = first + k * step;
 				double distView = distPaper * sc;
 				double[] pts = model.Select(z => z <= 0.0 ? 0.0 : (z >= h ? wallH : z * toView)).ToArray();
 				StraightDimensionSet set = EmitVerticalDim(view, edgeX, bottomY, pts, new Vector(left ? -1.0 : 1.0, 0.0, 0.0),
-					distView, scale, DimensionSetBaseAttributes.DimensionTypes.Absolute);
+					distView, scale, HeightColumnDimensionType, "HCOL " + c.Label);
+				CoordLogHcol(view, c.Label, model, pts, edgeX, bottomY, HeightColumnDimensionType.ToString());
 				if (set == null)
 				{
+					Console.WriteLine("[Hcol] dropped row='" + c.Label + "' reason=create failed");
 					PreflightQaChecker.Append(_pdfDir, _activePiece, "[HeightCol] failed to create column for '" + c.Label + "'");
 					continue;
 				}
+				string hcol = "[Hcol] row='" + c.Label + "' side=" + side
+					+ " laneX=" + distPaper.ToString("0.##", CultureInfo.InvariantCulture)
+					+ " pitch=" + step.ToString("0.##", CultureInfo.InvariantCulture);
+				Console.WriteLine(hcol);
+				PreflightQaChecker.Append(_pdfDir, _activePiece, hcol);
+				LogHcolDetail(axis, c.Row, "placed", side, distPaper, c.SideReason);
 				placed++;
 				double xc = edgeX + (left ? -distView : distView);
+				double originX = view.Origin != null ? view.Origin.X : 0.0;
+				double laneSheetX = originX + xc / (double)sc;
+				_layoutLaneXs.Add(laneSheetX);
+				Console.WriteLine("[Layout] lane row='" + c.Label + "' x=" + laneSheetX.ToString("0.#", CultureInfo.InvariantCulture));
+				double bom = bomLeftSheetMm > 1.0 ? bomLeftSheetMm : BomFallbackLeft;
+				bool outside = laneSheetX < SheetBorderMarginMm || (!left && laneSheetX > bom - BomGap);
+				if (outside)
+				{
+					_layoutBorderHits++;
+					Console.WriteLine("[Layout] FAIL lanes row='" + c.Label + "' x="
+						+ laneSheetX.ToString("0.#", CultureInfo.InvariantCulture) + " outside border");
+				}
 				string connector = "none";
 				if (c.Row != null && c.Row.Emitted)
 				{
 					double yRow = c.IsBottom ? bottomY - c.Row.DistanceView : topY + c.Row.DistanceView;
 					double yEnd = c.IsBottom ? bottomY : topY;
 					bool a = InsertHeightConnector(view, new Point(xc, yEnd, 0.0), new Point(xc, yRow, 0.0));
-					bool b = InsertHeightConnector(view, new Point(xc, yRow, 0.0), new Point(edgeX, yRow, 0.0));
+					bool b = InsertHeightConnector(view, new Point(xc, yRow, 0.0), new Point(innerX, yRow, 0.0));
+					innerX = xc;
 					connector = (a && b) ? (c.IsBottom ? "down" : "up") + " to row" : "failed";
 				}
 				var segs = new List<string>();
@@ -263,7 +341,34 @@ public partial class PrecastDimensionPostProcessor
 		}
 		_fitAudit.VertChainsLeft = unique.Count(c => c.Side == "left");
 		_fitAudit.VertChainsRight = unique.Count(c => c.Side == "right");
+		}
 		return placed;
+	}
+
+	private void LogHcolDetail(PanelAxis axis, TierRow row, string state, string side, double laneX, string reason)
+	{
+		double c = 0.0;
+		int n = 0;
+		if (row?.Stations != null)
+		{
+			foreach (double s in row.Stations)
+			{
+				c += s;
+				n++;
+			}
+		}
+		if (n > 0) c /= n;
+		double origin = axis != null ? axis.Min : 0.0;
+		double span = axis != null ? axis.Span : 0.0;
+		string lane = double.IsNaN(laneX) ? "n/a" : laneX.ToString("0.##", CultureInfo.InvariantCulture);
+		string line = "[Hcol] " + state + " row='" + (row?.Label ?? "") + "' side=" + (side ?? "")
+			+ " centroid=" + Mm(c)
+			+ " toMin=" + Mm(c - origin)
+			+ " toMax=" + Mm(origin + span - c)
+			+ " laneX=" + lane
+			+ " reason=" + (reason ?? "");
+		Console.WriteLine(line);
+		PreflightQaChecker.Append(_pdfDir, _activePiece, line);
 	}
 
 	private bool InsertHeightConnector(View view, Point a, Point b)

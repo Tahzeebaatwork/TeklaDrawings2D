@@ -44,6 +44,15 @@ namespace TeklaExtractor.Services
         /// <summary>--log-unlisted-embeds: log model embeds whose family is not on the BOM.</summary>
         public bool LogUnlistedEmbeds { get; set; }
 
+        /// <summary>--only-sheet 1..4. Zero means every matching sheet.</summary>
+        public int OnlySheet { get; set; }
+
+        /// <summary>With --only-sheet and --clean-mark, recreate that one sheet. Otherwise leave it.</summary>
+        public bool OnlySheetRecreate { get; set; }
+
+        /// <summary>--skip-pdf. Fit still runs.</summary>
+        public bool SkipPdf { get; set; }
+
         public CivilDrawingBatchExtractor(TSModel.Model model, string baseDir, bool skipMacros = false,
             bool extractOnly = false, string markFilter = null, bool selectedOnly = false, bool toRoot = false,
             bool preflightQa = false, bool enableMarkRepair = false, int fitStage = 0, bool preserveNativeDims = false, bool rebarMesh = false, bool rebarMeshReplace = false)
@@ -71,6 +80,7 @@ namespace TeklaExtractor.Services
         public int Run()
         {
             _runStart = DateTime.Now;
+            PrecastDimensionPostProcessor.SheetBoundsFailed = false;
             EnsureOutputFolders();
 
             string log = CivilDrawingSupport.LogPath(_outputRoot);
@@ -95,6 +105,27 @@ namespace TeklaExtractor.Services
                 return 1;
 
             var runner = new LocalDrawingMacroRunner(_model, _outputRoot);
+            int onlyMatches = 0;
+            bool createOnlySheet = OnlySheetRecreate && OnlySheet > 0;
+            if (OnlySheet > 0 && !string.IsNullOrWhiteSpace(_markFilter))
+            {
+                onlyMatches = DrawingSheetCleaner.CountOnlySheet(_markFilter, OnlySheet, out List<string> listed);
+                if (onlyMatches > 1)
+                {
+                    Console.WriteLine("[OnlySheet] ERROR " + onlyMatches + " sheets match sheet=" + OnlySheet + "; run stopped");
+                    foreach (string line in listed)
+                        Console.WriteLine(line);
+                    return 1;
+                }
+                if (onlyMatches == 0)
+                {
+                    createOnlySheet = true;
+                    Console.WriteLine("[Civil] --only-sheet " + OnlySheet + " has no sheet; creating it");
+                }
+                else if (!createOnlySheet)
+                    Console.WriteLine("[Civil] --only-sheet " + OnlySheet + " uses the existing sheet; macros not started");
+            }
+            runner.OnlySheet = createOnlySheet ? OnlySheet : 0;
             int drawingsBefore = runner.CountDrawings();
             Console.WriteLine("[Civil] drawings before macros=" + drawingsBefore);
 
@@ -143,6 +174,10 @@ namespace TeklaExtractor.Services
                         Console.WriteLine("[Civil] extract restricted to " + _onlyDrawings.Count +
                             " Open API sheets (macro sheets excluded)");
                     }
+                }
+                else if (OnlySheet > 0 && !createOnlySheet)
+                {
+                    Console.WriteLine("[Civil] drawing create skipped (--only-sheet " + OnlySheet + " already exists)");
                 }
                 else
                 {
@@ -225,7 +260,7 @@ namespace TeklaExtractor.Services
             Console.WriteLine("[Civil] review → " + Path.Combine(_outputRoot, "index.html"));
             Console.WriteLine("[Civil] compare → " + Path.Combine(_civilRoot, "compare.html"));
             Console.WriteLine("[Civil] errors → " + log);
-            return _qaFailed ? 2 : 0;
+            return (_qaFailed || PrecastDimensionPostProcessor.SheetBoundsFailed) ? 2 : 0;
         }
 
         private void EnsureOutputFolders()
@@ -359,6 +394,23 @@ namespace TeklaExtractor.Services
                         continue;
                     }
 
+                    if (OnlySheet > 0)
+                    {
+                        string sheetName = "";
+                        try { sheetName = drawing.Name ?? ""; } catch { }
+                        if (!SheetRoleMap.MatchesOnlySheet(
+                            CivilDrawingSupport.FirstNonEmpty(drawingMark, pieceGuess), sheetName, OnlySheet))
+                        {
+                            skipped++;
+                            continue;
+                        }
+                        int? suffix = SheetRoleMap.SuffixNumber(drawingMark);
+                        SheetRole pickedRole = SheetRoleMap.Resolve(drawingMark, sheetName);
+                        Console.WriteLine("[OnlySheet] picked mark='" + drawingMark + "' name='" + sheetName
+                            + "' suffix=" + (suffix.HasValue ? suffix.Value.ToString() : "?")
+                            + " role=" + pickedRole);
+                    }
+
                     if (_extractOnly && _markFilter == null && AlreadyExtracted(pieceGuess, drawingMark))
                     {
                         skipped++;
@@ -390,6 +442,8 @@ namespace TeklaExtractor.Services
                     AgentLogSheetIdentity(drawing, pieceGuess, capture);
                     // #endregion
 
+                    StageTimer.Sheet = matched;
+                    using (StageTimer.Start("extractors", matched))
                     foreach (var type in types)
                     {
                         try
@@ -434,6 +488,14 @@ namespace TeklaExtractor.Services
                             ElevationDimensionType = DimType,
                             LogUnlistedEmbeds = LogUnlistedEmbeds
                         };
+                        StageTimer.Sheet = matched;
+                        string fitStage = role == SheetRole.Hardware || PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing) ? "Fit"
+                            : role == SheetRole.Sections || PrecastDimensionPostProcessor.IsSectionsSheet(drawing) ? "CleanSections"
+                            : role == SheetRole.Placing || PrecastDimensionPostProcessor.IsPlacingSheet(drawing) ? "CleanPlacing"
+                            : role == SheetRole.BbsTable || PrecastDimensionPostProcessor.IsBbsSheet(drawing) ? "CleanBbs"
+                            : "";
+                        using (fitStage.Length > 0 ? StageTimer.Start(fitStage, matched) : null)
+                        {
                         if (role == SheetRole.Hardware || PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))
                             fit = post.Fit(drawing);
                         else if (role == SheetRole.Sections || PrecastDimensionPostProcessor.IsSectionsSheet(drawing))
@@ -442,6 +504,7 @@ namespace TeklaExtractor.Services
                             post.CleanPlacing(drawing);
                         else if (role == SheetRole.BbsTable || PrecastDimensionPostProcessor.IsBbsSheet(drawing))
                             post.CleanBbs(drawing);
+                        }
                         if (fit != null && fit.Sheet2Updated)
                             ReprintSibling(printer, pdfDir, fit.SiblingMark);
                         if (_preflightQa && PrecastDimensionPostProcessor.IsHardwareShopSheet(drawing))
@@ -449,7 +512,14 @@ namespace TeklaExtractor.Services
                             if (!PrecastQaValidator.Evaluate(fit))
                                 _qaFailed = true;
                         }
-                        if (printer.ExportToPdf(drawing, pdfPath))
+                        bool pdfOkSheet = false;
+                        if (SkipPdf)
+                            Console.WriteLine("[Civil] --skip-pdf " + stem);
+                        else
+                        {
+                        using (StageTimer.Start("pdf", matched))
+                            pdfOkSheet = printer.ExportToPdf(drawing, pdfPath);
+                        if (pdfOkSheet)
                         {
                             pdfOk++;
                             Console.WriteLine("[Civil] PDF → " + pdfPath);
@@ -472,6 +542,7 @@ namespace TeklaExtractor.Services
                         {
                             dwgOk++;
                             Console.WriteLine("[Civil] DWG → " + dwgPath);
+                        }
                         }
                     }
                     catch (Exception ex)

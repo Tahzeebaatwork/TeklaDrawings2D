@@ -5,7 +5,7 @@
   "source": "Engineer Rev 2 PDF, page 1. Order: top stack outer to inner, bottom stack inner to outer.",
   "rows": [
     { "label": "PROFILE OVERALL", "side": "top", "order": 1, "segments": [9366] },
-    { "label": "PROFILE OPENING", "side": "top", "order": 2, "segments": [373, 975, 4928, 975, 2115], "note": "windows" },
+    { "label": "PROFILE OPENING", "side": "top", "order": 2, "segments": [373, 975, 4928, 975, 2115], "note": "windows. PDF prints PROFILE OPENING twice (this row and the notch row); the text does not show one merged chain, so the two rows stay." },
     { "label": "PROFILE HOLE", "side": "top", "order": 3, "segments": [8890, 203, 273] },
     { "label": "PROFILE LEDGE", "side": "top", "order": 4, "segments": [9366] },
     { "label": "P-602", "side": "top", "order": 5, "segments": [74, 9292] },
@@ -25,6 +25,8 @@
     { "label": "PROFILE OPENING", "side": "bottom", "order": 5, "segments": [2684, 1830, 4852], "note": "notch" },
     { "label": "NO PAINT", "side": "bottom", "order": 6, "segments": [1857, 229, 3065, 229, 3745, 241] }
   ],
+  "sheetText": ["REVEAL (B)", "PROFILE OPENING", "END 1", "END 2", "SIDE A", "SIDE B", "PAINT/STAIN #2", "PAINT/STAIN #3", "PAINT/STAIN #4", "PAINT/STAIN #5"],
+  "absentText": ["BCMBD"],
   "bom": {
     "P-205": 4, "GT75-686": 2, "GT75-1219": 8, "GT76-254": 6, "GT100-1219": 1, "P-300": 5,
     "P-602": 1, "SP15-457": 2, "SP25-1067": 8, "SP30-1219": 1, "CNDT": 1, "EB-S-PL": 1
