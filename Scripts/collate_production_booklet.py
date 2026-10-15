@@ -1,8 +1,8 @@
-"""Bind shop sheets into an engineer fabrication booklet PDF (4–6 pages by role).
+"""Bind shop sheets into an engineer fabrication booklet PDF (3–6 pages by role).
 
 Page order (SheetRoleMap):
   1 Hardware (_-_1)
-  2 Sections/3D (_-_2_Sections_3D or legacy _-_2)
+  2 Sections/3D (_-_2_Sections_3D or legacy _-_2); absent when A-A sits on page 1
   3 Placing (_-_3)
   4 BBS table (_-_4)
   5–6 optional overflow
@@ -50,10 +50,12 @@ def sheet_paths(pdf_dir: Path, mark: str):
     if p4 is not None and p3 is not None and p4.resolve() == p3.resolve():
         p4 = first_existing(pdf_dir / f"{mark}_-_4.pdf")
 
-    pages = [p for p in (p1, p2, p3, p4) if p is not None]
+    pages = [p for p in (p1, p2, p3) if p is not None]
     for extra in (pdf_dir / f"{mark}_-_5.pdf", pdf_dir / f"{mark}_-_6.pdf"):
         if extra.exists() and extra not in pages:
             pages.append(extra)
+    if p4 is not None:
+        pages.append(p4)
     return pages
 
 

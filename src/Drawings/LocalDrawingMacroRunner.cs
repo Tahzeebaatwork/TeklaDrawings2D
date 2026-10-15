@@ -62,6 +62,9 @@ namespace TeklaExtractor.Services
         }
 
         /// <summary>Local Paisley macros (PG1–3 / BM_SET) then floor GA. No 40-piece cap.</summary>
+        /// <summary>1..4 recreates only that sheet. Zero runs the full pack.</summary>
+        public int OnlySheet { get; set; }
+
         public void RunMacros(string markFilter = null, bool smoke = false, bool selectedOnly = false)
         {
             _oneAtATime = smoke || selectedOnly;
@@ -81,6 +84,19 @@ namespace TeklaExtractor.Services
             if (selectedOnly && groups.Marks.Count == 0)
             {
                 MacroLog("FAIL selected: no precast WALL/COLUMN/BEAM in the Tekla selection");
+                return;
+            }
+
+            if (OnlySheet >= 1 && OnlySheet <= 4)
+            {
+                var onlyParts = groups.Walls.Concat(groups.Columns).ToList();
+                if (onlyParts.Count == 0) onlyParts = groups.Walls;
+                string onlyLabel = "only-sheet " + OnlySheet;
+                if (OnlySheet == 1) RunMacroInBatches(onlyParts, Pg1Hardware, onlyLabel);
+                else if (OnlySheet == 2) RunMacroInBatches(onlyParts, Pg2Placing, onlyLabel);
+                else if (OnlySheet == 3) RunMacroInBatches(onlyParts, Pg3Table, onlyLabel);
+                else CreateSectionsSheets(onlyParts, onlyLabel);
+                MacroLog("only-sheet " + OnlySheet + ": drawings " + sessionBefore + " → " + CountDrawings());
                 return;
             }
 
@@ -310,14 +326,26 @@ namespace TeklaExtractor.Services
 
             int size = _oneAtATime ? 1 : MacroBatchSize;
             int batches = (validParts.Count + size - 1) / size;
+            using (StageTimer.Start(MacroStage(macroFile), 0))
+            using (StageTimer.Beat macroBeat = StageTimer.Begin(MacroStage(macroFile), validParts.Count))
             for (int i = 0; i < validParts.Count; i += size)
             {
+                macroBeat.Item(Math.Min(i + size, validParts.Count), validParts.Count);
                 var slice = validParts.Skip(i).Take(size).ToList();
                 int batch = (i / size) + 1;
                 MacroLog(label + " batch " + batch + "/" + batches + " n=" + slice.Count);
                 RunMacroOnSelection(slice, macroFile, label + " batch " + batch);
                 CloseEditor("between batches");
             }
+        }
+
+        private static string MacroStage(string macroFile)
+        {
+            if (string.Equals(macroFile, Pg1Hardware, StringComparison.OrdinalIgnoreCase)) return "macro-PG1";
+            if (string.Equals(macroFile, Pg2Placing, StringComparison.OrdinalIgnoreCase)) return "macro-PG2";
+            if (string.Equals(macroFile, Pg3Table, StringComparison.OrdinalIgnoreCase)) return "macro-PG3";
+            if (string.Equals(macroFile, BeamSet, StringComparison.OrdinalIgnoreCase)) return "macro-BM_SET";
+            return "macro";
         }
 
         private void RunMacroOnSelection(List<TSModel.Part> parts, string macroFile, string label)
@@ -397,9 +425,51 @@ namespace TeklaExtractor.Services
         /// Create Document Manager Sections sheet (typically -4) after PG1–3 so Tekla UI has 4 base sheets.
         /// Uses hardware props for 3D/section views, then renames to <see cref="SectionsDrawingName"/>.
         /// </summary>
+        private bool PieceHasSectionsSheet(TSModel.Part part)
+        {
+            string piece = CivilDrawingSupport.PieceMark(part, null);
+            if (string.IsNullOrWhiteSpace(piece)) return false;
+            try
+            {
+                var en = _handler.GetDrawings();
+                while (en != null && en.MoveNext())
+                {
+                    var d = en.Current as Drawing;
+                    if (d == null) continue;
+                    string mark = "";
+                    string name = "";
+                    try { mark = d.Mark ?? ""; } catch { }
+                    try { name = d.Name ?? ""; } catch { }
+                    if (!CivilDrawingSupport.MarksMatch(CivilDrawingSupport.StripMark(mark), piece)
+                        && !CivilDrawingSupport.MarksMatch(piece, CivilDrawingSupport.StripMark(mark)))
+                        continue;
+                    if (name.IndexOf("SECTIONS 3D", StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                    if (SheetRoleMap.Resolve(mark, name) == SheetRole.Sections)
+                        return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MacroLog("sections lookup: " + ex.Message);
+            }
+            return false;
+        }
+
         private void CreateSectionsSheets(List<TSModel.Part> parts, string label)
         {
             if (parts == null || parts.Count == 0) return;
+            var pending = new List<TSModel.Part>();
+            foreach (var part in parts)
+            {
+                if (part == null) continue;
+                if (PieceHasSectionsSheet(part))
+                    MacroLog(label + ": reuse existing sections sheet for " + CivilDrawingSupport.PieceMark(part, null));
+                else
+                    pending.Add(part);
+            }
+            if (pending.Count == 0) return;
+            parts = pending;
             int before = CountDrawings();
             MacroLog(label + ": Open API sections sheet (props=" + SectionsProps + ")");
             var created = new List<Drawing>();

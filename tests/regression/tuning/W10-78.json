@@ -1,0 +1,61 @@
+{
+  "piece": "W10-78",
+  "set": "tuning",
+  "lengthMm": 5120,
+  "heightMm": 3475,
+  "source": "Engineer Rev 2 PDF, page 1. Order: top stack outer to inner, bottom stack inner to outer. heights[] = the row's vertical height column as read from the PDF (scored in either direction); heightSide is info only.",
+  "rows": [
+    { "label": "PROFILE OVERALL", "side": "top", "order": 1, "segments": [5120], "heights": [3475], "heightSide": "left" },
+    { "label": "PROFILE LEDGE", "side": "top", "order": 2, "segments": [5120], "heights": [3218, 257], "heightSide": "left" },
+    { "label": "PROFILE HOLE", "side": "top", "order": 3, "segments": [838, 508, 1535, 635, 1604], "heights": [2560, 76, 432, 407], "heightSide": "left" },
+    { "label": "P-300 BRACING INSERTS", "aliases": ["P-300 BRACING"], "side": "top", "order": 4, "segments": [1200, 2720, 1200], "heights": [2317, 1158], "heightSide": "right" },
+    { "label": "GT76-254", "side": "top", "order": 5, "segments": [1971, 3148], "sumTol": 1, "heights": [975, 2500], "heightSide": "left" },
+    { "label": "P-616", "side": "top", "order": 6, "segments": [5018, 102], "heights": [2600, 400, 475], "heightSide": "right" },
+    { "label": "SP30-1219", "side": "top", "order": 7, "segments": [190, 4930] },
+    { "label": "SP25-1067", "side": "top", "order": 8, "segments": [1580, 288, 288, 288, 2290, 386] },
+    { "label": "P-205 LIFTERS", "side": "top", "order": 9, "segments": [630, 3672, 818] },
+    { "label": "GT100-1219", "side": "bottom", "order": 1, "segments": [220, 2276, 1405, 333, 333, 333, 220] },
+    { "label": "GT100-686", "side": "bottom", "order": 2, "segments": [1300, 3820] },
+    { "label": "REVEAL (B)", "side": "bottom", "order": 3, "segments": [372, 976, 496, 3275], "sumTol": 1, "heights": [2414, 1061], "heightSide": "left" },
+    { "label": "PROFILE OPENING", "side": "bottom", "order": 4, "segments": [2617, 1087, 1416], "heights": [2135, 1340], "heightSide": "right" },
+    { "label": "NO PAINT", "side": "bottom", "order": 5, "segments": [1857, 3263], "heights": [3246, 229], "heightSide": "left" }
+  ],
+  "sections": [
+    { "tag": "OVERALL", "segments": [254] },
+    { "tag": "LEDGE", "segments": [152, 102] },
+    { "tag": "SP25-1067", "segments": [127, 127] },
+    { "tag": "SP30-1219", "segments": [127, 127] },
+    { "tag": "P-205", "segments": [116, 138] },
+    { "tag": "GT100-1219", "segments": [127, 127], "count": 2 },
+    { "tag": "HEIGHT", "segments": [257, 3218] }
+  ],
+  "rebar": {
+    "spacing": [
+      { "text": "2@203=406" },
+      { "text": "5@360=1800", "count": 2 },
+      { "text": "3@390=1170" },
+      { "text": "2@360=720" }
+    ],
+    "callouts": [
+      { "text": "RB10M 0072 T. & B." },
+      { "text": "10M - 740 T. & B." }
+    ]
+  },
+  "title": {
+    "strength": "28 DAY 6000 PSI",
+    "stripping": "STRIPPING 3500",
+    "weight": "WEIGHT 18305",
+    "air": "AIR 4% TO 7%",
+    "class": "CLASS F2",
+    "volume": "VOLUME 4.53",
+    "drawnChecked": "SJN / HR",
+    "dates": "25.04.2023 / 05.05.2023"
+  },
+  "titleKnownDeviations": {
+    "strength": "template: PSI layout variant not yet provided"
+  },
+  "bom": {
+    "P-205": 2, "GT76-254": 1, "GT100-686": 1, "GT100-1219": 6,
+    "P-300": 4, "P-616": 2, "SP25-1067": 5, "SP30-1219": 1
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "piece": "W10-175",
+  "set": "tuning",
+  "lengthMm": 9366,
+  "source": "Engineer Rev 2 PDF, page 1. Order: top stack outer to inner, bottom stack inner to outer.",
+  "rows": [
+    { "label": "PROFILE OVERALL", "side": "top", "order": 1, "segments": [9366] },
+    { "label": "PROFILE OPENING", "side": "top", "order": 2, "segments": [373, 975, 4928, 975, 2115], "note": "windows. PDF prints PROFILE OPENING twice (this row and the notch row); the text does not show one merged chain, so the two rows stay." },
+    { "label": "PROFILE HOLE", "side": "top", "order": 3, "segments": [8890, 203, 273] },
+    { "label": "PROFILE LEDGE", "side": "top", "order": 4, "segments": [9366] },
+    { "label": "P-602", "side": "top", "order": 5, "segments": [74, 9292] },
+    { "label": "REVEAL (B)", "side": "top", "order": 6, "segments": [372, 975, 497, 3548, 883, 975, 931, 943, 241], "sumTol": 1 },
+    { "label": "GT76-254", "side": "top", "order": 7, "segments": [1971, 3294, 4100], "sumTol": 1 },
+    { "label": "P-300 BRACING INSERTS", "aliases": ["P-300 BRACING"], "side": "top", "order": 8, "segments": [2360, 5106, 1900] },
+    { "label": "P-300 HARDWARE", "side": "top", "order": 9, "segments": [102, 9264] },
+    { "label": "SP30-1219", "side": "top", "order": 10, "segments": [190, 9176] },
+    { "label": "SP15-457", "side": "top", "order": 11, "segments": [5399, 2915, 1052] },
+    { "label": "SP25-1067", "side": "top", "order": 12, "segments": [1580, 288, 288, 288, 2290, 532, 778, 1437, 1665, 220],
+      "knownDeviation": "Engineer draws SP25-1067 and GT76-254 as one combined row (a GT76 point splits one 288 into 185|103); the identical-station merge does not reproduce it." },
+    { "label": "P-205 LIFTERS", "side": "top", "order": 13, "segments": [977, 2114, 2433, 2152, 1690] },
+    { "label": "GT75-686", "side": "bottom", "order": 1, "segments": [5399, 2915, 1052] },
+    { "label": "GT75-1219", "side": "bottom", "order": 2, "segments": [1580, 288, 288, 288, 2290, 1310, 1437, 1665, 220] },
+    { "label": "GT100-1219", "side": "bottom", "order": 3, "segments": [190, 9176] },
+    { "label": "EB-S-PL (B)", "side": "bottom", "order": 4, "segments": [2381, 6985] },
+    { "label": "PROFILE OPENING", "side": "bottom", "order": 5, "segments": [2684, 1830, 4852], "note": "notch" },
+    { "label": "NO PAINT", "side": "bottom", "order": 6, "segments": [1857, 229, 3065, 229, 3745, 241] }
+  ],
+  "sheetText": ["REVEAL (B)", "PROFILE OPENING", "END 1", "END 2", "SIDE A", "SIDE B", "PAINT/STAIN #2", "PAINT/STAIN #3", "PAINT/STAIN #4", "PAINT/STAIN #5"],
+  "absentText": ["BCMBD"],
+  "bom": {
+    "P-205": 4, "GT75-686": 2, "GT75-1219": 8, "GT76-254": 6, "GT100-1219": 1, "P-300": 5,
+    "P-602": 1, "SP15-457": 2, "SP25-1067": 8, "SP30-1219": 1, "CNDT": 1, "EB-S-PL": 1
+  }
+}
