@@ -174,6 +174,8 @@ namespace TeklaExtractor.Services
 			private int _total;
 			private int _warned;
 			private int _done;
+			private long _phaseStartMs;
+			private string _phase;
 
 			internal Beat(string stage, int total)
 			{
@@ -193,9 +195,22 @@ namespace TeklaExtractor.Services
 			/// <summary>Names the current phase and prints one [Progress] line immediately.</summary>
 			public void Phase(string stage, int item, int total)
 			{
+				FlushPhase();
 				_stage = stage ?? "";
+				_phase = _stage;
+				_phaseStartMs = _sw.ElapsedMilliseconds;
 				Item(item, total);
 				Tick();
+			}
+
+			private void FlushPhase()
+			{
+				if (string.IsNullOrEmpty(_phase)) return;
+				long delta = _sw.ElapsedMilliseconds - _phaseStartMs;
+				if (delta < 0) delta = 0;
+				Console.WriteLine("[Timing] stage=" + _phase + " sheet=" + Sheet.ToString(CultureInfo.InvariantCulture)
+					+ " ms=" + delta.ToString(CultureInfo.InvariantCulture) + " phase");
+				_phase = null;
 			}
 
 			private void Tick()
@@ -215,6 +230,7 @@ namespace TeklaExtractor.Services
 			{
 				if (Interlocked.Exchange(ref _done, 1) != 0) return;
 				try { _timer.Dispose(); } catch { }
+				FlushPhase();
 				if (_current == this) _current = _parent;
 				_sw.Stop();
 				WarnSlow(_stage, _sw.ElapsedMilliseconds, ref _warned);

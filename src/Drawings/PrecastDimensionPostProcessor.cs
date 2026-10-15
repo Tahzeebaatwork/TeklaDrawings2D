@@ -7919,6 +7919,156 @@ public partial class PrecastDimensionPostProcessor
 	}
 
 	/// <summary>
+	/// Read-only picture of the placing sheet before any cleanup. Does not insert, move, or delete.
+	/// </summary>
+	private void LogPlacingSnapshot(Drawing drawing, ContainerView sheet, View front, View section, View bottom, List<View> otherViews)
+	{
+		string mark = "";
+		string name = "";
+		try { mark = drawing?.Mark ?? ""; } catch { }
+		try { name = drawing?.Name ?? ""; } catch { }
+		Console.WriteLine("[Layout] placing sheet mark='" + mark + "' name='" + name + "'");
+		LogPlacingTemplate(sheet);
+		var views = new List<View>();
+		if (front != null) views.Add(front);
+		if (bottom != null) views.Add(bottom);
+		if (section != null) views.Add(section);
+		if (otherViews != null) views.AddRange(otherViews);
+		int singles = 0;
+		int callouts = 0;
+		foreach (View view in views)
+		{
+			if (view == null) continue;
+			string viewName = "";
+			try { viewName = view.Name ?? ""; } catch { }
+			singles += LogSingleGapCombines(view, viewName);
+			callouts += LogPlacingCallouts(view, viewName);
+		}
+		Console.WriteLine("[Layout] n=1 count=" + singles.ToString(CultureInfo.InvariantCulture));
+		Console.WriteLine("[Callout] marks=" + callouts.ToString(CultureInfo.InvariantCulture));
+	}
+
+	private static void LogPlacingTemplate(ContainerView sheet)
+	{
+		if (sheet == null) return;
+		var rows = new List<string>();
+		try
+		{
+			DrawingObjectEnumerator en = sheet.GetAllObjects();
+			while (en != null && en.MoveNext())
+			{
+				if (!(en.Current is Text tx)) continue;
+				string s = tx.TextString ?? "";
+				string u = s.ToUpperInvariant();
+				if (u.IndexOf("GENERAL NOTES", StringComparison.Ordinal) < 0
+					&& u.IndexOf("BILL OF MATERIAL", StringComparison.Ordinal) < 0
+					&& u.IndexOf("MIN. COVER", StringComparison.Ordinal) < 0
+					&& u.IndexOf("MIN COVER", StringComparison.Ordinal) < 0)
+					continue;
+				string box = "-";
+				try
+				{
+					if (tx is IAxisAlignedBoundingBox aabb)
+					{
+						AABB b = aabb.GetAxisAlignedBoundingBox();
+						if (b?.MinPoint != null && b.MaxPoint != null)
+							box = b.MinPoint.X.ToString("0.#", CultureInfo.InvariantCulture) + ","
+								+ b.MinPoint.Y.ToString("0.#", CultureInfo.InvariantCulture) + " "
+								+ (b.MaxPoint.X - b.MinPoint.X).ToString("0.#", CultureInfo.InvariantCulture) + "x"
+								+ (b.MaxPoint.Y - b.MinPoint.Y).ToString("0.#", CultureInfo.InvariantCulture);
+					}
+				}
+				catch { }
+				string shown = s.Replace("\r", " ").Replace("\n", " ");
+				if (shown.Length > 60) shown = shown.Substring(0, 60);
+				rows.Add(shown + " @ " + box);
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Layout] template scan failed: " + ex.Message);
+			return;
+		}
+		if (rows.Count == 0)
+			Console.WriteLine("[Layout] template none");
+		foreach (string row in rows)
+			Console.WriteLine("[Layout] template '" + row + "'");
+	}
+
+	private static int LogSingleGapCombines(View view, string viewName)
+	{
+		int n = 0;
+		try
+		{
+			DrawingObjectEnumerator en = view.GetObjects(new Type[1] { typeof(StraightDimension) });
+			while (en != null && en.MoveNext())
+			{
+				if (!(en.Current is StraightDimension dim)) continue;
+				string text = DimensionText(dim);
+				if (text.Length == 0 || !Regex.IsMatch(text, @"^1\s*@", RegexOptions.CultureInvariant))
+					continue;
+				n++;
+				if (n <= 12)
+					Console.WriteLine("[Layout] n=1 view='" + viewName + "' text='" + text + "'");
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Layout] n=1 scan failed: " + ex.Message);
+		}
+		return n;
+	}
+
+	private static string DimensionText(StraightDimension dim)
+	{
+		string text = "";
+		try
+		{
+			ContainerElement value = dim.Value;
+			if (value == null) return "";
+			foreach (object el in value)
+			{
+				if (el is TextElement te && !string.IsNullOrEmpty(te.Value))
+					text += te.Value;
+			}
+		}
+		catch { }
+		return text.Trim();
+	}
+
+	private static int LogPlacingCallouts(View view, string viewName)
+	{
+		int n = 0;
+		try
+		{
+			foreach (MarkBase mark in EnumerateMarks(view))
+			{
+				string shown = FlattenMarkText(mark);
+				if (string.IsNullOrWhiteSpace(shown)) continue;
+				if (!Regex.IsMatch(shown, @"\d+\s*M", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+					continue;
+				n++;
+				bool leader = false;
+				try
+				{
+					var prop = mark.GetType().GetProperty("Placing");
+					object placing = prop?.GetValue(mark, null);
+					leader = placing is LeaderLinePlacing;
+				}
+				catch { }
+				if (n <= 40)
+					Console.WriteLine("[Callout] view='" + viewName + "' text='" + shown.Replace("\r", " ").Replace("\n", " ")
+						+ "' leader=" + (leader ? "yes" : "no"));
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[Callout] scan failed: " + ex.Message);
+		}
+		return n;
+	}
+
+	/// <summary>
 	/// W10-175 - 2 target = macros-style (screenshot 2): dense END 2 dims kept, views NOT overlapping,
 	/// TOP IN FORM gets 2-tier dims, everything packed inside sheet bbox. Never stack VIEW A on END 2.
 	/// </summary>
@@ -7979,6 +8129,7 @@ public partial class PrecastDimensionPostProcessor
 			Console.WriteLine("[Placing] native dims elev=" + elevNative.ToString(CultureInfo.InvariantCulture)
 				+ " END2=" + endNative.ToString(CultureInfo.InvariantCulture)
 				+ " VIEW_A=" + secNative.ToString(CultureInfo.InvariantCulture));
+			LogPlacingSnapshot(drawing, sheet, front, section, bottom, otherViews);
 
 			beat.Phase("CleanPlacing.purge", 2, 8);
 			// Elevation placement chains are kept; only isolated full-length/height chains go (after layout below).
