@@ -43,8 +43,17 @@ public partial class PrecastDimensionPostProcessor
 	public bool LogUnlistedEmbeds { get; set; }
 
 	private static readonly Regex HardwareFamilyRegex = new Regex(
-		@"(?<![A-Z0-9])(P-\d+|GT\d+(?:-\d+)?|SP\d+(?:-\d+)?|SLV-\d+(?:-\d+)*|EB-S-PL|CNDT)(?![0-9])",
+		@"(?<![A-Z0-9])(P-\d+|GT\d+(?:-\d+)?|SP\d+(?:-\d+)?|SLV-\d+(?:-\d+)*|EB-S-PL\d*|CNDT\d*)(?![0-9A-Z])",
 		RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+	private static string NormalizeFamily(string fam)
+	{
+		if (string.IsNullOrEmpty(fam)) return "";
+		string u = fam.Trim().ToUpperInvariant();
+		if (Regex.IsMatch(u, @"^EB-S-PL\d*$", RegexOptions.CultureInvariant)) return "EB-S-PL";
+		if (Regex.IsMatch(u, @"^CNDT\d*$", RegexOptions.CultureInvariant)) return "CNDT";
+		return u;
+	}
 
 	/// <summary>Families allowed to draw hardware on this sheet (BOM, else model). Null = not resolved yet.</summary>
 	private HashSet<string> _hardwareFamilies;
@@ -366,7 +375,7 @@ public partial class PrecastDimensionPostProcessor
 			Match m = HardwareFamilyRegex.Match((c.Item2 ?? "").ToUpperInvariant());
 			if (!m.Success) continue;
 			source = c.Item1;
-			return m.Value.ToUpperInvariant();
+			return NormalizeFamily(m.Value.ToUpperInvariant());
 		}
 		source = "";
 		return "";
@@ -471,7 +480,9 @@ public partial class PrecastDimensionPostProcessor
 				};
 				double med = Median(cl.Select(f => f.ZMed));
 				row.MedianZ = med;
-				row.IsBottom = h > 0.0 && med < h / 2.0;
+				bool isSecondaryElec = string.Equals(head.Family, "CNDT", StringComparison.OrdinalIgnoreCase)
+					|| string.Equals(head.Family, "EB-S-PL", StringComparison.OrdinalIgnoreCase);
+				row.IsBottom = isSecondaryElec || (h > 0.0 && med < h / 2.0);
 				row.EdgeDistance = row.IsBottom ? med : h - med;
 				row.BaseLabel = HardwareLabel(head, split);
 				rows.Add(row);
@@ -765,14 +776,27 @@ public partial class PrecastDimensionPostProcessor
 		{
 			if (r.Kind == "hardware")
 			{
-				CatalogRow twin = result.FirstOrDefault(o => o.Kind == "hardware" && o.IsBottom == r.IsBottom && o.Face == r.Face
-					&& SameStations(o.Stations, r.Stations));
+				bool isElecR = r.Families.Any(f => string.Equals(f, "CNDT", StringComparison.OrdinalIgnoreCase)
+					|| string.Equals(f, "EB-S-PL", StringComparison.OrdinalIgnoreCase));
+
+				CatalogRow twin = result.FirstOrDefault(o =>
+				{
+					if (o.Kind != "hardware" || o.IsBottom != r.IsBottom) return false;
+					bool isElecO = o.Families.Any(f => string.Equals(f, "CNDT", StringComparison.OrdinalIgnoreCase)
+						|| string.Equals(f, "EB-S-PL", StringComparison.OrdinalIgnoreCase));
+					bool faceMatch = (o.Face == r.Face) || (isElecR && isElecO);
+					return faceMatch && SameStations(o.Stations, r.Stations);
+				});
+
 				if (twin != null)
 				{
 					twin.Families.AddRange(r.Families);
 					twin.Items.AddRange(r.Items);
+					if (twin.Face == "T" && r.Face == "B") twin.Face = "B";
 					var bases = twin.BaseLabel.Split(new[] { " + " }, StringSplitOptions.None).Concat(new[] { r.BaseLabel })
-						.Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(s => s, StringComparer.OrdinalIgnoreCase);
+						.Distinct(StringComparer.OrdinalIgnoreCase)
+						.OrderBy(s => s.StartsWith("EB-", StringComparison.OrdinalIgnoreCase) ? 0 : 1)
+						.ThenBy(s => s, StringComparer.OrdinalIgnoreCase);
 					twin.BaseLabel = string.Join(" + ", bases);
 					Console.WriteLine("[Elev] merged identical-station rows into '" + twin.Label + "'");
 					continue;
@@ -871,7 +895,7 @@ public partial class PrecastDimensionPostProcessor
 			_familiesByPiece.TryGetValue(_activePiece, out families);
 		if (families == null) return false;
 		Match m = HardwareFamilyRegex.Match((labelOrFamily ?? "").ToUpperInvariant());
-		return m.Success && BomHasFamily(families, new[] { m.Value.ToUpperInvariant() });
+		return m.Success && BomHasFamily(families, new[] { NormalizeFamily(m.Value.ToUpperInvariant()) });
 	}
 
 	/// <summary>Page 1 resolves the family list; the sections and placing sheets of the same piece reuse it.</summary>

@@ -85,7 +85,14 @@ public partial class PrecastDimensionPostProcessor
 				return null;
 			}
 			foreach (PanelFeature f in row.Items)
-				raw.Add(HardwareHeightRef == HeightRef.Bottom ? f.ZMin : HardwareHeightRef == HeightRef.Top ? f.ZMax : f.ZMed);
+			{
+				if (string.Equals(f.Family, "EB-S-PL", StringComparison.OrdinalIgnoreCase))
+					raw.Add(f.ZMin);
+				else if (string.Equals(f.Family, "CNDT", StringComparison.OrdinalIgnoreCase))
+					raw.Add(f.ZMax);
+				else
+					raw.Add(HardwareHeightRef == HeightRef.Bottom ? f.ZMin : HardwareHeightRef == HeightRef.Top ? f.ZMax : f.ZMed);
+			}
 		}
 		else
 		{

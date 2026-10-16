@@ -5000,7 +5000,7 @@ public partial class PrecastDimensionPostProcessor
 	{
 		if (_catalogRowFamilies.Count == 0) return false;
 		Match m = HardwareFamilyRegex.Match((labelOrFamily ?? "").ToUpperInvariant());
-		return m.Success && _catalogRowFamilies.Contains(m.Value.ToUpperInvariant());
+		return m.Success && _catalogRowFamilies.Contains(NormalizeFamily(m.Value.ToUpperInvariant()));
 	}
 
 	private void InsertGt76CalloutIfPresent(View view, PanelAxis axis, StationBuckets buckets, int scale)
@@ -5425,8 +5425,8 @@ public partial class PrecastDimensionPostProcessor
 		}
 		if (c.StartsWith("P-616", StringComparison.Ordinal) || c.StartsWith("P-602", StringComparison.Ordinal))
 			return "EMBED PLATES";
-		if (c == "CNDT") return "CONDUIT";
-		if (c == "EB-S-PL") return "ELECTRICAL BOX";
+		if (c == "EB-S-PL") return "CNDT";
+		if (c == "CNDT") return "";
 		Console.WriteLine("[Label] unmapped=" + code);
 		return "HARDWARE";
 	}
@@ -9387,7 +9387,7 @@ public partial class PrecastDimensionPostProcessor
 	private static string FamilyKey(string family)
 	{
 		Match m = HardwareFamilyRegex.Match((family ?? "").ToUpperInvariant());
-		return m.Success ? m.Value.ToUpperInvariant() : "";
+		return m.Success ? NormalizeFamily(m.Value.ToUpperInvariant()) : "";
 	}
 
 	private static bool IsDetailViewName(string name)

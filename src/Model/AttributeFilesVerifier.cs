@@ -107,6 +107,7 @@ namespace TeklaExtractor.Services
         {
             string[] candidates =
             {
+                @"D:\Farha\METRIC_FIRM2021\attributes",
                 @"D:\design_\METRIC_FIRM2021\attributes",
                 Environment.GetEnvironmentVariable("XS_FIRM") ?? "",
             };
