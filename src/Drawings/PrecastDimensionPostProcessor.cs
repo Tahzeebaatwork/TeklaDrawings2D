@@ -1151,6 +1151,12 @@ public partial class PrecastDimensionPostProcessor
 	/// <summary>Leave native marks that show '?' in place. Default deletes only those marks, after logging them.</summary>
 	public static bool KeepNativeMarks { get; set; }
 
+	/// <summary>--placing-dryrun. Compute the model chains and write placing_report.txt. Do not change the drawing.</summary>
+	public static bool PlacingDryRun { get; set; }
+
+	/// <summary>--placing-rebuild-only. Apply the model rebuild and skip purge, rebar placement, and the bill compare.</summary>
+	public static bool PlacingRebuildOnly { get; set; }
+
 	/// <summary>
 	/// Diagnostic: 0 = full Fit (mark repair still gated by EnableMarkRepair).
 	/// 1–5 = stop after investigation stage (see Fit stage log). Used with --fit-stage N.
@@ -1306,8 +1312,8 @@ public partial class PrecastDimensionPostProcessor
 			catch { }
 			using (StageTimer.Start("CommitChanges+Save", StageTimer.Sheet))
 			{
-				try { drawing.CommitChanges(); } catch { }
-				try { _handler.SaveActiveDrawing(); } catch { }
+			try { drawing.CommitChanges(); } catch { }
+			try { _handler.SaveActiveDrawing(); } catch { }
 			}
 			RefreshDrawingUi(drawing);
 			string bbsMark = "";
@@ -1408,7 +1414,7 @@ public partial class PrecastDimensionPostProcessor
 				PurgeUnresolvedQuestionMarks(sheet);
 			HideSheet1Rebar(sheet);
 			PurgeTemporaryTags(sheet);
-			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
+			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews, part);
 			if (front == null)
 			{
 				Console.WriteLine("[Fit] '" + text + "' skipped: no front view");
@@ -1615,7 +1621,7 @@ public partial class PrecastDimensionPostProcessor
 				Console.WriteLine("[Fit] mark-repair SKIPPED (default). Opt-in: --enable-mark-repair"
 					+ (FitStage > 0 ? " fit-stage=" + FitStage.ToString(CultureInfo.InvariantCulture) : ""));
 			}
-			AssertSheetBounds(sheet, sheetWidth, sheetHeight, num2, front, scale);
+			AssertSheetBounds(sheet, sheetWidth, sheetHeight, num2, front, scale, part);
 			WriteFitReport(text, scale, sheetWidth, sheetHeight, num2, availableWidthMm, num, num4, tapeVerified,
 				markRepair.Repaired, markRepair.Unresolved, hasSectionsSheet, canvas);
 			WriteFinalReport(text, scale, sheetWidth, sheetHeight, num2, availableWidthMm, num, tapeVerified,
@@ -1727,7 +1733,7 @@ public partial class PrecastDimensionPostProcessor
 				Console.WriteLine("[FitStage] abort: no sheet");
 				return result;
 			}
-			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
+			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews, part);
 			if (front == null)
 			{
 				Console.WriteLine("[FitStage] abort: no front view");
@@ -1823,7 +1829,7 @@ public partial class PrecastDimensionPostProcessor
 			{
 				Console.WriteLine("[FitStage] completed stage=5 (mark repair NOT run — pass --enable-mark-repair)");
 			}
-			AssertSheetBounds(sheet, sheetWidth, sheetHeight, bomLeft, front, scale);
+			AssertSheetBounds(sheet, sheetWidth, sheetHeight, bomLeft, front, scale, part);
 			WriteFitReport(text, scale, sheetWidth, sheetHeight, bomLeft, availableWidthMm, modelLength, tapeDelta, tapeOk,
 				repair.Repaired, repair.Unresolved, HasSiblingRole(drawing, SheetRole.Sections), canvas);
 			WriteFinalReport(text, scale, sheetWidth, sheetHeight, bomLeft, availableWidthMm, modelLength, tapeOk,
@@ -1846,8 +1852,8 @@ public partial class PrecastDimensionPostProcessor
 		RemoveInnerSheetBorders(sheet, sheetW, sheetH);
 		using (StageTimer.Start("CommitChanges+Save", StageTimer.Sheet))
 		{
-			try { drawing.CommitChanges(); } catch { }
-			try { _handler.SaveActiveDrawing(); } catch { }
+		try { drawing.CommitChanges(); } catch { }
+		try { _handler.SaveActiveDrawing(); } catch { }
 		}
 		RefreshDrawingUi(drawing);
 		WriteFitStageReport(drawingMark, stageDone, EnableMarkRepair);
@@ -2065,7 +2071,7 @@ public partial class PrecastDimensionPostProcessor
 			if (keepSection)
 				PlaceSectionOnPage1(section, main, bomLeft);
 			else
-				ParkViewOffSheet(section);
+			ParkViewOffSheet(section);
 			if (otherViews != null)
 			{
 				foreach (View ov in otherViews)
@@ -2386,6 +2392,25 @@ public partial class PrecastDimensionPostProcessor
 		view.RestrictionBox = new AABB(new Point(num - 5000.0, num2 - 5000.0, num3 - 5000.0), new Point(num4 + 5000.0, num5 + 5000.0, num6 + 5000.0));
 	}
 
+	private static int SelectPlacingScale(double modelLength, double availableWidthMm, out string reason)
+	{
+		int[] order = { 50, 60, 75, 100 };
+		double capW = availableWidthMm > 10.0 ? availableWidthMm : MaxViewWidth;
+		double length = modelLength > 1.0 ? modelLength : 9000.0;
+		foreach (int num in order)
+		{
+			double paperW = length / (double)num;
+			if (paperW <= capW)
+			{
+				reason = "paperW=" + paperW.ToString("0.#", CultureInfo.InvariantCulture)
+					+ "<=capW=" + capW.ToString("0.#", CultureInfo.InvariantCulture);
+				return num;
+			}
+		}
+		reason = "none fit capW=" + capW.ToString("0.#", CultureInfo.InvariantCulture) + " fallback=100";
+		return 100;
+	}
+
 	private static int SelectScale(double modelLength)
 	{
 		return SelectScale(modelLength, MaxViewWidth, 0.0, MaxViewWidth * 2.0);
@@ -2421,7 +2446,7 @@ public partial class PrecastDimensionPostProcessor
 			{
 				CoordTraceScale(trace.Append(" -> chosen 1:").Append(num).ToString());
 				return num;
-			}
+		}
 		}
 		CoordTraceScale(trace.Append(" -> none fits, fallback 1:").Append(fallback).ToString());
 		return fallback;
@@ -3159,13 +3184,13 @@ public partial class PrecastDimensionPostProcessor
 	/// check those via AssertDimSetsInsideBorder / AssertViewTextsInsideBorder (sheet mm).
 	/// Rev 2 keeps paint / NO PAINT text — do not fail on paint labels.
 	/// </summary>
-	private void AssertSheetBounds(ContainerView sheet, double sheetW, double sheetH, double bomLeft, View front, int viewScale)
+	private void AssertSheetBounds(ContainerView sheet, double sheetW, double sheetH, double bomLeft, View front, int viewScale, Tekla.Structures.Model.Part part = null)
 	{
 		using (StageTimer.Start("AssertSheetBounds", StageTimer.Sheet))
-		AssertSheetBoundsTimed(sheet, sheetW, sheetH, bomLeft, front, viewScale);
+		AssertSheetBoundsTimed(sheet, sheetW, sheetH, bomLeft, front, viewScale, part);
 	}
 
-	private void AssertSheetBoundsTimed(ContainerView sheet, double sheetW, double sheetH, double bomLeft, View front, int viewScale)
+	private void AssertSheetBoundsTimed(ContainerView sheet, double sheetW, double sheetH, double bomLeft, View front, int viewScale, Tekla.Structures.Model.Part part)
 	{
 		_lastBboxFailures.Clear();
 		if (sheet == null) return;
@@ -3210,6 +3235,26 @@ public partial class PrecastDimensionPostProcessor
 					string vType = "";
 					try { vName = vLog.Name ?? ""; } catch { }
 					try { vType = vLog.ViewType.ToString(); } catch { }
+					bool degenerate = Math.Abs(maxX - minX) < 1.0 && Math.Abs(maxY - minY) < 1.0;
+					bool unusable = degenerate || (maxX - minX) > sw || (maxY - minY) > sh || minX > sw + 50.0 || maxX < -50.0;
+					if (unusable && TryViewPaperBox(vLog, part, out double px0, out double py0, out double px1, out double py1))
+					{
+						minX = px0;
+						minY = py0;
+						maxX = px1;
+						maxY = py1;
+						boxText = minX.ToString("0.#", CultureInfo.InvariantCulture) + ","
+							+ minY.ToString("0.#", CultureInfo.InvariantCulture) + ".."
+							+ maxX.ToString("0.#", CultureInfo.InvariantCulture) + ","
+							+ maxY.ToString("0.#", CultureInfo.InvariantCulture);
+						degenerate = Math.Abs(maxX - minX) < 1.0 && Math.Abs(maxY - minY) < 1.0;
+					}
+					if (degenerate)
+					{
+						Console.WriteLine("[Bounds] view='" + vName + "' type=" + vType + " sheetBox=" + boxText + " unknown");
+						_lastBboxFailures.Add("view '" + vName + "' sheet box unknown");
+						continue;
+					}
 					bool parked = minX > sw + 50.0 || maxX < -50.0 || minY > sh + 50.0 || maxY < -50.0;
 					bool outside = !parked && (minX < innerL - tol || maxX > innerR + tol || minY < innerB - tol || maxY > innerT + tol);
 					bool bomHit = !parked && front != null && ReferenceEquals(vLog, front) && maxX > bom + 5.0;
@@ -3217,8 +3262,8 @@ public partial class PrecastDimensionPostProcessor
 					Console.WriteLine("[Bounds] view='" + vName + "' type=" + vType + " sheetBox=" + boxText + " " + state);
 					if (bomHit)
 						_lastBboxFailures.Add("view '" + vName + "' overlaps BOM maxX="
-							+ maxX.ToString("0.#", CultureInfo.InvariantCulture)
-							+ " bomLeft=" + bom.ToString("0.#", CultureInfo.InvariantCulture));
+								+ maxX.ToString("0.#", CultureInfo.InvariantCulture)
+								+ " bomLeft=" + bom.ToString("0.#", CultureInfo.InvariantCulture));
 					if (outside)
 						_lastBboxFailures.Add("view '" + vName + "' outside border AABB=[" + boxText + "]");
 					if (!parked)
@@ -4972,11 +5017,11 @@ public partial class PrecastDimensionPostProcessor
 				if (dedup.Count >= 2)
 				{
 					if (DimensionRouter.KeepChainOnElevation(dedup, axis.Span))
-					{
-						double dist = TierFirstOffsetPaperMm * 0.5 * (double)scale;
-						EmitDim(view, axis, dedup, isBottom: true, dist, "NOTCH / RECESS", scale, bomLeft);
-						Console.WriteLine("[Fit] notch/recess H stations count=" + dedup.Count.ToString(CultureInfo.InvariantCulture));
-					}
+				{
+					double dist = TierFirstOffsetPaperMm * 0.5 * (double)scale;
+					EmitDim(view, axis, dedup, isBottom: true, dist, "NOTCH / RECESS", scale, bomLeft);
+					Console.WriteLine("[Fit] notch/recess H stations count=" + dedup.Count.ToString(CultureInfo.InvariantCulture));
+				}
 					else
 					{
 						for (int i = 1; i < dedup.Count; i++)
@@ -5440,7 +5485,7 @@ public partial class PrecastDimensionPostProcessor
 			ApplyDimFont(text2.Attributes.Font);
 		}
 		catch { }
-		text2.Insert();
+			text2.Insert();
 		TagTierText(text2);
 		_layoutLabelPts.Add(at);
 		_layoutLabelNames.Add(text ?? "");
@@ -6154,8 +6199,8 @@ public partial class PrecastDimensionPostProcessor
 			{
 				t.Attributes.Frame.Type = FrameTypes.Rectangular;
 				ApplyDimFont(t.Attributes.Font);
-			}
-			catch { }
+		}
+		catch { }
 			t.Insert();
 		}
 		catch (Exception ex)
@@ -6325,8 +6370,8 @@ public partial class PrecastDimensionPostProcessor
 		if (fixture == null || fixture.Bom.Count == 0)
 		{
 			Console.WriteLine("[BomQty] no fixture BOM targets for '" + _activePiece + "'");
-			return;
-		}
+				return;
+			}
 		var modelQty = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 		if (main != null)
 		{
@@ -6579,11 +6624,11 @@ public partial class PrecastDimensionPostProcessor
 				double x3 = point5.X;
 				InsertFramedText(front, new Point(point4.X + 2.0 * (double)scale, num, 0.0), "SIDE C", scale);
 				if (corners.Count >= 2)
-					InsertFramedText(front, new Point(point5.X - 2.0 * (double)scale, num, 0.0), "SIDE D", scale);
+				InsertFramedText(front, new Point(point5.X - 2.0 * (double)scale, num, 0.0), "SIDE D", scale);
 				InsertFramedText(front, new Point(x2, num + 6.0 * (double)scale, 0.0), "END 3", scale);
 				InsertFramedText(front, new Point(x2, num - 6.0 * (double)scale, 0.0), "END 4", scale);
 				if (corners.Count >= 2)
-					InsertFramedText(front, new Point(x3, num + 6.0 * (double)scale, 0.0), "END 5", scale);
+				InsertFramedText(front, new Point(x3, num + 6.0 * (double)scale, 0.0), "END 5", scale);
 				Console.WriteLine("[Fit] form faces corners=" + corners.Count.ToString(CultureInfo.InvariantCulture)
 					+ (buckets != null && buckets.Openings.Count >= 4 ? " from openings" : " from outline"));
 			}
@@ -7546,7 +7591,67 @@ public partial class PrecastDimensionPostProcessor
 		return view ?? view2;
 	}
 
-	private static void FindSheetViews(ContainerView sheet, out View front, out View view3D, out View section, out View bottom, out List<View> otherViews)
+	/// <summary>
+	/// Paper size of a view on the sheet. Width and Height are used when both are real.
+	/// A zero frame falls back to the part solid divided by the view scale, at the view origin.
+	/// </summary>
+	private static bool TryViewPaperBox(View view, Tekla.Structures.Model.Part part, out double minX, out double minY, out double maxX, out double maxY)
+	{
+		minX = 0;
+		minY = 0;
+		maxX = 0;
+		maxY = 0;
+		if (view == null) return false;
+		double w = 0, h = 0;
+		try { w = view.Width; h = view.Height; } catch { }
+		// A frame larger than a sheet is view-coordinate noise, not paper size.
+		if (w > 1.0 && h > 1.0 && w < 800.0 && h < 800.0)
+		{
+			double ox = 0, oy = 0;
+			try
+			{
+				Point frame = view.FrameOrigin;
+				if (frame != null) { ox = frame.X; oy = frame.Y; }
+				else if (view.Origin != null) { ox = view.Origin.X; oy = view.Origin.Y; }
+			}
+			catch
+			{
+				try { if (view.Origin != null) { ox = view.Origin.X; oy = view.Origin.Y; } } catch { }
+			}
+			minX = ox;
+			minY = oy;
+			maxX = ox + w;
+			maxY = oy + h;
+			return true;
+		}
+		if (part == null || !GetSolidBoundsInView(view, part, out double vx0, out double vx1, out double vy0, out double vy1))
+			return false;
+		double originX = 0, originY = 0, sc = 1;
+		try { if (view.Origin != null) { originX = view.Origin.X; originY = view.Origin.Y; } } catch { }
+		try { sc = view.Attributes.Scale; } catch { }
+		if (sc < 1) sc = 1;
+		minX = originX + vx0 / sc;
+		maxX = originX + vx1 / sc;
+		minY = originY + vy0 / sc;
+		maxY = originY + vy1 / sc;
+		return Math.Abs(maxX - minX) > 1.0 && Math.Abs(maxY - minY) > 1.0;
+	}
+
+	private static void ViewPaperSize(View view, Tekla.Structures.Model.Part part, out double width, out double height)
+	{
+		width = 0;
+		height = 0;
+		if (view == null) return;
+		try { width = view.Width; height = view.Height; } catch { }
+		if (width > 1.0 && height > 1.0) return;
+		if (TryViewPaperBox(view, part, out double minX, out double minY, out double maxX, out double maxY))
+		{
+			width = Math.Abs(maxX - minX);
+			height = Math.Abs(maxY - minY);
+		}
+	}
+
+	private static void FindSheetViews(ContainerView sheet, out View front, out View view3D, out View section, out View bottom, out List<View> otherViews, Tekla.Structures.Model.Part part = null)
 	{
 		front = null;
 		view3D = null;
@@ -7587,7 +7692,9 @@ public partial class PrecastDimensionPostProcessor
 			catch
 			{
 			}
-			if ((item2.ViewType == View.ViewTypes.FrontView || text.IndexOf("FRONT", StringComparison.OrdinalIgnoreCase) >= 0 || text.IndexOf("TOP IN FORM", StringComparison.OrdinalIgnoreCase) >= 0 || text.IndexOf("SIDE A", StringComparison.OrdinalIgnoreCase) >= 0) && (front == null || item2.Width * item2.Height > front.Width * front.Height))
+			ViewPaperSize(item2, part, out double itemW, out double itemH);
+			ViewPaperSize(front, part, out double frontW, out double frontH);
+			if ((item2.ViewType == View.ViewTypes.FrontView || text.IndexOf("FRONT", StringComparison.OrdinalIgnoreCase) >= 0 || text.IndexOf("TOP IN FORM", StringComparison.OrdinalIgnoreCase) >= 0 || text.IndexOf("SIDE A", StringComparison.OrdinalIgnoreCase) >= 0) && (front == null || itemW * itemH > frontW * frontH))
 			{
 				front = item2;
 			}
@@ -7610,7 +7717,12 @@ public partial class PrecastDimensionPostProcessor
 			catch
 			{
 			}
-			Console.WriteLine("[Fit] View candidate: Name='" + text2 + "' Type=" + item3.ViewType.ToString() + " W=" + item3.Width.ToString("F1", CultureInfo.InvariantCulture) + " H=" + item3.Height.ToString("F1", CultureInfo.InvariantCulture));
+			ViewPaperSize(item3, part, out double candW, out double candH);
+			Console.WriteLine("[Fit] View candidate: Name='" + text2 + "' Type=" + item3.ViewType.ToString()
+				+ " W=" + item3.Width.ToString("F1", CultureInfo.InvariantCulture)
+				+ " H=" + item3.Height.ToString("F1", CultureInfo.InvariantCulture)
+				+ " paper=" + candW.ToString("0.#", CultureInfo.InvariantCulture)
+				+ "x" + candH.ToString("0.#", CultureInfo.InvariantCulture));
 			if (item3.ViewType == View.ViewTypes._3DView || text2.IndexOf("3D", StringComparison.OrdinalIgnoreCase) >= 0)
 			{
 				if (view3D == null)
@@ -7652,7 +7764,8 @@ public partial class PrecastDimensionPostProcessor
 			View view = null;
 			foreach (View otherView in otherViews)
 			{
-				if (otherView.Height >= otherView.Width)
+				ViewPaperSize(otherView, part, out double otherW, out double otherH);
+				if (otherH >= otherW && otherH > 1.0)
 				{
 					view = otherView;
 					break;
@@ -7801,8 +7914,8 @@ public partial class PrecastDimensionPostProcessor
 			}
 			using (StageTimer.Start("CommitChanges+Save", StageTimer.Sheet))
 			{
-				drawing.CommitChanges();
-				_handler.SaveActiveDrawing();
+			drawing.CommitChanges();
+			_handler.SaveActiveDrawing();
 			}
 			DPMPrinterAttributes printAttributes = new DPMPrinterAttributes
 			{
@@ -7854,8 +7967,8 @@ public partial class PrecastDimensionPostProcessor
 				}
 				using (StageTimer.Start("CommitChanges+Save", StageTimer.Sheet))
 				{
-					drawing.CommitChanges();
-					_handler.SaveActiveDrawing();
+				drawing.CommitChanges();
+				_handler.SaveActiveDrawing();
 				}
 				Console.WriteLine("[Fit] Page 2 printed; sheet 1 restored to elevation-only.");
 			}
@@ -7923,12 +8036,16 @@ public partial class PrecastDimensionPostProcessor
 	/// </summary>
 	private void LogPlacingSnapshot(Drawing drawing, ContainerView sheet, View front, View section, View bottom, List<View> otherViews)
 	{
+		var swTotal = System.Diagnostics.Stopwatch.StartNew();
 		string mark = "";
 		string name = "";
 		try { mark = drawing?.Mark ?? ""; } catch { }
 		try { name = drawing?.Name ?? ""; } catch { }
 		Console.WriteLine("[Layout] placing sheet mark='" + mark + "' name='" + name + "'");
+		var swTemplate = System.Diagnostics.Stopwatch.StartNew();
 		LogPlacingTemplate(sheet);
+		swTemplate.Stop();
+		Console.WriteLine("[Profile] LogPlacingTemplate ms=" + swTemplate.ElapsedMilliseconds);
 		var views = new List<View>();
 		if (front != null) views.Add(front);
 		if (bottom != null) views.Add(bottom);
@@ -7941,11 +8058,26 @@ public partial class PrecastDimensionPostProcessor
 			if (view == null) continue;
 			string viewName = "";
 			try { viewName = view.Name ?? ""; } catch { }
+			var swView = System.Diagnostics.Stopwatch.StartNew();
+			var swSingles = System.Diagnostics.Stopwatch.StartNew();
 			singles += LogSingleGapCombines(view, viewName);
+			swSingles.Stop();
+			var swCallouts = System.Diagnostics.Stopwatch.StartNew();
 			callouts += LogPlacingCallouts(view, viewName);
+			swCallouts.Stop();
+			var swObjTypes = System.Diagnostics.Stopwatch.StartNew();
+			LogPlacingObjectTypes(view, viewName);
+			swObjTypes.Stop();
+			swView.Stop();
+			Console.WriteLine("[Profile] view='" + viewName + "' totalMs=" + swView.ElapsedMilliseconds
+				+ " (singlesMs=" + swSingles.ElapsedMilliseconds
+				+ " calloutsMs=" + swCallouts.ElapsedMilliseconds
+				+ " objTypesMs=" + swObjTypes.ElapsedMilliseconds + ")");
 		}
 		Console.WriteLine("[Layout] n=1 count=" + singles.ToString(CultureInfo.InvariantCulture));
 		Console.WriteLine("[Callout] marks=" + callouts.ToString(CultureInfo.InvariantCulture));
+		swTotal.Stop();
+		Console.WriteLine("[Profile] LogPlacingSnapshot totalMs=" + swTotal.ElapsedMilliseconds);
 	}
 
 	private static void LogPlacingTemplate(ContainerView sheet)
@@ -8104,9 +8236,10 @@ public partial class PrecastDimensionPostProcessor
 			double sheetWidth = sheet.Width > 1.0 ? sheet.Width : 431.8;
 			double sheetHeight = sheet.Height > 1.0 ? sheet.Height : 279.4;
 
-			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
+			Tekla.Structures.Model.Part part = ResolveMainPart(drawing);
+			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews, part);
 			PromotePlacingViews(ref front, ref section, ref bottom, otherViews);
-			ForceClassifyPlacingViews(ref front, ref section, ref bottom, otherViews);
+			ForceClassifyPlacingViews(ref front, ref section, ref bottom, otherViews, part);
 			if (section == null && otherViews != null)
 			{
 				for (int i = 0; i < otherViews.Count; i++)
@@ -8129,11 +8262,39 @@ public partial class PrecastDimensionPostProcessor
 			Console.WriteLine("[Placing] native dims elev=" + elevNative.ToString(CultureInfo.InvariantCulture)
 				+ " END2=" + endNative.ToString(CultureInfo.InvariantCulture)
 				+ " VIEW_A=" + secNative.ToString(CultureInfo.InvariantCulture));
+			var swSnap = System.Diagnostics.Stopwatch.StartNew();
 			LogPlacingSnapshot(drawing, sheet, front, section, bottom, otherViews);
+			swSnap.Stop();
+			Console.WriteLine("[Profile] LogPlacingSnapshot completed in " + swSnap.ElapsedMilliseconds + " ms");
+			PlacingStageAudit.RecordStage("00_macro", drawing, sheet, front, bottom, section, _handler);
+
+			double modelLen = LiveLength(part);
+			double bomLeft = ScanBomLeft(sheet, sheetWidth);
+			const double leftMargin = 40.0;
+			const double dimPadLeft = 28.0;
+			const double gapViews = 18.0;
+			double availW = Math.Max(90.0, bomLeft - leftMargin - dimPadLeft - 14.0 - BomGap);
+			availW = Math.Min(availW, MaxViewWidth);
+			var swScale = System.Diagnostics.Stopwatch.StartNew();
+			int scale = SelectPlacingScale(modelLen > 1.0 ? modelLen : 9000.0, availW, out string scaleReason);
+			swScale.Stop();
+			Console.WriteLine("[place-b] scale=1:" + scale.ToString(CultureInfo.InvariantCulture) + " reason=" + scaleReason
+				+ " (scaleSelectMs=" + swScale.ElapsedMilliseconds + ")");
+			if (PlacingDryRun)
+			{
+				var swRebuild = System.Diagnostics.Stopwatch.StartNew();
+				RebuildFromModel(bottom, section, front, sheet, part, scale, scaleReason, apply: false);
+				swRebuild.Stop();
+				Console.WriteLine("[place-b] dry-run drawing unchanged (rebuildMs=" + swRebuild.ElapsedMilliseconds + ")");
+				PlacingStageAudit.RecordStage("01_views", drawing, sheet, front, bottom, section, _handler);
+				return;
+			}
+			PlacingStageAudit.RecordStage("01_views", drawing, sheet, front, bottom, section, _handler);
 
 			beat.Phase("CleanPlacing.purge", 2, 8);
-			// Elevation placement chains are kept; only isolated full-length/height chains go (after layout below).
-			int purged = NuclearPurgeLeftDumpOnly(sheet, sheetWidth, sheetHeight);
+			int purged = 0;
+			if (!PlacingRebuildOnly)
+				purged = NuclearPurgeLeftDumpOnly(sheet, sheetWidth, sheetHeight);
 			if (otherViews != null)
 			{
 				foreach (View ov in otherViews)
@@ -8150,18 +8311,7 @@ public partial class PrecastDimensionPostProcessor
 				}
 			}
 			ParkViewOffSheet(view3D);
-
-			Tekla.Structures.Model.Part part = ResolveMainPart(drawing);
-			double modelLen = LiveLength(part);
-			double bomLeft = ScanBomLeft(sheet, sheetWidth);
-			const double leftMargin = 40.0;
-			const double dimPadLeft = 28.0;
-			const double gapViews = 18.0;
-			double availW = Math.Max(90.0, bomLeft - leftMargin - dimPadLeft - 14.0 - BomGap);
-			availW = Math.Min(availW, MaxViewWidth);
-			int scale = SelectScale(modelLen > 1.0 ? modelLen : 9000.0, availW);
-			if (scale < 75 && modelLen / 75.0 <= availW)
-				scale = 75;
+			PlacingStageAudit.RecordStage("02_purge", drawing, sheet, front, bottom, section, _handler);
 
 			// Screenshot-2 style packing: elev TOP (with 2-tier), END 2 BOTTOM-LEFT, VIEW A BOTTOM-RIGHT — no overlap.
 			double elevCenterX = leftMargin + dimPadLeft + availW * 0.42;
@@ -8175,7 +8325,11 @@ public partial class PrecastDimensionPostProcessor
 			if (front != null && part != null)
 			{
 				ApplyPlacingViewLayout(front, part, scale, elevCenterX, elevCenterY);
-				elevAxis = PanelAxis.Measure(part, modelLen);
+				ReseatPlacingFront(front, part, scale, elevCenterX, elevCenterY, sheetWidth, sheetHeight);
+				if (PlacingRebuildOnly)
+					Console.WriteLine("[place-b] TOP IN FORM tiers skipped (--placing-rebuild-only)");
+				else
+					elevAxis = PanelAxis.Measure(part, modelLen);
 				if (elevAxis != null)
 				{
 					elevAxis.BindView(front, part);
@@ -8187,9 +8341,14 @@ public partial class PrecastDimensionPostProcessor
 						rebuilt.AddRange(ConsolidateOpeningStations(elevBuckets.Openings, elevAxis));
 					purged += PurgeIsolatedAndStaleChains(front, elevAxis, modelLen, LiveHeight(part), rebuilt, out bool placementSpansPanel);
 					CombineNativeChains(front, _combineMin);
+					PlacingStageAudit.RecordStage("03_stations", drawing, sheet, front, bottom, section, _handler);
 					beat.Phase("CleanPlacing.tiers", 4, 8);
 					PlacePlacingTwoTierElevDims(front, elevAxis, elevBuckets, scale, sheet, bomLeft, part, skipOverall: placementSpansPanel);
 					SealView(front, modelLen, scale, sheetHeight, bomLeft);
+				}
+				else
+				{
+					PlacingStageAudit.RecordStage("03_stations", drawing, sheet, front, bottom, section, _handler);
 				}
 				SyncTopInFormLabel(front, elevAxis, scale);
 				ReportUnresolvedMarks(front);
@@ -8198,29 +8357,23 @@ public partial class PrecastDimensionPostProcessor
 					+ " scale=1:" + scale.ToString(CultureInfo.InvariantCulture)
 					+ " openings=" + (elevBuckets != null ? elevBuckets.Openings.Count : 0).ToString(CultureInfo.InvariantCulture));
 			}
+			else
+			{
+				PlacingStageAudit.RecordStage("03_stations", drawing, sheet, front, bottom, section, _handler);
+			}
+			PlacingStageAudit.RecordStage("04_tiers", drawing, sheet, front, bottom, section, _handler);
 
 			beat.Phase("CleanPlacing.end", 5, 8);
-			int endScale = scale;
-			double endCenterX = leftMargin + dimPadLeft + 55.0;
+			double endCenterX = elevCenterX; // END 2 horizontally aligned under TOP IN FORM
 			if (bottom != null)
 			{
-				ApplyPlacingViewLayout(bottom, part, endScale, endCenterX, rowY + 10.0);
-				if (endNative < 3)
-				{
-					PurgeAllViewDimensions(bottom);
-					PlacePlacingEndViewDims(bottom, part, modelLen, elevBuckets, endScale, bomLeft);
-					Console.WriteLine("[Placing] END 2 rebuilt (sparse native)");
-				}
-				else
-					Console.WriteLine("[Placing] END 2 preserve-native dims=" + endNative.ToString(CultureInfo.InvariantCulture));
+				ApplyPlacingViewLayout(bottom, part, scale, endCenterX, rowY + 10.0);
 				RemoveTextsMatching(bottom, "VIEW VIEW");
-				SyncViewScaleLabel(bottom, part, "END 2", endScale);
-				ReportUnresolvedMarks(bottom);
 			}
+			PlacingStageAudit.RecordStage("05_end", drawing, sheet, front, bottom, section, _handler);
 
 			beat.Phase("CleanPlacing.viewA", 6, 8);
-			// VIEW A to the RIGHT of END 2 — use solid bounds so they never crash (screenshot 1 failure).
-			int secScale = Math.Min(scale, 50);
+			// VIEW A to the RIGHT of TOP IN FORM & END 2 — vertical center aligned with elevation
 			double viewACenterX = Math.Min(bomLeft - 70.0, endCenterX + 140.0);
 			if (bottom != null && part != null
 				&& GetSolidBoundsInView(bottom, part, out double bMinX, out double bMaxX, out _, out _))
@@ -8228,23 +8381,22 @@ public partial class PrecastDimensionPostProcessor
 				try
 				{
 					double originX = bottom.Origin != null ? bottom.Origin.X : endCenterX;
-					double sheetMaxX = originX + Math.Max(bMinX, bMaxX) / (double)((endScale < 1) ? 1 : endScale);
+					double sheetMaxX = originX + Math.Max(bMinX, bMaxX) / (double)((scale < 1) ? 1 : scale);
 					viewACenterX = Math.Min(bomLeft - 65.0, sheetMaxX + gapViews + 35.0);
 				}
 				catch { }
 			}
 			if (section != null)
+				ApplyPlacingViewLayout(section, part, scale, viewACenterX, elevCenterY);
+			RebuildFromModel(bottom, section, front, sheet, part, scale, scaleReason, apply: true);
+			if (bottom != null)
 			{
-				ApplyPlacingViewLayout(section, part, secScale, viewACenterX, rowY + 25.0);
-				if (secNative < 2)
-				{
-					PurgeAllViewDimensions(section);
-					PlacePlacingSectionDims(section, part, elevBuckets, secScale);
-					Console.WriteLine("[Placing] VIEW A rebuilt (sparse native)");
-				}
-				else
-					Console.WriteLine("[Placing] VIEW A preserve-native dims=" + secNative.ToString(CultureInfo.InvariantCulture));
-				SyncViewScaleLabel(section, part, "VIEW A", secScale);
+				SyncViewScaleLabel(bottom, part, "END 2", scale);
+				ReportUnresolvedMarks(bottom);
+			}
+			if (section != null)
+			{
+				SyncViewScaleLabel(section, part, "VIEW A", scale);
 				ReportUnresolvedMarks(section);
 			}
 
@@ -8255,51 +8407,63 @@ public partial class PrecastDimensionPostProcessor
 				foreach (View ov in otherViews)
 				{
 					if (ov == null || IsJunkPlacingDetail(ov)) continue;
-					ApplyPlacingViewLayout(ov, part, 50, ox, rowY + 20.0);
+					ApplyPlacingViewLayout(ov, part, scale, ox, rowY + 20.0);
 					ReportUnresolvedMarks(ov);
 					ox += 70.0;
 				}
 			}
+			PlacingStageAudit.RecordStage("06_viewA", drawing, sheet, front, bottom, section, _handler);
 
 			beat.Phase("CleanPlacing.combine", 7, 8);
-			purged += NuclearPurgeLeftDumpOnly(sheet, sheetWidth, sheetHeight);
-			CombineNativeChains(bottom, _combineMin);
-			CombineNativeChains(section, _combineMin);
-			RewriteCombinedStars(front, "placing front");
-			RewriteCombinedStars(bottom, "placing end");
-			RewriteCombinedStars(section, "placing section");
-			beat.Phase("CleanPlacing.rebar", 8, 8);
-			AntiCollisionEngine.PlaceRebarRuns(front, part, scale, CollectMarkTexts(front));
-			var placingViews = new List<View> { front, bottom, section };
-			if (otherViews != null) placingViews.AddRange(otherViews);
-			beat.Phase("CleanPlacing.bbs", 8, 8);
-			PreflightQaChecker.CompareViewToBbs(_model, part, placingViews, _activePiece, _pdfDir);
+			if (!PlacingRebuildOnly)
+			{
+				purged += NuclearPurgeLeftDumpOnly(sheet, sheetWidth, sheetHeight);
+				RewriteCombinedStars(front, "placing front");
+				RewriteCombinedStars(bottom, "placing end");
+				RewriteCombinedStars(section, "placing section");
+				PlacingStageAudit.RecordStage("07_combine", drawing, sheet, front, bottom, section, _handler);
+				beat.Phase("CleanPlacing.rebar", 8, 8);
+				AntiCollisionEngine.PlaceRebarRuns(front, part, scale, CollectMarkTexts(front));
+				PlacingStageAudit.RecordStage("08_rebar", drawing, sheet, front, bottom, section, _handler);
+				var placingViews = new List<View> { front, bottom, section };
+				if (otherViews != null) placingViews.AddRange(otherViews);
+				beat.Phase("CleanPlacing.bbs", 8, 8);
+				PreflightQaChecker.CompareViewToBbs(_model, part, placingViews, _activePiece, _pdfDir);
+			}
+			else
+			{
+				Console.WriteLine("[place-b] skipped purge, rebar placement, bill compare");
+				PlacingStageAudit.RecordStage("07_combine", drawing, sheet, front, bottom, section, _handler);
+				PlacingStageAudit.RecordStage("08_rebar", drawing, sheet, front, bottom, section, _handler);
+			}
 			ReaffirmPlacingScale(front, scale);
-			ReaffirmPlacingScale(bottom, endScale);
-			if (section != null) ReaffirmPlacingScale(section, secScale);
+			ReaffirmPlacingScale(bottom, scale);
+			if (section != null) ReaffirmPlacingScale(section, scale);
 			ApplyFontToStraightSets(front);
 			ApplyFontToStraightSets(bottom);
 			ApplyFontToStraightSets(section);
+			PlacingStageAudit.RecordStage("09_bbs", drawing, sheet, front, bottom, section, _handler);
 			beat.Phase("CleanPlacing.commit", 8, 8);
-			AssertSheetBounds(sheet, sheetWidth, sheetHeight, bomLeft, front, scale);
+			AssertSheetBounds(sheet, sheetWidth, sheetHeight, bomLeft, front, scale, part);
 
 			using (StageTimer.Start("CommitChanges+Save", StageTimer.Sheet))
 			{
 				StageTimer.TimeApi("CommitChanges", "PrecastDimensionPostProcessor.cs:CleanPlacing", delegate { drawing.CommitChanges(); });
-				_handler.SaveActiveDrawing();
+			_handler.SaveActiveDrawing();
 			}
 			RefreshDrawingUi(drawing);
+			PlacingStageAudit.RecordStage("10_commit", drawing, sheet, front, bottom, section, _handler);
 			WarnIfNumberingStale();
 			int dimsAfter = CountStraightDimensionSets(front)
 				+ CountStraightDimensionSets(bottom)
 				+ CountStraightDimensionSets(section);
-			Console.WriteLine("[Placing] W10-175-2 macros+2tier: elevDims=" + elevDims.ToString(CultureInfo.InvariantCulture)
+			string piece = string.IsNullOrEmpty(_activePiece) ? (drawing.Mark ?? "") : _activePiece;
+			Console.WriteLine("[Placing] " + piece + " macros+2tier: elevDims=" + elevDims.ToString(CultureInfo.InvariantCulture)
 				+ " END2=" + CountStraightDimensionSets(bottom).ToString(CultureInfo.InvariantCulture)
 				+ " VIEW_A=" + CountStraightDimensionSets(section).ToString(CultureInfo.InvariantCulture)
 				+ " dimsAfter=" + dimsAfter.ToString(CultureInfo.InvariantCulture)
 				+ " purged=" + purged.ToString(CultureInfo.InvariantCulture)
-				+ " bboxFailures=" + _lastBboxFailures.Count.ToString(CultureInfo.InvariantCulture)
-				+ " (END2/VIEW_A no overlap; native END2 dims kept)");
+				+ " bboxFailures=" + _lastBboxFailures.Count.ToString(CultureInfo.InvariantCulture));
 		}
 		catch (Exception ex)
 		{
@@ -8308,15 +8472,14 @@ public partial class PrecastDimensionPostProcessor
 	}
 
 	/// <summary>Pick END 2 (wide thin) and A-A (tall) from leftovers when names are empty.</summary>
-	private static void ForceClassifyPlacingViews(ref View front, ref View section, ref View bottom, List<View> otherViews)
+	private static void ForceClassifyPlacingViews(ref View front, ref View section, ref View bottom, List<View> otherViews, Tekla.Structures.Model.Part part = null)
 	{
 		if (otherViews == null) return;
 		for (int i = otherViews.Count - 1; i >= 0; i--)
 		{
 			View v = otherViews[i];
 			if (v == null || IsJunkPlacingDetail(v)) continue;
-			double w = 0, h = 0;
-			try { w = v.Width; h = v.Height; } catch { }
+			ViewPaperSize(v, part, out double w, out double h);
 			if (bottom == null && w > h * 1.6 && w > 40.0)
 			{
 				bottom = v;
@@ -8667,6 +8830,1176 @@ public partial class PrecastDimensionPostProcessor
 	}
 
 	/// <summary>Native chains on rebar views combine equal gaps from 2 (n*s=total).</summary>
+	private sealed class PlacingNativeChain
+	{
+		public StraightDimensionSet Set;
+		public DrawingObject Box;
+		public string Text;
+		public int Ticks;
+		public double AlongMin;
+		public double AlongMax;
+		public double Anchor;
+		public double EndX;
+		public double EndY;
+	}
+
+	private sealed class PlacingBox
+	{
+		public DrawingObject Obj;
+		public string Text;
+		public string TypeName;
+		public string Frame;
+		public double MinX;
+		public double MinY;
+		public double MaxX;
+		public double MaxY;
+		public double Cx;
+		public double Cy;
+	}
+
+	private static readonly Regex StraightBarMarkPattern = new Regex(@"\d+\s*M\s*-", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+	/// <summary>
+	/// END 2 and VIEW A only. One box per chain, drop the stuck 2-point total, then step the
+	/// remaining straight-bar chains off the solid. Unpaired panel chains stay put.
+	/// </summary>
+	private sealed class PlacingBarChain
+	{
+		public bool EndView;
+		public string Key = "";
+		public string SizeText = "";
+		public string QtyText = "";
+		public double Anchor;
+		public List<double> Stations = new List<double>();
+		public List<StraightDimensionSet> Sets = new List<StraightDimensionSet>();
+		public List<DrawingObject> Marks = new List<DrawingObject>();
+		public int Points;
+		public double Span;
+		public bool Hold;
+		public bool Drop;
+		public int Slot = 1;
+		public View Host;
+	}
+
+	/// <summary>
+	/// END 2 and VIEW A. Create the new chain and box first. Delete that bar's old set only after the insert matches.
+	/// </summary>
+	private void RebuildPlacingChains(View endView, View sectionView, Tekla.Structures.Model.Part part, int scale)
+	{
+		int sc = scale < 1 ? 1 : scale;
+		var all = new List<PlacingBarChain>();
+		all.AddRange(ReadPlacingBars(endView, true, sc));
+		all.AddRange(ReadPlacingBars(sectionView, false, sc));
+		ChoosePlacingView(all);
+		AssignPlacingSlots(all, endView, part, true);
+		AssignPlacingSlots(all, sectionView, part, false);
+		var remain = new List<PlacingBarChain>();
+		int endDeletedDims = 0, endDeletedMarks = 0, secDeletedDims = 0, secDeletedMarks = 0;
+		int endCreated = 0, secCreated = 0;
+		var keys = new List<string>();
+		foreach (PlacingBarChain chain in all)
+		{
+			if (string.IsNullOrEmpty(chain.Key) || keys.Contains(chain.Key)) continue;
+			keys.Add(chain.Key);
+		}
+		foreach (string key in keys)
+		{
+			var group = new List<PlacingBarChain>();
+			foreach (PlacingBarChain chain in all)
+				if (chain.Key == key) group.Add(chain);
+			bool hold = false;
+			foreach (PlacingBarChain chain in group)
+				if (chain.Hold) hold = true;
+			if (hold)
+			{
+				foreach (PlacingBarChain chain in group)
+				{
+					remain.Add(chain);
+					Console.WriteLine("[place-b] kept native mark=" + key + " reason=tie view=" + (chain.EndView ? "END2" : "VIEW_A")
+						+ " pts=" + chain.Points.ToString(CultureInfo.InvariantCulture)
+						+ " span=" + chain.Span.ToString("0.#", CultureInfo.InvariantCulture));
+				}
+				continue;
+			}
+			var made = new List<PlacingBarChain>();
+			bool allOk = true;
+			foreach (PlacingBarChain chain in group)
+			{
+				if (chain.Drop) continue;
+				if (TryCreatePlacingChain(chain, part, sc))
+				{
+					made.Add(chain);
+					if (chain.EndView) endCreated++;
+					else secCreated++;
+				}
+				else
+				{
+					allOk = false;
+					remain.Add(chain);
+					Console.WriteLine("[place-b] kept native mark=" + key + " reason=insert view=" + (chain.EndView ? "END2" : "VIEW_A"));
+				}
+			}
+			foreach (PlacingBarChain chain in made)
+			{
+				DeletePlacingChainObjects(chain, ref endDeletedDims, ref endDeletedMarks, ref secDeletedDims, ref secDeletedMarks);
+				remain.Add(chain);
+			}
+			foreach (PlacingBarChain chain in group)
+			{
+				if (!chain.Drop) continue;
+				if (allOk)
+					DeletePlacingChainObjects(chain, ref endDeletedDims, ref endDeletedMarks, ref secDeletedDims, ref secDeletedMarks);
+				else
+				{
+					remain.Add(chain);
+					Console.WriteLine("[place-b] kept native mark=" + key + " reason=sibling view=" + (chain.EndView ? "END2" : "VIEW_A"));
+				}
+			}
+		}
+		foreach (PlacingBarChain chain in all)
+		{
+			if (!string.IsNullOrEmpty(chain.Key)) continue;
+			remain.Add(chain);
+			Console.WriteLine("[place-b] kept native reason=unlink view=" + (chain.EndView ? "END2" : "VIEW_A")
+				+ " pts=" + chain.Points.ToString(CultureInfo.InvariantCulture));
+		}
+		Console.WriteLine("[place-b] deleted END 2 dims=" + endDeletedDims.ToString(CultureInfo.InvariantCulture)
+			+ " marks=" + endDeletedMarks.ToString(CultureInfo.InvariantCulture));
+		Console.WriteLine("[place-b] deleted VIEW A dims=" + secDeletedDims.ToString(CultureInfo.InvariantCulture)
+			+ " marks=" + secDeletedMarks.ToString(CultureInfo.InvariantCulture));
+		Console.WriteLine("[place-b] created END 2 chains=" + endCreated.ToString(CultureInfo.InvariantCulture)
+			+ " VIEW A chains=" + secCreated.ToString(CultureInfo.InvariantCulture) + " type=Text");
+		int endRemain = 0, secRemain = 0;
+		foreach (PlacingBarChain chain in remain)
+		{
+			if (chain.EndView) endRemain++;
+			else secRemain++;
+		}
+		Console.WriteLine("[place-b] chains END2=" + endRemain.ToString(CultureInfo.InvariantCulture)
+			+ " VIEW_A=" + secRemain.ToString(CultureInfo.InvariantCulture));
+		ScorePlacingSheet(endView, sectionView, part, remain);
+	}
+
+	private static List<PlacingBarChain> ReadPlacingBars(View view, bool endView, int scale)
+	{
+		var raw = new List<PlacingBarChain>();
+		if (view == null) return raw;
+		List<PlacingBox> boxes = CollectPlacingBoxes(view);
+		double pairLimit = 40.0 * scale;
+		try
+		{
+			DrawingObjectEnumerator en = view.GetObjects(new Type[1] { typeof(StraightDimensionSet) });
+			while (en != null && en.MoveNext())
+			{
+				if (!(en.Current is StraightDimensionSet set)) continue;
+				PlacingBarChain chain = ReadOnePlacingBar(set, view, endView, boxes, pairLimit, scale);
+				if (chain != null) raw.Add(chain);
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[place-b] read " + (endView ? "END 2" : "VIEW A") + ": " + ex.Message);
+		}
+		return MergePlacingTotals(raw, 6.0 * scale);
+	}
+
+	private static PlacingBarChain ReadOnePlacingBar(StraightDimensionSet set, View view, bool endView, List<PlacingBox> boxes, double pairLimit, int scale)
+	{
+		var stations = new List<double>();
+		double anchorSum = 0;
+		int anchorN = 0;
+		try
+		{
+			DrawingObjectEnumerator en = set.GetObjects();
+			while (en != null && en.MoveNext())
+			{
+				if (!(en.Current is StraightDimension dim)) continue;
+				TakePlacingStation(dim.StartPoint, endView, stations, ref anchorSum, ref anchorN);
+				TakePlacingStation(dim.EndPoint, endView, stations, ref anchorSum, ref anchorN);
+			}
+		}
+		catch { return null; }
+		stations = DedupeStations(stations);
+		if (stations.Count < 2 || anchorN < 1) return null;
+		var chain = new PlacingBarChain
+		{
+			EndView = endView,
+			Anchor = anchorSum / anchorN,
+			Stations = stations,
+			Points = stations.Count,
+			Span = stations[stations.Count - 1] - stations[0],
+			Host = view
+		};
+		chain.Sets.Add(set);
+		double endX = endView ? stations[stations.Count - 1] : chain.Anchor;
+		double endY = endView ? chain.Anchor : stations[stations.Count - 1];
+		PlacingBox size = null;
+		double best = pairLimit;
+		foreach (PlacingBox box in boxes)
+		{
+			if (box == null || box.Obj == null) continue;
+			if (!IsStraightBarMark(box.Text)) continue;
+			double d = Math.Sqrt((box.Cx - endX) * (box.Cx - endX) + (box.Cy - endY) * (box.Cy - endY));
+			if (d < best)
+			{
+				best = d;
+				size = box;
+			}
+		}
+		if (size == null) return chain;
+		chain.Marks.Add(size.Obj);
+		if (!TryPlacingSizeKey(size.Text, out string key, out string shown)) return chain;
+		chain.Key = key;
+		chain.SizeText = shown;
+		chain.QtyText = FindPlacingQty(boxes, size, 20.0 * scale, chain);
+		return chain;
+	}
+
+	private static void TakePlacingStation(Point point, bool endView, List<double> stations, ref double anchorSum, ref int anchorN)
+	{
+		if (point == null) return;
+		stations.Add(endView ? point.X : point.Y);
+		anchorSum += endView ? point.Y : point.X;
+		anchorN++;
+	}
+
+	private static List<PlacingBarChain> MergePlacingTotals(List<PlacingBarChain> raw, double twin)
+	{
+		raw.Sort((a, b) => b.Points.CompareTo(a.Points));
+		var kept = new List<PlacingBarChain>();
+		foreach (PlacingBarChain chain in raw)
+		{
+			PlacingBarChain host = null;
+			foreach (PlacingBarChain other in kept)
+			{
+				if (string.IsNullOrEmpty(chain.Key) || chain.Key != other.Key || chain.EndView != other.EndView) continue;
+				bool shortTotal = chain.Points <= 3 && Math.Abs(chain.Span - other.Span) <= 2.0;
+				bool sameBar = chain.Points > 3 && other.Points > 3
+					&& Math.Abs(chain.Anchor - other.Anchor) <= twin
+					&& Math.Abs(chain.Span - other.Span) <= 2.0;
+				if (shortTotal || sameBar)
+				{
+					host = other;
+					break;
+				}
+			}
+			if (host == null)
+			{
+				kept.Add(chain);
+				continue;
+			}
+			host.Sets.AddRange(chain.Sets);
+			host.Marks.AddRange(chain.Marks);
+			if (string.IsNullOrEmpty(host.QtyText)) host.QtyText = chain.QtyText;
+			host.Stations.AddRange(chain.Stations);
+			host.Stations = DedupeStations(host.Stations);
+			host.Points = host.Stations.Count;
+			host.Span = host.Stations[host.Stations.Count - 1] - host.Stations[0];
+		}
+		return kept;
+	}
+
+	private static void ChoosePlacingView(List<PlacingBarChain> all)
+	{
+		var keys = new List<string>();
+		foreach (PlacingBarChain chain in all)
+		{
+			if (string.IsNullOrEmpty(chain.Key) || keys.Contains(chain.Key)) continue;
+			keys.Add(chain.Key);
+		}
+		foreach (string key in keys)
+		{
+			PlacingBarChain endBest = null;
+			PlacingBarChain secBest = null;
+			foreach (PlacingBarChain chain in all)
+			{
+				if (chain.Key != key) continue;
+				if (chain.EndView)
+				{
+					if (endBest == null || chain.Points > endBest.Points || (chain.Points == endBest.Points && chain.Span > endBest.Span))
+						endBest = chain;
+				}
+				else if (secBest == null || chain.Points > secBest.Points || (chain.Points == secBest.Points && chain.Span > secBest.Span))
+					secBest = chain;
+			}
+			if (endBest == null || secBest == null) continue;
+			string choice;
+			bool endWins;
+			if (endBest.Points != secBest.Points)
+			{
+				endWins = endBest.Points > secBest.Points;
+				choice = endWins ? "END2" : "VIEW_A";
+			}
+			else if (Math.Abs(endBest.Span - secBest.Span) > 1.0)
+			{
+				endWins = endBest.Span > secBest.Span;
+				choice = (endWins ? "END2" : "VIEW_A") + " tie-span";
+			}
+			else
+			{
+				foreach (PlacingBarChain chain in all)
+					if (chain.Key == key) chain.Hold = true;
+				Console.WriteLine("[place-b] points mark=" + key
+					+ " END2pts=" + endBest.Points.ToString(CultureInfo.InvariantCulture)
+					+ " END2span=" + endBest.Span.ToString("0.#", CultureInfo.InvariantCulture)
+					+ " VIEW_Apts=" + secBest.Points.ToString(CultureInfo.InvariantCulture)
+					+ " VIEW_Aspan=" + secBest.Span.ToString("0.#", CultureInfo.InvariantCulture)
+					+ " choice=kept-native");
+				continue;
+			}
+			foreach (PlacingBarChain chain in all)
+			{
+				if (chain.Key != key) continue;
+				chain.Drop = chain.EndView != endWins;
+			}
+			Console.WriteLine("[place-b] points mark=" + key
+				+ " END2pts=" + endBest.Points.ToString(CultureInfo.InvariantCulture)
+				+ " END2span=" + endBest.Span.ToString("0.#", CultureInfo.InvariantCulture)
+				+ " VIEW_Apts=" + secBest.Points.ToString(CultureInfo.InvariantCulture)
+				+ " VIEW_Aspan=" + secBest.Span.ToString("0.#", CultureInfo.InvariantCulture)
+				+ " choice=" + choice);
+		}
+	}
+
+	private bool TryCreatePlacingChain(PlacingBarChain chain, Tekla.Structures.Model.Part part, int scale)
+	{
+		if (chain == null || chain.Host == null || string.IsNullOrEmpty(chain.SizeText) || chain.Sets.Count == 0) return false;
+		View view = chain.Host;
+		if (!GetSolidBoundsInView(view, part, out double minX, out double maxX, out double minY, out double maxY))
+			return false;
+		double axisMin = chain.EndView ? Math.Min(minX, maxX) : Math.Min(minY, maxY);
+		double axisMax = chain.EndView ? Math.Max(minX, maxX) : Math.Max(minY, maxY);
+		var stations = new List<double>(chain.Stations);
+		stations.Add(axisMin);
+		stations.Add(axisMax);
+		stations = DedupeStations(stations);
+		if (stations.Count < 2) return false;
+		double mid = chain.EndView ? (minY + maxY) * 0.5 : (minX + maxX) * 0.5;
+		bool outer = chain.Anchor >= mid;
+		int slot = chain.Slot < 1 ? 1 : chain.Slot;
+		double pitchPaper = chain.EndView ? 9.00 : 7.00;
+		double paper = Math.Max(1, slot) * pitchPaper;
+		var pts = new PointList();
+		foreach (double station in stations)
+		{
+			if (chain.EndView) pts.Add(new Point(station, chain.Anchor, 0.0));
+			else pts.Add(new Point(chain.Anchor, station, 0.0));
+		}
+		Vector up = chain.EndView
+			? (outer ? new Vector(0.0, 1.0, 0.0) : new Vector(0.0, -1.0, 0.0))
+			: (outer ? new Vector(1.0, 0.0, 0.0) : new Vector(-1.0, 0.0, 0.0));
+		StraightDimensionSet set = null;
+		try
+		{
+			var attrs = NewDimensionSetAttributes();
+			try { attrs.LoadAttributes("standard"); } catch { }
+			attrs.ExtensionLine = DimensionSetBaseAttributes.ExtensionLineTypes.Yes;
+			attrs.Color = DrawingColors.Green;
+			try { attrs.Text.Font.Color = DrawingColors.Yellow; } catch { }
+			try { ApplyDimFont(attrs.Text.Font); } catch { }
+			if (HasEqualPlacingGaps(stations))
+			{
+				attrs.CombinedDimension.MinimumNumberToCombine = 2;
+				attrs.CombinedDimension.Format = DimensionSetBaseAttributes.CombineFormats.NumberOfItemsTimesLengthEqualsResult;
+			}
+			set = _dims.CreateDimensionSet(view, pts, up, paper, attrs);
+			if (set != null)
+			{
+				try { set.Distance = paper * scale; set.Modify(); } catch { }
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[place-b] create " + chain.Key + ": " + ex.Message);
+		}
+		int expected = 1;
+		int created = set != null ? 1 : 0;
+		double sign = outer ? 1.0 : -1.0;
+		double line = chain.Anchor + sign * paper * scale;
+		double tail = (3.72 + 1.0) * scale;
+		double boxX = chain.EndView ? axisMax + tail : line;
+		double boxY = chain.EndView ? line : axisMax + tail;
+		Text sizeText = null;
+		Text qtyText = null;
+		try
+		{
+			sizeText = new Text(view, new Point(boxX, boxY, 0.0), chain.SizeText);
+			sizeText.Attributes.Frame.Type = FrameTypes.Rectangular;
+			try { ApplyDimFont(sizeText.Attributes.Font); } catch { }
+			expected++;
+			if (sizeText.Insert()) created++;
+		}
+		catch { expected++; }
+		if (!string.IsNullOrEmpty(chain.QtyText))
+		{
+			try
+			{
+				qtyText = new Text(view, new Point(boxX, boxY - 5.0 * scale, 0.0), chain.QtyText);
+				qtyText.Attributes.Frame.Type = FrameTypes.None;
+				try { ApplyDimFont(qtyText.Attributes.Font); } catch { }
+				expected++;
+				if (qtyText.Insert()) created++;
+			}
+			catch { expected++; }
+		}
+		if (created == expected) return true;
+		try { if (set != null) set.Delete(); } catch { }
+		try { if (sizeText != null) sizeText.Delete(); } catch { }
+		try { if (qtyText != null) qtyText.Delete(); } catch { }
+		return false;
+	}
+
+	private static bool HasEqualPlacingGaps(List<double> stations)
+	{
+		if (stations == null || stations.Count < 3) return false;
+		var gaps = new List<double>();
+		for (int i = 1; i < stations.Count; i++)
+		{
+			double gap = stations[i] - stations[i - 1];
+			if (gap > 1.0) gaps.Add(gap);
+		}
+		for (int i = 0; i < gaps.Count; i++)
+		{
+			for (int j = i + 1; j < gaps.Count; j++)
+			{
+				if (Math.Abs(gaps[i] - gaps[j]) <= 1.0) return true;
+			}
+		}
+		return false;
+	}
+
+	private static void DeletePlacingChainObjects(PlacingBarChain chain, ref int endDims, ref int endMarks, ref int secDims, ref int secMarks)
+	{
+		var seen = new HashSet<DrawingObject>();
+		foreach (StraightDimensionSet set in chain.Sets)
+		{
+			if (set == null || !seen.Add(set)) continue;
+			try
+			{
+				if (set.Delete())
+				{
+					if (chain.EndView) endDims++;
+					else secDims++;
+				}
+			}
+			catch { }
+		}
+		foreach (DrawingObject mark in chain.Marks)
+		{
+			if (mark == null || !seen.Add(mark)) continue;
+			try
+			{
+				if (mark.Delete())
+				{
+					if (chain.EndView) endMarks++;
+					else secMarks++;
+				}
+			}
+			catch { }
+		}
+	}
+
+	private void ScorePlacingSheet(View endView, View sectionView, Tekla.Structures.Model.Part part, List<PlacingBarChain> remain)
+	{
+		double endSpan = 0, secSpan = 0;
+		if (GetSolidBoundsInView(endView, part, out double e0, out double e1, out _, out _))
+			endSpan = Math.Abs(e1 - e0);
+		if (GetSolidBoundsInView(sectionView, part, out _, out _, out double s0, out double s1))
+			secSpan = Math.Abs(s1 - s0);
+		Console.WriteLine("[place-b] extent END2=" + endSpan.ToString("0.#", CultureInfo.InvariantCulture)
+			+ " VIEW_A=" + secSpan.ToString("0.#", CultureInfo.InvariantCulture));
+		string piece = _activePiece ?? "";
+		if (piece.IndexOf("W10-78", StringComparison.OrdinalIgnoreCase) < 0) return;
+		Console.WriteLine("[place-b] score extent END2 " + (Math.Abs(endSpan - 5120.0) <= 25.0 ? "pass" : "fail")
+			+ " VIEW_A " + (Math.Abs(secSpan - 3475.0) <= 25.0 ? "pass" : "fail"));
+		var expectEnd = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+		{
+			{ "10M-2460", 2 }, { "15M-3120", 1 }, { "10M-3120", 1 }, { "10M-3370", 1 }, { "15M-3370", 1 }, { "10M-310", 1 }
+		};
+		var expectSec = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+		{
+			{ "10M-2570", 2 }, { "10M-1830", 2 }, { "10M-5020", 1 }, { "15M-5020", 2 }, { "10M-1430", 1 }, { "15M-2440", 2 }, { "10M-740", 1 }
+		};
+		string[] planOnly = { "10M-1990", "15M-1990", "10M-600" };
+		ScorePlacingSide("END2", true, expectEnd, remain);
+		ScorePlacingSide("VIEW_A", false, expectSec, remain);
+		foreach (string key in planOnly)
+		{
+			int n = 0;
+			foreach (PlacingBarChain chain in remain)
+				if (string.Equals(chain.Key, key, StringComparison.OrdinalIgnoreCase)) n++;
+			Console.WriteLine("[place-b] score " + key + " section " + (n == 0 ? "pass" : "fail")
+				+ " count=" + n.ToString(CultureInfo.InvariantCulture));
+		}
+		Console.WriteLine("[place-b] plan-only next: drop a mark whose longest chain in both views has 3 or fewer points. That is the rule to try for the marks that failed the section list.");
+	}
+
+	private static void ScorePlacingSide(string name, bool endView, Dictionary<string, int> expect, List<PlacingBarChain> remain)
+	{
+		var seen = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+		foreach (PlacingBarChain chain in remain)
+		{
+			if (chain.EndView != endView || string.IsNullOrEmpty(chain.Key)) continue;
+			seen.TryGetValue(chain.Key, out int n);
+			seen[chain.Key] = n + 1;
+		}
+		foreach (KeyValuePair<string, int> kv in expect)
+		{
+			seen.TryGetValue(kv.Key, out int n);
+			Console.WriteLine("[place-b] score " + name + " " + kv.Key
+				+ " x" + kv.Value.ToString(CultureInfo.InvariantCulture)
+				+ " " + (n == kv.Value ? "pass" : "fail")
+				+ " count=" + n.ToString(CultureInfo.InvariantCulture));
+		}
+		foreach (KeyValuePair<string, int> kv in seen)
+		{
+			if (!expect.ContainsKey(kv.Key))
+				Console.WriteLine("[place-b] score " + name + " extra " + kv.Key
+					+ " count=" + kv.Value.ToString(CultureInfo.InvariantCulture) + " fail");
+		}
+	}
+
+	private static List<double> DedupeStations(List<double> stations)
+	{
+		stations.Sort();
+		var deduped = new List<double>();
+		foreach (double station in stations)
+		{
+			if (deduped.Count == 0 || station - deduped[deduped.Count - 1] > 1.0)
+				deduped.Add(station);
+		}
+		return deduped;
+	}
+
+	private static bool TryPlacingSizeKey(string text, out string key, out string shown)
+	{
+		key = "";
+		shown = "";
+		if (string.IsNullOrWhiteSpace(text)) return false;
+		Match match = Regex.Match(text, @"(\d+)\s*M\s*-\s*(\d+)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+		if (!match.Success) return false;
+		key = match.Groups[1].Value + "M-" + match.Groups[2].Value;
+		shown = match.Groups[1].Value + "M - " + match.Groups[2].Value;
+		return true;
+	}
+
+	private static string FindPlacingQty(List<PlacingBox> boxes, PlacingBox size, double limit, PlacingBarChain chain)
+	{
+		Match own = Regex.Match(size.Text ?? "", @"x\s*,\s*\d+\s*x|\d+\s*x", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+		if (own.Success) return own.Value.Trim();
+		string best = "";
+		PlacingBox bestBox = null;
+		double bestDist = limit;
+		foreach (PlacingBox box in boxes)
+		{
+			if (box == null || ReferenceEquals(box, size)) continue;
+			Match qty = Regex.Match(box.Text ?? "", @"x\s*,\s*\d+\s*x|\d+\s*x", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+			if (!qty.Success) continue;
+			double d = Math.Sqrt((box.Cx - size.Cx) * (box.Cx - size.Cx) + (box.Cy - size.Cy) * (box.Cy - size.Cy));
+			if (d < bestDist)
+			{
+				bestDist = d;
+				best = qty.Value.Trim();
+				bestBox = box;
+			}
+		}
+		if (bestBox != null && bestBox.Obj != null && !chain.Marks.Contains(bestBox.Obj))
+			chain.Marks.Add(bestBox.Obj);
+		return best;
+	}
+
+	private static void AssignPlacingSlots(List<PlacingBarChain> all, View view, Tekla.Structures.Model.Part part, bool endView)
+	{
+		var face = new List<PlacingBarChain>();
+		foreach (PlacingBarChain chain in all)
+		{
+			if (chain.EndView != endView || chain.Hold || chain.Drop || string.IsNullOrEmpty(chain.Key)) continue;
+			face.Add(chain);
+		}
+		if (face.Count == 0) return;
+		double mid = 0;
+		bool haveMid = GetSolidBoundsInView(view, part, out double minX, out double maxX, out double minY, out double maxY);
+		if (haveMid) mid = endView ? (minY + maxY) * 0.5 : (minX + maxX) * 0.5;
+		var inner = new List<PlacingBarChain>();
+		var outer = new List<PlacingBarChain>();
+		foreach (PlacingBarChain chain in face)
+		{
+			if (!haveMid || chain.Anchor >= mid) outer.Add(chain);
+			else inner.Add(chain);
+		}
+		if (face.Count > 1 && (inner.Count == 0 || outer.Count == 0))
+		{
+			face.Sort((a, b) => a.Anchor.CompareTo(b.Anchor));
+			inner.Clear();
+			outer.Clear();
+			int half = face.Count / 2;
+			for (int i = 0; i < face.Count; i++)
+			{
+				if (i < half) inner.Add(face[i]);
+				else outer.Add(face[i]);
+			}
+			Console.WriteLine("[place-b] " + (endView ? "END 2" : "VIEW A") + " one face empty; split "
+				+ face.Count.ToString(CultureInfo.InvariantCulture) + " chains in half");
+		}
+		inner.Sort((a, b) => b.Anchor.CompareTo(a.Anchor));
+		outer.Sort((a, b) => a.Anchor.CompareTo(b.Anchor));
+		for (int i = 0; i < inner.Count; i++) inner[i].Slot = i + 1;
+		for (int i = 0; i < outer.Count; i++) outer[i].Slot = i + 1;
+	}
+
+	private static void RestackPlacingNative(View view, Tekla.Structures.Model.Part part, int scale, bool endView)
+	{
+		string viewName = endView ? "END 2" : "VIEW A";
+		if (view == null) return;
+		int sc = scale < 1 ? 1 : scale;
+		const double endPitchPaper = 9.00;
+		const double viewAPitchPaper = 7.00;
+		const double boxPaper = 3.72;
+		double pitch = (endView ? endPitchPaper : viewAPitchPaper) * sc;
+		double twin = 6.0 * sc;
+		double tail = (boxPaper + 1.0) * sc;
+		if (!GetSolidBoundsInView(view, part, out double minX, out double maxX, out double minY, out double maxY))
+		{
+			Console.WriteLine("[place-b] " + viewName + " no solid bounds");
+			return;
+		}
+		double mid = endView ? (minY + maxY) * 0.5 : (minX + maxX) * 0.5;
+
+		var chains = new List<PlacingNativeChain>();
+		try
+		{
+			DrawingObjectEnumerator en = view.GetObjects(new Type[1] { typeof(StraightDimensionSet) });
+			while (en != null && en.MoveNext())
+			{
+				if (!(en.Current is StraightDimensionSet set)) continue;
+				PlacingNativeChain chain = ReadPlacingChain(set, endView);
+				if (chain != null) chains.Add(chain);
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[place-b] " + viewName + " read: " + ex.Message);
+			return;
+		}
+
+		foreach (PlacingNativeChain chain in chains)
+			SetPlacingChainEnd(chain, endView);
+
+		List<PlacingBox> boxes = CollectPlacingBoxes(view);
+		double pairLimit = 40.0 * sc;
+		var taken = new HashSet<DrawingObject>();
+		var pairCandidates = new List<Tuple<double, PlacingNativeChain, PlacingBox>>();
+		foreach (PlacingNativeChain chain in chains)
+		{
+			foreach (PlacingBox box in boxes)
+			{
+				if (box.Obj == null) continue;
+				if (box.Text.IndexOf("RB", StringComparison.OrdinalIgnoreCase) >= 0) continue;
+				double d = Math.Sqrt((box.Cx - chain.EndX) * (box.Cx - chain.EndX) + (box.Cy - chain.EndY) * (box.Cy - chain.EndY));
+				if (d > pairLimit) continue;
+				if (!string.IsNullOrEmpty(box.Text) && !IsStraightBarMark(box.Text) && string.IsNullOrEmpty(box.Frame))
+					continue;
+				pairCandidates.Add(Tuple.Create(d, chain, box));
+			}
+		}
+		pairCandidates.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+		foreach (Tuple<double, PlacingNativeChain, PlacingBox> hit in pairCandidates)
+		{
+			if (hit.Item2.Box != null || taken.Contains(hit.Item3.Obj)) continue;
+			hit.Item2.Box = hit.Item3.Obj;
+			hit.Item2.Text = NormalizePlacingMark(hit.Item3.Text);
+			taken.Add(hit.Item3.Obj);
+		}
+
+		var doomed = new HashSet<StraightDimensionSet>();
+		int totals = 0;
+		foreach (PlacingNativeChain shortChain in chains)
+		{
+			if (shortChain.Ticks != 1 || doomed.Contains(shortChain.Set)) continue;
+			double span = shortChain.AlongMax - shortChain.AlongMin;
+			foreach (PlacingNativeChain other in chains)
+			{
+				if (other.Set == shortChain.Set || other.Ticks < 2 || doomed.Contains(other.Set)) continue;
+				double otherSpan = other.AlongMax - other.AlongMin;
+				if (Math.Abs(span - otherSpan) > 2.0) continue;
+				bool sameBox = shortChain.Box != null && ReferenceEquals(shortChain.Box, other.Box);
+				bool sameText = !string.IsNullOrEmpty(shortChain.Text)
+					&& string.Equals(shortChain.Text, other.Text, StringComparison.OrdinalIgnoreCase)
+					&& Math.Abs(shortChain.Anchor - other.Anchor) <= twin;
+				if (!sameBox && !sameText) continue;
+				doomed.Add(shortChain.Set);
+				totals++;
+				break;
+			}
+		}
+
+		int twins = 0;
+		var alive = new List<PlacingNativeChain>();
+		foreach (PlacingNativeChain chain in chains)
+		{
+			if (!doomed.Contains(chain.Set)) alive.Add(chain);
+		}
+		alive.Sort((a, b) => a.Anchor.CompareTo(b.Anchor));
+		for (int i = 0; i < alive.Count; i++)
+		{
+			if (doomed.Contains(alive[i].Set) || string.IsNullOrEmpty(alive[i].Text)) continue;
+			for (int j = i + 1; j < alive.Count; j++)
+			{
+				if (doomed.Contains(alive[j].Set)) continue;
+				if (!string.Equals(alive[i].Text, alive[j].Text, StringComparison.OrdinalIgnoreCase)) continue;
+				if (Math.Abs(alive[i].Anchor - alive[j].Anchor) > twin) continue;
+				PlacingNativeChain drop = alive[i].Ticks >= alive[j].Ticks ? alive[j] : alive[i];
+				if (!doomed.Contains(drop.Set))
+				{
+					doomed.Add(drop.Set);
+					twins++;
+				}
+			}
+		}
+
+		int marksDeleted = 0;
+		foreach (PlacingNativeChain chain in chains)
+		{
+			if (!doomed.Contains(chain.Set)) continue;
+			bool markKept = false;
+			foreach (PlacingNativeChain other in chains)
+			{
+				if (!doomed.Contains(other.Set) && other.Box != null && ReferenceEquals(other.Box, chain.Box))
+				{
+					markKept = true;
+					break;
+				}
+			}
+			if (!markKept && chain.Box != null)
+			{
+				try { if (chain.Box.Delete()) marksDeleted++; } catch { }
+			}
+			try { chain.Set.Delete(); } catch { }
+		}
+
+		var paired = new List<PlacingNativeChain>();
+		int unpaired = 0;
+		foreach (PlacingNativeChain chain in chains)
+		{
+			if (doomed.Contains(chain.Set)) continue;
+			if (chain.Box == null)
+			{
+				unpaired++;
+				continue;
+			}
+			paired.Add(chain);
+		}
+		var inner = new List<PlacingNativeChain>();
+		var outer = new List<PlacingNativeChain>();
+		foreach (PlacingNativeChain chain in paired)
+		{
+			if (chain.Anchor >= mid) outer.Add(chain);
+			else inner.Add(chain);
+		}
+		if (paired.Count > 1 && (inner.Count == 0 || outer.Count == 0))
+		{
+			paired.Sort((a, b) => a.Anchor.CompareTo(b.Anchor));
+			inner.Clear();
+			outer.Clear();
+			int half = paired.Count / 2;
+			for (int i = 0; i < paired.Count; i++)
+			{
+				if (i < half) inner.Add(paired[i]);
+				else outer.Add(paired[i]);
+			}
+			Console.WriteLine("[place-b] " + viewName + " one face empty; split "
+				+ paired.Count.ToString(CultureInfo.InvariantCulture) + " chains in half");
+		}
+		inner.Sort((a, b) => b.Anchor.CompareTo(a.Anchor));
+		outer.Sort((a, b) => a.Anchor.CompareTo(b.Anchor));
+
+		int moved = 0;
+		moved += StepPlacingFace(inner, endView, false, minX, maxX, minY, maxY, pitch, tail);
+		moved += StepPlacingFace(outer, endView, true, minX, maxX, minY, maxY, pitch, tail);
+		Console.WriteLine("[place-b] " + viewName
+			+ " chains=" + chains.Count.ToString(CultureInfo.InvariantCulture)
+			+ " paired=" + paired.Count.ToString(CultureInfo.InvariantCulture)
+			+ " unpaired=" + unpaired.ToString(CultureInfo.InvariantCulture)
+			+ " totals=" + totals.ToString(CultureInfo.InvariantCulture)
+			+ " twins=" + twins.ToString(CultureInfo.InvariantCulture)
+			+ " marks=" + marksDeleted.ToString(CultureInfo.InvariantCulture)
+			+ (endView
+				? " below=" + inner.Count.ToString(CultureInfo.InvariantCulture) + " above=" + outer.Count.ToString(CultureInfo.InvariantCulture)
+				: " left=" + inner.Count.ToString(CultureInfo.InvariantCulture) + " right=" + outer.Count.ToString(CultureInfo.InvariantCulture))
+			+ " restacked=" + moved.ToString(CultureInfo.InvariantCulture)
+			+ " pitchPaper=" + (endView ? endPitchPaper : viewAPitchPaper).ToString("0.00", CultureInfo.InvariantCulture));
+	}
+
+	private static PlacingNativeChain ReadPlacingChain(StraightDimensionSet set, bool endView)
+	{
+		if (set == null) return null;
+		double alongMin = double.MaxValue;
+		double alongMax = double.MinValue;
+		double anchorSum = 0.0;
+		int anchorN = 0;
+		int ticks = 0;
+		try
+		{
+			DrawingObjectEnumerator en = set.GetObjects();
+			while (en != null && en.MoveNext())
+			{
+				if (!(en.Current is StraightDimension dim)) continue;
+				ticks++;
+				AccumulatePlacingPoint(dim.StartPoint, endView, ref alongMin, ref alongMax, ref anchorSum, ref anchorN);
+				AccumulatePlacingPoint(dim.EndPoint, endView, ref alongMin, ref alongMax, ref anchorSum, ref anchorN);
+			}
+		}
+		catch { return null; }
+		if (ticks < 1 || anchorN < 1 || alongMax <= alongMin) return null;
+		return new PlacingNativeChain
+		{
+			Set = set,
+			Ticks = ticks,
+			AlongMin = alongMin,
+			AlongMax = alongMax,
+			Anchor = anchorSum / anchorN
+		};
+	}
+
+	private static void SetPlacingChainEnd(PlacingNativeChain chain, bool endView)
+	{
+		if (chain == null) return;
+		double dist = 0;
+		try { dist = chain.Set.Distance; } catch { }
+		double endX = endView ? chain.AlongMax : chain.Anchor + dist;
+		double endY = endView ? chain.Anchor + dist : chain.AlongMax;
+		if (TryObjectBox(chain.Set, out double minX, out double minY, out double maxX, out double maxY)
+			&& maxX - minX > 1.0 && maxY - minY > 1.0)
+		{
+			if (endView)
+			{
+				endX = maxX;
+				endY = (minY + maxY) * 0.5;
+			}
+			else
+			{
+				endX = (minX + maxX) * 0.5;
+				endY = maxY;
+			}
+		}
+		chain.EndX = endX;
+		chain.EndY = endY;
+	}
+
+	private static void AccumulatePlacingPoint(Point point, bool endView, ref double alongMin, ref double alongMax, ref double anchorSum, ref int anchorN)
+	{
+		if (point == null) return;
+		double along = endView ? point.X : point.Y;
+		double anchor = endView ? point.Y : point.X;
+		if (along < alongMin) alongMin = along;
+		if (along > alongMax) alongMax = along;
+		anchorSum += anchor;
+		anchorN++;
+	}
+
+	private static int StepPlacingFace(List<PlacingNativeChain> face, bool endView, bool outerFace, double minX, double maxX, double minY, double maxY, double pitch, double tail)
+	{
+		int moved = 0;
+		for (int i = 0; i < face.Count; i++)
+		{
+			PlacingNativeChain chain = face[i];
+			double line;
+			double distance;
+			if (endView)
+			{
+				line = outerFace ? maxY + (i + 1) * pitch : minY - (i + 1) * pitch;
+				distance = line - chain.Anchor;
+			}
+			else
+			{
+				line = outerFace ? maxX + (i + 1) * pitch : minX - (i + 1) * pitch;
+				distance = line - chain.Anchor;
+			}
+			try
+			{
+				chain.Set.Distance = distance;
+				if (!chain.Set.Modify()) continue;
+			}
+			catch { continue; }
+			if (chain.Box != null)
+			{
+				double boxX = endView ? chain.AlongMax + tail : line;
+				double boxY = endView ? line : chain.AlongMax + tail;
+				TryMovePlacingObject(chain.Box, boxX, boxY);
+			}
+			moved++;
+		}
+		return moved;
+	}
+
+	private static bool IsStraightBarMark(string text)
+	{
+		if (string.IsNullOrWhiteSpace(text)) return false;
+		if (text.IndexOf("RB", StringComparison.OrdinalIgnoreCase) >= 0) return false;
+		return StraightBarMarkPattern.IsMatch(text);
+	}
+
+	private static string NormalizePlacingMark(string text)
+	{
+		if (string.IsNullOrWhiteSpace(text)) return "";
+		return Regex.Replace(text, @"\s+", "");
+	}
+
+	private static void LogPlacingObjectTypes(View view, string viewName)
+	{
+		var swEnum = System.Diagnostics.Stopwatch.StartNew();
+		var counts = new SortedDictionary<string, int>(StringComparer.Ordinal);
+		int objects = 0;
+		foreach (DrawingObject o in EnumerateViewObjects(view))
+		{
+			if (o == null) continue;
+			objects++;
+			string name = o.GetType().Name;
+			counts.TryGetValue(name, out int n);
+			counts[name] = n + 1;
+		}
+		swEnum.Stop();
+		var line = new System.Text.StringBuilder();
+		line.Append("[place-b] types view='").Append(viewName).Append("' objects=").Append(objects.ToString(CultureInfo.InvariantCulture));
+		foreach (KeyValuePair<string, int> kv in counts)
+			line.Append(' ').Append(kv.Key).Append('=').Append(kv.Value.ToString(CultureInfo.InvariantCulture));
+		Console.WriteLine(line.ToString());
+		Console.WriteLine("[Profile] types view='" + viewName + "' enumObjectsMs=" + swEnum.ElapsedMilliseconds);
+
+		var swBoxes = System.Diagnostics.Stopwatch.StartNew();
+		List<PlacingBox> boxes = CollectPlacingBoxes(view);
+		swBoxes.Stop();
+		Console.WriteLine("[Profile] types view='" + viewName + "' CollectPlacingBoxes ms=" + swBoxes.ElapsedMilliseconds + " count=" + boxes.Count);
+
+		int logged = 0;
+		int more = 0;
+		foreach (PlacingBox box in boxes)
+		{
+			bool framed = box.Frame.Length > 0 && box.Frame.IndexOf("None", StringComparison.OrdinalIgnoreCase) < 0;
+			bool markish = framed || IsStraightBarMark(box.Text);
+			if (!markish && logged >= 24)
+			{
+				more++;
+				continue;
+			}
+			if (logged >= 80)
+			{
+				more++;
+				continue;
+			}
+			logged++;
+			string shown = (box.Text ?? "").Replace("\r", " ").Replace("\n", " ");
+			if (shown.Length > 80) shown = shown.Substring(0, 80);
+			Console.WriteLine("[place-b] box view='" + viewName
+				+ "' type=" + box.TypeName
+				+ " text='" + shown
+				+ "' frame=" + (box.Frame.Length == 0 ? "-" : box.Frame)
+				+ " box=" + box.MinX.ToString("0.#", CultureInfo.InvariantCulture)
+				+ "," + box.MinY.ToString("0.#", CultureInfo.InvariantCulture)
+				+ ".." + box.MaxX.ToString("0.#", CultureInfo.InvariantCulture)
+				+ "," + box.MaxY.ToString("0.#", CultureInfo.InvariantCulture));
+		}
+		if (more > 0)
+			Console.WriteLine("[place-b] box view='" + viewName + "' more=" + more.ToString(CultureInfo.InvariantCulture));
+	}
+
+	private static IEnumerable<DrawingObject> EnumerateViewObjects(View view)
+	{
+		if (view == null) yield break;
+		DrawingObjectEnumerator en = null;
+		try { en = view.GetAllObjects(); }
+		catch
+		{
+			try { en = view.GetObjects(); }
+			catch { yield break; }
+		}
+		while (en != null && en.MoveNext())
+		{
+			if (en.Current is DrawingObject o)
+				yield return o;
+		}
+	}
+
+	private static List<PlacingBox> CollectPlacingBoxes(View view)
+	{
+		var list = new List<PlacingBox>();
+		var seen = new HashSet<int>();
+		var msPerType = new SortedDictionary<string, long>(StringComparer.Ordinal);
+		var countPerType = new SortedDictionary<string, int>(StringComparer.Ordinal);
+		var swTotal = System.Diagnostics.Stopwatch.StartNew();
+		var swObj = new System.Diagnostics.Stopwatch();
+
+		foreach (DrawingObject o in EnumerateViewObjects(view))
+		{
+			if (o == null || o is ViewBase || o is StraightDimensionSet || o is DimensionBase) continue;
+			string typeName = o.GetType().Name;
+			if (typeName.IndexOf("Dimension", StringComparison.OrdinalIgnoreCase) >= 0) continue;
+
+			swObj.Restart();
+			int id = 0;
+			try { id = o.GetHashCode(); } catch { }
+			if (id != 0 && !seen.Add(id))
+			{
+				swObj.Stop();
+				continue;
+			}
+			string text = ReadPlacingObjectText(o);
+			string frame = ReadPlacingFrame(o);
+			bool framed = frame.Length > 0 && frame.IndexOf("None", StringComparison.OrdinalIgnoreCase) < 0;
+			if (!framed && string.IsNullOrWhiteSpace(text))
+			{
+				swObj.Stop();
+				long elSkip = swObj.ElapsedMilliseconds;
+				msPerType.TryGetValue(typeName, out long curMsSkip);
+				msPerType[typeName] = curMsSkip + elSkip;
+				countPerType.TryGetValue(typeName, out int curCountSkip);
+				countPerType[typeName] = curCountSkip + 1;
+				continue;
+			}
+			if (TryPlacingBoxPoint(o, out double minX, out double minY, out double maxX, out double maxY))
+			{
+				if (!(maxX - minX > 4000.0 && maxY - minY > 4000.0))
+				{
+					list.Add(new PlacingBox
+					{
+						Obj = o,
+						Text = text ?? "",
+						TypeName = typeName,
+						Frame = frame ?? "",
+						MinX = minX,
+						MinY = minY,
+						MaxX = maxX,
+						MaxY = maxY,
+						Cx = (minX + maxX) * 0.5,
+						Cy = (minY + maxY) * 0.5
+					});
+				}
+			}
+			swObj.Stop();
+			long el = swObj.ElapsedMilliseconds;
+			msPerType.TryGetValue(typeName, out long curMs);
+			msPerType[typeName] = curMs + el;
+			countPerType.TryGetValue(typeName, out int curCount);
+			countPerType[typeName] = curCount + 1;
+		}
+		swTotal.Stop();
+		if (swTotal.ElapsedMilliseconds > 100)
+		{
+			var sb = new System.Text.StringBuilder();
+			sb.Append("[Profile] CollectPlacingBoxes breakdown totalMs=").Append(swTotal.ElapsedMilliseconds).Append(":");
+			foreach (var kv in msPerType)
+			{
+				countPerType.TryGetValue(kv.Key, out int c);
+				sb.Append(" ").Append(kv.Key).Append("=").Append(kv.Value).Append("ms(").Append(c).Append(")");
+			}
+			Console.WriteLine(sb.ToString());
+		}
+		return list;
+	}
+
+	private static bool TryPlacingBoxPoint(DrawingObject o, out double minX, out double minY, out double maxX, out double maxY)
+	{
+		if (TryObjectBox(o, out minX, out minY, out maxX, out maxY) && maxX - minX > 0.5 && maxY - minY > 0.5)
+			return true;
+		Point ip = null;
+		if (o is MarkBase mb) ip = mb.InsertionPoint;
+		else if (o is Text tx) ip = tx.InsertionPoint;
+		if (ip == null) return false;
+		minX = maxX = ip.X;
+		minY = maxY = ip.Y;
+		return true;
+	}
+
+	private static bool TryObjectBox(DrawingObject o, out double minX, out double minY, out double maxX, out double maxY)
+	{
+		minX = 0;
+		minY = 0;
+		maxX = 0;
+		maxY = 0;
+		if (!(o is IAxisAlignedBoundingBox aabb)) return false;
+		try
+		{
+			AABB box = aabb.GetAxisAlignedBoundingBox();
+			if (box?.MinPoint == null || box.MaxPoint == null) return false;
+			minX = box.MinPoint.X;
+			minY = box.MinPoint.Y;
+			maxX = box.MaxPoint.X;
+			maxY = box.MaxPoint.Y;
+			return true;
+		}
+		catch
+		{
+			return false;
+		}
+	}
+
+	private static string ReadPlacingObjectText(DrawingObject o)
+	{
+		if (o is MarkBase mb) return FlattenMarkText(mb);
+		if (o is Text t) return t.TextString ?? "";
+		try
+		{
+			var prop = o.GetType().GetProperty("TextString");
+			if (prop != null)
+			{
+				object value = prop.GetValue(o, null);
+				if (value != null) return value.ToString();
+			}
+		}
+		catch { }
+		return "";
+	}
+
+	private static string ReadPlacingFrame(DrawingObject o)
+	{
+		if (o == null) return "";
+		try
+		{
+			var attrsProp = o.GetType().GetProperty("Attributes");
+			object attrs = attrsProp == null ? null : attrsProp.GetValue(o, null);
+			if (attrs == null) return "";
+			var frameProp = attrs.GetType().GetProperty("Frame");
+			object frame = frameProp == null ? null : frameProp.GetValue(attrs, null);
+			if (frame == null) return "";
+			var typeProp = frame.GetType().GetProperty("FrameType") ?? frame.GetType().GetProperty("Type");
+			object kind = typeProp == null ? null : typeProp.GetValue(frame, null);
+			return kind == null ? "" : kind.ToString();
+		}
+		catch
+		{
+			return "";
+		}
+	}
+
+	private static bool TryMovePlacingObject(DrawingObject o, double x, double y)
+	{
+		if (o == null) return false;
+		try
+		{
+			if (o is MarkBase mb)
+			{
+				Point ip = mb.InsertionPoint;
+				mb.InsertionPoint = new Point(x, y, ip != null ? ip.Z : 0.0);
+				return mb.Modify();
+			}
+			if (o is Text t)
+			{
+				Point ip = t.InsertionPoint;
+				t.InsertionPoint = new Point(x, y, ip != null ? ip.Z : 0.0);
+				return t.Modify();
+			}
+			var prop = o.GetType().GetProperty("InsertionPoint");
+			if (prop == null || !prop.CanWrite) return false;
+			Point cur = prop.GetValue(o, null) as Point;
+			prop.SetValue(o, new Point(x, y, cur != null ? cur.Z : 0.0), null);
+			return o.Modify();
+		}
+		catch
+		{
+			return false;
+		}
+	}
+
 	private static void CombineNativeChains(View view, int minCombine)
 	{
 		if (view == null) return;
@@ -9051,13 +10384,13 @@ public partial class PrecastDimensionPostProcessor
 		{
 			ContainerView sheet = drawing.GetSheet();
 			if (sheet == null) return;
-			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews);
+			Tekla.Structures.Model.Part part = ResolveMainPart(drawing);
+			FindSheetViews(sheet, out var front, out var view3D, out var section, out var bottom, out var otherViews, part);
 			DimensionRouter.ApplyPending(MicrosDirectory(), drawing, sheet);
 			double sw = sheet.Width > 1.0 ? sheet.Width : 431.8;
 			double sh = sheet.Height > 1.0 ? sheet.Height : 279.4;
 			// Sheet 2 = sections / details / 3D only — park full elevation front.
 			ParkViewOffSheet(front);
-			Tekla.Structures.Model.Part part = ResolveMainPart(drawing);
 			try { _activePiece = SheetRoleMap.PieceMark(drawing.Mark ?? ""); } catch { }
 			LogQuestionMarkObjects(sheet, "sections '" + (drawing.Mark ?? "") + "'");
 			if (!EnsureDimFont())
@@ -9149,12 +10482,12 @@ public partial class PrecastDimensionPostProcessor
 			foreach (View fontView in views)
 				ApplyFontToStraightSets(fontView);
 			if (master != null) ApplyFontToStraightSets(master);
-			AssertSheetBounds(sheet, sw, sh, sw, master, masterScale);
+			AssertSheetBounds(sheet, sw, sh, sw, master, masterScale, part);
 			if (master != null) LogViewTextCollisions(master, masterScale < 1 ? 50 : masterScale);
 			using (StageTimer.Start("CommitChanges+Save", StageTimer.Sheet))
 			{
-				drawing.CommitChanges();
-				_handler.SaveActiveDrawing();
+			drawing.CommitChanges();
+			_handler.SaveActiveDrawing();
 			}
 			RefreshDrawingUi(drawing);
 			Console.WriteLine("[Sections] Sheet-2 arranged " + views.Count.ToString(CultureInfo.InvariantCulture)

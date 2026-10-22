@@ -405,8 +405,21 @@ namespace TeklaExtractor
                     || !labelTypes.Trim().Equals("off", StringComparison.OrdinalIgnoreCase);
                 Console.WriteLine("[Civil] --label-types " + (PrecastDimensionPostProcessor.LabelTypes ? "on" : "off"));
                 PrecastDimensionPostProcessor.KeepNativeMarks = args != null && HasFlag(args, "--keep-native-marks");
-                if (PrecastDimensionPostProcessor.KeepNativeMarks)
-                    Console.WriteLine("[Civil] --keep-native-marks (magenta '?' marks stay)");
+				if (PrecastDimensionPostProcessor.KeepNativeMarks)
+					Console.WriteLine("[Civil] --keep-native-marks (magenta '?' marks stay)");
+				PrecastDimensionPostProcessor.PlacingDryRun = args != null && HasFlag(args, "--placing-dryrun");
+				PrecastDimensionPostProcessor.PlacingRebuildOnly = args != null && HasFlag(args, "--placing-rebuild-only");
+				PrecastDimensionPostProcessor.StageCensus = args != null && HasFlag(args, "--stage-census");
+				PrecastDimensionPostProcessor.StageSnapshots = args != null && HasFlag(args, "--stage-snapshots");
+				PrecastDimensionPostProcessor.CleanMarkRequested = cleanFirst;
+				if (PrecastDimensionPostProcessor.PlacingDryRun)
+					Console.WriteLine("[Civil] --placing-dryrun (report only, drawing unchanged)");
+				if (PrecastDimensionPostProcessor.PlacingRebuildOnly)
+					Console.WriteLine("[Civil] --placing-rebuild-only (skip purge, rebar placement, bill compare)");
+				if (PrecastDimensionPostProcessor.StageCensus)
+					Console.WriteLine("[Civil] --stage-census (write Export/stage_census.csv after macro and each stage)");
+				if (PrecastDimensionPostProcessor.StageSnapshots)
+					Console.WriteLine("[Civil] --stage-snapshots (export PDF per stage to Export/stages/NN_stagename.pdf)");
                 PrecastDimensionPostProcessor.CoordProbeKeep = args != null && HasFlag(args, "--coord-probe-keep");
                 PrecastDimensionPostProcessor.CoordProbeEnabled = PrecastDimensionPostProcessor.CoordProbeKeep
                     || (args != null && HasFlag(args, "--coord-probe"));
@@ -1089,6 +1102,10 @@ namespace TeklaExtractor
             Console.WriteLine("                            (page 1 also copied to <stem>__dimtype-<t>.pdf)");
             Console.WriteLine("    --fixtures <dir>        regression fixtures root (default: tests/regression found upward)");
             Console.WriteLine("    --run-tag <tag>         'run' column in regression_scores.csv (e.g. run1-baseline)");
+            Console.WriteLine("    --placing-dryrun        report model chains, do not change the placing sheet");
+            Console.WriteLine("    --placing-rebuild-only  rebuild END 2 and VIEW A, skip the slow placing stages");
+            Console.WriteLine("    --stage-census          log and write Export/stage_census.csv after macro and each stage");
+            Console.WriteLine("    --stage-snapshots       export PDF per stage into Export/stages/NN_stagename.pdf");
             Console.WriteLine("    --log-unlisted-embeds   log model embeds whose family is not on the sheet BOM");
             Console.WriteLine("    --coord-check           [CoordCheck] coordinate/unit diagnostic + coordcheck_<runtag>.csv (log only)");
             Console.WriteLine("    --coord-probe           with --coord-check: one calibration probe (scratch views, deleted again)");
