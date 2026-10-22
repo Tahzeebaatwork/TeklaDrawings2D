@@ -115,7 +115,8 @@ namespace TeklaExtractor
             try
             {
                 var reader = new ModelReader(maxRetries: 4, retryDelayMs: 2000);
-                tekla = reader.Connect();
+                using (StageTimer.Start("ModelReader", 0))
+                    tekla = reader.Connect();
             }
             catch (ModelReaderException ex)
             {
@@ -136,8 +137,8 @@ namespace TeklaExtractor
                     Console.WriteLine("[Delete] Error: --mark <piece> is required (e.g. dotnet run -- --delete --mark P6-1).");
                     return 1;
                 }
-                DrawingSheetCleaner.DeleteByMark(mark);
-                return 0;
+                int left = DrawingSheetCleaner.DeleteByMark(mark);
+                return left > 0 ? 1 : 0;
             }
 
             if (wantOpen)
@@ -265,6 +266,14 @@ namespace TeklaExtractor
                 bool wantAll = args != null && (HasFlag(args, "--all") || HasFlag(args, "--full"));
                 bool toRoot = args != null && (HasFlag(args, "--to-root") || HasFlag(args, "--legacy-root"));
                 bool cleanFirst = args != null && (HasFlag(args, "--clean-mark") || HasFlag(args, "--delete-existing"));
+                string sectionsOnPage1 = FlagValue(args, "--sections-on-page1");
+                PrecastDimensionPostProcessor.SectionsOnPage1 = string.Equals(sectionsOnPage1, "on", StringComparison.OrdinalIgnoreCase);
+                if (!string.IsNullOrWhiteSpace(sectionsOnPage1)
+                    && !string.Equals(sectionsOnPage1, "on", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(sectionsOnPage1, "off", StringComparison.OrdinalIgnoreCase))
+                    Console.WriteLine("[Civil] --sections-on-page1 expects on|off (ignored: " + sectionsOnPage1 + ")");
+                else if (PrecastDimensionPostProcessor.SectionsOnPage1)
+                    Console.WriteLine("[Civil] --sections-on-page1=on (section stays on page 1 when no sections sheet exists)");
                 string mark = FlagValue(args, "--mark");
                 // Safe default: Tekla selection only. Full model requires explicit --all.
                 // --mark already limits to one piece, so it does not use the selection.
@@ -290,14 +299,35 @@ namespace TeklaExtractor
                 if (!extractOnly && PrecastDimensionPostProcessor.AbortIfNumberingStale("Civil"))
                     return 1;
 
+                int onlySheet = 0;
+                string onlySheetRaw = FlagValue(args, "--only-sheet");
+                if (!string.IsNullOrWhiteSpace(onlySheetRaw))
+                {
+                    int parsedSheet;
+                    if (int.TryParse(onlySheetRaw.Trim(), out parsedSheet) && parsedSheet >= 1 && parsedSheet <= 4)
+                        onlySheet = parsedSheet;
+                    else
+                        Console.WriteLine("[Civil] --only-sheet expects 1..4 (ignored: " + onlySheetRaw + ")");
+                }
+                bool skipPdf = args != null && HasFlag(args, "--skip-pdf");
+                if (onlySheet > 0)
+                    Console.WriteLine("[Civil] --only-sheet " + onlySheet + " (" + SheetRoleMap.RoleForSheetNumber(onlySheet) + ")");
+                if (skipPdf)
+                    Console.WriteLine("[Civil] --skip-pdf (fit still runs)");
                 if (cleanFirst)
                 {
                     if (string.IsNullOrWhiteSpace(mark))
                         Console.WriteLine("[Civil] --clean-mark ignored: needs --mark <piece>");
                     else
                     {
-                        Console.WriteLine("[Civil] deleting existing sheets for " + mark + " before macros");
-                        DrawingSheetCleaner.DeleteByMark(mark);
+                        Console.WriteLine("[Civil] deleting existing sheets for " + mark + " before macros"
+                            + (onlySheet > 0 ? " (sheet " + onlySheet + " only)" : ""));
+                        int left = DrawingSheetCleaner.DeleteByMark(mark, onlySheet: onlySheet);
+                        if (left > 0)
+                        {
+                            Console.WriteLine("[Delete] ERROR survivors remain; macros not started");
+                            return 1;
+                        }
                     }
                 }
 
@@ -307,6 +337,9 @@ namespace TeklaExtractor
                 // Mark repair opt-in only. Default = skip (manual props drawings have no magenta '?').
                 bool enableMarkRepair = args != null && HasFlag(args, "--enable-mark-repair");
                 bool preserveNativeDims = args != null && HasFlag(args, "--preserve-native-dims");
+                bool rebarMesh = args != null && HasFlag(args, "--rebar-mesh");
+                bool rebarMeshReplace = args != null && HasFlag(args, "--rebar-mesh-replace");
+                if (rebarMeshReplace) rebarMesh = true;
                 // --skip-mark-repair is the documented default; if both set, skip wins.
                 if (args != null && HasFlag(args, "--skip-mark-repair"))
                     enableMarkRepair = false;
@@ -325,8 +358,98 @@ namespace TeklaExtractor
                     Console.WriteLine("[Civil] --fit-stage=" + fitStage + " (stops after investigation stage; inspect UI for '?')");
                 if (preserveNativeDims)
                     Console.WriteLine("[Civil] --preserve-native-dims → skip rebuild when ≥8 native dim sets");
+                Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes? dimType =
+                    Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.RelativeAndAbsolute;
+                string dimTypeRaw = FlagValue(args, "--dim-type");
+                if (!string.IsNullOrWhiteSpace(dimTypeRaw))
+                {
+                    switch (dimTypeRaw.Trim().ToLowerInvariant())
+                    {
+                        case "off":
+                            dimType = null;
+                            break;
+                        case "relabs":
+                            dimType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.RelativeAndAbsolute;
+                            break;
+                        case "allrelabove":
+                            dimType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.AbsoluteWithAllRelativesAbove;
+                            break;
+                        case "usabs":
+                            dimType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.USAbsolute;
+                            break;
+                        case "relative":
+                            dimType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.Relative;
+                            break;
+                        default:
+                            Console.WriteLine("[Civil] --dim-type expects relabs|allrelabove|usabs|relative|off (ignored: " + dimTypeRaw + ")");
+                            break;
+                    }
+                }
+                if (dimType.HasValue)
+                    Console.WriteLine("[Civil] --dim-type " + dimType.Value
+                        + (string.IsNullOrWhiteSpace(dimTypeRaw) ? " (default)" : "") + " on page-1 chains");
+                else
+                    Console.WriteLine("[Civil] --dim-type off (standard attribute file on page-1 chains)");
+                string fixturesDir = FlagValue(args, "--fixtures");
+                if (!string.IsNullOrWhiteSpace(fixturesDir))
+                {
+                    RegressionChecker.FixtureRoot = Path.GetFullPath(fixturesDir.Trim());
+                    Console.WriteLine("[Civil] --fixtures " + RegressionChecker.FixtureRoot);
+                }
+                string runTag = FlagValue(args, "--run-tag");
+                if (!string.IsNullOrWhiteSpace(runTag))
+                    RegressionChecker.RunTag = runTag.Trim();
+                bool logUnlistedEmbeds = args != null && HasFlag(args, "--log-unlisted-embeds");
+                string labelTypes = FlagValue(args, "--label-types");
+                PrecastDimensionPostProcessor.LabelTypes = string.IsNullOrWhiteSpace(labelTypes)
+                    || !labelTypes.Trim().Equals("off", StringComparison.OrdinalIgnoreCase);
+                Console.WriteLine("[Civil] --label-types " + (PrecastDimensionPostProcessor.LabelTypes ? "on" : "off"));
+                PrecastDimensionPostProcessor.KeepNativeMarks = args != null && HasFlag(args, "--keep-native-marks");
+                if (PrecastDimensionPostProcessor.KeepNativeMarks)
+                    Console.WriteLine("[Civil] --keep-native-marks (magenta '?' marks stay)");
+                PrecastDimensionPostProcessor.CoordProbeKeep = args != null && HasFlag(args, "--coord-probe-keep");
+                PrecastDimensionPostProcessor.CoordProbeEnabled = PrecastDimensionPostProcessor.CoordProbeKeep
+                    || (args != null && HasFlag(args, "--coord-probe"));
+                PrecastDimensionPostProcessor.CoordCheckEnabled = PrecastDimensionPostProcessor.CoordProbeEnabled
+                    || (args != null && HasFlag(args, "--coord-check"));
+                StageTimer.LogCoordOverhead = PrecastDimensionPostProcessor.CoordCheckEnabled;
+                if (PrecastDimensionPostProcessor.CoordCheckEnabled)
+                    Console.WriteLine("[Civil] --coord-check on (log only; commits before every read-back)"
+                        + (PrecastDimensionPostProcessor.CoordProbeEnabled ? "; calibration probe on" : "")
+                        + (PrecastDimensionPostProcessor.CoordProbeKeep ? " (probe objects KEPT in the drawing)" : ""));
+                string hcolType = FlagValue(args, "--hcol-type");
+                if (!string.IsNullOrWhiteSpace(hcolType))
+                {
+                    bool hcolKnown = true;
+                    switch (hcolType.Trim().ToLowerInvariant())
+                    {
+                        case "absolute":
+                            PrecastDimensionPostProcessor.HeightColumnDimensionType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.Absolute;
+                            break;
+                        case "relative":
+                            PrecastDimensionPostProcessor.HeightColumnDimensionType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.Relative;
+                            break;
+                        case "relabs":
+                            PrecastDimensionPostProcessor.HeightColumnDimensionType = Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.RelativeAndAbsolute;
+                            break;
+                        default:
+                            hcolKnown = false;
+                            Console.WriteLine("[Civil] --hcol-type expects absolute|relative|relabs (ignored: " + hcolType + ")");
+                            break;
+                    }
+                    if (hcolKnown)
+                        Console.WriteLine("[Civil] --hcol-type " + PrecastDimensionPostProcessor.HeightColumnDimensionType + " on page-1 height columns");
+                }
                 int civilCode = new CivilDrawingBatchExtractor(tekla, baseDir, skipMacros, extractOnly, mark, selectedOnly, toRoot,
-                    preflightQa, enableMarkRepair, fitStage, preserveNativeDims).Run();
+                    preflightQa, enableMarkRepair, fitStage, preserveNativeDims, rebarMesh, rebarMeshReplace)
+                {
+                    DimType = dimType,
+                    DimTypeName = dimType.HasValue ? dimTypeRaw : null,
+                    LogUnlistedEmbeds = logUnlistedEmbeds,
+                    OnlySheet = onlySheet,
+                    SkipPdf = skipPdf,
+                    OnlySheetRecreate = cleanFirst && onlySheet > 0
+                }.Run();
 
                 // Always bind that wall's 4–6 role PDFs into one fabrication booklet
                 // (same for --clean-mark recreate and --extract-only). Opt out: --no-booklet.
@@ -338,7 +461,8 @@ namespace TeklaExtractor
                         ? civilRoot
                         : Path.Combine(civilRoot, skipMacros ? CivilDrawingTypes.OpenApiFolder : CivilDrawingTypes.MacrosFolder);
                     Console.WriteLine("[Booklet] collating multi-page fabrication PDF from role sheets…");
-                    ProductionBookletCollator.Collate(baseDir, outputRoot, mark);
+                    using (StageTimer.Start("booklet", 0))
+                        ProductionBookletCollator.Collate(baseDir, outputRoot, mark);
                 }
                 else if (noBooklet)
                     Console.WriteLine("[Booklet] skipped (--no-booklet)");
@@ -826,7 +950,9 @@ namespace TeklaExtractor
                 if (lower.StartsWith("delete ") || lower.StartsWith("clean "))
                 {
                     string m = input.Substring(input.IndexOf(' ') + 1).Trim();
-                    DrawingSheetCleaner.DeleteByMark(m);
+                    int left = DrawingSheetCleaner.DeleteByMark(m);
+                    if (left > 0)
+                        Console.WriteLine("[Delete] ERROR survivors remain");
                     continue;
                 }
 
@@ -952,8 +1078,25 @@ namespace TeklaExtractor
             Console.WriteLine("    --civil-drawings --all  FULL WALL/COLUMN/BEAM model (crash risk); must be explicit");
             Console.WriteLine("    --civil-drawings --mark W10-50   one piece (smoke) then extract");
             Console.WriteLine("    --civil-drawings --mark W10-50 --clean-mark   delete that piece's old sheets first");
+            Console.WriteLine("    --sections-on-page1 on|off   default off: park section/3D off the hardware sheet");
+            Console.WriteLine("    --only-sheet <1-4>      fit one sheet (1 hardware, 2 placing, 3 table, 4 sections)");
+            Console.WriteLine("    --skip-pdf              fit and log, do not print PDF or DWG");
             Console.WriteLine("    --civil-drawings --extract-only  extract selected existing CU sheets (add --all to resume whole model)");
             Console.WriteLine("    --civil-drawings --extract-only --all --to-root   Sep-2 layout → Export/CivilDrawings/PDF");
+            Console.WriteLine("    --rebar-mesh            opt-in mesh on parts that have no bars yet");
+            Console.WriteLine("    --rebar-mesh-replace    with --rebar-mesh, delete existing bars first");
+            Console.WriteLine("    --dim-type <t>          page-1 chains: relabs (default) | allrelabove | usabs | relative | off");
+            Console.WriteLine("                            (page 1 also copied to <stem>__dimtype-<t>.pdf)");
+            Console.WriteLine("    --fixtures <dir>        regression fixtures root (default: tests/regression found upward)");
+            Console.WriteLine("    --run-tag <tag>         'run' column in regression_scores.csv (e.g. run1-baseline)");
+            Console.WriteLine("    --log-unlisted-embeds   log model embeds whose family is not on the sheet BOM");
+            Console.WriteLine("    --coord-check           [CoordCheck] coordinate/unit diagnostic + coordcheck_<runtag>.csv (log only)");
+            Console.WriteLine("    --coord-probe           with --coord-check: one calibration probe (scratch views, deleted again)");
+            Console.WriteLine("    --coord-probe-keep      like --coord-probe but keeps probe sets + reference lines for the PDF");
+            Console.WriteLine("    --hcol-type <t>         page-1 height columns: absolute (default) | relative | relabs");
+            Console.WriteLine("    (civil) preflight_<piece>.log in PDF folder: bent-bar shape/pin/legs, BBS qty, [RowClosure]");
+            Console.WriteLine("    (civil) qmarks_<piece>.log: '?' marks/texts + magenta symbols with model object (log only)");
+            Console.WriteLine("    (civil) [Regression] lines in preflight_<piece>.log + regression_scores.csv: page-1 rows vs fixture");
             Console.WriteLine("    (after civil) auto booklet: P22-132.<mark>.Rev 2.pdf from _-_1…_-_4 sheets; --no-booklet to skip");
             Console.WriteLine("    --skip-mark-repair      default: Fit does NOT rewrite marks (safe; manual drawings have no '?')");
             Console.WriteLine("    --enable-mark-repair    opt-in: run RepairBrokenPartMarks (TextElement rewrite)");

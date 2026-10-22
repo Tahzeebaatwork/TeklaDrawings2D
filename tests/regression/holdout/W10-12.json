@@ -1,0 +1,22 @@
+{
+  "piece": "W10-12",
+  "set": "holdout",
+  "lengthMm": 1920,
+  "heightMm": 3218,
+  "pages": 3,
+  "source": "Engineer PDF page 1, read by the user. Hold-out: test only, never tune rules against it.",
+  "rows": [
+    { "label": "PROFILE OVERALL", "side": "top", "order": 1, "segments": [1920] },
+    { "label": "PROFILE NOTCH", "side": "top", "order": 2, "segments": [203, 1514, 203] },
+    { "label": "P-300 W/ RECESS", "aliases": ["P-300 HARDWARE W/ RECESS"], "side": "top", "order": 3, "segments": [1579, 341] },
+    { "label": "P-300 BRACING INSERTS", "side": "top", "order": 4, "segments": [480, 960, 480] },
+    { "label": "SLV-102-254", "aliases": ["SLV-102-254 HARDWARE"], "side": "top", "order": 5, "segments": [1713, 207] },
+    { "label": "P-705", "side": "top", "order": 6, "segments": [101, 1717, 102] },
+    { "label": "SP25-1067", "side": "top", "order": 7, "segments": [242, 1391, 287] },
+    { "label": "P-205 LIFTERS", "side": "top", "order": 8, "segments": [385, 1152, 383] },
+    { "label": "GT100-1219", "side": "bottom", "order": 1, "segments": [221, 1406, 293] },
+    { "label": "GT100-686", "side": "bottom", "order": 2, "segments": [894, 1026] },
+    { "label": "EB-S-PL + CNDT (T)", "aliases": ["EB-S-PL+CNDT (T)"], "side": "bottom", "order": 3, "segments": [339, 200, 1381] },
+    { "label": "EB-S-PL + CNDT (B)", "aliases": ["EB-S-PL+CNDT (B)"], "side": "bottom", "order": 4, "segments": [239, 650, 1031] }
+  ]
+}
