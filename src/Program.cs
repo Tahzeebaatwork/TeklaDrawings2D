@@ -409,6 +409,20 @@ namespace TeklaExtractor
 					Console.WriteLine("[Civil] --keep-native-marks (magenta '?' marks stay)");
 				PrecastDimensionPostProcessor.PlacingDryRun = args != null && HasFlag(args, "--placing-dryrun");
 				PrecastDimensionPostProcessor.PlacingRebuildOnly = args != null && HasFlag(args, "--placing-rebuild-only");
+				PrecastDimensionPostProcessor.ShopDryRun = args != null && HasFlag(args, "--shop-dryrun");
+				bool legacyShop = args != null && HasFlag(args, "--legacy-shop");
+				if (legacyShop)
+				{
+					PrecastDimensionPostProcessor.ShopModelRebuildOnly = false;
+					Console.WriteLine("[Civil] --legacy-shop (using legacy macro-based Sheet 1 dimension tiers)");
+				}
+				else
+				{
+					PrecastDimensionPostProcessor.ShopModelRebuildOnly = true;
+					Console.WriteLine("[Civil] pure 3D model rebuild enabled for Sheet 1 (default)");
+				}
+				if (PrecastDimensionPostProcessor.ShopDryRun)
+					Console.WriteLine("[Civil] --shop-dryrun (report only, Sheet 1 drawing unchanged)");
 				PrecastDimensionPostProcessor.StageCensus = args != null && HasFlag(args, "--stage-census");
 				PrecastDimensionPostProcessor.StageSnapshots = args != null && HasFlag(args, "--stage-snapshots");
 				PrecastDimensionPostProcessor.CleanMarkRequested = cleanFirst;

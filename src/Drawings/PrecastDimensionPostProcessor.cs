@@ -3838,6 +3838,17 @@ public partial class PrecastDimensionPostProcessor
 			Console.WriteLine("[Fit] native dims count=" + nativeDims.ToString(CultureInfo.InvariantCulture)
 				+ " — rebuild engineer sheet-1 tiers from model stations");
 
+		if (ShopDryRun)
+		{
+			RebuildShopFromModel(view, sheet, part, axis, scale, bomLeftSheetMm, apply: false);
+			return scale;
+		}
+		if (ShopModelRebuildOnly)
+		{
+			RebuildShopFromModel(view, sheet, part, axis, scale, bomLeftSheetMm, apply: true);
+			return scale;
+		}
+
 		_elevationMode = true;
 		try
 		{
@@ -5434,7 +5445,14 @@ public partial class PrecastDimensionPostProcessor
 		line2 = null;
 		frame = false;
 		string u = line1.ToUpperInvariant();
-		if (u.StartsWith("PROFILE ") || u.StartsWith("REVEAL") || u.StartsWith("NO PAINT") || u.StartsWith("LEDGE") || u.StartsWith("NOTCH"))
+		if (u.StartsWith("NO PAINT"))
+		{
+			line1 = "NO PAINT";
+			line2 = null;
+			frame = false;
+			return;
+		}
+		if (u.StartsWith("PROFILE ") || u.StartsWith("REVEAL") || u.StartsWith("LEDGE") || u.StartsWith("NOTCH"))
 		{
 			int sp = line1.IndexOf(' ');
 			if (sp > 0)
@@ -5449,7 +5467,19 @@ public partial class PrecastDimensionPostProcessor
 		if (!fam.Success) return;
 		frame = true;
 		line1 = fam.Value;
-		line2 = LabelTypes ? TypeLine(raw, fam.Value) : "HARDWARE";
+		if (ShopModelRebuildOnly)
+		{
+			if (fam.Value.StartsWith("P-205", StringComparison.OrdinalIgnoreCase))
+				line2 = "LIFTERS";
+			else if (fam.Value.StartsWith("P-300", StringComparison.OrdinalIgnoreCase))
+				line2 = "BRACING INSERT";
+			else
+				line2 = "HARDWARE";
+		}
+		else
+		{
+			line2 = LabelTypes ? TypeLine(raw, fam.Value) : "HARDWARE";
+		}
 	}
 
 	private static string TypeLine(string raw, string code)
