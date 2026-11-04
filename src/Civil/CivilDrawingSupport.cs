@@ -1087,11 +1087,20 @@ namespace TeklaExtractor.Services
             TSModel.Part main = MainPart(parts);
             int mainId = 0;
             try { if (main != null) mainId = main.Identifier.ID; } catch { }
+            int mainAssemblyId = 0;
+            try { mainAssemblyId = main?.GetAssembly()?.Identifier.ID ?? 0; } catch { }
 
             foreach (var part in parts)
             {
                 int id = 0;
                 try { id = part.Identifier.ID; } catch { continue; }
+                if (mainAssemblyId != 0)
+                {
+                    int partAssemblyId = 0;
+                    try { partAssemblyId = part.GetAssembly()?.Identifier.ID ?? 0; } catch { }
+                    if (partAssemblyId != 0 && partAssemblyId != mainAssemblyId)
+                        continue;
+                }
                 bool embed = mainId != 0 && id != mainId;
                 string name = FirstNonEmpty(Safe(() => part.Name), Report(part, "NAME"));
                 string mark = FirstNonEmpty(Report(part, "PART_POS"), name);

@@ -177,7 +177,12 @@ public partial class PrecastDimensionPostProcessor
 		{
 			foreach (object o in secondaries)
 			{
-				if (o is Tekla.Structures.Model.Part p) AddCatalogPart(cat, p, axis, fromBoolean: false);
+				if (o is Tekla.Structures.Model.Part p)
+				{
+					// At depth 0 (cast unit level), loose secondaries are standalone embeds.
+					// At depth > 0 (subassembly level), child secondaries (studs, plugs) must NOT be catalog features.
+					if (depth == 0) AddCatalogPart(cat, p, axis, fromBoolean: false);
+				}
 				else if (o is Assembly sub) WalkAssembly(cat, sub, axis, depth + 1, visited);
 			}
 		}
