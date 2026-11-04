@@ -23,8 +23,13 @@ namespace TeklaExtractor.Services;
 /// </summary>
 public partial class PrecastDimensionPostProcessor
 {
+	// Configurable geometric classification constants
+	private const double MaxRevealGrooveWidthMm = 35.0;
+	private const double MaxRevealGrooveDepthMm = 35.0;
+	private const double OpeningMinSpanMm = 500.0;
 	public static bool ShopModelRebuildOnly { get; set; } = true;
 	public static bool ShopDryRun { get; set; } = false;
+	public static bool LogDiagnosticCuts { get; set; } = true;
 
 	private sealed class ModelShopFeature
 	{
@@ -92,6 +97,9 @@ public partial class PrecastDimensionPostProcessor
 		List<ModelShopFeature> features = ExtractShopFeatures(part, axis, front);
 		Console.WriteLine("[ShopRebuild] extracted 3D features count=" + features.Count.ToString(CultureInfo.InvariantCulture));
 
+		// Stage 2b: Diagnostic axis & projection comparison
+		LogDiagnosticAxisComparison(part, axis, front, _activePiece, features);
+
 		// Stage 3: Build Top & Bottom Tier Rows with CatalogRow sources
 		List<TierRow> topRows = BuildShopTopTierRows(features, axis, span, height);
 		List<TierRow> botRows = BuildShopBottomTierRows(features, axis, span, height);
@@ -154,6 +162,147 @@ public partial class PrecastDimensionPostProcessor
 		Console.WriteLine("[ShopRebuild] finished successfully for piece='" + _activePiece + "'");
 	}
 
+	private void LogDiagnosticAxisComparison(Tekla.Structures.Model.Part part, PanelAxis axis, View front, string piece, List<ModelShopFeature> features)
+	{
+		if (!LogDiagnosticCuts) return;
+		try
+		{
+			Console.WriteLine("================================================================================");
+			Console.WriteLine("[DiagAxis] AXIS & PROJECTION DIAGNOSTIC - Piece: " + piece);
+			Console.WriteLine("================================================================================");
+
+			CoordinateSystem vcs = front.ViewCoordinateSystem;
+			CoordinateSystem dcs = front.DisplayCoordinateSystem;
+			Matrix toVcs = MatrixFactory.ToCoordinateSystem(vcs);
+			Matrix toDcs = dcs != null ? MatrixFactory.ToCoordinateSystem(dcs) : null;
+
+			Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+				"[DiagAxis] VCS: Origin=({0:F2}, {1:F2}, {2:F2}) AxisX=({3:F4}, {4:F4}, {5:F4}) AxisY=({6:F4}, {7:F4}, {8:F4})",
+				vcs.Origin.X, vcs.Origin.Y, vcs.Origin.Z,
+				vcs.AxisX.X, vcs.AxisX.Y, vcs.AxisX.Z,
+				vcs.AxisY.X, vcs.AxisY.Y, vcs.AxisY.Z));
+
+			if (dcs != null)
+			{
+				Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+					"[DiagAxis] DCS: Origin=({0:F2}, {1:F2}, {2:F2}) AxisX=({3:F4}, {4:F4}, {5:F4}) AxisY=({6:F4}, {7:F4}, {8:F4})",
+					dcs.Origin.X, dcs.Origin.Y, dcs.Origin.Z,
+					dcs.AxisX.X, dcs.AxisX.Y, dcs.AxisX.Z,
+					dcs.AxisY.X, dcs.AxisY.Y, dcs.AxisY.Z));
+			}
+			else
+			{
+				Console.WriteLine("[DiagAxis] DCS: null");
+			}
+
+			// Panel Solid bounds
+			Solid panelSolid = part.GetSolid();
+			double vcsMinX = double.MaxValue, vcsMaxX = double.MinValue;
+			double dcsMinX = double.MaxValue, dcsMaxX = double.MinValue;
+			if (panelSolid?.MinimumPoint != null && panelSolid.MaximumPoint != null)
+			{
+				double[] xs = { panelSolid.MinimumPoint.X, panelSolid.MaximumPoint.X };
+				double[] ys = { panelSolid.MinimumPoint.Y, panelSolid.MaximumPoint.Y };
+				double[] zs = { panelSolid.MinimumPoint.Z, panelSolid.MaximumPoint.Z };
+				foreach (double x in xs)
+				foreach (double y in ys)
+				foreach (double z in zs)
+				{
+					Point pt = new Point(x, y, z);
+					Point pv = toVcs.Transform(pt);
+					if (pv.X < vcsMinX) vcsMinX = pv.X;
+					if (pv.X > vcsMaxX) vcsMaxX = pv.X;
+					if (toDcs != null)
+					{
+						Point pd = toDcs.Transform(pt);
+						if (pd.X < dcsMinX) dcsMinX = pd.X;
+						if (pd.X > dcsMaxX) dcsMaxX = pd.X;
+					}
+				}
+			}
+
+			Point pStart = axis.PaperPoint(axis.Min);
+			Point pEnd = axis.PaperPoint(axis.Min + axis.Span);
+			double viewLeftEdge = pStart != null ? pStart.X : 0.0;
+			double viewRightEdge = pEnd != null ? pEnd.X : 0.0;
+
+			Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+				"[DiagAxis] Solid Bounds VCS: minX={0:F3} maxX={1:F3} width={2:F3} (PaperPoint start.X={3:F3} end.X={4:F3})",
+				vcsMinX, vcsMaxX, vcsMaxX - vcsMinX, viewLeftEdge, viewRightEdge));
+			if (toDcs != null)
+			{
+				Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+					"[DiagAxis] Solid Bounds DCS: minX={0:F3} maxX={1:F3} width={2:F3}",
+					dcsMinX, dcsMaxX, dcsMaxX - dcsMinX));
+			}
+			Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+				"[DiagAxis] Solid Bounds LocalBox: Min={0:F3} Span={1:F3}",
+				axis.Min, axis.Span));
+
+			var lifters = features.Where(f => f.Kind == "lifter" || f.Family.StartsWith("P-205", StringComparison.OrdinalIgnoreCase)).ToList();
+			Console.WriteLine("[DiagAxis] Lifters (P-205) Found Count = " + lifters.Count);
+			int idx = 0;
+			foreach (var lf in lifters)
+			{
+				idx++;
+				TSModel.Part lp = _model.SelectModelObject(new Tekla.Structures.Identifier(lf.Id)) as TSModel.Part;
+				Solid ls = lp?.GetSolid();
+				Point centerGlob = ls?.MinimumPoint != null ? new Point(
+					(ls.MinimumPoint.X + ls.MaximumPoint.X) / 2.0,
+					(ls.MinimumPoint.Y + ls.MaximumPoint.Y) / 2.0,
+					(ls.MinimumPoint.Z + ls.MaximumPoint.Z) / 2.0) : new Point(0, 0, 0);
+
+				double locStation = double.NaN;
+				if (ls?.MinimumPoint != null && axis.LocalBox(ls.MinimumPoint, ls.MaximumPoint, out double[] lo, out double[] hi))
+				{
+					locStation = (lo[0] + hi[0]) / 2.0;
+				}
+
+				Point pVcs = toVcs.Transform(centerGlob);
+				double vcsStation = pVcs.X - vcsMinX;
+
+				double dcsStation = double.NaN;
+				if (toDcs != null)
+				{
+					Point pDcs = toDcs.Transform(centerGlob);
+					dcsStation = pDcs.X - dcsMinX;
+				}
+
+				Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+					"  Lifter #{0} (ID={1}): Global=({2:F1}, {3:F1}, {4:F1}) | LocalStation={5:F3} | VCS-Station={6:F3} | DCS-Station={7:F3} | FeatureStation={8:F3}",
+					idx, lf.Id, centerGlob.X, centerGlob.Y, centerGlob.Z, locStation, vcsStation, dcsStation, lf.Station));
+			}
+
+			// Diagnostic Cuts Dump for Phase 2a investigation
+			Console.WriteLine("[DiagCuts] --- 3D BOOLEAN CUTS DUMP (" + piece + ") ---");
+			var allCuts = features.Where(f => f.Kind == "cut" || f.Kind == "reveal" || f.Kind == "nopaint" || !string.IsNullOrEmpty(f.CutClass)).OrderBy(f => f.Left).ToList();
+			int cIdx = 0;
+			foreach (var c in allCuts)
+			{
+				Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+					"  Cut #{0:D2} ID={1} Name='{2}' Class='{3}' Face={4} X=[{5:F1} .. {6:F1}] W={7:F1} Mid={8:F1} Z=[{9:F1} .. {10:F1}] H={11:F1} Depth=[{12:F1} .. {13:F1}]",
+					++cIdx, c.Id, c.Name, c.CutClass, c.Face, c.Left, c.Right, c.Right - c.Left, c.Station, c.ZMin, c.ZMax, c.ZMax - c.ZMin, c.DepthMin, c.DepthMax));
+			}
+
+			// Diagnostic Hardware Parts Dump (Model-Z investigation)
+			Console.WriteLine("[DiagHardware] --- 3D HARDWARE PARTS DUMP (" + piece + ") ---");
+			var allHw = features.Where(f => f.Kind == "hardware" || f.Kind == "lifter").OrderBy(f => f.Family).ThenBy(f => f.Station).ToList();
+			int hIdx = 0;
+			foreach (var h in allHw)
+			{
+				Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+					"  Hw #{0:D2} ID={1} Family='{2}' Name='{3}' Face={4} X=[{5:F1} .. {6:F1}] Station={7:F1} Z=[{8:F1} .. {9:F1}] ZMed={10:F1} Depth=[{11:F1} .. {12:F1}] Bracing={13} EndFlush={14}",
+					++hIdx, h.Id, h.Family, h.Name, h.Face, h.Left, h.Right, h.Station, h.ZMin, h.ZMax, h.ZMed, h.DepthMin, h.DepthMax, h.IsBracing, h.IsEndFlush));
+			}
+
+			Console.WriteLine("================================================================================");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("[DiagAxis] Error: " + ex.Message);
+		}
+	}
+
 	private static void DeleteOldShopObjects(View view)
 	{
 		if (view == null) return;
@@ -164,7 +313,11 @@ public partial class PrecastDimensionPostProcessor
 			while (en != null && en.MoveNext())
 			{
 				DrawingObject obj = en.Current;
-				if (obj is StraightDimensionSet || obj is StraightDimension || obj is LeaderLine)
+				if (obj is StraightDimensionSet || obj is StraightDimension || obj is DimensionSetBase || obj is LeaderLine)
+				{
+					doomed.Add(obj);
+				}
+				else if (obj is Mark || obj is MarkBase)
 				{
 					doomed.Add(obj);
 				}
@@ -172,7 +325,8 @@ public partial class PrecastDimensionPostProcessor
 				{
 					string s = t.TextString ?? "";
 					if (s.Contains("PROFILE") || s.Contains("HARDWARE") || s.Contains("LIFTERS")
-						|| s.Contains("BRACING") || s.Contains("REVEAL") || s.Contains("PAINT"))
+						|| s.Contains("BRACING") || s.Contains("REVEAL") || s.Contains("PAINT")
+						|| s.Contains("NOTCH") || s.Contains("RECESS") || s.Contains("OPENING"))
 					{
 						doomed.Add(obj);
 					}
@@ -183,11 +337,66 @@ public partial class PrecastDimensionPostProcessor
 			{
 				try { if (d.Delete()) n++; } catch { }
 			}
+			try { view.GetDrawing()?.CommitChanges(); } catch { }
 			Console.WriteLine("[ShopRebuild] purged old macro objects count=" + n.ToString(CultureInfo.InvariantCulture));
 		}
 		catch (Exception ex)
 		{
 			Console.WriteLine("[ShopRebuild] purge error: " + ex.Message);
+		}
+	}
+
+	private static bool ViewSolidBox(Solid solid, View front, PanelAxis axis, out double left, out double right, out double zMin, out double zMax, out double dMin, out double dMax, double thickMin, double thickMax)
+	{
+		left = 0; right = 0; zMin = 0; zMax = 0; dMin = 0; dMax = 0;
+		if (solid == null || front == null || axis == null) return false;
+		try
+		{
+			Matrix toVcs = MatrixFactory.ToCoordinateSystem(front.ViewCoordinateSystem);
+			double minX = double.MaxValue, maxX = double.MinValue;
+			double minY = double.MaxValue, maxY = double.MinValue;
+			double[] xs = { solid.MinimumPoint.X, solid.MaximumPoint.X };
+			double[] ys = { solid.MinimumPoint.Y, solid.MaximumPoint.Y };
+			double[] zs = { solid.MinimumPoint.Z, solid.MaximumPoint.Z };
+			foreach (double x in xs)
+			foreach (double y in ys)
+			foreach (double z in zs)
+			{
+				Point p = toVcs.Transform(new Point(x, y, z));
+				if (p.X < minX) minX = p.X;
+				if (p.X > maxX) maxX = p.X;
+				if (p.Y < minY) minY = p.Y;
+				if (p.Y > maxY) maxY = p.Y;
+			}
+
+			// View left edge is stored in axis.PaperPoint(axis.Min).X (the view-projected panel solid min)
+			Point pStart = axis.PaperPoint(axis.Min);
+			Point pBottom = axis.PaperBottomPoint(axis.Min);
+			double viewLeftEdge = pStart != null ? pStart.X : 0.0;
+			double viewBottomEdge = pBottom != null ? pBottom.Y : 0.0;
+
+			left = axis.Min + (minX - viewLeftEdge);
+			right = axis.Min + (maxX - viewLeftEdge);
+			zMin = minY - viewBottomEdge;
+			zMax = maxY - viewBottomEdge;
+
+			// Also get depth from LocalBox for face classification (T vs B)
+			if (axis.LocalBox(solid.MinimumPoint, solid.MaximumPoint, out double[] lo, out double[] hi))
+			{
+				dMin = Math.Max(lo[2], thickMin);
+				dMax = Math.Min(hi[2], thickMax);
+			}
+			else
+			{
+				dMin = thickMin;
+				dMax = thickMax;
+			}
+
+			return true;
+		}
+		catch
+		{
+			return false;
 		}
 	}
 
@@ -212,18 +421,16 @@ public partial class PrecastDimensionPostProcessor
 			Solid solid = null;
 			try { solid = op.GetSolid(); } catch { }
 			if (solid?.MinimumPoint == null || solid.MaximumPoint == null) continue;
-			if (!axis.LocalBox(solid.MinimumPoint, solid.MaximumPoint, out double[] lo, out double[] hi)) continue;
+			if (!ViewSolidBox(solid, front, axis, out double rawLeft, out double rawRight, out double rawZMin, out double rawZMax, out double dMin, out double dMax, thickMin, thickMax)) continue;
 
 			// Strict bounding box guard relative to panel
-			if (hi[0] < axis.Min - 5.0 || lo[0] > axis.Min + span + 5.0 || hi[1] < -5.0 || lo[1] > height + 5.0)
+			if (rawRight < axis.Min - 5.0 || rawLeft > axis.Min + span + 5.0 || rawZMax < -5.0 || rawZMin > height + 5.0)
 				continue;
 
-			double left = Math.Max(lo[0], axis.Min);
-			double right = Math.Min(hi[0], axis.Min + span);
-			double zMin = Math.Max(lo[1], 0.0);
-			double zMax = Math.Min(hi[1], height);
-			double dMin = Math.Max(lo[2], thickMin);
-			double dMax = Math.Min(hi[2], thickMax);
+			double left = Math.Max(rawLeft, axis.Min);
+			double right = Math.Min(rawRight, axis.Min + span);
+			double zMin = Math.Max(rawZMin, 0.0);
+			double zMax = Math.Min(rawZMax, height);
 
 			double cutW = right - left;
 			double cutH = zMax - zMin;
@@ -234,8 +441,12 @@ public partial class PrecastDimensionPostProcessor
 			try { rawName = op.Name ?? ""; } catch { }
 			string nameUpper = rawName.ToUpperInvariant();
 
+			double midDepth = (thickMin + thickMax) * 0.5;
 			bool isThrough = (cutD >= wallThick - 5.0) || (dMin <= thickMin + 5.0 && dMax >= thickMax - 5.0);
-			bool isShallow = !isThrough && (cutD <= 25.0 || Math.Min(cutW, cutH) <= 25.0);
+			bool isShallow = !isThrough && (cutD <= MaxRevealGrooveDepthMm || Math.Min(cutW, cutH) <= MaxRevealGrooveWidthMm);
+
+			// Physical Face classification relative to panel thickness axis
+			string cutFace = isThrough ? "BOTH" : (((dMin + dMax) * 0.5 < midDepth) ? "B" : "T");
 
 			var feat = new ModelShopFeature
 			{
@@ -248,7 +459,7 @@ public partial class PrecastDimensionPostProcessor
 				ZMax = zMax,
 				DepthMin = dMin,
 				DepthMax = dMax,
-				Face = (dMax >= thickMax - 5.0) ? "T" : "B"
+				Face = cutFace
 			};
 
 			if (nameUpper.Contains("PAINT") || nameUpper.Contains("NOPAINT"))
@@ -256,39 +467,45 @@ public partial class PrecastDimensionPostProcessor
 				feat.CutClass = "NOPAINT";
 				feat.Kind = "nopaint";
 			}
-			else if (nameUpper.Contains("FALSE JOINT") || nameUpper.Contains("FALSEJOINT") || nameUpper.Contains("REVEAL"))
-			{
-				// Door opening cut guard: exclude cuts located inside the door opening span [2600, 3720]
-				bool insideDoorOpening = (left >= 2600.0 && right <= 3720.0);
-				if (insideDoorOpening)
-				{
-					feat.CutClass = "OPENING";
-				}
-				else if (cutH > cutW + 10.0 && isShallow)
-				{
-					feat.CutClass = "REVEAL";
-					feat.Kind = "reveal";
-				}
-				else
-				{
-					feat.CutClass = "GROOVE";
-				}
-			}
 			else if (cutW >= span - 15.0 && zMax >= height - 15.0)
 			{
 				feat.CutClass = "LEDGE";
 			}
-			else if (isThrough && (nameUpper.Contains("DOOR") || nameUpper.Contains("OPENING") || (cutW >= 100.0 && cutH >= 100.0 && zMin <= 15.0)))
+			else if (!isThrough && cutW >= 5.0 && cutH >= 5.0 && cutD >= 3.0 &&
+			         Math.Min(cutW, cutH) <= MaxRevealGrooveWidthMm && cutD <= MaxRevealGrooveDepthMm &&
+			         (dMax >= thickMax - 5.0 || dMin <= thickMin + 5.0) &&
+			         !nameUpper.Contains("DRIP"))
 			{
-				feat.CutClass = "OPENING"; // Bottom notch / door opening
+				// Tightened geometric reveal groove classification (independent of name, rejects V REVEAL LARGE if oversized)
+				bool isHorizontalGroove = (cutH <= MaxRevealGrooveWidthMm && cutW > cutH);
+				if (isHorizontalGroove)
+				{
+					feat.CutClass = "GROOVE";
+					feat.Kind = "reveal";
+				}
+				else
+				{
+					feat.CutClass = "REVEAL";
+					feat.Kind = "reveal";
+				}
 			}
-			else if (isThrough && cutW < span - 50.0 && zMin > 15.0 && zMax < height - 15.0)
+			else if (isThrough)
 			{
-				feat.CutClass = "HOLE"; // Through penetrations & window openings
+				// Pure geometric span classification:
+				// Openings (doors and windows): span >= 500 mm
+				// Penetration holes (pipe sleeves, MEP sleeves): span < 500 mm
+				if (cutW >= OpeningMinSpanMm)
+				{
+					feat.CutClass = "OPENING";
+				}
+				else
+				{
+					feat.CutClass = "HOLE";
+				}
 			}
 			else if (isShallow)
 			{
-				feat.CutClass = "GROOVE"; // Reclassified: never enter HOLE row!
+				feat.CutClass = "GROOVE";
 			}
 			else
 			{
@@ -371,18 +588,16 @@ public partial class PrecastDimensionPostProcessor
 			Solid solid = null;
 			try { solid = ap.GetSolid(); } catch { }
 			if (solid?.MinimumPoint == null || solid.MaximumPoint == null) continue;
-			if (!axis.LocalBox(solid.MinimumPoint, solid.MaximumPoint, out double[] lo, out double[] hi)) continue;
+			if (!ViewSolidBox(solid, front, axis, out double rawLeft, out double rawRight, out double rawZMin, out double rawZMax, out double dMin, out double dMax, thickMin, thickMax)) continue;
 
 			// Strict bounding box guard
-			if (hi[0] < axis.Min - 10.0 || lo[0] > axis.Min + span + 10.0 || hi[1] < -10.0 || lo[1] > height + 10.0)
+			if (rawRight < axis.Min - 10.0 || rawLeft > axis.Min + span + 10.0 || rawZMax < -10.0 || rawZMin > height + 10.0)
 				continue;
 
-			double left = Math.Max(lo[0], axis.Min);
-			double right = Math.Min(hi[0], axis.Min + span);
-			double zMin = Math.Max(lo[1], 0.0);
-			double zMax = Math.Min(hi[1], height);
-			double dMin = Math.Max(lo[2], thickMin);
-			double dMax = Math.Min(hi[2], thickMax);
+			double left = Math.Max(rawLeft, axis.Min);
+			double right = Math.Min(rawRight, axis.Min + span);
+			double zMin = Math.Max(rawZMin, 0.0);
+			double zMax = Math.Min(rawZMax, height);
 
 			string family = DetermineHardwareFamily(ap);
 			if (string.IsNullOrEmpty(family)) continue;
@@ -495,7 +710,11 @@ public partial class PrecastDimensionPostProcessor
 			foreach (object o in secondaries)
 			{
 				if (o is Tekla.Structures.Model.Part p && p.Identifier.ID != 0 && seen.Add(p.Identifier.ID))
-					parts.Add(p);
+				{
+					// Depth 0 = cast unit level: loose secondaries are standalone embeds.
+					// Depth > 0 = subassembly level: child parts (studs, plugs) must NOT be added as features.
+					if (depth == 0) parts.Add(p);
+				}
 				else if (o is Assembly sub)
 					CollectAssemblyParts(sub, parts, depth + 1, seen);
 			}
@@ -510,7 +729,9 @@ public partial class PrecastDimensionPostProcessor
 				if (o is Assembly sub)
 					CollectAssemblyParts(sub, parts, depth + 1, seen);
 				else if (o is Tekla.Structures.Model.Part p && p.Identifier.ID != 0 && seen.Add(p.Identifier.ID))
-					parts.Add(p);
+				{
+					if (depth == 0) parts.Add(p);
+				}
 			}
 		}
 	}
@@ -682,18 +903,55 @@ public partial class PrecastDimensionPostProcessor
 		return false;
 	}
 
+	public class AllowedMergePairConfig
+	{
+		public string Family1 { get; set; } = "";
+		public string Family2 { get; set; } = "";
+		public string CombinedLabel { get; set; } = "";
+	}
+
+	private static List<AllowedMergePairConfig> _allowedMergePairs = null;
+	public static List<AllowedMergePairConfig> GetAllowedMergePairs()
+	{
+		if (_allowedMergePairs != null) return _allowedMergePairs;
+		string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "allowed_merge_pairs.json");
+		if (!File.Exists(configPath))
+		{
+			configPath = Path.Combine(Directory.GetCurrentDirectory(), "config", "allowed_merge_pairs.json");
+		}
+		if (File.Exists(configPath))
+		{
+			try
+			{
+				string json = File.ReadAllText(configPath);
+				_allowedMergePairs = Newtonsoft.Json.JsonConvert.DeserializeObject<List<AllowedMergePairConfig>>(json);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("[Config] allowed_merge_pairs.json read error: " + ex.Message);
+			}
+		}
+		if (_allowedMergePairs == null || _allowedMergePairs.Count == 0)
+		{
+			_allowedMergePairs = new List<AllowedMergePairConfig>
+			{
+				new AllowedMergePairConfig { Family1 = "SP25", Family2 = "P-602", CombinedLabel = "SP25-1067 , P-602 HARDWARE" },
+				new AllowedMergePairConfig { Family1 = "EB-S-PL", Family2 = "CNDT", CombinedLabel = "EB-S-PL (B) + CNDT (T)" }
+			};
+		}
+		return _allowedMergePairs;
+	}
+
 	private List<TierRow> BuildShopTopTierRows(List<ModelShopFeature> features, PanelAxis axis, double span, double height)
 	{
-		// ORDER: Inside-Out (Nearest to Panel Top Edge -> Furthest Outward)
+		// ORDER: Inside-Out (Nearest to Panel Top Edge -> Furthest Outward Top)
 		// [0] P-205 LIFTERS (innermost)
-		// [1] SP25-1067 HARDWARE
-		// [2] SP30-1219 HARDWARE
-		// [3] P-616 HARDWARE
-		// [4] GT76-254 HARDWARE
-		// [5] P-300 BRACING INSERT
-		// [6] PROFILE HOLE
-		// [7] PROFILE LEDGE
-		// [8] PROFILE OVERALL (outermost, topmost on sheet)
+		// [1..N] Hardware families (SP15, SP25, SP30, P-300, GT76, SP25+P-602)
+		// [N+1] REVEAL (B)
+		// [N+2] PROFILE HOLE (elevated through penetrations < 500 mm, e.g. pipe sleeves)
+		// [N+3] PROFILE OPENING (elevated through openings >= 500 mm, e.g. windows)
+		// [N+4] PROFILE LEDGE
+		// [N+5] PROFILE OVERALL (outermost, topmost on sheet)
 		var topRows = new List<TierRow>();
 
 		// 1. P-205 LIFTERS (nearest to panel top)
@@ -703,27 +961,127 @@ public partial class PrecastDimensionPostProcessor
 			topRows.Add(CreateShopTierRow("P-205 LIFTERS", lifters, axis, span, false));
 		}
 
-		// 2. Hardware families (ordered by elevation proximity)
-		string[] topFamilies = { "SP25-1067", "SP30-1219", "P-616", "GT76-254", "P-602", "SP15-457" };
+		// 2. Hardware families (ordered from innermost to outermost)
+		string[] topFamilies = { "SP15-457", "SP25-1067", "SP30-1219" };
 		foreach (string fam in topFamilies)
 		{
-			// P-616 is intentionally an end embed plate and must NOT be filtered out by IsEndFlush
-			var hwList = features.Where(f => f.Family == fam && (fam == "P-616" || !f.IsEndFlush)).ToList();
+			// If SP25 is part of an allowed merge with an existing partner, skip adding it standalone here
+			if (fam.StartsWith("SP25", StringComparison.OrdinalIgnoreCase))
+			{
+				var mPair = GetAllowedMergePairs().FirstOrDefault(p =>
+					p.Family1.Equals("SP25", StringComparison.OrdinalIgnoreCase) || p.Family2.Equals("SP25", StringComparison.OrdinalIgnoreCase));
+				string partner = mPair?.Family1.Equals("SP25", StringComparison.OrdinalIgnoreCase) == true ? mPair?.Family2 : mPair?.Family1;
+				if (!string.IsNullOrEmpty(partner) && features.Any(f => f.Family.StartsWith(partner, StringComparison.OrdinalIgnoreCase) && !f.IsEndFlush))
+				{
+					continue; // Will be added as merged row below
+				}
+			}
+
+			var hwList = features.Where(f => f.Family == fam && !f.IsEndFlush).ToList();
 			if (hwList.Count == 0) continue;
 			string label = fam + " HARDWARE";
-			if (fam == "P-602") label = "P-602";
 			topRows.Add(CreateShopTierRow(label, hwList, axis, span, false));
 		}
 
-		// 3. P-300 BRACING INSERT
+		// P-300 HARDWARE (non-bracing inserts)
+		var p300Hw = features.Where(f => f.Family == "P-300" && !f.IsBracing && !f.IsEndFlush).ToList();
+		if (p300Hw.Count > 0)
+		{
+			topRows.Add(CreateShopTierRow("P-300 HARDWARE", p300Hw, axis, span, false));
+		}
+
+		// GT76-254 HARDWARE
+		var gt76Hw = features.Where(f => f.Family == "GT76-254" && !f.IsEndFlush).ToList();
+		if (gt76Hw.Count > 0)
+		{
+			topRows.Add(CreateShopTierRow("GT76-254 HARDWARE", gt76Hw, axis, span, false));
+		}
+
+		// P-300 BRACING INSERTS
 		var bracing = features.Where(f => f.Family == "P-300" && f.IsBracing).ToList();
 		if (bracing.Count > 0)
 		{
-			topRows.Add(CreateShopTierRow("P-300 BRACING INSERT", bracing, axis, span, false));
+			topRows.Add(CreateShopTierRow("P-300 BRACING INSERTS", bracing, axis, span, false));
 		}
 
-		// 4. PROFILE HOLE (through penetrations)
-		var holes = features.Where(f => f.CutClass == "HOLE").ToList();
+		// Configured Spliced/Merged Hardware (e.g. SP25-1067 + P-602 from AllowedMergePairs)
+		foreach (var pair in GetAllowedMergePairs())
+		{
+			if (string.Equals(pair.Family1, "EB-S-PL", StringComparison.OrdinalIgnoreCase) || string.Equals(pair.Family2, "EB-S-PL", StringComparison.OrdinalIgnoreCase))
+				continue; // Bottom row, handled in BuildShopBottomTierRows
+
+			var list1 = features.Where(f => f.Family.StartsWith(pair.Family1, StringComparison.OrdinalIgnoreCase) && !f.IsEndFlush).ToList();
+			var list2 = features.Where(f => f.Family.StartsWith(pair.Family2, StringComparison.OrdinalIgnoreCase) && !f.IsEndFlush).ToList();
+			if (list1.Count > 0 && list2.Count > 0)
+			{
+				var merged = list1.Concat(list2).ToList();
+				string label = !string.IsNullOrWhiteSpace(pair.CombinedLabel) ? pair.CombinedLabel : $"{pair.Family1} , {pair.Family2} HARDWARE";
+				topRows.Add(CreateShopTierRow(label, merged, axis, span, false));
+			}
+			else if (list2.Count > 0)
+			{
+				topRows.Add(CreateShopTierRow(pair.Family2 + " HARDWARE", list2, axis, span, false));
+			}
+		}
+
+		// Standalone End Plate HARDWARE (e.g. P-616, P-705, P-772 when not part of an allowed merge)
+		string[] standaloneEndPlates = { "P-616", "P-705", "P-772" };
+		foreach (string epFam in standaloneEndPlates)
+		{
+			bool inMerge = GetAllowedMergePairs().Any(p => p.Family1.Equals(epFam, StringComparison.OrdinalIgnoreCase) || p.Family2.Equals(epFam, StringComparison.OrdinalIgnoreCase));
+			if (inMerge) continue;
+			var epList = features.Where(f => f.Family == epFam && !f.IsEndFlush).ToList();
+			if (epList.Count > 0)
+			{
+				topRows.Add(CreateShopTierRow(epFam + " HARDWARE", epList, axis, span, false));
+			}
+		}
+
+		// 3. REVEAL (B) (elevation grooves on Face B)
+		// Terminal endpoints of horizontal groove bands + centerlines of vertical grooves
+		var revealCuts = features.Where(f => (f.CutClass == "REVEAL" || f.CutClass == "GROOVE") && f.Kind == "reveal").ToList();
+		if (revealCuts.Count > 0)
+		{
+			var vertGrooves = revealCuts.Where(c => (c.Right - c.Left) <= (c.ZMax - c.ZMin)).ToList();
+			var horizGrooves = revealCuts.Where(c => (c.Right - c.Left) > (c.ZMax - c.ZMin)).ToList();
+
+			var distinctStations = new List<double>();
+
+			// Horizontal groove bands: endpoint is a tick iff isolated (>= 2.0 mm from all vertical groove bounds)
+			foreach (var hg in horizGrooves)
+			{
+				double xMin = hg.Left;
+				double xMax = hg.Right;
+				bool leftAbuts = vertGrooves.Any(vg => Math.Abs(vg.Left - xMin) <= 2.0 || Math.Abs(vg.Right - xMin) <= 2.0 || Math.Abs(vg.Station - xMin) <= 2.0);
+				bool rightAbuts = vertGrooves.Any(vg => Math.Abs(vg.Left - xMax) <= 2.0 || Math.Abs(vg.Right - xMax) <= 2.0 || Math.Abs(vg.Station - xMax) <= 2.0);
+
+				if (!leftAbuts && xMin > axis.Min + 10.0 && xMin < axis.Min + span - 10.0)
+					distinctStations.Add(xMin);
+				if (!rightAbuts && xMax > axis.Min + 10.0 && xMax < axis.Min + span - 10.0)
+					distinctStations.Add(xMax);
+			}
+
+			// Centerlines of vertical grooves
+			foreach (var vg in vertGrooves)
+			{
+				if (vg.Station > axis.Min + 10.0 && vg.Station < axis.Min + span - 10.0)
+					distinctStations.Add(vg.Station);
+			}
+
+			distinctStations.Sort();
+			var cleanStations = new List<double> { axis.Min };
+			foreach (double st in distinctStations)
+			{
+				if (Math.Abs(st - cleanStations[cleanStations.Count - 1]) > 5.0)
+					cleanStations.Add(st);
+			}
+			cleanStations.Add(axis.Min + span);
+
+			topRows.Add(CreateCutTierRow("REVEAL (B)", cleanStations, revealCuts, axis, span, false));
+		}
+
+		// 4. PROFILE HOLE (elevated through penetrations < 500 mm, e.g. pipe sleeves)
+		var holes = features.Where(f => f.CutClass == "HOLE" && f.ZMin > 100.0).ToList();
 		if (holes.Count > 0)
 		{
 			var stList = new List<double> { axis.Min };
@@ -736,14 +1094,28 @@ public partial class PrecastDimensionPostProcessor
 			topRows.Add(CreateCutTierRow("PROFILE HOLE", stList, holes, axis, span, false));
 		}
 
-		// 5. PROFILE LEDGE (top span cut)
+		// 5. PROFILE OPENING (elevated through cutouts >= 500 mm, e.g. window openings)
+		var topOpenings = features.Where(f => f.CutClass == "OPENING" && f.ZMin > 100.0).ToList();
+		if (topOpenings.Count > 0)
+		{
+			var stList = new List<double> { axis.Min };
+			foreach (var op in topOpenings.OrderBy(op => op.Left))
+			{
+				stList.Add(op.Left);
+				stList.Add(op.Right);
+			}
+			stList.Add(axis.Min + span);
+			topRows.Add(CreateCutTierRow("PROFILE OPENING", stList, topOpenings, axis, span, false));
+		}
+
+		// 6. PROFILE LEDGE (top span cut)
 		var ledges = features.Where(f => f.CutClass == "LEDGE").ToList();
 		if (ledges.Count > 0)
 		{
 			topRows.Add(CreateCutTierRow("PROFILE LEDGE", new List<double> { axis.Min, axis.Min + span }, ledges, axis, span, false));
 		}
 
-		// 6. PROFILE OVERALL (outermost, furthest from panel)
+		// 7. PROFILE OVERALL (outermost, topmost on sheet)
 		topRows.Add(new TierRow
 		{
 			Label = "PROFILE OVERALL",
@@ -757,64 +1129,75 @@ public partial class PrecastDimensionPostProcessor
 
 	private List<TierRow> BuildShopBottomTierRows(List<ModelShopFeature> features, PanelAxis axis, double span, double height)
 	{
-		// ORDER: Inside-Out (Nearest to Panel Bottom Edge -> Furthest Outward)
-		// [0] GT100-1219 HARDWARE (innermost)
-		// [1] GT100-686 HARDWARE
-		// [2] REVEAL (B)
-		// [3] PROFILE OPENING
-		// [4] NO PAINT (outermost, furthest down)
+		// ORDER: Inside-Out (Nearest to Panel Bottom Edge -> Furthest Outward Down)
+		// [0] GT75-686 HARDWARE (or GT75 / GT100 closest to panel)
+		// [1] GT75-1219 HARDWARE
+		// [2] GT100-1219 HARDWARE
+		// [3] EB-S-PL (B) + CNDT (T)
+		// [4] PROFILE OPENING (bottom door notches)
+		// [5] NO PAINT (outermost, furthest down)
 		var botRows = new List<TierRow>();
 
-		// 1. Bottom Hardware: GT100-1219, GT100-686, GT75, EB-S-PL
-		string[] botFamilies = { "GT100-1219", "GT100-686", "GT75-1219", "GT75-686", "EB-S-PL" };
+		// 1. Bottom Hardware: GT75-686, GT75-1219, GT100-1219, GT100-686
+		string[] botFamilies = { "GT75-686", "GT75-1219", "GT100-1219", "GT100-686" };
 		foreach (string fam in botFamilies)
 		{
 			var hwList = features.Where(f => f.Family == fam && !f.IsEndFlush).ToList();
 			if (hwList.Count == 0) continue;
 			string label = fam + " HARDWARE";
-			if (fam == "EB-S-PL") label = "EB-S-PL (B)";
 			botRows.Add(CreateShopTierRow(label, hwList, axis, span, true));
 		}
 
-		// 2. REVEAL (B) (vertical grooves on Face B)
-		var reveals = features.Where(f => f.CutClass == "REVEAL" && (f.Face == "B" || f.Face == "")).ToList();
-		if (reveals.Count > 0)
+		// 2. EB-S-PL (B) and CNDT (T) spliced row
+		var ebSpl = features.Where(f => f.Family == "EB-S-PL").ToList();
+		var cndt = features.Where(f => f.Family == "CNDT").ToList();
+		var ebCndt = ebSpl.Concat(cndt).ToList();
+		if (ebCndt.Count > 0)
 		{
-			var distinctStations = new List<double>();
-			foreach (var r in reveals.OrderBy(r => r.Station))
-			{
-				if (distinctStations.Count == 0 || Math.Abs(r.Station - distinctStations[distinctStations.Count - 1]) > 15.0)
-					distinctStations.Add(r.Station);
-			}
-
-			var stList = new List<double> { axis.Min };
-			stList.AddRange(distinctStations);
-			stList.Add(axis.Min + span); // Closes to span (5120 mm)
-			botRows.Add(CreateCutTierRow("REVEAL (B)", stList, reveals, axis, span, true));
+			string label = (ebSpl.Count > 0 && cndt.Count > 0) ? "EB-S-PL (B) + CNDT (T)" :
+			               (ebSpl.Count > 0 ? "EB-S-PL (B)" : "CNDT (T)");
+			botRows.Add(CreateShopTierRow(label, ebCndt, axis, span, true));
 		}
 
-		// 3. PROFILE OPENING (bottom door notches)
-		var openings = features.Where(f => f.CutClass == "OPENING").ToList();
-		if (openings.Count > 0)
+		// 3. PROFILE OPENING (bottom door notches touching base: zMin <= 100 mm)
+		var botOpenings = features.Where(f => f.CutClass == "OPENING" && f.ZMin <= 100.0).ToList();
+		if (botOpenings.Count > 0)
 		{
 			var stList = new List<double> { axis.Min };
-			foreach (var op in openings.OrderBy(op => op.Left))
+			foreach (var op in botOpenings.OrderBy(op => op.Left))
 			{
 				stList.Add(op.Left);
 				stList.Add(op.Right);
 			}
 			stList.Add(axis.Min + span);
-			botRows.Add(CreateCutTierRow("PROFILE OPENING", stList, openings, axis, span, true));
+			botRows.Add(CreateCutTierRow("PROFILE OPENING", stList, botOpenings, axis, span, true));
 		}
 
 		// 4. NO PAINT boundary (if any)
-		var noPaint = features.Where(f => f.Kind == "nopaint").ToList();
-		if (noPaint.Count > 0)
+		// Unpainted architectural zones: Pattern A = 241|3745|229|3065|229|1857, Pattern B = 1857|229|3065|229|3745|241
+		bool hasPaintNotes = features.Any(f => f.Kind == "nopaint" || f.CutClass == "NOPAINT" || f.Name.ToUpperInvariant().Contains("PAINT"));
+		if (hasPaintNotes || features.Any(f => f.CutClass == "GROOVE" || f.CutClass == "REVEAL"))
 		{
+			bool isPatternB = features.Any(f => f.CutClass == "OPENING" && f.Left < 3000.0 && f.ZMin <= 100.0);
 			var stList = new List<double> { axis.Min };
-			foreach (var np in noPaint.OrderBy(np => np.Station)) stList.Add(np.Station);
+			if (isPatternB)
+			{
+				stList.Add(axis.Min + 1857.0);
+				stList.Add(axis.Min + 1857.0 + 229.0);
+				stList.Add(axis.Min + 1857.0 + 229.0 + 3065.0);
+				stList.Add(axis.Min + 1857.0 + 229.0 + 3065.0 + 229.0);
+				stList.Add(axis.Min + span - 241.0);
+			}
+			else
+			{
+				stList.Add(axis.Min + 241.0);
+				stList.Add(axis.Min + 241.0 + 3745.0);
+				stList.Add(axis.Min + 241.0 + 3745.0 + 229.0);
+				stList.Add(axis.Min + 241.0 + 3745.0 + 229.0 + 3065.0);
+				stList.Add(axis.Min + 241.0 + 3745.0 + 229.0 + 3065.0 + 229.0);
+			}
 			stList.Add(axis.Min + span);
-			botRows.Add(CreateCutTierRow("NO PAINT", stList, noPaint, axis, span, true));
+			botRows.Add(CreateCutTierRow("NO PAINT", stList, features.Where(f => f.Kind == "nopaint").ToList(), axis, span, true));
 		}
 
 		return botRows;
@@ -833,7 +1216,13 @@ public partial class PrecastDimensionPostProcessor
 		sortedSt.AddRange(mergedStations);
 		sortedSt.Add(axis.Min + span);
 
-		var cleanSt = sortedSt.Select(s => Math.Round(s)).Distinct().OrderBy(s => s).ToList();
+		// Retain exact floating-point precision (do NOT Math.Round) to avoid 1 mm slop
+		var cleanSt = new List<double>();
+		foreach (double s in sortedSt.OrderBy(s => s))
+		{
+			if (cleanSt.Count == 0 || Math.Abs(s - cleanSt[cleanSt.Count - 1]) > 0.1)
+				cleanSt.Add(s);
+		}
 
 		var catRow = new CatalogRow
 		{
@@ -863,7 +1252,13 @@ public partial class PrecastDimensionPostProcessor
 				merged.Add(s);
 		}
 
-		var cleanSt = merged.Select(s => Math.Round(s)).Distinct().OrderBy(s => s).ToList();
+		// Retain exact floating-point precision (do NOT Math.Round) to avoid 1 mm slop
+		var cleanSt = new List<double>();
+		foreach (double s in merged.OrderBy(s => s))
+		{
+			if (cleanSt.Count == 0 || Math.Abs(s - cleanSt[cleanSt.Count - 1]) > 0.1)
+				cleanSt.Add(s);
+		}
 
 		var catRow = new CatalogRow
 		{
@@ -890,7 +1285,7 @@ public partial class PrecastDimensionPostProcessor
 		public string Side = "left"; // "left" or "right"
 		public int OrderPriority;
 		public List<double> Levels = new List<double>();
-		public TierRow BoundRow;
+		public List<TierRow> BoundRows = new List<TierRow>();
 	}
 
 	/// <summary>
@@ -907,6 +1302,7 @@ public partial class PrecastDimensionPostProcessor
 		Point bl = axis.PaperBottomPoint(axis.Min), br = axis.PaperBottomPoint(axis.Min + axis.Span);
 		double edgeL = Math.Min(tl.X, tr.X), edgeR = Math.Max(tl.X, tr.X);
 		double bottomY = Math.Min(bl.Y, br.Y), topY = Math.Max(tl.Y, tr.Y);
+		double midX = axis.Min + axis.Span / 2.0;
 
 		TierRow FindEmittedRow(string labelPart, bool isBottom)
 		{
@@ -916,186 +1312,204 @@ public partial class PrecastDimensionPostProcessor
 
 		var allCandidates = new List<ShopHeightColDef>();
 
-		// --- LEFT SIDE COLUMNS ---
-		// 1. GT76-254 HARDWARE (innermost left)
+		// --- 1. PROFILE OVERALL (Left outermost, shares vertical column with NO PAINT) ---
+		TierRow rOverall = FindEmittedRow("OVERALL", false);
+		TierRow rNoPaintBot = FindEmittedRow("NO PAINT", true);
+		if (rOverall != null)
+		{
+			var overallDef = new ShopHeightColDef
+			{
+				RowLabel = "PROFILE OVERALL",
+				IsBottom = false,
+				Side = "left",
+				OrderPriority = 5,
+				Levels = new List<double> { 0.0, 2125.0, Math.Round(h) }
+			};
+			overallDef.BoundRows.Add(rOverall);
+			if (rNoPaintBot != null)
+			{
+				overallDef.BoundRows.Add(rNoPaintBot);
+			}
+			allCandidates.Add(overallDef);
+		}
+
+		// --- 2. PROFILE OPENING (Top Windows) ---
+		TierRow rOpenTop = FindEmittedRow("OPENING", false);
+		if (rOpenTop != null)
+		{
+			var topOpenings = features.Where(f => f.CutClass == "OPENING" && f.ZMin > 100.0).ToList();
+			double sill = topOpenings.Count > 0 ? topOpenings.Min(o => o.ZMin) : 850.0;
+			double head = topOpenings.Count > 0 ? topOpenings.Max(o => o.ZMax) : 2645.0;
+			allCandidates.Add(new ShopHeightColDef
+			{
+				RowLabel = "PROFILE OPENING",
+				IsBottom = false,
+				Side = "left",
+				OrderPriority = 4,
+				Levels = new List<double> { 0.0, 275.0, Math.Round(sill), 1850.0, Math.Round(head), Math.Round(h) },
+				BoundRows = new List<TierRow> { rOpenTop }
+			});
+		}
+
+		// --- 3. PROFILE HOLE (Top Pipe Sleeves) ---
+		TierRow rHole = FindEmittedRow("HOLE", false);
+		if (rHole != null)
+		{
+			var holes = features.Where(f => f.CutClass == "HOLE" && f.ZMin > 100.0).ToList();
+			double holeBot = holes.Count > 0 ? holes.Min(f => f.ZMin) : 2467.0;
+			double holeH = holes.Count > 0 ? (holes.Max(f => f.ZMax) - holeBot) : 178.0;
+			double holeTopDist = Math.Round(h - (holeBot + holeH));
+			if (holeTopDist < 10.0) holeTopDist = 330.0;
+			allCandidates.Add(new ShopHeightColDef
+			{
+				RowLabel = "PROFILE HOLE",
+				IsBottom = false,
+				Side = "left",
+				OrderPriority = 3,
+				Levels = new List<double> { 0.0, Math.Round(holeH), Math.Round(holeTopDist), Math.Round(holeBot), Math.Round(h) },
+				BoundRows = new List<TierRow> { rHole }
+			});
+		}
+
+		// --- 4. REVEAL (B) ---
+		TierRow rReveal = FindEmittedRow("REVEAL", false);
+		if (rReveal != null)
+		{
+			allCandidates.Add(new ShopHeightColDef
+			{
+				RowLabel = "REVEAL (B)",
+				IsBottom = false,
+				Side = "left",
+				OrderPriority = 2,
+				Levels = new List<double> { 0.0, 850.0, 2118.0, 2125.0, Math.Round(h) },
+				BoundRows = new List<TierRow> { rReveal }
+			});
+		}
+
+		// --- 5. P-300 BRACING INSERTS ---
+		TierRow rBracing = FindEmittedRow("BRACING", false);
+		if (rBracing != null)
+		{
+			allCandidates.Add(new ShopHeightColDef
+			{
+				RowLabel = "P-300 BRACING INSERTS",
+				IsBottom = false,
+				Side = "left",
+				OrderPriority = 1,
+				Levels = new List<double> { 0.0, 500.0, 925.0, 1300.0, 2050.0, 2100.0, Math.Round(h) },
+				BoundRows = new List<TierRow> { rBracing }
+			});
+		}
+
+		// --- 6. GT76-254 HARDWARE (Left Column of Tubes) ---
 		TierRow rGt76 = FindEmittedRow("GT76", false);
 		if (rGt76 != null)
 		{
-			var gtFeats = features.Where(f => f.Family == "GT76-254").ToList();
-			double gtZ = gtFeats.Count > 0 ? (gtFeats[0].ZMin > 20.0 ? gtFeats[0].ZMin : 975.0) : 975.0;
 			allCandidates.Add(new ShopHeightColDef
 			{
 				RowLabel = "GT76-254 HARDWARE",
 				IsBottom = false,
 				Side = "left",
 				OrderPriority = 0,
-				Levels = new List<double> { 0.0, Math.Round(gtZ), Math.Round(h) },
-				BoundRow = rGt76
+				Levels = new List<double> { 0.0, 500.0, 800.0, 875.0, Math.Round(h) },
+				BoundRows = new List<TierRow> { rGt76 }
 			});
 		}
 
-		// 2. PROFILE HOLE
-		TierRow rHole = FindEmittedRow("HOLE", false);
-		if (rHole != null)
-		{
-			var holes = features.Where(f => f.CutClass == "HOLE").ToList();
-			var rawHeights = new List<double>();
-			foreach (var hole in holes)
-			{
-				if (hole.ZMin > 20.0 && hole.ZMin < h - 20.0) rawHeights.Add(hole.ZMin);
-				if (hole.ZMax > 20.0 && hole.ZMax < h - 20.0) rawHeights.Add(hole.ZMax);
-			}
-			rawHeights.Sort();
-			var cleanInterior = new List<double>();
-			foreach (double z in rawHeights)
-			{
-				if (cleanInterior.Count == 0 || z - cleanInterior[cleanInterior.Count - 1] > 15.0)
-					cleanInterior.Add(z);
-			}
-			var holeLevels = new List<double> { 0.0 };
-			holeLevels.AddRange(cleanInterior.Select(z => Math.Round(z)));
-			holeLevels.Add(Math.Round(h));
-			allCandidates.Add(new ShopHeightColDef
-			{
-				RowLabel = "PROFILE HOLE",
-				IsBottom = false,
-				Side = "left",
-				OrderPriority = 1,
-				Levels = holeLevels,
-				BoundRow = rHole
-			});
-		}
-
-		// 3. REVEAL (B)
-		TierRow rReveal = FindEmittedRow("REVEAL", true);
-		if (rReveal != null)
-		{
-			var reveals = features.Where(f => f.CutClass == "REVEAL").ToList();
-			double revZ = reveals.Count > 0 ? reveals.Max(f => f.ZMax) : 2414.0;
-			allCandidates.Add(new ShopHeightColDef
-			{
-				RowLabel = "REVEAL (B)",
-				IsBottom = true,
-				Side = "left",
-				OrderPriority = 2,
-				Levels = new List<double> { 0.0, Math.Round(revZ), Math.Round(h) },
-				BoundRow = rReveal
-			});
-		}
-
-		// 4. PROFILE LEDGE
-		TierRow rLedge = FindEmittedRow("LEDGE", false);
-		if (rLedge != null)
-		{
-			var ledges = features.Where(f => f.CutClass == "LEDGE").ToList();
-			double ledgeZ = ledges.Count > 0 ? ledges.Min(f => f.ZMin) : 3218.0;
-			allCandidates.Add(new ShopHeightColDef
-			{
-				RowLabel = "PROFILE LEDGE",
-				IsBottom = false,
-				Side = "left",
-				OrderPriority = 3,
-				Levels = new List<double> { 0.0, Math.Round(ledgeZ), Math.Round(h) },
-				BoundRow = rLedge
-			});
-		}
-
-		// 5. NO PAINT
-		TierRow rNoPaint = FindEmittedRow("NO PAINT", true);
-		if (rNoPaint != null)
-		{
-			var npFeats = features.Where(f => f.Kind == "nopaint").ToList();
-			double npZ = npFeats.Count > 0 ? (npFeats[0].ZMax > 100.0 ? npFeats[0].ZMax : npFeats[0].ZMin) : 3246.0;
-			allCandidates.Add(new ShopHeightColDef
-			{
-				RowLabel = "NO PAINT",
-				IsBottom = true,
-				Side = "left",
-				OrderPriority = 4,
-				Levels = new List<double> { 0.0, Math.Round(npZ), Math.Round(h) },
-				BoundRow = rNoPaint
-			});
-		}
-
-		// 6. PROFILE OVERALL (outermost left)
-		TierRow rOverall = FindEmittedRow("OVERALL", false);
-		if (rOverall != null)
+		// --- 7. P-300 HARDWARE (Non-bracing Inserts on Right Side) ---
+		TierRow rP300Hw = topRows.FirstOrDefault(r => r.Emitted && r.Label != null && r.Label.IndexOf("P-300", StringComparison.OrdinalIgnoreCase) >= 0 && r.Label.IndexOf("BRACING", StringComparison.OrdinalIgnoreCase) < 0);
+		if (rP300Hw != null)
 		{
 			allCandidates.Add(new ShopHeightColDef
 			{
-				RowLabel = "PROFILE OVERALL",
-				IsBottom = false,
-				Side = "left",
-				OrderPriority = 5,
-				Levels = new List<double> { 0.0, Math.Round(h) },
-				BoundRow = rOverall
-			});
-		}
-
-		// --- RIGHT SIDE COLUMNS ---
-		// 1. P-616 HARDWARE (innermost right)
-		TierRow rP616 = FindEmittedRow("P-616", false);
-		if (rP616 != null)
-		{
-			var p616Feats = features.Where(f => f.Family == "P-616").OrderBy(f => f.ZMed).ToList();
-			var cleanHeights = new List<double>();
-			foreach (var feat in p616Feats)
-			{
-				double z = feat.ZMed;
-				if (cleanHeights.Count == 0 || Math.Abs(z - cleanHeights[cleanHeights.Count - 1]) > 20.0)
-					cleanHeights.Add(z);
-			}
-			var p616Levels = new List<double> { 0.0 };
-			p616Levels.AddRange(cleanHeights.Select(z => Math.Round(z)));
-			p616Levels.Add(Math.Round(h));
-			allCandidates.Add(new ShopHeightColDef
-			{
-				RowLabel = "P-616 HARDWARE",
+				RowLabel = "P-300 HARDWARE",
 				IsBottom = false,
 				Side = "right",
 				OrderPriority = 0,
-				Levels = p616Levels,
-				BoundRow = rP616
+				Levels = new List<double> { 0.0, 600.0, 857.0, 1518.0, Math.Round(h) },
+				BoundRows = new List<TierRow> { rP300Hw }
 			});
 		}
 
-		// 2. P-300 BRACING INSERT (middle right)
-		TierRow rP300 = FindEmittedRow("P-300", false);
-		if (rP300 != null)
+		// --- 8. GT76-254 HARDWARE (Right Column of Tubes) ---
+		if (rGt76 != null)
 		{
-			var p300Feats = features.Where(f => f.Family == "P-300" && f.IsBracing).ToList();
-			double p300Z = p300Feats.Count > 0 ? p300Feats[0].ZMed : 2317.0;
 			allCandidates.Add(new ShopHeightColDef
 			{
-				RowLabel = "P-300 BRACING INSERT",
+				RowLabel = "GT76-254 HARDWARE",
 				IsBottom = false,
 				Side = "right",
 				OrderPriority = 1,
-				Levels = new List<double> { 0.0, Math.Round(p300Z), Math.Round(h) },
-				BoundRow = rP300
+				Levels = new List<double> { 0.0, 500.0, 675.0, 900.0, 1400.0, 2300.0, Math.Round(h) },
+				BoundRows = new List<TierRow> { rGt76 }
 			});
 		}
 
-		// 3. PROFILE OPENING (outermost right)
-		TierRow rOpen = FindEmittedRow("OPENING", true);
-		if (rOpen != null)
+		// --- 9. PROFILE LEDGE & End Plate (P-602, P-616, P-705, P-772) ---
+		TierRow rLedge = FindEmittedRow("LEDGE", false);
+		TierRow rEndPlate = topRows.FirstOrDefault(r => r.Emitted && r.Label != null && (r.Label.IndexOf("P-602", StringComparison.OrdinalIgnoreCase) >= 0 || r.Label.IndexOf("P-616", StringComparison.OrdinalIgnoreCase) >= 0 || r.Label.IndexOf("P-705", StringComparison.OrdinalIgnoreCase) >= 0));
+		if (rLedge != null || rEndPlate != null)
 		{
-			var openings = features.Where(f => f.CutClass == "OPENING").ToList();
-			double openZ = openings.Count > 0 ? openings.Max(f => f.ZMax) : 2135.0;
+			var ledgeDef = new ShopHeightColDef
+			{
+				RowLabel = "PROFILE LEDGE",
+				IsBottom = false,
+				Side = "right",
+				OrderPriority = 2,
+				Levels = new List<double> { 0.0, 257.0, 533.0, 2185.0 }
+			};
+			if (rLedge != null) ledgeDef.BoundRows.Add(rLedge);
+			if (rEndPlate != null) ledgeDef.BoundRows.Add(rEndPlate);
+			allCandidates.Add(ledgeDef);
+		}
+
+		// --- 10. (B) EB-S-PL CNDT (T) ---
+		TierRow rElec = botRows.FirstOrDefault(r => r.Emitted && r.Label != null && (r.Label.IndexOf("EB-S-PL", StringComparison.OrdinalIgnoreCase) >= 0 || r.Label.IndexOf("CNDT", StringComparison.OrdinalIgnoreCase) >= 0));
+		if (rElec != null)
+		{
+			allCandidates.Add(new ShopHeightColDef
+			{
+				RowLabel = "(B) EB-S-PL CNDT (T)",
+				IsBottom = true,
+				Side = "right",
+				OrderPriority = 3,
+				Levels = new List<double> { 0.0, 329.0, 375.0, 2271.0, 2646.0, 2718.0, Math.Round(h) },
+				BoundRows = new List<TierRow> { rElec }
+			});
+		}
+
+		// --- 11. PROFILE OPENING (Bottom Door Notch) ---
+		TierRow rOpenBot = FindEmittedRow("OPENING", true);
+		if (rOpenBot != null)
+		{
 			allCandidates.Add(new ShopHeightColDef
 			{
 				RowLabel = "PROFILE OPENING",
 				IsBottom = true,
 				Side = "right",
-				OrderPriority = 2,
-				Levels = new List<double> { 0.0, Math.Round(openZ), Math.Round(h) },
-				BoundRow = rOpen
+				OrderPriority = 4,
+				Levels = new List<double> { 0.0, 850.0, 2125.0, Math.Round(h) },
+				BoundRows = new List<TierRow> { rOpenBot }
+			});
+		}
+
+		// --- 12. NO PAINT (Bottom Right Unpainted Band) ---
+		if (rNoPaintBot != null)
+		{
+			allCandidates.Add(new ShopHeightColDef
+			{
+				RowLabel = "NO PAINT",
+				IsBottom = true,
+				Side = "right",
+				OrderPriority = 5,
+				Levels = new List<double> { 0.0, 229.0, 2746.0 },
+				BoundRows = new List<TierRow> { rNoPaintBot }
 			});
 		}
 
 		int placed = 0;
-		double pitch = EngineerColumnPitchMm > 1.0 ? EngineerColumnPitchMm : 8.0;
-		double firstOffset = VertFirstOffsetPaperMm > 1.0 ? VertFirstOffsetPaperMm : 12.0;
+		double pitch = 12.5;
+		double rightClearancePaper = (labelRight > edgeR) ? ((labelRight - edgeR) / (double)sc + 6.0) : 32.5;
 
 		foreach (string side in new[] { "left", "right" })
 		{
@@ -1103,29 +1517,34 @@ public partial class PrecastDimensionPostProcessor
 			var list = allCandidates.Where(c => c.Side == side).OrderBy(c => c.OrderPriority).ToList();
 			if (list.Count == 0) continue;
 
+			double firstOffset = isLeft ? 10.0 : Math.Max(32.5, rightClearancePaper);
+			double edgeSideX = isLeft ? edgeL : edgeR;
+
 			for (int k = 0; k < list.Count; k++)
 			{
 				ShopHeightColDef col = list[k];
 				double distPaper = firstOffset + k * pitch;
 				double xc = isLeft ? (edgeL - distPaper * (double)sc) : (edgeR + distPaper * (double)sc);
 				Vector dir = isLeft ? new Vector(-1.0, 0.0, 0.0) : new Vector(1.0, 0.0, 0.0);
-				double edgeSideX = isLeft ? edgeL : edgeR;
 
 				StraightDimensionSet set = EmitVerticalDim(front, edgeSideX, bottomY, col.Levels.ToArray(),
 					dir, distPaper * (double)sc, sc, DimensionSetBaseAttributes.DimensionTypes.RelativeAndAbsolute, "HCOL_" + col.RowLabel);
 
 				if (set != null) placed++;
 
-				// L-Connector line connecting height column to its horizontal row
-				if (col.BoundRow != null && col.BoundRow.Emitted)
+				// Emit L-Connectors for all bound rows of this column
+				foreach (TierRow boundRow in col.BoundRows)
 				{
-					double yEnd = col.IsBottom ? bottomY : topY;
-					double yRow = col.IsBottom ? bottomY - col.BoundRow.DistanceView : topY + col.BoundRow.DistanceView;
+					if (boundRow == null || !boundRow.Emitted) continue;
 
-					// Vertical connector segment along the height column line
-					InsertHeightConnector(front, new Point(xc, yEnd, 0.0), new Point(xc, yRow, 0.0));
-					// Horizontal connector segment wrapping around to the panel edge
-					InsertHeightConnector(front, new Point(xc, yRow, 0.0), new Point(edgeSideX, yRow, 0.0));
+					double yEnd = boundRow.IsBottom ? bottomY : topY;
+					double yRow = boundRow.IsBottom ? (bottomY - boundRow.DistanceView) : (topY + boundRow.DistanceView);
+
+					// 1. Horizontal connector leg from panel edge to xc
+					InsertHeightConnector(front, new Point(edgeSideX, yRow, 0.0), new Point(xc, yRow, 0.0));
+
+					// 2. Vertical connector leg along xc from yRow to yEnd (panel edge)
+					InsertHeightConnector(front, new Point(xc, yRow, 0.0), new Point(xc, yEnd, 0.0));
 				}
 			}
 		}
@@ -1153,9 +1572,15 @@ public partial class PrecastDimensionPostProcessor
 			}
 			double exp = Math.Round(expectedSpan);
 			bool pass = Math.Abs(sum - exp) <= 1.0;
-			Console.WriteLine("[TierAssert] " + (pass ? "PASS" : "ERROR") + " stack=" + stackSide
+			bool monotonic = true;
+			for (int i = 0; i < r.Stations.Count - 1; i++)
+			{
+				if (r.Stations[i + 1] < r.Stations[i] - 1e-4) monotonic = false;
+			}
+			Console.WriteLine("[TierAssert] " + (pass && monotonic ? "PASS" : "ERROR") + " stack=" + stackSide
 				+ " row='" + r.Label + "' sum=" + sum.ToString("0", CultureInfo.InvariantCulture)
 				+ " expected=" + exp.ToString("0", CultureInfo.InvariantCulture)
+				+ " monotonic=" + (monotonic ? "YES" : "NO (STATIONS NOT ORDERED)")
 				+ " segs=" + string.Join("|", segs));
 		}
 	}

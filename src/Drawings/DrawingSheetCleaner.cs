@@ -240,5 +240,34 @@ namespace TeklaExtractor.Services
             try { return d.Name ?? ""; }
             catch { return ""; }
         }
+
+        /// <summary>
+        /// Verifies that all expected sheets (1..expectedCount) exist in Document Manager for the mark.
+        /// </summary>
+        public static bool VerifySheetIntegrity(string markFilter, int expectedCount = 4)
+        {
+            var handler = new DrawingHandler();
+            if (!handler.GetConnectionStatus()) return false;
+            var foundSheets = new HashSet<int>();
+            try
+            {
+                var en = handler.GetDrawings();
+                while (en != null && en.MoveNext())
+                {
+                    if (en.Current is Drawing d && CivilDrawingSupport.MarksMatch(Mark(d), markFilter))
+                    {
+                        int? suffix = SheetRoleMap.SuffixNumber(Mark(d));
+                        if (suffix.HasValue) foundSheets.Add(suffix.Value);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[Integrity] GetDrawings failed: " + ex.Message);
+                return false;
+            }
+            Console.WriteLine("[Integrity] mark=" + markFilter + " sheets found: [" + string.Join(", ", foundSheets) + "] (expected=" + expectedCount + ")");
+            return foundSheets.Count >= expectedCount;
+        }
     }
 }

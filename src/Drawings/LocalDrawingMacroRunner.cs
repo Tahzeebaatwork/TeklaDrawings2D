@@ -470,6 +470,7 @@ namespace TeklaExtractor.Services
             }
             if (pending.Count == 0) return;
             parts = pending;
+            CloseEditor("before sections OpenAPI insert");
             int before = CountDrawings();
             MacroLog(label + ": Open API sections sheet (props=" + SectionsProps + ")");
             var created = new List<Drawing>();
@@ -572,21 +573,35 @@ namespace TeklaExtractor.Services
                 MacroLog("OpenAPI next free sheet for id=" + aid + " → " + sheet);
                 foreach (var attr in attributes)
                 {
-                    try
+                    for (int insAttempt = 0; insAttempt < 3; insAttempt++)
                     {
-                        var d = new CastUnitDrawing(asm.Identifier, sheet, attr);
-                        if (d.Insert())
+                        try
                         {
-                            n++;
-                            if (created != null) created.Add(d);
-                            MacroLog("OpenAPI CastUnit Insert OK attr=" + attr + " sheet=" + sheet);
+                            var d = new CastUnitDrawing(asm.Identifier, sheet, attr);
+                            if (d.Insert())
+                            {
+                                n++;
+                                if (created != null) created.Add(d);
+                                MacroLog("OpenAPI CastUnit Insert OK attr=" + attr + " sheet=" + sheet);
+                                break;
+                            }
+                            else
+                            {
+                                MacroLog("OpenAPI CastUnit Insert FALSE attr=" + attr + " sheet=" + sheet + " id=" + aid);
+                                break;
+                            }
                         }
-                        else
-                            MacroLog("OpenAPI CastUnit Insert FALSE attr=" + attr + " sheet=" + sheet + " id=" + aid);
-                    }
-                    catch (Exception ex)
-                    {
-                        Fail("OpenAPI CastUnit " + attr + " id=" + aid + " sheet=" + sheet, ex);
+                        catch (Exception ex) when (ex.Message.Contains("Drawing cannot be inserted when another drawing is active"))
+                        {
+                            MacroLog("OpenAPI CastUnit retry " + (insAttempt + 1) + "/3 waiting for active drawing to close...");
+                            CloseEditor("retry after CannotInsertDrawingException");
+                            Thread.Sleep(500);
+                        }
+                        catch (Exception ex)
+                        {
+                            Fail("OpenAPI CastUnit " + attr + " id=" + aid + " sheet=" + sheet, ex);
+                            break;
+                        }
                     }
                     sheet++;
                 }
@@ -866,9 +881,28 @@ namespace TeklaExtractor.Services
         {
             try
             {
-                _handler.CloseActiveDrawing(false);
-                MacroLog("CloseActiveDrawing (" + reason + ")");
+                for (int attempt = 0; attempt < 25; attempt++)
+                {
+                    Drawing active = null;
+                    try { active = _handler.GetActiveDrawing(); } catch { }
+                    if (active == null)
+                    {
+                        if (attempt > 0)
+                            MacroLog("CloseActiveDrawing (" + reason + ") confirmed closed after " + (attempt * 200) + "ms");
+                        return;
+                    }
+                    try { _handler.CloseActiveDrawing(false); } catch { }
+                    Thread.Sleep(200);
+                }
+                Drawing stillActive = null;
+                try { stillActive = _handler.GetActiveDrawing(); } catch { }
+                if (stillActive != null)
+                {
+                    MacroLog("CloseActiveDrawing (" + reason + "): ERROR active drawing could not be closed after 5s");
+                    throw new TimeoutException("Active drawing could not be closed after 5s timeout (" + reason + ")");
+                }
             }
+            catch (TimeoutException) { throw; }
             catch (Exception ex)
             {
                 MacroLog("CloseActiveDrawing (" + reason + "): " + ex.GetType().Name + ": " + ex.Message);

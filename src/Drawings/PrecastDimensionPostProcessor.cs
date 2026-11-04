@@ -1986,6 +1986,21 @@ public partial class PrecastDimensionPostProcessor
 		return false;
 	}
 
+	private static void RemoveViewFromSheet1(View view)
+	{
+		if (view == null) return;
+		try
+		{
+			if (view.Delete())
+			{
+				Console.WriteLine("[ViewArrange] Deleted non-elevation view '" + (view.Name ?? "") + "' from Sheet 1");
+				return;
+			}
+		}
+		catch { }
+		ParkViewOffSheet(view);
+	}
+
 	private static void ParkViewOffSheet(View view)
 	{
 		if (view == null) return;
@@ -2066,22 +2081,17 @@ public partial class PrecastDimensionPostProcessor
 			}
 			front.Modify();
 
-			ParkViewOffSheet(bottom);
-			ParkViewOffSheet(view3D);
+			RemoveViewFromSheet1(bottom);
+			RemoveViewFromSheet1(view3D);
 			if (keepSection)
 				PlaceSectionOnPage1(section, main, bomLeft);
 			else
-			ParkViewOffSheet(section);
+				RemoveViewFromSheet1(section);
 			if (otherViews != null)
 			{
 				foreach (View ov in otherViews)
-					ParkViewOffSheet(ov);
+					RemoveViewFromSheet1(ov);
 			}
-			LogParkClip(bottom, sheetWidth, sheetHeight, main);
-			LogParkClip(view3D, sheetWidth, sheetHeight, main);
-			if (!keepSection) LogParkClip(section, sheetWidth, sheetHeight, main);
-			if (otherViews != null)
-				foreach (View ov in otherViews) LogParkClip(ov, sheetWidth, sheetHeight, main);
 
 			try { drawing.CommitChanges(); } catch { }
 
@@ -3070,6 +3080,7 @@ public partial class PrecastDimensionPostProcessor
 			string path = Path.Combine(dir, "fit_report_" + piece.Replace(' ', '_') + ".txt");
 			var sb = new System.Text.StringBuilder();
 			sb.AppendLine("FitReport " + DateTime.UtcNow.ToString("o"));
+			sb.AppendLine("engine=" + (ShopModelRebuildOnly ? "ShopModelRebuild (pure 3D model)" : "LegacyPlaceTierRows"));
 			sb.AppendLine("drawing=" + drawingMark);
 			sb.AppendLine("piece=" + piece);
 			sb.AppendLine("scale=1:" + scale.ToString(CultureInfo.InvariantCulture));
@@ -3740,7 +3751,20 @@ public partial class PrecastDimensionPostProcessor
 			{
 				doomed.Add(item2);
 			}
-			// Part/assembly numbering marks (MarkBase) are kept — do not mass-delete.
+			else if (drawingObjectEnumerator.Current is MarkBase mark)
+			{
+				string text2 = FlattenMarkText(mark);
+				if (Regex.IsMatch(text2, @"^(AF\d+|TEMP_|LIFTING BALANCE|PROFILE RECESS|RECESS NOTCH|PROFILE OPENING|BCMBD|RECESS|OPENING|NOTCH)", RegexOptions.IgnoreCase)
+					|| text2.IndexOf("PROFILE RECESS", StringComparison.OrdinalIgnoreCase) >= 0
+					|| text2.IndexOf("RECESS NOTCH", StringComparison.OrdinalIgnoreCase) >= 0
+					|| text2.IndexOf("PROFILE OPENING", StringComparison.OrdinalIgnoreCase) >= 0
+					|| text2.IndexOf("RECESS", StringComparison.OrdinalIgnoreCase) >= 0
+					|| text2.IndexOf("NOTCH", StringComparison.OrdinalIgnoreCase) >= 0
+					|| text2.IndexOf("BCMBD", StringComparison.OrdinalIgnoreCase) >= 0)
+				{
+					doomed.Add(mark);
+				}
+			}
 		}
 		// Do not walk Part/Rebar related MarkBase — numbering marks must stay visible.
 	}
@@ -3753,6 +3777,18 @@ public partial class PrecastDimensionPostProcessor
 		}
 		HashSet<DimensionSetBase> hashSet = new HashSet<DimensionSetBase>();
 		List<DrawingObject> list = new List<DrawingObject>();
+		try
+		{
+			DrawingObjectEnumerator allDims = view.GetAllObjects();
+			while (allDims != null && allDims.MoveNext())
+			{
+				if (allDims.Current is DimensionSetBase dsb)
+					hashSet.Add(dsb);
+				else if (allDims.Current is StraightDimension sd)
+					list.Add(sd);
+			}
+		}
+		catch { }
 		try
 		{
 			DrawingObjectEnumerator objects = view.GetObjects(new Type[1] { typeof(StraightDimensionSet) });
@@ -5015,6 +5051,13 @@ public partial class PrecastDimensionPostProcessor
 		if (view == null || axis == null || buckets == null) return;
 		try
 		{
+			Drawing active = null;
+			try { active = _handler?.GetActiveDrawing(); } catch { }
+			if (active != null && (IsHardwareShopSheet(active) || SheetRoleMap.SuffixNumber(active.Mark ?? "") == 1))
+			{
+				Console.WriteLine("[Router] notch/recess skipped on Sheet 1 (hardware elevation)");
+				return;
+			}
 			if (buckets.NotchX != null && buckets.NotchX.Count >= 2)
 			{
 				List<double> nx = new List<double>(buckets.NotchX);
@@ -5325,6 +5368,18 @@ public partial class PrecastDimensionPostProcessor
 		}
 		catch { }
 		ApplyDimFont(attrs.Text != null ? attrs.Text.Font : null);
+		try
+		{
+			if (attrs.Text != null)
+			{
+				attrs.Text.Frame = DimensionSetBaseAttributes.FrameTypes.None;
+			}
+			attrs.LeftUpperTag?.Clear();
+			attrs.RightUpperTag?.Clear();
+			attrs.LeftLowerTag?.Clear();
+			attrs.RightLowerTag?.Clear();
+		}
+		catch { }
 		if (_elevationMode)
 		{
 			try { attrs.Format.UseDigitGrouping = false; } catch { }
@@ -5452,6 +5507,20 @@ public partial class PrecastDimensionPostProcessor
 			frame = false;
 			return;
 		}
+		if (u.Contains("EB-S-PL") && u.Contains("CNDT"))
+		{
+			line1 = "EB-S-PL (B)";
+			line2 = "CNDT (T)";
+			frame = false;
+			return;
+		}
+		if (u.Contains("SP25") && u.Contains("P-602"))
+		{
+			line1 = "SP25-1067 , P-602";
+			line2 = "HARDWARE";
+			frame = true;
+			return;
+		}
 		if (u.StartsWith("PROFILE ") || u.StartsWith("REVEAL") || u.StartsWith("LEDGE") || u.StartsWith("NOTCH"))
 		{
 			int sp = line1.IndexOf(' ');
@@ -5460,6 +5529,18 @@ public partial class PrecastDimensionPostProcessor
 				line2 = line1.Substring(sp + 1);
 				line1 = line1.Substring(0, sp);
 			}
+			return;
+		}
+		if (line1.IndexOfAny(new[] { ',', '+' }) >= 0)
+		{
+			// Composite / merged tier label: e.g. "SP25-1067 , P-602 HARDWARE" or "EB-S-PL (B) + CNDT (T)"
+			int hwIdx = line1.IndexOf("HARDWARE", StringComparison.OrdinalIgnoreCase);
+			if (hwIdx > 0)
+			{
+				line2 = line1.Substring(hwIdx).Trim();
+				line1 = line1.Substring(0, hwIdx).Trim();
+			}
+			frame = true;
 			return;
 		}
 		string raw = line1;
