@@ -331,6 +331,14 @@ public partial class PrecastDimensionPostProcessor
 						doomed.Add(obj);
 					}
 				}
+				else if (obj is Symbol shopSym)
+				{
+					// Remove magenta '?' symbols left by Tekla macro (unresolved hardware marks).
+					bool isMagenta = false;
+					try { isMagenta = shopSym.Attributes.Color == DrawingColors.Magenta; } catch { }
+					if (isMagenta)
+						doomed.Add(obj);
+				}
 			}
 			int n = 0;
 			foreach (DrawingObject d in doomed)

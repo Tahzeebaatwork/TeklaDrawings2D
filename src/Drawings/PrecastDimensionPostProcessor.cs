@@ -6378,6 +6378,21 @@ public partial class PrecastDimensionPostProcessor
 							+ "' content=" + DescribeContent(mb));
 						doomed.Add(mb);
 					}
+					else if (en.Current is Symbol sym)
+					{
+						bool isMagenta = false;
+						try { isMagenta = sym.Attributes.Color == DrawingColors.Magenta; } catch { }
+						if (isMagenta)
+						{
+							string symFile = "";
+							int symIdx = -1;
+							try { symFile = sym.SymbolInfo.SymbolFile ?? ""; } catch { }
+							try { symIdx = sym.SymbolInfo.SymbolIndex; } catch { }
+							Console.WriteLine("[qmark] purge magenta Symbol view='" + (view.Name ?? "")
+								+ "' file='" + symFile + "' idx=" + symIdx);
+							doomed.Add(sym);
+						}
+					}
 				}
 			}
 		}
@@ -8406,6 +8421,9 @@ public partial class PrecastDimensionPostProcessor
 			int purged = 0;
 			if (!PlacingRebuildOnly)
 				purged = NuclearPurgeLeftDumpOnly(sheet, sheetWidth, sheetHeight);
+			// Purge magenta '?' Symbol objects (unresolved hardware marks from Tekla macro).
+			if (!KeepNativeMarks)
+				PurgeUnresolvedQuestionMarks(sheet);
 			if (otherViews != null)
 			{
 				foreach (View ov in otherViews)
