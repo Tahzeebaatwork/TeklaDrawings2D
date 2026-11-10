@@ -36,7 +36,7 @@ namespace TeklaExtractor.Services
             "chamfer", "recess", "notch", "corbel", "End1", "End2", "SideA", "SideB"
         };
 
-        public static void Write(string outputRoot)
+        public static void Write(string outputRoot, string targetMark = null)
         {
             var sb = new StringBuilder();
             sb.AppendLine("CIVIL DRAWING COVERAGE REPORT");
@@ -67,7 +67,7 @@ namespace TeklaExtractor.Services
                     " dims=" + s.DimCount + " views=" + s.ViewNames.Count);
             sb.AppendLine();
 
-            var ptr = PickPtr(shops);
+            var ptr = PickPtr(shops, targetMark);
             sb.AppendLine("=== Paisley local score (W8-22 PDF is appendix only) ===");
             if (ptr == null)
             {
@@ -76,7 +76,8 @@ namespace TeklaExtractor.Services
             else
             {
                 sb.AppendLine("Scored piece: " + ptr.Piece +
-                    (string.Equals(ptr.Piece, "PTR", StringComparison.OrdinalIgnoreCase) ? "" : " (no piece mark PTR in this model; using closest/richest match)"));
+                    (!string.IsNullOrWhiteSpace(targetMark) && string.Equals(ptr.Piece, targetMark.Trim(), StringComparison.OrdinalIgnoreCase) ? " (requested target mark)" :
+                    string.Equals(ptr.Piece, "PTR", StringComparison.OrdinalIgnoreCase) ? "" : " (no piece mark PTR in this model; using closest/richest match)"));
                 int missing = ScorePiece(sb, ptr, pdfQty, false);
                 sb.AppendLine("PAISLEY RESULT: " + (missing == 0 ? "PASS (100% PRESENT)" : "FAIL (" + missing + " MISSING fields)"));
             }
@@ -271,9 +272,17 @@ namespace TeklaExtractor.Services
             return parts.Count == 0 ? "blank" : string.Join(" ", parts);
         }
 
-        private static ShopSnap PickPtr(List<ShopSnap> shops)
+        private static ShopSnap PickPtr(List<ShopSnap> shops, string targetMark = null)
         {
             if (shops == null || shops.Count == 0) return null;
+            if (!string.IsNullOrWhiteSpace(targetMark))
+            {
+                string tm = targetMark.Trim();
+                var exactTarget = shops.FirstOrDefault(s => s.Piece.Equals(tm, StringComparison.OrdinalIgnoreCase));
+                if (exactTarget != null) return exactTarget;
+                // Strict exact match only - do not partial match (e.g. W10-4 must not match W10-42)
+                return null;
+            }
             var exact = shops.FirstOrDefault(s => s.Piece.Equals("PTR", StringComparison.OrdinalIgnoreCase));
             if (exact != null) return exact;
             var w822 = shops.FirstOrDefault(s => s.Piece.IndexOf("W8-22", StringComparison.OrdinalIgnoreCase) >= 0);

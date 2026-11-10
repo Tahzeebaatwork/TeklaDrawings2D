@@ -79,6 +79,11 @@ namespace TeklaExtractor
                 return 0;
             }
 
+            if (HasFlag(args, "--test-tuner") || HasFlag(args, "--test-regression"))
+            {
+                return TestNativeDimensionLayoutTuner.RunAllTests();
+            }
+
             bool extractOnly = HasFlag(args, "--extract");
             bool wantDeep = HasFlag(args, "--deep");
             bool selectedOnly = HasFlag(args, "--selected");
@@ -336,7 +341,14 @@ namespace TeklaExtractor
                     Console.WriteLine("[Civil] --preflight-qa → margin, BOM gap, tape delta");
                 // Mark repair opt-in only. Default = skip (manual props drawings have no magenta '?').
                 bool enableMarkRepair = args != null && HasFlag(args, "--enable-mark-repair");
-                bool preserveNativeDims = args != null && HasFlag(args, "--preserve-native-dims");
+                bool wantRebuild = args != null && (HasFlag(args, "--legacy-rebuild") || HasFlag(args, "--rebuild"));
+                bool wantPreserve = args != null && HasFlag(args, "--preserve-native-dims");
+                if (wantRebuild && wantPreserve)
+                {
+                    Console.WriteLine("[Civil] ERROR: Cannot specify both --legacy-rebuild and --preserve-native-dims.");
+                    return 1;
+                }
+                bool preserveNativeDims = !wantRebuild;
                 bool rebarMesh = args != null && HasFlag(args, "--rebar-mesh");
                 bool rebarMeshReplace = args != null && HasFlag(args, "--rebar-mesh-replace");
                 if (rebarMeshReplace) rebarMesh = true;
@@ -356,8 +368,7 @@ namespace TeklaExtractor
                 Console.WriteLine("[Civil] mark-repair=" + (enableMarkRepair ? "ON (--enable-mark-repair)" : "SKIP (default)"));
                 if (fitStage > 0)
                     Console.WriteLine("[Civil] --fit-stage=" + fitStage + " (stops after investigation stage; inspect UI for '?')");
-                if (preserveNativeDims)
-                    Console.WriteLine("[Civil] --preserve-native-dims → skip rebuild when ≥8 native dim sets");
+                Console.WriteLine("[Civil] dimension-strategy=" + (preserveNativeDims ? "NATIVE-FIRST (preserves associative dims; pass --legacy-rebuild to force rebuild)" : "LEGACY-REBUILD"));
                 Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes? dimType =
                     Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTypes.RelativeAndAbsolute;
                 string dimTypeRaw = FlagValue(args, "--dim-type");
@@ -481,7 +492,7 @@ namespace TeklaExtractor
                 // Always bind that wall's 4–6 role PDFs into one fabrication booklet
                 // (same for --clean-mark recreate and --extract-only). Opt out: --no-booklet.
                 bool noBooklet = args != null && (HasFlag(args, "--no-booklet") || HasFlag(args, "--skip-booklet"));
-                if (!noBooklet && civilCode != 1)
+                if (!noBooklet && civilCode == 0)
                 {
                     string civilRoot = Path.Combine(baseDir ?? ".", "Export", "CivilDrawings");
                     string outputRoot = toRoot
@@ -490,6 +501,10 @@ namespace TeklaExtractor
                     Console.WriteLine("[Booklet] collating multi-page fabrication PDF from role sheets…");
                     using (StageTimer.Start("booklet", 0))
                         ProductionBookletCollator.Collate(baseDir, outputRoot, mark);
+                }
+                else if (!noBooklet && civilCode != 0)
+                {
+                    Console.WriteLine($"[Booklet] skipped due to non-zero exit code ({civilCode})");
                 }
                 else if (noBooklet)
                     Console.WriteLine("[Booklet] skipped (--no-booklet)");

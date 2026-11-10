@@ -1099,7 +1099,25 @@ namespace TeklaExtractor.Services
                     int partAssemblyId = 0;
                     try { partAssemblyId = part.GetAssembly()?.Identifier.ID ?? 0; } catch { }
                     if (partAssemblyId != 0 && partAssemblyId != mainAssemblyId)
-                        continue;
+                    {
+                        bool belongsToCu = false;
+                        var asm = part.GetAssembly();
+                        while (asm != null)
+                        {
+                            if (asm.Identifier.ID == mainAssemblyId) { belongsToCu = true; break; }
+                            var parentAsm = asm.GetAssembly();
+                            if (parentAsm == null || parentAsm.Identifier.ID == asm.Identifier.ID) break;
+                            asm = parentAsm;
+                        }
+                        if (!belongsToCu)
+                        {
+                            string partCu = FirstNonEmpty(Report(part, "CAST_UNIT_POS"), Report(part, "ASSEMBLY_POS"));
+                            if (string.Equals(partCu, pieceMark, StringComparison.OrdinalIgnoreCase))
+                                belongsToCu = true;
+                        }
+                        if (!belongsToCu)
+                            continue;
+                    }
                 }
                 bool embed = mainId != 0 && id != mainId;
                 string name = FirstNonEmpty(Safe(() => part.Name), Report(part, "NAME"));

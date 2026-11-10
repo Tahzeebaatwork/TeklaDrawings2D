@@ -1173,8 +1173,11 @@ public partial class PrecastDimensionPostProcessor
 	/// When true (default): if the front view already has a dense native dimension set from
 	/// drawing properties, skip PurgeOldDimensions + PlaceTiers so manual-like elevations stay.
 	/// </summary>
-	/// <summary>Opt-in only (--preserve-native-dims). Default false: rebuild engineer sheet-1 tiers in Tekla UI.</summary>
-	public bool PreserveNativeDimensions { get; set; } = false;
+	/// <summary>Default true: Native-First mode preserves associative macro dimensions. Set false or pass --legacy-rebuild to force rebuild.</summary>
+	public bool PreserveNativeDimensions { get; set; } = true;
+
+	/// <summary>Tracks whether native dimensions were actually preserved on the view (guards tuner against running on static rebuilds).</summary>
+	private bool _nativeDimsPreserved;
 
 	/// <summary>Minimum StraightDimensionSet count to treat the view as having usable native dims.</summary>
 	private const int NativeDimPreserveMin = 8;
@@ -1376,7 +1379,7 @@ public partial class PrecastDimensionPostProcessor
 				}
 				try
 				{
-					flag = _handler.SetActiveDrawing(drawing, showDrawing: false);
+					flag = _handler.SetActiveDrawing(drawing, showDrawing: true);
 				}
 				catch (Exception ex)
 				{
@@ -1386,7 +1389,7 @@ public partial class PrecastDimensionPostProcessor
 				{
 					try
 					{
-						flag = _handler.SetActiveDrawing(drawing, showDrawing: false, forceOpen: true);
+						flag = _handler.SetActiveDrawing(drawing, showDrawing: true, forceOpen: true);
 					}
 					catch
 					{
@@ -1587,6 +1590,47 @@ public partial class PrecastDimensionPostProcessor
 				}
 				else
 					scale = kept;
+
+				// Native-First Layout Tuner runs ONCE at the final chosen scale (not inside candidate loop)
+				if (_nativeDimsPreserved && CountStraightDimensionSets(front) > 0)
+				{
+					try
+					{
+						string piece = part?.AssemblyNumber?.Prefix ?? part?.Name;
+						if (string.IsNullOrWhiteSpace(piece))
+						{
+							string pos = "";
+							try { part?.GetReportProperty("ASSEMBLY_POS", ref pos); } catch { }
+							piece = pos;
+						}
+						var cfg = NativeDimensionLayoutTuner.LoadConfig(piece);
+						double dynamicBom = (num2 > 50.0) ? num2 : ((sheet != null) ? ScanBomLeft(sheet, sheetWidth) : 0.0);
+						var tuneRes = NativeDimensionLayoutTuner.TuneViewDimensions(front, part, scale, cfg, computedBomLeft: dynamicBom);
+						if (tuneRes != null)
+						{
+							if (tuneRes.MaxExtentPaperMm.TryGetValue(NativeDimensionLayoutTuner.EdgeSide.Left, out double leftExt) && leftExt > 100.0)
+							{
+								_layoutViolations++;
+								Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+									"[Fit] WARN: Left dimension stack extent {0:F1} mm exceeds reserved margin 100 mm", leftExt));
+							}
+							if (tuneRes.MaxExtentPaperMm.TryGetValue(NativeDimensionLayoutTuner.EdgeSide.Right, out double rightExt) && rightExt > 100.0)
+							{
+								_layoutViolations++;
+								Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+									"[Fit] WARN: Right dimension stack extent {0:F1} mm exceeds reserved margin 100 mm", rightExt));
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine("[Fit] FATAL: NativeDimensionLayoutTuner failed: " + ex.ToString());
+						_layoutViolations++;
+						SheetBoundsFailed = true;
+						throw;
+					}
+				}
+
 				ApplyFontToStraightSets(front);
 				}
 				fitBeat.Item(3, 4);
@@ -1659,6 +1703,9 @@ public partial class PrecastDimensionPostProcessor
 		catch (Exception ex2)
 		{
 			Console.WriteLine("[Fit] '" + text + "' failed: " + ex2.Message);
+			SheetBoundsFailed = true;
+			_layoutViolations++;
+			throw;
 		}
 		finally
 		{
@@ -1917,7 +1964,7 @@ public partial class PrecastDimensionPostProcessor
 		}
 	}
 
-	private static bool GetSolidBoundsInView(View view, Tekla.Structures.Model.Part main, out double minX, out double maxX, out double minY, out double maxY)
+	public static bool GetSolidBoundsInView(View view, Tekla.Structures.Model.Part main, out double minX, out double maxX, out double minY, out double maxY)
 	{
 		minX = double.MaxValue;
 		minY = double.MaxValue;
@@ -2063,8 +2110,8 @@ public partial class PrecastDimensionPostProcessor
 			return;
 		try
 		{
-			const double desiredLeft = 25.0;
-			const double desiredCenterY = 145.0;
+			const double desiredLeft = 115.0;
+			const double desiredCenterY = 88.0;
 
 			var fAttrs = front.Attributes;
 			fAttrs.Scale = scale;
@@ -3861,18 +3908,29 @@ public partial class PrecastDimensionPostProcessor
 	{
 		int nativeDims = CountStraightDimensionSets(view);
 		_fitAudit.DimSetsBefore = nativeDims;
-		bool preserve = PreserveNativeDimensions && nativeDims >= NativeDimPreserveMin;
-		if (preserve)
+		if (PreserveNativeDimensions && nativeDims > 0)
 		{
-			Console.WriteLine("[Fit] preserve-native dims count=" + nativeDims.ToString(CultureInfo.InvariantCulture)
-				+ " (>= " + NativeDimPreserveMin.ToString(CultureInfo.InvariantCulture)
-				+ ") — skip PurgeOldDimensions and PlaceTiers (opt-in: --preserve-native-dims)");
+			_nativeDimsPreserved = true;
+			if (nativeDims < NativeDimPreserveMin)
+			{
+				Console.WriteLine("[Fit] WARN: native dims=" + nativeDims.ToString(CultureInfo.InvariantCulture)
+					+ " < " + NativeDimPreserveMin.ToString(CultureInfo.InvariantCulture)
+					+ " but keeping native sets (Native-First; pass --legacy-rebuild to force rebuild)");
+			}
+			else
+			{
+				Console.WriteLine("[Fit] preserve-native dims count=" + nativeDims.ToString(CultureInfo.InvariantCulture)
+					+ " — skip PurgeOldDimensions and PlaceTiers (Native-First; pass --legacy-rebuild to force rebuild)");
+			}
 			_fitAudit.DimSetsAfter = nativeDims;
 			return scale;
 		}
-		if (nativeDims > 0)
-			Console.WriteLine("[Fit] native dims count=" + nativeDims.ToString(CultureInfo.InvariantCulture)
-				+ " — rebuild engineer sheet-1 tiers from model stations");
+
+		if (PreserveNativeDimensions && nativeDims == 0)
+		{
+			_nativeDimsPreserved = false;
+			throw new InvalidOperationException($"[Fit] FATAL: nativeDims == 0 on view '{view?.Name}'. Native-First policy requires associative dimensions from macro properties.");
+		}
 
 		if (ShopDryRun)
 		{

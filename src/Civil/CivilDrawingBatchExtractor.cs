@@ -55,7 +55,7 @@ namespace TeklaExtractor.Services
 
         public CivilDrawingBatchExtractor(TSModel.Model model, string baseDir, bool skipMacros = false,
             bool extractOnly = false, string markFilter = null, bool selectedOnly = false, bool toRoot = false,
-            bool preflightQa = false, bool enableMarkRepair = false, int fitStage = 0, bool preserveNativeDims = false, bool rebarMesh = false, bool rebarMeshReplace = false)
+            bool preflightQa = false, bool enableMarkRepair = false, int fitStage = 0, bool preserveNativeDims = true, bool rebarMesh = false, bool rebarMeshReplace = false)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _handler = new DrawingHandler();
@@ -250,7 +250,7 @@ namespace TeklaExtractor.Services
             DedupeCombinedCsvs();
             WriteSamples(new Dictionary<string, int>());
             CopyBomCsv();
-            CivilCoverageReporter.Write(_outputRoot);
+            CivilCoverageReporter.Write(_outputRoot, _markFilter);
             try { CivilHtmlReview.WriteFolderIndex(_outputRoot, _skipMacros ? CivilDrawingTypes.OpenApiFolder + " (Open API)" : CivilDrawingTypes.MacrosFolder); }
             catch (Exception ex) { Console.WriteLine("[Civil] index.html: " + ex.Message); }
             try { CivilHtmlReview.WriteCompare(_civilRoot); }
@@ -426,6 +426,10 @@ namespace TeklaExtractor.Services
                         Console.WriteLine("[Civil] opening sheet '" + SafeMark(drawing) + "'");
                         capture = CivilDrawingSupport.CaptureActiveSheet(_handler, drawing, pieceGuess, _outputRoot);
                         CivilDrawingSupport.MergeSheetParts(_model, capture, parts);
+                        var mainPartObj = CivilDrawingSupport.MainPart(parts);
+                        var seenPartIds = new HashSet<int>();
+                        foreach (var p in parts) { try { seenPartIds.Add(p.Identifier.ID); } catch { } }
+                        CivilDrawingSupport.MergeCastUnitIndex(_model, mainPartObj, parts, seenPartIds);
                     }
                     catch (Exception ex)
                     {
@@ -548,6 +552,7 @@ namespace TeklaExtractor.Services
                     catch (Exception ex)
                     {
                         CivilDrawingSupport.LogError(_outputRoot, SafeMark(drawing) + " pdf/dwg", ex);
+                        _qaFailed = true;
                     }
 
                     try { _handler.CloseActiveDrawing(false); } catch { }

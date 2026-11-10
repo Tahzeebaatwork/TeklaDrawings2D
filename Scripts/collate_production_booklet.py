@@ -72,7 +72,7 @@ def main():
         print(f"No sheet PDFs found in {pdf_dir} for mark={args.mark}")
         return 1
 
-    out = Path(args.out) if args.out else pdf_dir / f"P22-132.{args.mark}.Rev 2.pdf"
+    out = Path(args.out) if args.out else pdf_dir / f"P22-132.{args.mark}.Rev 2.GENERATED.pdf"
     book = fitz.open()
     for idx, path in enumerate(pages):
         src = fitz.open(path)
