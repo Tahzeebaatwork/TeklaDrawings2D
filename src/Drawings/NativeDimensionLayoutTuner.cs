@@ -443,6 +443,37 @@ namespace TeklaExtractor
                 }
             }
 
+            // If multiple Lifter sets exist on top, keep the hardware-linked one (RelatedObjects >= 2 or anchor mid), prune wall-only
+            var topLifterSets = allSets.Where(x => !x.IsArtifact && x.Side == EdgeSide.Top && x.Feature == SemanticFeature.LiftersP205).ToList();
+            if (topLifterSets.Count > 1)
+            {
+                var linkedLifter = topLifterSets.FirstOrDefault(x => x.RelatedCount >= 2 || x.ModelPartNames.Any(n => n.IndexOf("ANCHOR", StringComparison.OrdinalIgnoreCase) >= 0));
+                if (linkedLifter != null)
+                {
+                    foreach (var s in topLifterSets)
+                    {
+                        if (s != linkedLifter)
+                        {
+                            Console.WriteLine($"[LayoutTuner] Pruning duplicate wall-only lifters row ID={s.ObjectId}");
+                            s.IsArtifact = true;
+                            setsToPrune.Add(s);
+                        }
+                    }
+                }
+            }
+
+            // If multiple P-300 sets exist on top, keep only the primary one
+            var topP300Sets = allSets.Where(x => !x.IsArtifact && x.Side == EdgeSide.Top && (x.Feature == SemanticFeature.FaceInsertP300 || x.Feature == SemanticFeature.EdgeInsertP300)).ToList();
+            if (topP300Sets.Count > 1)
+            {
+                for (int i = 1; i < topP300Sets.Count; i++)
+                {
+                    Console.WriteLine($"[LayoutTuner] Pruning duplicate P-300 row ID={topP300Sets[i].ObjectId}");
+                    topP300Sets[i].IsArtifact = true;
+                    setsToPrune.Add(topP300Sets[i]);
+                }
+            }
+
             // If duplicate overall sets exist on left or right, keep outermost only
             var leftOveralls = allSets.Where(x => !x.IsArtifact && x.Side == EdgeSide.Left && x.Feature == SemanticFeature.ProfileOverall).ToList();
             if (leftOveralls.Count > 1)
@@ -805,14 +836,23 @@ namespace TeklaExtractor
                 topLifters.Set.Modify();
                 Console.WriteLine("[LayoutTuner] Set Lifters row tag to '[P-205]' / 'LIFTERS' (matching Engineer standard).");
             }
+            if (topSP25 != null)
+            {
+                topSP25.Set.Attributes.LeftUpperTag = new ContainerElement();
+                topSP25.Set.Attributes.LeftLowerTag = new ContainerElement();
+                topSP25.Set.Attributes.RightUpperTag = CreateNativeStyleTag("[SP25-1067]");
+                topSP25.Set.Attributes.RightLowerTag = CreateNativeStyleTag("HARDWARE");
+                topSP25.Set.Modify();
+                Console.WriteLine("[LayoutTuner] Set SP25 row tag to '[SP25-1067]' / 'HARDWARE' (matching Engineer standard).");
+            }
             if (topP300 != null)
             {
                 topP300.Set.Attributes.LeftUpperTag = new ContainerElement();
                 topP300.Set.Attributes.LeftLowerTag = new ContainerElement();
-                topP300.Set.Attributes.RightUpperTag = CreateNativeStyleTag("P-300");
+                topP300.Set.Attributes.RightUpperTag = CreateNativeStyleTag("[P-300]");
                 topP300.Set.Attributes.RightLowerTag = CreateNativeStyleTag("BRACING INSERT");
                 topP300.Set.Modify();
-                Console.WriteLine("[LayoutTuner] Set P-300 row tag to 'P-300' / 'BRACING INSERT' (matching Engineer standard).");
+                Console.WriteLine("[LayoutTuner] Set P-300 row tag to '[P-300]' / 'BRACING INSERT' (matching Engineer standard).");
             }
             foreach (var h in topHoles)
             {
@@ -822,14 +862,32 @@ namespace TeklaExtractor
                 h.Set.Attributes.RightLowerTag = new ContainerElement();
                 h.Set.Modify();
             }
+            if (botGT100 != null)
+            {
+                botGT100.Set.Attributes.LeftUpperTag = new ContainerElement();
+                botGT100.Set.Attributes.LeftLowerTag = new ContainerElement();
+                botGT100.Set.Attributes.RightUpperTag = CreateNativeStyleTag("[GT100-1219]");
+                botGT100.Set.Attributes.RightLowerTag = CreateNativeStyleTag("HARDWARE");
+                botGT100.Set.Modify();
+                Console.WriteLine("[LayoutTuner] Set GT100-1219 row tag to '[GT100-1219]' / 'HARDWARE' (matching Engineer standard).");
+            }
+            if (botGT686 != null)
+            {
+                botGT686.Set.Attributes.LeftUpperTag = new ContainerElement();
+                botGT686.Set.Attributes.LeftLowerTag = new ContainerElement();
+                botGT686.Set.Attributes.RightUpperTag = CreateNativeStyleTag("[GT100-686]");
+                botGT686.Set.Attributes.RightLowerTag = CreateNativeStyleTag("HARDWARE");
+                botGT686.Set.Modify();
+                Console.WriteLine("[LayoutTuner] Set GT100-686 row tag to '[GT100-686]' / 'HARDWARE' (matching Engineer standard).");
+            }
             if (botDoor != null)
             {
                 botDoor.Set.Attributes.LeftUpperTag = new ContainerElement();
                 botDoor.Set.Attributes.LeftLowerTag = new ContainerElement();
-                botDoor.Set.Attributes.RightUpperTag = CreateNativeStyleTag("OPENING");
-                botDoor.Set.Attributes.RightLowerTag = new ContainerElement();
+                botDoor.Set.Attributes.RightUpperTag = CreateNativeStyleTag("PROFILE");
+                botDoor.Set.Attributes.RightLowerTag = CreateNativeStyleTag("OPENING");
                 botDoor.Set.Modify();
-                Console.WriteLine("[LayoutTuner] Set Door Opening row tag to 'OPENING' (matching Engineer standard).");
+                Console.WriteLine("[LayoutTuner] Set Door Opening row tag to 'PROFILE' / 'OPENING' (matching Engineer standard).");
             }
 
             // Reposition "TOP IN FORM" view label below all bottom dimensions to prevent collision
@@ -1182,8 +1240,8 @@ namespace TeklaExtractor
             else if (hasEdgeInsert) info.Feature = SemanticFeature.EdgeInsertP300;
             else if (hasSpliceSP25) info.Feature = SemanticFeature.SpliceSP25;
             else if (hasSpliceSP30) info.Feature = SemanticFeature.SpliceSP30;
-            else if (hasGroutTube100) info.Feature = SemanticFeature.GroutTubeGT100;
             else if (hasGroutTube686) info.Feature = SemanticFeature.GroutTubeGT686;
+            else if (hasGroutTube100) info.Feature = SemanticFeature.GroutTubeGT100;
             else if (hasLifters) info.Feature = SemanticFeature.LiftersP205;
             else if (info.IsOverall || info.TagText.IndexOf("OVERALL", StringComparison.OrdinalIgnoreCase) >= 0)
             {

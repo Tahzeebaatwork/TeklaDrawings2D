@@ -128,5 +128,8 @@
     <Copy SourceFiles="@(TeklaRuntimeDll)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="false" OverwriteReadOnlyFiles="true" />
   </Target>
 
+  <ItemGroup>
+    <Compile Remove="scratch\**" />
+    <Compile Remove="Tools\**" />
+  </ItemGroup>
 </Project>
-  <!-- prevent stray scratch files -->
